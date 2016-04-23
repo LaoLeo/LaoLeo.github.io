@@ -1,23 +1,23 @@
 
 ---
-title: jsÏµÁĞÖ®DOM»ù´¡
+title: jsç³»åˆ—ä¹‹DOMåŸºç¡€
 date: 2016-04-23 13:55:00
 tags: [javacript,DOM]
 ---
 
-±¾ÎÄÕÂÊÇ±¾ÈËÔÚÑ§Ï°jsÊ±ºòµÄÖªÊ¶×Ü½á£¬Éæ¼°µ½Ñ§Ï°¹ı³ÌÖĞµÄÒ»Ğ©ÖªÊ¶µã£¬´úÂëÁ·Ï°ÒÔ¼°ĞÂÊÖ³£·¸µÄ´íÎóÓë½â¾ö·½·¨£¬Ï£Íû¶ÔjsµÄ°®ºÃÕßÓĞ°ïÖú¡£
+æœ¬æ–‡ç« æ˜¯æœ¬äººåœ¨å­¦ä¹ jsæ—¶å€™çš„çŸ¥è¯†æ€»ç»“ï¼Œæ¶‰åŠåˆ°å­¦ä¹ è¿‡ç¨‹ä¸­çš„ä¸€äº›çŸ¥è¯†ç‚¹ï¼Œä»£ç ç»ƒä¹ ä»¥åŠæ–°æ‰‹å¸¸çŠ¯çš„é”™è¯¯ä¸è§£å†³æ–¹æ³•ï¼Œå¸Œæœ›å¯¹jsçš„çˆ±å¥½è€…æœ‰å¸®åŠ©ã€‚
 <!--more-->
-##DOM½Úµã
+##DOMèŠ‚ç‚¹
 
-###childNodes£¬nodeTypeºÍchildren
+###childNodesï¼ŒnodeTypeå’Œchildren
 
-* childNodes×Ó½Úµã£¬Ö»ÊÊºÏÓÃÓÚ¾É°æµÄieä¯ÀÀÆ÷£¬ÓÃÓÚ»ğºü¹È¸èÉÏ»á½«ÎÄ±¾½Úµã£¨¿Õ¸ñ£©°üÀ¨½øÀ´¡£
+* childNodeså­èŠ‚ç‚¹ï¼Œåªé€‚åˆç”¨äºæ—§ç‰ˆçš„ieæµè§ˆå™¨ï¼Œç”¨äºç«ç‹è°·æ­Œä¸Šä¼šå°†æ–‡æœ¬èŠ‚ç‚¹ï¼ˆç©ºæ ¼ï¼‰åŒ…æ‹¬è¿›æ¥ã€‚
 
-* nodeType½ÚµãÀàĞÍ£¬·µ»ØÒÔÒ»¸öÊı×Ö¡£1±íÊ¾ÔªËØ½Úµã£¬2Ö¸ÊôĞÔ½Úµã£¬3ÊÇÎÄ±¾½Úµã¡£
+* nodeTypeèŠ‚ç‚¹ç±»å‹ï¼Œè¿”å›ä»¥ä¸€ä¸ªæ•°å­—ã€‚1è¡¨ç¤ºå…ƒç´ èŠ‚ç‚¹ï¼Œ2æŒ‡å±æ€§èŠ‚ç‚¹ï¼Œ3æ˜¯æ–‡æœ¬èŠ‚ç‚¹ã€‚
 
-* children×÷ÓÃÍ¬ÓÚchildNodes£¬µ«Ç¿ÓÚËü£¬ÊÇËüµÄ¼æÈİ°æ£¬·µ»ØÖ»°üº¬ÔªËØ½ÚµãµÄÊı¾İ¡£
+* childrenä½œç”¨åŒäºchildNodesï¼Œä½†å¼ºäºå®ƒï¼Œæ˜¯å®ƒçš„å…¼å®¹ç‰ˆï¼Œè¿”å›åªåŒ…å«å…ƒç´ èŠ‚ç‚¹çš„æ•°æ®ã€‚
 
-###Á·Ï°´úÂë£º
+###ç»ƒä¹ ä»£ç ï¼š
 ```javascript
 <script>
 
@@ -27,7 +27,7 @@ var oUl = document.getElementById('ul1');
 
 var i=0;
 
-alert(oUl.childNodes.length)//ÎŞÂÛÔÚ»ğºü»òÕßie£¬360£¬¹È¸è¶¼ÏÔÊ¾11
+alert(oUl.childNodes.length)//æ— è®ºåœ¨ç«ç‹æˆ–è€…ieï¼Œ360ï¼Œè°·æ­Œéƒ½æ˜¾ç¤º11
 
 /* for(i=0; i<oUl.childNodes.length;i++)
 
@@ -45,7 +45,7 @@ oUl.childNodes[i].style.background = 'red';
 
 }
 
-alert(oUl.children.length) //childrenÊÇchildNodesµÄ¼æÈİ°æ*/
+alert(oUl.children.length) //childrenæ˜¯childNodesçš„å…¼å®¹ç‰ˆ*/
 
 }
 
@@ -101,13 +101,13 @@ this.parentNode.style.display = 'none';
 
 <ul id="ul1">
 
-<li>jjjj<a href="javascript:;">Òş²Ø</a></li> <!--±ÜÃâaÁ´½Óµã»÷Á¢¼´Ë¢ĞÂÀ´²»¼°ÏÔÊ¾Ğ§¹û-->
+<li>jjjj<a href="javascript:;">éšè—</a></li> <!--é¿å…aé“¾æ¥ç‚¹å‡»ç«‹å³åˆ·æ–°æ¥ä¸åŠæ˜¾ç¤ºæ•ˆæœ-->
 
-<li>°¡°¡j<a href="javascript:">Òş²Ø</a></li>
+<li>å•Šå•Šj<a href="javascript:">éšè—</a></li>
 
-<li>µÄ<a href="javascript:">Òş²Ø</a></li>
+<li>çš„<a href="javascript:">éšè—</a></li>
 
-<li>jµÃµ½j<a href="javascript:">Òş²Ø</a></li>
+<li>jå¾—åˆ°j<a href="javascript:">éšè—</a></li>
 
 </ul>
 
@@ -116,7 +116,7 @@ this.parentNode.style.display = 'none';
 ###offsetParent
 
 
-* offsetParentÊôĞÔ·µ»ØÒ»¸ö¶ÔÏóµÄÒıÓÃ£¬Õâ¸ö¶ÔÏóÊÇ¾àÀëµ÷ÓÃoffsetParentµÄÔªËØ×î½üµÄ£¨ÔÚ°üº¬²ã´ÎÖĞ×î¿¿½üµÄ£©£¬²¢ÇÒÊÇÒÑ½øĞĞ¹ıCSS¶¨Î»µÄÈİÆ÷ÔªËØ¡£ Èç¹ûÕâ¸öÈİÆ÷ÔªËØÎ´½øĞĞCSS¶¨Î», ÔòoffsetParentÊôĞÔµÄÈ¡ÖµÎª¸ùÔªËØ(ÔÚ±ê×¼¼æÈİÄ£Ê½ÏÂÎªhtmlÔªËØ£»ÔÚ¹ÖÒì³ÊÏÖÄ£Ê½ÏÂÎªbodyÔªËØ)µÄÒıÓÃ¡£ µ±ÈİÆ÷ÔªËØµÄstyle.display ±»ÉèÖÃÎª "none"Ê±£¨Òë×¢£ºIEºÍOpera³ıÍâ£©£¬offsetParentÊôĞÔ ·µ»Ø null¡£Ò»°ã·µ»ØÉèÖÃÁË¶¨Î»ÔªËØµÄ¸¸ÔªËØ
+* offsetParentå±æ€§è¿”å›ä¸€ä¸ªå¯¹è±¡çš„å¼•ç”¨ï¼Œè¿™ä¸ªå¯¹è±¡æ˜¯è·ç¦»è°ƒç”¨offsetParentçš„å…ƒç´ æœ€è¿‘çš„ï¼ˆåœ¨åŒ…å«å±‚æ¬¡ä¸­æœ€é è¿‘çš„ï¼‰ï¼Œå¹¶ä¸”æ˜¯å·²è¿›è¡Œè¿‡CSSå®šä½çš„å®¹å™¨å…ƒç´ ã€‚ å¦‚æœè¿™ä¸ªå®¹å™¨å…ƒç´ æœªè¿›è¡ŒCSSå®šä½, åˆ™offsetParentå±æ€§çš„å–å€¼ä¸ºæ ¹å…ƒç´ (åœ¨æ ‡å‡†å…¼å®¹æ¨¡å¼ä¸‹ä¸ºhtmlå…ƒç´ ï¼›åœ¨æ€ªå¼‚å‘ˆç°æ¨¡å¼ä¸‹ä¸ºbodyå…ƒç´ )çš„å¼•ç”¨ã€‚ å½“å®¹å™¨å…ƒç´ çš„style.display è¢«è®¾ç½®ä¸º "none"æ—¶ï¼ˆè¯‘æ³¨ï¼šIEå’ŒOperaé™¤å¤–ï¼‰ï¼ŒoffsetParentå±æ€§ è¿”å› nullã€‚ä¸€èˆ¬è¿”å›è®¾ç½®äº†å®šä½å…ƒç´ çš„çˆ¶å…ƒç´ 
 
 ```javascript
 <body>
@@ -128,12 +128,12 @@ this.parentNode.style.display = 'none';
 </body>
 ```
 
-###firstChildÓëfirstElementChild
+###firstChildä¸firstElementChild
 
 
-* firstChildÔÚ»ğºü¹È¸èÏÂÃæ¶¼ÊÇundefined£¬³ö´í£»ÒÔÇ°firstChildÖ»ÄÜÔÚieÏÂÓĞÓÃ£¬ÏÖÔÚ»ñÈ¡Ê×½ÚµãÓÃfirstElementChild£¬Í¬Àí¿ÉÑÓÉìµ½lastChildºÍlastElementChild
+* firstChildåœ¨ç«ç‹è°·æ­Œä¸‹é¢éƒ½æ˜¯undefinedï¼Œå‡ºé”™ï¼›ä»¥å‰firstChildåªèƒ½åœ¨ieä¸‹æœ‰ç”¨ï¼Œç°åœ¨è·å–é¦–èŠ‚ç‚¹ç”¨firstElementChildï¼ŒåŒç†å¯å»¶ä¼¸åˆ°lastChildå’ŒlastElementChild
 
-* »¹ÓĞĞÖµÜ½Úµã£¬nextSiblingÓënextElementSibling ºÍpreviousSiblingÓëpreviousElementSibling
+* è¿˜æœ‰å…„å¼ŸèŠ‚ç‚¹ï¼ŒnextSiblingä¸nextElementSibling å’ŒpreviousSiblingä¸previousElementSibling
 
 ```javascript
 <script type="text/javascript">
@@ -144,23 +144,23 @@ var oUl = document.getElementById('ul1');
 
 var i;
 
-//firstChildÔÚ»ğºü¹È¸èÏÂÃæ¶¼ÊÇundefined£¬³ö´í£»ÒÔÇ°firstChildÖ»ÄÜÔÚieÏÂÓĞÓÃ
+//firstChildåœ¨ç«ç‹è°·æ­Œä¸‹é¢éƒ½æ˜¯undefinedï¼Œå‡ºé”™ï¼›ä»¥å‰firstChildåªèƒ½åœ¨ieä¸‹æœ‰ç”¨
 
 //oUl.firstChild.style.background = 'red';
 
-//ĞÂÒ»´úfirstElementChild¼æÈİ°æ
+//æ–°ä¸€ä»£firstElementChildå…¼å®¹ç‰ˆ
 
 oUl.firstElementChild.style.background = 'red';
 
-//ÒÔÇ°½â¾öÕâÒ»ÎÊÌâµÄ·½·¨
+//ä»¥å‰è§£å†³è¿™ä¸€é—®é¢˜çš„æ–¹æ³•
 
 oFirst = oUl.firstElementChild || oUl.firstChild
 
 oFirst.style.background = 'red'
 
-//Í¬ÀíÒ²ÓĞlastChild ºÍ lastElementChild
+//åŒç†ä¹Ÿæœ‰lastChild å’Œ lastElementChild
 
-//ĞÖµÜ½Úµã
+//å…„å¼ŸèŠ‚ç‚¹
 
 var oLi = document.getElementById('li1');
 
@@ -168,7 +168,7 @@ var oLi = document.getElementById('li1');
 
 oLi.nextElementSibling.style.background = 'red';
 
-//Í¬ÀínextSibling nextElementSiblingºÍpreviousSibling previousElementSiblingÒàÊÇÍ¬ÑùµÄÓÃ·¨
+//åŒç†nextSibling nextElementSiblingå’ŒpreviousSibling previousElementSiblingäº¦æ˜¯åŒæ ·çš„ç”¨æ³•
 
 }
 
@@ -190,7 +190,7 @@ oLi.nextElementSibling.style.background = 'red';
 
 </ul>
 ```
-##DOM·½·¨²Ù×÷ÔªËØÊôĞÔ
+##DOMæ–¹æ³•æ“ä½œå…ƒç´ å±æ€§
 ***
 ```javascript   
 <script>
@@ -223,19 +223,19 @@ alert(oTxt.getAttribute('id'));
 
 </body>
 ```
-##DOMÔªËØÁé»î²éÕÒ
+##DOMå…ƒç´ çµæ´»æŸ¥æ‰¾
 
 ###className
 
-* Í¨¹ıclassÑ¡È¡ÔªËØ£¬Ò»°ã·ÖÁ½²½£º
+* é€šè¿‡classé€‰å–å…ƒç´ ï¼Œä¸€èˆ¬åˆ†ä¸¤æ­¥ï¼š
 
-1. °ÑËùÓĞµÄ×ÓÔªËØÑ¡³öÀ´
+1. æŠŠæ‰€æœ‰çš„å­å…ƒç´ é€‰å‡ºæ¥
 
-2. ÓÃclassName×÷ÎªÌõ¼şÉ¸Ñ¡³öÀ´´¦Àí
+2. ç”¨classNameä½œä¸ºæ¡ä»¶ç­›é€‰å‡ºæ¥å¤„ç†
 ```javascript
 <script>
 
-//Í¨¹ıclassÀ´Ñ¡ÔªËØ
+//é€šè¿‡classæ¥é€‰å…ƒç´ 
 
 window.onload = function (){
 
@@ -279,9 +279,9 @@ aLi[i].style.background = 'green';
 
 </body>
 ```
-**½øÒ»²½¸Ä½ø**£¬Ğ´Ò»¸öº¯ÊıÍê³ÉÑ¡classµÄ¹¦ÄÜ
+**è¿›ä¸€æ­¥æ”¹è¿›**ï¼Œå†™ä¸€ä¸ªå‡½æ•°å®Œæˆé€‰classçš„åŠŸèƒ½
 ```javacript
-//Í¨¹ıclassÀ´Ñ¡ÔªËØµÄº¯Êı
+//é€šè¿‡classæ¥é€‰å…ƒç´ çš„å‡½æ•°
 
 function getByClass(oParent, sClass){
 
@@ -291,7 +291,7 @@ var aResult = new Array();
 
 for (var i = 0; i < aEle.length; i++) {
 
-if (aEle[i].className == sClass) { //×¢ÒâÇ§Íò²»ÒªĞ´³É¡®sClass¡¯£¬ÒòÎª´«¹ıÊ±¾ÍÒÑ¾­´øÓĞ¡®¡¯ÁË
+if (aEle[i].className == sClass) { //æ³¨æ„åƒä¸‡ä¸è¦å†™æˆâ€˜sClassâ€™ï¼Œå› ä¸ºä¼ è¿‡æ—¶å°±å·²ç»å¸¦æœ‰â€˜â€™äº†
 
 aResult.push(aEle[i]);
 
@@ -303,7 +303,7 @@ return aResult;
 
 };
 ```
-ÒıÓÃÈçÏÂ£º
+å¼•ç”¨å¦‚ä¸‹ï¼š
 ```javascript
 window.onload = function (){
 
@@ -343,26 +343,26 @@ aDou[i].style.background = 'yellow';
 
 </body>
 ```
-##´´½¨¡¢²åÈë¡¢ºÍÉ¾³ıÔªËØ
+##åˆ›å»ºã€æ’å…¥ã€å’Œåˆ é™¤å…ƒç´ 
 ***
-###´´½¨DOMÔªËØ
+###åˆ›å»ºDOMå…ƒç´ 
 
-* creatElement£¨±êÇ©Ãû£©  ´´½¨Ò»¸ö½Úµã
-* appendChild£¨½Úµã£©		×·¼ÓÒ»¸ö½Úµã
-	-Àı×Ó£ºÎªul²åÈëli
+* creatElementï¼ˆæ ‡ç­¾åï¼‰  åˆ›å»ºä¸€ä¸ªèŠ‚ç‚¹
+* appendChildï¼ˆèŠ‚ç‚¹ï¼‰		è¿½åŠ ä¸€ä¸ªèŠ‚ç‚¹
+	-ä¾‹å­ï¼šä¸ºulæ’å…¥li
 	
-###²åÈëÔªËØ
+###æ’å…¥å…ƒç´ 
 
-* insertBefore£¨½Úµã£¬Ô­ÓĞ½Úµã£©		ÔÚÒÑÓĞÔªËØÇ°²åÈë
-	-Àı×Ó£ºµ¹Ğò²åÈëli
+* insertBeforeï¼ˆèŠ‚ç‚¹ï¼ŒåŸæœ‰èŠ‚ç‚¹ï¼‰		åœ¨å·²æœ‰å…ƒç´ å‰æ’å…¥
+	-ä¾‹å­ï¼šå€’åºæ’å…¥li
 	
-###É¾³ıDOMÔªËØ
+###åˆ é™¤DOMå…ƒç´ 
 
-* removeChild£¨½Úµã£©		É¾³ıÒ»¸öÔªËØ
-	-Àı×ÓÉ¾³ıli
+* removeChildï¼ˆèŠ‚ç‚¹ï¼‰		åˆ é™¤ä¸€ä¸ªå…ƒç´ 
+	-ä¾‹å­åˆ é™¤li
 	
-###Á·Ï°´úÂë£º
-¢Ù´´½¨²åÈëli 
+###ç»ƒä¹ ä»£ç ï¼š
+â‘ åˆ›å»ºæ’å…¥li 
 ```javascript
 <script>
 	window.onload = function(){
@@ -387,15 +387,15 @@ aDou[i].style.background = 'yellow';
 </script>
 <body>
 	<label for="txt1"></label><input type="text" id="txt1">
-	<button id="btn1">²åÈë</button>
+	<button id="btn1">æ’å…¥</button>
 
 	<ul id="ul1"></ul>
 </body>
 ```
 
-**×¢Òâ**£ºappendchild(´´½¨ÔªËØ)£¬´´½¨×Ó½Úµã£»insertBefore£¨²åÈëµÄ¶ÔÏó£¬ÔÚÄÄÀïÖ®Ç°²åÈë£©
+**æ³¨æ„**ï¼šappendchild(åˆ›å»ºå…ƒç´ )ï¼Œåˆ›å»ºå­èŠ‚ç‚¹ï¼›insertBeforeï¼ˆæ’å…¥çš„å¯¹è±¡ï¼Œåœ¨å“ªé‡Œä¹‹å‰æ’å…¥ï¼‰
 	
-¢ÚÉ¾³ıÔªËØ
+â‘¡åˆ é™¤å…ƒç´ 
 ```javascript   
 <script>
 	window.onload = function(){
@@ -412,20 +412,20 @@ aDou[i].style.background = 'yellow';
 </script>
 <body>
 	<ul id="ul1">
-		<li>li1<a href="javascript:;">É¾³ı</a></li>
-		<li>li2<a href="javascript:;">É¾³ı</a></li>
-		<li>li3<a href="javascript:;">É¾³ı</a></li>
-		<li>li4<a href="javascript:;">É¾³ı</a></li>
-		<li>li5<a href="javascript:;">É¾³ı</a></li>
+		<li>li1<a href="javascript:;">åˆ é™¤</a></li>
+		<li>li2<a href="javascript:;">åˆ é™¤</a></li>
+		<li>li3<a href="javascript:;">åˆ é™¤</a></li>
+		<li>li4<a href="javascript:;">åˆ é™¤</a></li>
+		<li>li5<a href="javascript:;">åˆ é™¤</a></li>
 	</ul>
 </body>
 ```
-**×¢Òâ**£ºa±êÇ©ÀïhrefÊôĞÔÖµÎªJavaScript£º£» ×÷ÓÃÎªÈ¡ÏûÄ¬ÈÏĞĞÎª£¬±ÜÃâÌø×ªË¢ĞÂ£¬Ïàµ±Ò»¸öjsÈë¿Ú£¬²»Ğ´µÄ»°js´úÂëÃ»ÓĞĞ§¹û¡£
+**æ³¨æ„**ï¼šaæ ‡ç­¾é‡Œhrefå±æ€§å€¼ä¸ºJavaScriptï¼šï¼› ä½œç”¨ä¸ºå–æ¶ˆé»˜è®¤è¡Œä¸ºï¼Œé¿å…è·³è½¬åˆ·æ–°ï¼Œç›¸å½“ä¸€ä¸ªjså…¥å£ï¼Œä¸å†™çš„è¯jsä»£ç æ²¡æœ‰æ•ˆæœã€‚
 
->**Ğ¡½á**
- ÒÔÉÏÊÇJavaScriptÖĞDOM£¨document object model£©µÄÒ»Ğ©»ù´¡£¬¸²¸ÇÃæ²»ÊÇºÜ¹ã£¬ÏëÁË½â¸ü¶àµÄÅóÓÑ¿ÉÒÔ²Î¿¼[wschoolDOM²Î¿¼ÊÖ²á](http://www.w3school.com.cn/htmldom/index.asp)»òÕßÔÄ¶Á[JavaScript DOM±à³ÌÒÕÊõ£¨µÚ¶ş°æ£©](http://www.javascriptcn.com/read-42.html)Ò»Êé
+>**å°ç»“**
+ ä»¥ä¸Šæ˜¯JavaScriptä¸­DOMï¼ˆdocument object modelï¼‰çš„ä¸€äº›åŸºç¡€ï¼Œè¦†ç›–é¢ä¸æ˜¯å¾ˆå¹¿ï¼Œæƒ³äº†è§£æ›´å¤šçš„æœ‹å‹å¯ä»¥å‚è€ƒ[wschoolDOMå‚è€ƒæ‰‹å†Œ](http://www.w3school.com.cn/htmldom/index.asp)æˆ–è€…é˜…è¯»[JavaScript DOMç¼–ç¨‹è‰ºæœ¯ï¼ˆç¬¬äºŒç‰ˆï¼‰](http://www.javascriptcn.com/read-42.html)ä¸€ä¹¦
 
 
-><span style="font-size:12px">±¾ÎÄ±êÌâ: <a href="{{ permalink }}">  { {title} }  </a>
-ÎÄÕÂ×÷Õß: <a href="http://itxiehui.github.io/">ÀÍÍÁÖı</a>  
-Ğí¿ÉĞ­Òé: <img alt="ÖªÊ¶¹²ÏíĞí¿ÉĞ­Òé" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">?ÊğÃû-·ÇÉÌÓÃ-ÏàÍ¬·½Ê½¹²Ïí 4.0</a></span>
+><span style="font-size:12px">æœ¬æ–‡æ ‡é¢˜: <a href="{{ permalink }}">  { {title} }  </a>
+æ–‡ç« ä½œè€…: <a href="http://itxiehui.github.io/">åŠ³åœŸé“¸</a>  
+è®¸å¯åè®®: <img alt="çŸ¥è¯†å…±äº«è®¸å¯åè®®" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">?ç½²å-éå•†ç”¨-ç›¸åŒæ–¹å¼å…±äº« 4.0</a></span>
