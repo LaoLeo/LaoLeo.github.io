@@ -8,9 +8,10 @@ tags: [github,基础]
 > 仅以此文提醒下次不会再犯之错
 <!--more-->
 
-* 在notepad上编辑md文件，首先要改编码
+* 在notepad上编辑md文件，首先要改编码（UTF-8 without BOM）
 ***
-* hexi上commit后的内容，要先checkout到master分支上，merge hexi分支后，
+* hexi上commit后的内容，直接个git push origin hexi，再hexo d -g 就可以发布出去了。
+第二种可行方法：checkout到master分支上，merge hexi分支后，
 再push到远程库的hexi分支（git push origin master:hexi） 括号里master是
 本地master分支，hexi是远程的hexi分支
 

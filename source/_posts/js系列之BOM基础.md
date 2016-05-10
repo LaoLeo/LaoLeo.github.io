@@ -1,5 +1,5 @@
 ---
-title: js系列之DOM基础
+title: js系列之BOM基础
 date: 
 tags: [编程,javacript,BOM]
 ---
@@ -8,7 +8,6 @@ tags: [编程,javacript,BOM]
 
 <!--more-->
 
-# js系列之BOM基础
 ***
 ## open
 
