@@ -1,22 +1,22 @@
 ---
-title: JSÖ®Ä¬ÈÏĞĞÎª
+title: JSä¹‹é»˜è®¤è¡Œä¸º
 date: 2016-05-19 17:10:00
-tags: [±à³Ì,javacript]
+tags: [ç¼–ç¨‹,javacript]
 ---
 
-±¾ÎÄÕÂÊÇ±¾ÈËÔÚÑ§Ï°jsÊ±ºòµÄÖªÊ¶×Ü½á£¬Éæ¼°µ½Ñ§Ï°¹ı³ÌÖĞµÄÒ»Ğ©ÖªÊ¶µã£¬´úÂëÁ·Ï°ÒÔ¼°ĞÂÊÖ³£·¸µÄ´íÎóÓë½â¾ö·½·¨£¬Ï£Íû¶ÔjsµÄ°®ºÃÕßÓĞ°ïÖú¡£
+æœ¬æ–‡ç« æ˜¯æœ¬äººåœ¨å­¦ä¹ jsæ—¶å€™çš„çŸ¥è¯†æ€»ç»“ï¼Œæ¶‰åŠåˆ°å­¦ä¹ è¿‡ç¨‹ä¸­çš„ä¸€äº›çŸ¥è¯†ç‚¹ï¼Œä»£ç ç»ƒä¹ ä»¥åŠæ–°æ‰‹å¸¸çŠ¯çš„é”™è¯¯ä¸è§£å†³æ–¹æ³•ï¼Œå¸Œæœ›å¯¹jsçš„çˆ±å¥½è€…æœ‰å¸®åŠ©ã€‚
 
 <!--more-->
 
-## **Ä¬ÈÏĞĞÎª**
+## **é»˜è®¤è¡Œä¸º**
 ***
 
-> ä¯ÀÀÆ÷×Ô´øµÄÊÂ¼ş£¬±ÈÈç£ºÓÒ¼ü²Ëµ¥£¬aÁ´½ÓÌø×ª£¬±íµ¥Ìá½»
-return false;È¡ÏûÄ¬ÈÏĞĞÎª
+> æµè§ˆå™¨è‡ªå¸¦çš„äº‹ä»¶ï¼Œæ¯”å¦‚ï¼šå³é”®èœå•ï¼Œaé“¾æ¥è·³è½¬ï¼Œè¡¨å•æäº¤
+return false;å–æ¶ˆé»˜è®¤è¡Œä¸º
 
-### Á·Ï°´úÂë
-#### 1.ÆÁ±ÎÓÒ¼ü²Ëµ¥
-> --µ¯³ö×Ô¶¨ÒåµÄÓÒ¼ü²Ëµ¥
+### ç»ƒä¹ ä»£ç 
+#### 1.å±è”½å³é”®èœå•
+> --å¼¹å‡ºè‡ªå®šä¹‰çš„å³é”®èœå•
 ```javascipt
 <style>
 	*{
@@ -65,16 +65,16 @@ return false;È¡ÏûÄ¬ÈÏĞĞÎª
 </head>
 <body>
 	<ul id="ul1">
-		<li>·µ»Ø</li>
-		<li>Ë¢ĞÂ</li>
-		<li>¿ª·¢ÕßÄ£Ê½</li>
-		<li>²é¿´Ô´´úÂë</li>
-		<li>ÊôĞÔ</li>
+		<li>è¿”å›</li>
+		<li>åˆ·æ–°</li>
+		<li>å¼€å‘è€…æ¨¡å¼</li>
+		<li>æŸ¥çœ‹æºä»£ç </li>
+		<li>å±æ€§</li>
 	</ul>
 </body>
 ```
-#### 2.ÍÏ×§div£¨¼òÒ×°æ£©
-> Ô­Àí£ºÊó±êºÍdiv×óÉÏ½Ç¶¥µã¾àÀë²»±ä£»Èı¸öº¯Êı£¬onmousedown£¨´æ´¢¾àÀë£©£¬onmousemove£¨¼ÆËãÊó±êÒÆ¶¯ºóµÄÎ»ÖÃ£©£¬onmouseup£¨È¡Ïûº¯Êı£©£¬ºó¶şÕßÔÚÇ°ÕßÀïÃæ
+#### 2.æ‹–æ‹½divï¼ˆç®€æ˜“ç‰ˆï¼‰
+> åŸç†ï¼šé¼ æ ‡å’Œdivå·¦ä¸Šè§’é¡¶ç‚¹è·ç¦»ä¸å˜ï¼›ä¸‰ä¸ªå‡½æ•°ï¼Œonmousedownï¼ˆå­˜å‚¨è·ç¦»ï¼‰ï¼Œonmousemoveï¼ˆè®¡ç®—é¼ æ ‡ç§»åŠ¨åçš„ä½ç½®ï¼‰ï¼Œonmouseupï¼ˆå–æ¶ˆå‡½æ•°ï¼‰ï¼ŒåäºŒè€…åœ¨å‰è€…é‡Œé¢
 ```javascript
 <style>
 		#div1{
@@ -107,7 +107,7 @@ return false;È¡ÏûÄ¬ÈÏĞĞÎª
 					oDiv.onmousemove = null;
 					oDiv.onmouseup = null;
 				}
-			return false£» //½â¾ö¾É°æ»ğºüµÄbug
+			return falseï¼› //è§£å†³æ—§ç‰ˆç«ç‹çš„bug
 			}
 		}
 	</script>
@@ -117,8 +117,8 @@ return false;È¡ÏûÄ¬ÈÏĞĞÎª
 </body>
 ```
 
-* ½â¾ödivÍÏ¶¯Ê±£¬Êó±êÒÆ³öÎÊÌâ
-	> Ô­Òò£ºÊó±êÍÏµÃÌ«¿ì£¬ÍÑÀëdivÊÂ¼şÍ£Ö¹µ÷ÓÃ£¬Ïë°ì·¨À©´óÊÂ¼ş·¶Î§£¬°ÑdivµÄonmousemoveºÍonmouseupÊÂ¼ş¸ÄÎªdocumentµÄ
+* è§£å†³divæ‹–åŠ¨æ—¶ï¼Œé¼ æ ‡ç§»å‡ºé—®é¢˜
+	> åŸå› ï¼šé¼ æ ‡æ‹–å¾—å¤ªå¿«ï¼Œè„±ç¦»diväº‹ä»¶åœæ­¢è°ƒç”¨ï¼Œæƒ³åŠæ³•æ‰©å¤§äº‹ä»¶èŒƒå›´ï¼ŒæŠŠdivçš„onmousemoveå’Œonmouseupäº‹ä»¶æ”¹ä¸ºdocumentçš„
 ```javascript
 document.onmousemove=function(ev){
 					var oEvent = ev || event;
@@ -132,7 +132,7 @@ document.onmousemove=function(ev){
 					document.onmouseup = null;
 				}
 ```	
-* ½â¾ödivÍÏ³ö¿ÉÊÓÇø
+* è§£å†³divæ‹–å‡ºå¯è§†åŒº
 ```javascript
 document.onmousemove=function(ev){
 					var oEvent = ev || event;
@@ -140,7 +140,7 @@ document.onmousemove=function(ev){
 					var l = oEvent.clientX-disX;
 					var t = oEvent.clientY-disY;
 
-					if (l<0) {  //ÏŞÖÆdivÒÆ³ö¿ÉÊÓÇø
+					if (l<0) {  //é™åˆ¶divç§»å‡ºå¯è§†åŒº
 						l=0;
 					}else if(l>document.documentElement.clientWidth- oDiv.offsetWidth){
 						l = document.documentElement.clientWidth- oDiv.offsetWidth;
@@ -157,7 +157,7 @@ document.onmousemove=function(ev){
 
 ```
 
-><span style="font-size:12px">±¾ÎÄ±êÌâ: <a href="{{ permalink }}">  {{title}}  </a>
->ÎÄÕÂ×÷Õß: <a href="http://itxiehui.github.io/">ÀÍÍÁÖı</a>  
->Ğí¿ÉĞ­Òé: <img alt="ÖªÊ¶¹²ÏíĞí¿ÉĞ­Òé" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">?ÊğÃû-·ÇÉÌÓÃ-ÏàÍ¬·½Ê½¹²Ïí 4.0</a></span>
+><span style="font-size:12px">æœ¬æ–‡æ ‡é¢˜: <a href="{{ permalink }}">  {{title}}  </a>
+>æ–‡ç« ä½œè€…: <a href="http://itxiehui.github.io/">åŠ³åœŸé“¸</a>  
+>è®¸å¯åè®®: <img alt="çŸ¥è¯†å…±äº«è®¸å¯åè®®" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">?ç½²å-éå•†ç”¨-ç›¸åŒæ–¹å¼å…±äº« 4.0</a></span>
  
