@@ -93,7 +93,8 @@ search:
   limit: 10
 
 #评论
-disqus_shortname: disqus_kJiOW9LrMI 
+#disqus_shortname: disqus_kJiOW9LrMI 
+
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
