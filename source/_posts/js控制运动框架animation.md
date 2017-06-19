@@ -7,7 +7,7 @@ tags: [js,css,animation]
 ## js控制运动框架animation
 
 目标：做一个通过按钮控制旋转的动画，下面的是效果图：
-
+![image](http://note.youdao.com/yws/api/personal/file/221639B83D0B4AD3A49229F58A468023?method=download&shareKey=fb6cd7994e20ce6c6ea7f94a1609b490)
 
 想想都很简单，就写个css框架，然后用js给img节点添加animation样式。
 所以一开始是这样的的：
