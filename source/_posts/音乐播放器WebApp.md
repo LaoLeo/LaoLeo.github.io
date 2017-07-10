@@ -284,7 +284,7 @@ srcAPI = http://210.38.1.134:9999/ws.stream.qqmusic.qq.com/songID.m4a?fromtag=46
 当用到多个计时器是可以把它放在一个数组里，方便管理。
 
 ## 百度到的资源
-专门说进度条的网站：[https://usablica.github.io/progress.js/](http://note.youdao.com/)  
-js,jq获取div高度：[http://www.cnblogs.com/xiaopin/archive/2012/03/26/2418152.html](http://note.youdao.com/)  
-[http://blog.csdn.net/zy1281539626/article/details/61913770](获取div的margin，border，padding，content的宽高)  
-js控制audio标签：[http://blog.csdn.net/u014520745/article/details/52412427](http://note.youdao.com/)
+专门说进度条的网站：[https://usablica.github.io/progress.js/](https://usablica.github.io/progress.js/)  
+js,jq获取div高度：[http://www.cnblogs.com/xiaopin/archive/2012/03/26/2418152.html](http://www.cnblogs.com/xiaopin/archive/2012/03/26/2418152.html)  
+[获取div的margin，border，padding，content的宽高](http://blog.csdn.net/zy1281539626/article/details/61913770)  
+js控制audio标签：[http://blog.csdn.net/u014520745/article/details/52412427](http://blog.csdn.net/u014520745/article/details/52412427)

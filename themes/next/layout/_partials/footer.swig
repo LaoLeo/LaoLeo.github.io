@@ -18,3 +18,5 @@
     NexT.{{ theme.scheme }}
   </a>
 </div>
+
+<script type="text/javascript" color="11,236,124" opacity='0.7' zIndex="-2" count="99" src="{{ url_for(theme.js) }}/src/plug/canvas-nest.min.js"></script>
