@@ -5,7 +5,7 @@ tags: [MVVM]
 categories: [前端框架]
 ---
 
-![我是图片](https://i.loli.net/2017/08/11/598c8c87529b1.jpeg)
+![我是图片](https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525175920&di=0a8226ac6efda720e6da74d056b697a3&imgtype=jpg&er=1&src=http%3A%2F%2Fwww.chinairn.com%2FUserFiles%2Fimage%2F20161106%2F20161106162224_9200.jpg)
 
 # 前言
 > 目前前端最火的几个框架vue，angular等都是基于MVVM框架思想，那么什么是MVVM框架，和它的双向数据绑定都是如何实现的呢？
