@@ -5,7 +5,9 @@ tags: [vue]
 categories: [前端]
 ---
 
-![首图](https://user-gold-cdn.xitu.io/2019/5/24/16ae97c6f46e4680?imageView2/1/w/1304/h/734/q/85/format/webp/interlace/1)
+![首图](https://pixabay.com/photos/home-office-workstation-office-336373/)
+
+<!-- more -->
 
 # 【VueSSR系列一】构建流程源码解读
 

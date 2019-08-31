@@ -5,7 +5,9 @@ tags: [vue]
 categories: [前端]
 ---
 
-![我是图片](https://cdn.pixabay.com/photo/2014/05/02/21/50/home-office-336378__340.jpg)
+![我是图片](https://cdn.pixabay.com/photo/2016/03/26/13/09/cup-of-coffee-1280537__340.jpg)
+
+<!-- more -->
 
 上一节讨论了VueSSR的构建流程，构建出来的clientManifest和serverBundle最终会被转换成html，这一节我们深入vue-server-renderer的核心内容，看看它们都经过了哪些的处理。这一节的内容包括：
 - 使用BundleRenderer的原因
