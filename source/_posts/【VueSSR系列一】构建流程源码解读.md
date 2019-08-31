@@ -5,7 +5,7 @@ tags: [vue]
 categories: [前端]
 ---
 
-![首图](https://pixabay.com/photos/home-office-workstation-office-336373/)
+![首图](https://cdn.pixabay.com/photo/2014/05/02/21/49/home-office-336373__340.jpg)
 
 <!-- more -->
 
