@@ -1,6 +1,6 @@
 ---
 title: js面向对象编程之继承
-date: 
+date: 2016-5-29
 tags: [js, 继承]
 categories: [js]
 ---

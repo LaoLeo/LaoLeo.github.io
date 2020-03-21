@@ -1,6 +1,6 @@
 ---
 title: 使用javascript实现常见的排序算法
-date: 
+date: 2018-09-2
 tags: [js, 算法]
 categories: [js]
 ---

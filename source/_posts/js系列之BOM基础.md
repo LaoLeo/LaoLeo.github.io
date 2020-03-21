@@ -1,6 +1,6 @@
 ---
 title: js系列之BOM基础
-date: 
+date: 2016-5-20
 tags: [编程,javacript,BOM]
 ---
 
