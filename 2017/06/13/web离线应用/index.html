@@ -1,0 +1,1006 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ApplicationCache,localStorage,webSQL,闭包," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="博客 web前端-Leo" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="前言编写web离线应用，需要把应用文件和数据存在本地，也就是浏览器中。这主要用到了H5的三个重要的知识点，Application Cache(应用程序缓存), localStorage/sessionStorage(web存储), web SQL(web数据库)。
+Application cache如果要启用应用缓存，就需要在html标签加manifest属性1234&amp;lt;!DOCTPYE HT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web离线应用">
+<meta property="og:url" content="/2017/06/13/web离线应用/index.html">
+<meta property="og:site_name" content="博客 web前端-Leo">
+<meta property="og:description" content="前言编写web离线应用，需要把应用文件和数据存在本地，也就是浏览器中。这主要用到了H5的三个重要的知识点，Application Cache(应用程序缓存), localStorage/sessionStorage(web存储), web SQL(web数据库)。
+Application cache如果要启用应用缓存，就需要在html标签加manifest属性1234&amp;lt;!DOCTPYE HT">
+<meta property="og:updated_time" content="2020-03-21T13:59:10.358Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web离线应用">
+<meta name="twitter:description" content="前言编写web离线应用，需要把应用文件和数据存在本地，也就是浏览器中。这主要用到了H5的三个重要的知识点，Application Cache(应用程序缓存), localStorage/sessionStorage(web存储), web SQL(web数据库)。
+Application cache如果要启用应用缓存，就需要在html标签加manifest属性1234&amp;lt;!DOCTPYE HT">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="/2017/06/13/web离线应用/"/>
+
+
+  <title> Web离线应用 | 博客 web前端-Leo </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">博客 web前端-Leo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">“非宁静无以致远”</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Web离线应用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-13T00:00:00+08:00" content="2017-06-13">
+              2017-06-13
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/06/13/web离线应用/" class="leancloud_visitors" data-flag-title="Web离线应用">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>编写web离线应用，需要把应用文件和数据存在本地，也就是浏览器中。这主要用到了H5的三个重要的知识点，Application Cache(应用程序缓存), localStorage/sessionStorage(web存储), web SQL(web数据库)。</p>
+<h2 id="Application-cache"><a href="#Application-cache" class="headerlink" title="Application cache"></a>Application cache</h2><p>如果要启用应用缓存，就需要在html标签加manifest属性<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">!DOCTPYE</span> <span class="attr">HTML</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">manifest</span>=<span class="string">"demo.appcache"</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>demo.appcache就是写需要缓存页面信息的manifest文件，文件的后缀名可以任写，但建议统一为.appcache。  </p>
+<h3 id="manifest文件"><a href="#manifest文件" class="headerlink" title="manifest文件"></a>manifest文件</h3><p>告知浏览器需要（或不需要）缓存的文件，包括三部分：  </p>
+<ul>
+<li><strong>CACHE MANIFEST</strong> 此标题下出现的文件将在首次下载后进行缓存</li>
+<li><strong>NETWORK</strong> 此标题下列出的文件需要在访问服务器，且不被缓存</li>
+<li><strong>FALLBACK</strong> 此标题下列出的文件是页面无法被访问时退回的页面</li>
+</ul>
+<p>第一行写CACHE MANIFEST是必须的，写法为<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">CACHE</span> <span class="selector-tag">MANIFEST</span></span><br><span class="line"># 2017<span class="selector-tag">-06-10</span> <span class="selector-tag">v1</span><span class="selector-class">.0</span><span class="selector-class">.0</span></span><br><span class="line"><span class="selector-tag">index</span><span class="selector-class">.html</span> </span><br><span class="line"><span class="selector-tag">jqury</span><span class="selector-class">.min</span><span class="selector-class">.js</span></span><br></pre></td></tr></table></figure></p>
+<p>#后面的是注释，写上日期和版本号，当index.html等页面有更新时，改日期或者版本号，浏览器会将页面进行更新和缓存，方便。其中能应用默访问的页面，也就是index.html是默认被缓存的，不写也可以。<strong>一般写修改不频繁的文件</strong></p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">NETWORK:</span></span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+<p>一般写星号，也就是其他的页面都要通过访问服务器</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">FALLBACK:</span></span><br><span class="line"><span class="meta-keyword">/html/</span> /offline.html</span><br></pre></td></tr></table></figure>
+<p>如果无法建立因特网连接，则用 “offline.html” 替代 /html5/ 目录中的所有文件。</p>
+<h3 id="更新缓存的情况"><a href="#更新缓存的情况" class="headerlink" title="更新缓存的情况"></a>更新缓存的情况</h3><ul>
+<li>用户清空浏览器缓存</li>
+<li>manifest文件被修改</li>
+<li>由程序文件来更新应用缓存</li>
+</ul>
+<h3 id="设置MIME-type"><a href="#设置MIME-type" class="headerlink" title="设置MIME-type"></a>设置MIME-type</h3><p>需要给manifest文件设置MIME-type为text/cache-manifest</p>
+<ul>
+<li>在Apache服务器<br>可以在根目录下添加.htaccess文件<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType <span class="built_in">text</span>/cache-manifest manifest</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>或者在manifest文件开头添加（前提是文件是php后缀名）<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?php</span></span><br><span class="line">header(<span class="string">"Content-Type: text/cache-manifest"</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>==貌似使用nodejs做后台不用设置MIME-type也可以将程序文件写进缓存==</p>
+<h2 id="localStorage-sessionStorage"><a href="#localStorage-sessionStorage" class="headerlink" title="localStorage/sessionStorage"></a>localStorage/sessionStorage</h2><p>在浏览器上（本地）储存用户的浏览数据<br>两者的区别就在于，localStorage储存的数据没有时间的限制，sessionStorage储存的数据，当关闭浏览器时，数据就没了。</p>
+<p>两者的API都是相同的，主要有一下：</p>
+<ul>
+<li>保存数据：localStorage.setItem(key,value);</li>
+<li>读取数据：localStorage.getItem(key);</li>
+<li>删除单个数据：localStorage.removeItem(key);</li>
+<li>删除所有数据：localStorage.clear();</li>
+<li>得到某个索引的key：localStorage.key(index);<br>保存数据还可以直接定义localStorage的属性，比如localStorage.resource = value<br><strong>一般储存变更频繁的文件</strong></li>
+</ul>
+<h2 id="web-SQL"><a href="#web-SQL" class="headerlink" title="web SQL"></a>web SQL</h2><p>位于浏览器中的关系型数据库<br>核心的方法就三个：</p>
+<ul>
+<li><p>openDatabase：这个方法使用现有数据库或创建新数据库创建数据库对象。</p>
+</li>
+<li><p>transaction：这个方法允许我们根据情况控制事务提交或回滚，意思是可以划分事务。</p>
+</li>
+<li><p>executeSql：这个方法用于执行真实的SQL查询。</p>
+</li>
+</ul>
+<h3 id="打开数据库"><a href="#打开数据库" class="headerlink" title="打开数据库"></a>打开数据库</h3><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> db = openDatabase(<span class="string">'mydb'</span>, <span class="string">'1.0'</span>, <span class="string">'Test DB'</span>, <span class="number">2</span> * <span class="number">1024</span> * <span class="number">1024</span>);</span><br></pre></td></tr></table></figure>
+<p>openDatebase方法接受五个参数，分别是：</p>
+<ul>
+<li>数据名称</li>
+<li>数据库版本（写死就行）</li>
+<li>数据库描述</li>
+<li>大小</li>
+<li>回调（可选）</li>
+</ul>
+<h3 id="插入和读取数据"><a href="#插入和读取数据" class="headerlink" title="插入和读取数据"></a>插入和读取数据</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> db = openDatabase(<span class="string">'mydb'</span>, <span class="string">'1.0'</span>, <span class="string">'Test DB'</span>, <span class="number">2</span> * <span class="number">1024</span> * <span class="number">1024</span>);</span><br><span class="line"> </span><br><span class="line">db.transaction(<span class="function"><span class="keyword">function</span> (<span class="params">tx</span>) </span>&#123;</span><br><span class="line">   tx.executeSql(<span class="string">'CREATE TABLE IF NOT EXISTS LOGS (id unique, log)'</span>);</span><br><span class="line">   tx.executeSql(<span class="string">'INSERT INTO LOGS (id, log) VALUES (1, "菜鸟教程")'</span>);</span><br><span class="line">   tx.executeSql(<span class="string">'INSERT INTO LOGS (id, log) VALUES (2, "www.runoob.com")'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line">db.transaction(<span class="function"><span class="keyword">function</span> (<span class="params">tx</span>) </span>&#123;</span><br><span class="line">   tx.executeSql(<span class="string">'SELECT * FROM LOGS'</span>, [], <span class="function"><span class="keyword">function</span> (<span class="params">tx, results</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> len = results.rows.length, i;</span><br><span class="line">      msg = <span class="string">"&lt;p&gt;查询记录条数: "</span> + len + <span class="string">"&lt;/p&gt;"</span>;</span><br><span class="line">      <span class="built_in">document</span>.querySelector(<span class="string">'#status'</span>).innerHTML +=  msg;</span><br><span class="line">    </span><br><span class="line">      <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; len; i++)&#123;</span><br><span class="line">         alert(results.rows.item(i).log );</span><br><span class="line">      &#125;</span><br><span class="line">    </span><br><span class="line">   &#125;, <span class="literal">null</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="采用MVC思想写js代码"><a href="#采用MVC思想写js代码" class="headerlink" title="采用MVC思想写js代码"></a>采用MVC思想写js代码</h2><ul>
+<li><p>applicationcontroller.js //程序的入口程序主控制器，向外暴露一个start方法，作为程序的入口。其他的私有函数都是对次控制器暴露出的方法的调用</p>
+</li>
+<li><p>articlescontroller.js //操作articles模型，调用article暴露出的方法实现增删改查以及调用template的方法渲染页面</p>
+</li>
+<li><p>article.js //article模型，调用更底层的database对象（对数据库操作的封装）</p>
+</li>
+<li><p>database.js //更底层的M层，封装对数据库的操作</p>
+</li>
+<li><p>templates.js //V层，插入html节点</p>
+</li>
+</ul>
+<p>程序的入口就只有一个<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//applicationController.js</span></span><br><span class="line"><span class="comment">//webapp的入口函数，类似C语言中的main，或者jq中的$(document).ready</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">start</span>(<span class="params">resources, storeResources</span>) </span>&#123;</span><br><span class="line">        APP.database.open(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="comment">//监听hash的变化</span></span><br><span class="line">            $(<span class="built_in">window</span>).bind(<span class="string">"hashchange"</span>, route);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//往DOM里添加CSS</span></span><br><span class="line">            $(<span class="string">"head"</span>).append(<span class="string">'&lt;style&gt;'</span> +　resources.css + <span class="string">'&lt;/style&gt;'</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//创造app应用名称节点</span></span><br><span class="line">            $(<span class="string">'body'</span>).html(APP.templates.application());</span><br><span class="line"></span><br><span class="line">            <span class="comment">//移除下载提示</span></span><br><span class="line">            $(<span class="string">'#loading'</span>).remove();</span><br><span class="line"></span><br><span class="line">            route();</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(storeResources) &#123;</span><br><span class="line">            localStorage.resources = <span class="built_in">JSON</span>.stringify(resources);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>在index.html调用<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'ready %o'</span>, <span class="keyword">new</span> <span class="built_in">Date</span>()); <span class="comment">//%o代替javascript对象</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> APP_START_FAILED = <span class="string">"I'm sorry, the app can't start right now."</span></span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">startWithResources</span>(<span class="params">resources, storeResources</span>) </span>&#123;</span><br><span class="line">                <span class="comment">//执行加载的js函数</span></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">//eval(resources.js)</span></span><br><span class="line">                    insertScript(resources.js);</span><br><span class="line">                    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                        APP.applicationController.start(resources, storeResources);  <span class="comment">//程序入口</span></span><br><span class="line">                    &#125;, <span class="number">500</span>); </span><br><span class="line"></span><br><span class="line">                &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">                    alert(APP_START_FAILED);</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'%o'</span>, e);</span><br><span class="line">                &#125; </span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">startWithOnlineResources</span>(<span class="params">resources</span>) </span>&#123;</span><br><span class="line">                startWithResources(resources, <span class="literal">true</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">startWithOfflineResources</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> resources;</span><br><span class="line"></span><br><span class="line">                <span class="comment">//假如之前已经访问了并且js文件已经缓存进localStorage，执行以下</span></span><br><span class="line">                <span class="keyword">if</span>(localStorage &amp;&amp; localStorage.resources) &#123;</span><br><span class="line">                    resources = <span class="built_in">JSON</span>.parse(localStorage.resources);</span><br><span class="line">                    startWithResources(resources, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//否则输出提醒信息</span></span><br><span class="line">                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                    alert(APP_START_FAILED);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">insertScript</span>(<span class="params">script</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> node = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</span><br><span class="line">                node.innerHTML = script;</span><br><span class="line">                <span class="built_in">document</span>.head.appendChild(node);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//假如设备离线，则执行离线操作</span></span><br><span class="line">            <span class="keyword">if</span>(navigator &amp;&amp; navigator.onLine === <span class="literal">false</span>) &#123;</span><br><span class="line">                startWithOfflineResources();</span><br><span class="line"></span><br><span class="line">                <span class="comment">//否则，下载资源并执行，假如成功就把资源添加进local storage。</span></span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                $.ajax(&#123;</span><br><span class="line">                    url: <span class="string">'api/resources'</span>,</span><br><span class="line">                    success: startWithOnlineResources,</span><br><span class="line">                    error: startWithOfflineResources,</span><br><span class="line">                    dataType: <span class="string">'json'</span></span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure></p>
+<p>程序的设计就类似于树形的结构：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[程序入口]--&gt;B[主控制器]</span><br><span class="line">    B--&gt;<span class="keyword">C</span>[各种次控制器]</span><br><span class="line">    <span class="keyword">C</span>--&gt;<span class="keyword">D</span>[模型]</span><br><span class="line">    <span class="keyword">C</span>--&gt;<span class="keyword">E</span>[视图]</span><br><span class="line">    B--&gt;<span class="keyword">E</span></span><br></pre></td></tr></table></figure>
+<p>主控制器的第一步工作是打开数据库</p>
+<h3 id="对象的封装"><a href="#对象的封装" class="headerlink" title="对象的封装"></a>对象的封装</h3><p>全局就一个APP对象，为window的全局变量<br><figure class="highlight scilab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">window.APP = &#123;&#125;;</span><br><span class="line">(<span class="function"><span class="keyword">function</span><span class="params">(APP)</span>&#123;</span></span><br><span class="line">    APP.applicationController = (<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;</span></span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            start: start</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;());</span><br><span class="line">    </span><br><span class="line">    APP.articleController = (funcion()&#123;</span><br><span class="line">       ...</span><br><span class="line">       </span><br><span class="line">       <span class="keyword">return</span> &#123;</span><br><span class="line">            synchronizeWithServer:　synchronizeWithServer,</span><br><span class="line">            showArticle: showArticle,</span><br><span class="line">            showArticleList: showArticleList</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;());</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    APP.templates = (<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;<span class="params">(</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">        return &#123;</span><br><span class="line">            application: application,</span><br><span class="line">            home: home,</span><br><span class="line">            articleList: articleList,</span><br><span class="line">            article: article,</span><br><span class="line">            articleLoading:　articleLoading</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    )</span><span class="params">()</span>&#125;;</span></span><br><span class="line">    </span><br><span class="line">    APP.database = (<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;<span class="params">(</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">        return &#123;</span><br><span class="line">            open: open,</span><br><span class="line">            runQuery: runQuery</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><span class="params">()</span>&#125;;</span></span><br><span class="line">    </span><br><span class="line">    APP.article = (<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;<span class="params">(</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">        return &#123;</span><br><span class="line">            deleteArticles: deleteArticles,</span><br><span class="line">            insertArticles: insertArticles,</span><br><span class="line">            selectBasicArticles: selectBasicArticles,</span><br><span class="line">            selectFullArticle: selectFullArticle</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><span class="params">()</span>&#125;;</span></span><br><span class="line">&#125;(APP))</span><br></pre></td></tr></table></figure></p>
+<p>这里运用的JS的闭包思想，每一个(function(){…}()()};都是单独的作用域，代码不会被污染，全局就只有一个对象APP.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatPay.png" alt="Leo WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ApplicationCache/" rel="tag">#ApplicationCache</a>
+          
+            <a href="/tags/localStorage/" rel="tag">#localStorage</a>
+          
+            <a href="/tags/webSQL/" rel="tag">#webSQL</a>
+          
+            <a href="/tags/闭包/" rel="tag">#闭包</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/19/JS之事件详情（1）/" rel="next" title="JS之事件详解（一）">
+                <i class="fa fa-chevron-left"></i> JS之事件详解（一）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/13/node开发公众号踩过的坑/" rel="prev" title="node开发公众号踩过的坑">
+                node开发公众号踩过的坑 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+ <div class="comments" id="comments">
+   
+        <div id="uyan_frame"></div>
+   
+ </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Leo" />
+          <p class="site-author-name" itemprop="name">Leo</p>
+          <p class="site-description motion-element" itemprop="description">“努力向前就对了”</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LaoLeo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="/resume" target="_blank" title="我的简历">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  我的简历
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Application-cache"><span class="nav-number">2.</span> <span class="nav-text">Application cache</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#manifest文件"><span class="nav-number">2.1.</span> <span class="nav-text">manifest文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新缓存的情况"><span class="nav-number">2.2.</span> <span class="nav-text">更新缓存的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置MIME-type"><span class="nav-number">2.3.</span> <span class="nav-text">设置MIME-type</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#localStorage-sessionStorage"><span class="nav-number">3.</span> <span class="nav-text">localStorage/sessionStorage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web-SQL"><span class="nav-number">4.</span> <span class="nav-text">web SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开数据库"><span class="nav-number">4.1.</span> <span class="nav-text">打开数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入和读取数据"><span class="nav-number">4.2.</span> <span class="nav-text">插入和读取数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#采用MVC思想写js代码"><span class="nav-number">5.</span> <span class="nav-text">采用MVC思想写js代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的封装"><span class="nav-number">5.1.</span> <span class="nav-text">对象的封装</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leo</span>
+</div>
+
+<div class="powered-by">
+  <!--由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动-->
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+<div class="theme-info">
+  <!--
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+  -->
+
+  <span id="busuanzi_container_site_uv">
+    本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script type="text/javascript" color="11,236,124" opacity='0.7' zIndex="-2" count="99" src="/js/src/plug/canvas-nest.min.js"></script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+    
+      
+    
+
+   
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136427"></script>
+        <!-- UY END -->
+    
+  
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("tclwTLFzsKj58eErJvcmsYBe-gzGzoHsz", "IIVcrNlUlzbFRmRVxxCAIEjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

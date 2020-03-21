@@ -1,0 +1,985 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT, 前端, LaoLeo" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="博客 web前端-Leo" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="记一次在腾讯面外包岗的面试经历，想想都激动人心……">
+<meta property="og:type" content="article">
+<meta property="og:title" content="腾讯外包面试经历总结">
+<meta property="og:url" content="/2020/03/21/腾讯外包面试经历总结/index.html">
+<meta property="og:site_name" content="博客 web前端-Leo">
+<meta property="og:description" content="记一次在腾讯面外包岗的面试经历，想想都激动人心……">
+<meta property="og:image" content="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1534660249&di=be90597f4b2290b96a1689d2815aabb9&src=http://pic.90sjimg.com/design/00/59/79/86/5945d6977e2e7.png">
+<meta property="og:image" content="https://img-blog.csdn.net/20180125112320806?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHhzamg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2020-03-21T13:59:10.365Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="腾讯外包面试经历总结">
+<meta name="twitter:description" content="记一次在腾讯面外包岗的面试经历，想想都激动人心……">
+<meta name="twitter:image" content="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1534660249&di=be90597f4b2290b96a1689d2815aabb9&src=http://pic.90sjimg.com/design/00/59/79/86/5945d6977e2e7.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="/2020/03/21/腾讯外包面试经历总结/"/>
+
+
+  <title> 腾讯外包面试经历总结 | 博客 web前端-Leo </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">博客 web前端-Leo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">“非宁静无以致远”</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                腾讯外包面试经历总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2020-03-21T21:59:10+08:00" content="2020-03-21">
+              2020-03-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/总结/" itemprop="url" rel="index">
+                    <span itemprop="name">总结</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2020/03/21/腾讯外包面试经历总结/" class="leancloud_visitors" data-flag-title="腾讯外包面试经历总结">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&amp;quality=100&amp;size=b4000_4000&amp;sec=1534660249&amp;di=be90597f4b2290b96a1689d2815aabb9&amp;src=http://pic.90sjimg.com/design/00/59/79/86/5945d6977e2e7.png" alt="我是图片"></p>
+<p>记一次在腾讯面外包岗的面试经历，想想都激动人心……</p>
+<a id="more"></a>
+<p>其实我自己也没想到在这个阶段（应届毕业生），有机会去腾讯面试，去之前的感受，现在还记忆犹新，激动，紧张，兴奋……</p>
+<p>腾讯其实分很多事业部，我是经过外包公司介绍过去的，地点在广州塔附近的TIT创意园，因为之前来过这里面试，所以这个地方还算是熟悉。</p>
+<p>来这边面试的人，都要去B4前台领访客条，贴在手臂上，说真拿了之后舍不得贴，想留再来珍藏着，现在它已当成了我的书签，在我看书的时候提醒我，要努力成为一名优秀的开发人员。</p>
+<p>到了等候面试阶段，跟两个和我一样是来面试的应聘者闲聊了两句，一个是有三年工作经验经朋友内推过来复面的，另一个则是跟我一样是应届毕业生，也是由软通外包过来面试的。其中一个人一眼就看出我是刚毕业不久，难道我的脸上充满了稚嫩？还是因为我的着装过于青涩？我觉得是有必要去学学搭配，换身装扮才行了，每个月抽出点钱来建设下个人形象。</p>
+<p>其他先不说，来点干货~<br>先是30分钟的笔试题，选择题填空题和简答题。总体上都是很基础的很考察原理性的题目，但不会像校招题那样包括了计算机基础，系统算法数据库的题目，都是关于web前端的题目。下面是记忆中部份题目。  </p>
+<p>选择题：  </p>
+<ol>
+<li>选择器的优先级，考察点就在于伪类选择器的权重，其实伪类选择器权重=class选择器=10</li>
+<li>考察伪类选择器的区别和使用，:last-child,:nth-of-type(even),:nth-child()  </li>
+<li>http request头和reponse头的字段，connection位于general header（both of request and response）,referer则只为与request header中。<br>(差不多都忘光，捂脸)</li>
+</ol>
+<p>填空题：  </p>
+<ol>
+<li>position的值包括absolute,fixed,relative,static,inherit<br>(基本都是基础)</li>
+</ol>
+<p>简答题：  </p>
+<ol>
+<li><p>写出浏览器渲染页面的过程，以及针对这个过程的优化方案。<br><img src="https://img-blog.csdn.net/20180125112320806?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHhzamg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image"></p>
+<blockquote>
+<p>(1) 浏览器器跟据html文档从上至下开始解析，html解析器将html解析构建dom树。<br>(2)遇到script标签时，html解析器会将控制权转移给js引擎，由其去下载和解析js执行，当js执行完毕后，才将控制权返还给html解析器继续解析构建dom树。<br>(3)当遇到style或link的css文件，浏览器会开启一个异步的线程去下载和解析css成css rule。该线程会阻塞js线程的执行，但不会阻塞html线程的解析。<br>(4)将dom树和css rules结合，并计算各节点的位置等，合成render tree，这个过程叫layout。<br>(5)浏览器根据render tree去plainting和display。</p>
+</blockquote>
+</li>
+<li><p>用js写出翻页的效果。</p>
+<blockquote>
+<p>考察的是swiper的原理</p>
+</blockquote>
+</li>
+</ol>
+<p>笔试后是一面</p>
+<p>一面的过程相对简单，因为面试官会根据你简历上写着的技能点逐一考察。所以面试前要确定简历上写到的都是清楚明白的，这个对于第一印象很是要命。</p>
+<p>爬完一坡又见一坡，接下来二面难度就加大了。一上来面试官就考说，写Array.prototype上写个数组去重的函数，接着写个在调用xmlHttpRequest对象的send()前打印一句话，在面试官前手写代码还是略带紧张的，除非特别熟悉的情况下。第二条编程题考的其实是面向切面编程和原型，思路是先把xmlHttpRequest.prototype.send保存起来，改写后在填回去<br>说说阻塞和非阻塞，同步和异步的区别。<br>v-show和v-if的区别。  </p>
+<p>面完后问了面试官对于现在前端圈的看法，面试官的回答挺耐人寻味的。大概的意思是：</p>
+<blockquote>
+<p>前端发展到现在已经到天花板了，指的应该是前端的知识深度，html、css、js、浏览器等，深度差不多就是这么深了，但是广度却是很宽阔，从node的兴起，js涉足后代，到现在前端可以写数据可视化，VR，AI，还有很多平台的大屏幕，可是css方向，偏前端的比如小游戏开发，动效开发，偏后的js工程师，node工程师。<br>面试官还特别强调一个词就是业务，业务驱动技术发展，把业务放在第一位，技术在另一个角度看，服务与业务，技术工程师也是服务型岗位。</p>
+</blockquote>
+<p>二面结束，面试官觉得我的基础还是挺好的，这样我很开心，也让我有了更大的信心来迎接下一面。</p>
+<p>等了差不多三十分钟，三面官还没来。三面官给我端了咖啡，看起来很年轻。另外疑惑的是三面官没有问技术呀，感觉是在了解我为人和基本情况。没想到这为三面官是我校友，师兄，前几天还参加了毕业十年的毕业聚会，我的天，我这么幸运的么！</p>
+<p>我也从这位师兄身上学到了两点很多用的经验：</p>
+<blockquote>
+<p>师兄大学挂了三科，对于Linux很感兴趣，很专，大学时看了很多关于Linux的书籍，当过网管，在面网易的校招时，笔试题做了满分，这个可以吹一辈子了。所以师兄的经历让我明白，互联网行业的招聘还是很看重专这个字的，对于某一个领域很专业，这能让面试官眼前一亮，不讨论专是否比广重要，我觉得不只是互联网行业，其他领域也一样，起码让人觉得你有一技之长，这某一领域你能提供专业的价值。互联网技术繁多复杂，某一个技术背后都是由庞大的技术体系来支撑的，所以我们在保证有该有的基础后，选定一个切入点来钻研。<br>回到自身，我是该选择偏前还是偏后呢？感觉我自己比较喜欢偏js的方向的，以后想往数据可视化和AI方向学习，但这个要求偏前的技术也很高，业务驱动技术发展，需要的就学呗。</p>
+<p>大公司跟注重人才的培养。其实一切都需要靠自己的把握，但大公司流程规范，工作起来会高效很多。我个人的经历告诉我，假如同时有两个offer，是平台大的公司但工资低，一个是平台小的公司工资高，我会选择哪个？就现阶段来说，我一个应届生，工资高的也不过一两k，小公司能给你这个高工资但肯定付出也很多，说不定是无止境的加班。目光不能太短浅，不能被一时之利所蒙蔽，选择大公司在刚出社会的大学生来说会更有帮助。</p>
+</blockquote>
+<p>其实写写字，跑跑步就是一个进步的过程，每天进步一点点，记录成长的点滴，现在才明白，厚积才能薄发，成功无非三个词：积累，等待，尝试。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatPay.png" alt="Leo WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/21/自定义的checkbox,radio样式/" rel="next" title="自定义的checkbox,radio样式">
+                <i class="fa fa-chevron-left"></i> 自定义的checkbox,radio样式
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/21/调用定时器的正确姿势/" rel="prev" title="调用定时器的正确姿势">
+                调用定时器的正确姿势 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+ <div class="comments" id="comments">
+   
+        <div id="uyan_frame"></div>
+   
+ </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Leo" />
+          <p class="site-author-name" itemprop="name">Leo</p>
+          <p class="site-description motion-element" itemprop="description">“努力向前就对了”</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LaoLeo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="/resume" target="_blank" title="我的简历">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  我的简历
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leo</span>
+</div>
+
+<div class="powered-by">
+  <!--由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动-->
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+<div class="theme-info">
+  <!--
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+  -->
+
+  <span id="busuanzi_container_site_uv">
+    本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script type="text/javascript" color="11,236,124" opacity='0.7' zIndex="-2" count="99" src="/js/src/plug/canvas-nest.min.js"></script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+    
+      
+    
+
+   
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136427"></script>
+        <!-- UY END -->
+    
+  
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("tclwTLFzsKj58eErJvcmsYBe-gzGzoHsz", "IIVcrNlUlzbFRmRVxxCAIEjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

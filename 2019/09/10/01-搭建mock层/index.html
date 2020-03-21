@@ -1,0 +1,991 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT, 前端, LaoLeo" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="博客 web前端-Leo" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建mock层【工作日记01】">
+<meta property="og:url" content="/2019/09/10/01-搭建mock层/index.html">
+<meta property="og:site_name" content="博客 web前端-Leo">
+<meta property="og:description">
+<meta property="og:image" content="http://pic1.win4000.com/wallpaper/2017-11-08/5a029eda4cc75.jpg">
+<meta property="og:updated_time" content="2020-03-21T15:23:54.061Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="搭建mock层【工作日记01】">
+<meta name="twitter:description">
+<meta name="twitter:image" content="http://pic1.win4000.com/wallpaper/2017-11-08/5a029eda4cc75.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="/2019/09/10/01-搭建mock层/"/>
+
+
+  <title> 搭建mock层【工作日记01】 | 博客 web前端-Leo </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">博客 web前端-Leo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">“非宁静无以致远”</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                搭建mock层【工作日记01】
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-09-10T00:00:00+08:00" content="2019-09-10">
+              2019-09-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/工作日记/" itemprop="url" rel="index">
+                    <span itemprop="name">工作日记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2019/09/10/01-搭建mock层/" class="leancloud_visitors" data-flag-title="搭建mock层【工作日记01】">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://pic1.win4000.com/wallpaper/2017-11-08/5a029eda4cc75.jpg" alt="我是图片"></p>
+<a id="more"></a>
+<blockquote>
+<p>什么是mock？mock指的是模拟。</p>
+</blockquote>
+<p>在软件工程中当开发工作不同步情况下为了不断工作链，而模拟其中一环节让工作得以持续下去，符合这种情况的工作我们就叫mock。当然我们常说的mock是指模拟网络请求前后端通讯。</p>
+<p>前端和后端的协同工作中，为了不串行工作流加快开发效率，往往需要制定协议，而前端只需要后端提供数据接口，所以这份协议就是接口协议。根据这份协议前端就可以mock模仿数据，达到前后端并行开发。</p>
+<p>mock可以分为以下几种方式：</p>
+<ol>
+<li>侵入业务代码，设置开关</li>
+<li>利用webpack构建工具拦截请求</li>
+<li>搭建mock服务层代理响应</li>
+<li>利用浏览器插件拦截请求</li>
+</ol>
+<p>cms-web是由vue-cli3脚手架搭建的项目，依赖webpack打包工具，可以利用devServer.defore api对请求拦截处理，返回mock数据，引入mock层。</p>
+<p>所以选择上面第二种方式，原因总结为：<strong>无侵入，简单快捷易上手</strong>。</p>
+<h2 id="mockjs"><a href="#mockjs" class="headerlink" title="mockjs"></a>mockjs</h2><p>借助mockjs实现mock数据逻辑，以下是最简单的实现：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Mock = <span class="built_in">require</span>(<span class="string">'mockjs'</span>);</span><br><span class="line">...</span><br><span class="line">before(app, server) &#123;</span><br><span class="line">    app.get(<span class="string">'/api/action/game/list'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> data = Mock.mock(&#123;</span><br><span class="line">        code: <span class="number">0</span>,</span><br><span class="line">        data: &#123;</span><br><span class="line">          <span class="string">'totalCount|1-100'</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="string">'datas|1-10'</span>: [&#123;</span><br><span class="line">            <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="string">'dataName|1-5'</span>: <span class="string">'name'</span>,</span><br><span class="line">            <span class="string">'dataType|1-2'</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="string">'dataScope'</span>: <span class="string">'1,100'</span>,</span><br><span class="line">            <span class="string">'defaultValue|1-5'</span>: <span class="string">'value'</span>,</span><br><span class="line">            <span class="string">'dataStatus|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="string">'remark|1-5'</span>: <span class="string">'str'</span>,</span><br><span class="line">            <span class="string">'record|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="string">'series|1-3'</span>: [&#123;</span><br><span class="line">              <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">              <span class="string">'type|1-2'</span>: <span class="number">2</span>,</span><br><span class="line">              <span class="string">'name|1-2'</span>: <span class="string">'小云熊奇妙故事'</span>,</span><br><span class="line">              <span class="string">'mark'</span>: <span class="literal">null</span>,</span><br><span class="line">              <span class="string">'status'</span>: <span class="number">0</span></span><br><span class="line">            &#125;]</span><br><span class="line">          &#125;]</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    </span><br><span class="line">      res.json(data)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里我们简单介绍一下mockjs的使用规范，详细移至<a href="https://github.com/nuysoft/Mock/wiki/Syntax-Specification" target="_blank" rel="external">mockjs文档</a></p>
+<p>数据模板中属性主要由三个部分构成：属性名，生成规则和属性值<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">'属性名<span class="string">|生成规则': 属性值</span></span><br></pre></td></tr></table></figure></p>
+<p>以’dataName|1-5’: ‘name’为例，dataName是属性值，name是属性值，1-5是生成规则，对应String类型属性代表重复随机次数1到5次，假如对应Number类型代表生成随机数的最小值1和最大值5。’id|+1’: 1表示id值会从开始叠加。</p>
+<h2 id="优化mock层"><a href="#优化mock层" class="headerlink" title="优化mock层"></a>优化mock层</h2><p>话题回来mock层搭建的迭代优化，首先分析上面实现存在的问题：</p>
+<ul>
+<li>所有的请求都会经过这一层，mock层匹配到请求就会被拦截，需要设置开关</li>
+<li>配置的请求和数据模板会越来越多，逻辑与配置混合会导致代码越来越臃肿，逻辑和配置要分离</li>
+</ul>
+<p>把mock层从before函数中抽离，并设置开关机制：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Mock = <span class="built_in">require</span>(<span class="string">'mockjs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MockHandler</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;&#125;</span><br><span class="line">  </span><br><span class="line">  handle(app, server) &#123;</span><br><span class="line">    app.get(<span class="string">'/api/action/game/list'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!!process.env.mock || !!req.query._is_mock) &#123;</span><br><span class="line">        <span class="keyword">var</span> data = Mock.mock(&#123;</span><br><span class="line">          code: <span class="number">0</span>,</span><br><span class="line">          data: &#123;</span><br><span class="line">            <span class="string">'totalCount|1-100'</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="string">'datas|1-10'</span>: [&#123;</span><br><span class="line">              <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">              <span class="string">'dataName|1-5'</span>: <span class="string">'name'</span>,</span><br><span class="line">              <span class="string">'dataType|1-2'</span>: <span class="number">1</span>,</span><br><span class="line">              <span class="string">'dataScope'</span>: <span class="string">'1,100'</span>,</span><br><span class="line">              <span class="string">'defaultValue|1-5'</span>: <span class="string">'value'</span>,</span><br><span class="line">              <span class="string">'dataStatus|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">              <span class="string">'remark|1-5'</span>: <span class="string">'str'</span>,</span><br><span class="line">              <span class="string">'record|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">              <span class="string">'series|1-3'</span>: [&#123;</span><br><span class="line">                <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">                <span class="string">'type|1-2'</span>: <span class="number">2</span>,</span><br><span class="line">                <span class="string">'name|1-2'</span>: <span class="string">'小云熊奇妙故事'</span>,</span><br><span class="line">                <span class="string">'mark'</span>: <span class="literal">null</span>,</span><br><span class="line">                <span class="string">'status'</span>: <span class="number">0</span></span><br><span class="line">              &#125;]</span><br><span class="line">            &#125;]</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        res.json(data);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        next();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">new</span> MockHandler(config);</span><br></pre></td></tr></table></figure></p>
+<p>设置了两个并联开关，分别设置环境变量mock或者往请求查询参数加入_is_mock变量都可以通过验证。</p>
+<p>逻辑与配置分离：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">const config = &#123;</span><br><span class="line">    <span class="string">'/api/action/game/list'</span>: &#123;</span><br><span class="line">      code: <span class="number">0</span>,</span><br><span class="line">      <span class="keyword">data</span>: &#123;</span><br><span class="line">        <span class="string">'totalCount|1-100'</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">'datas|1-10'</span>: [&#123;</span><br><span class="line">          <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="string">'dataName|1-5'</span>: <span class="string">'name'</span>,</span><br><span class="line">          <span class="string">'dataType|1-2'</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="string">'dataScope'</span>: <span class="string">'1,100'</span>,</span><br><span class="line">          <span class="string">'defaultValue|1-5'</span>: <span class="string">'value'</span>,</span><br><span class="line">          <span class="string">'dataStatus|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="string">'remark|1-5'</span>: <span class="string">'str'</span>,</span><br><span class="line">          <span class="string">'record|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="string">'series|1-3'</span>: [&#123;</span><br><span class="line">            <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="string">'type|1-2'</span>: <span class="number">2</span>,</span><br><span class="line">            <span class="string">'name|1-2'</span>: <span class="string">'小云熊奇妙故事'</span>,</span><br><span class="line">            <span class="string">'mark'</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="string">'status'</span>: <span class="number">0</span></span><br><span class="line">          &#125;]</span><br><span class="line">        &#125;]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MockHandler</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(config) &#123;</span><br><span class="line">      <span class="keyword">this</span>.config = config</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  handle(app, server) &#123;</span><br><span class="line">    Object.keys(<span class="keyword">this</span>.config).forEach(route =&gt; &#123;</span><br><span class="line">        app.<span class="keyword">get</span>(route, function (req, res, next) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!!process.env.mock || !!req.query._is_mock) &#123;</span><br><span class="line">                <span class="keyword">var</span> <span class="keyword">data</span> = Mock.mock(&#123;</span><br><span class="line">                  code: <span class="number">0</span>,</span><br><span class="line">                  <span class="keyword">data</span>: &#123;</span><br><span class="line">                    <span class="string">'totalCount|1-100'</span>: <span class="number">1</span>,</span><br><span class="line">                    <span class="string">'datas|1-10'</span>: [&#123;</span><br><span class="line">                      <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">                      <span class="string">'dataName|1-5'</span>: <span class="string">'name'</span>,</span><br><span class="line">                      <span class="string">'dataType|1-2'</span>: <span class="number">1</span>,</span><br><span class="line">                      <span class="string">'dataScope'</span>: <span class="string">'1,100'</span>,</span><br><span class="line">                      <span class="string">'defaultValue|1-5'</span>: <span class="string">'value'</span>,</span><br><span class="line">                      <span class="string">'dataStatus|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">                      <span class="string">'remark|1-5'</span>: <span class="string">'str'</span>,</span><br><span class="line">                      <span class="string">'record|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">                      <span class="string">'series|1-3'</span>: [&#123;</span><br><span class="line">                        <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">                        <span class="string">'type|1-2'</span>: <span class="number">2</span>,</span><br><span class="line">                        <span class="string">'name|1-2'</span>: <span class="string">'小云熊奇妙故事'</span>,</span><br><span class="line">                        <span class="string">'mark'</span>: <span class="literal">null</span>,</span><br><span class="line">                        <span class="string">'status'</span>: <span class="number">0</span></span><br><span class="line">                      &#125;]</span><br><span class="line">                    &#125;]</span><br><span class="line">                  &#125;</span><br><span class="line">                &#125;)</span><br><span class="line">                res.json(<span class="keyword">data</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                next();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>革命尚未成功，旧的问题的解决了，但同时又出现的新的问题：</p>
+<ul>
+<li>只支持get请求，不支持post请求</li>
+<li>get方法的回调函数中重复了很多次对mock开关条件的判断，需要提取出来</li>
+</ul>
+<p>针对第一个问题，只需要将get/post请求方法配置到route就好了，本身属于配置逻辑的范围之内。而第二个问题，可以提炼函数，利用函数式编程，利用高阶函数返回回调函数，这样代码会简洁很多，具体优化如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">    <span class="string">'GET /api/action/game/list'</span>: &#123;</span><br><span class="line">      code: <span class="number">0</span>,</span><br><span class="line">      data: &#123;</span><br><span class="line">        <span class="string">'totalCount|1-100'</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">'datas|1-10'</span>: [&#123;</span><br><span class="line">          <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="string">'dataName|1-5'</span>: <span class="string">'name'</span>,</span><br><span class="line">          <span class="string">'dataType|1-2'</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="string">'dataScope'</span>: <span class="string">'1,100'</span>,</span><br><span class="line">          <span class="string">'defaultValue|1-5'</span>: <span class="string">'value'</span>,</span><br><span class="line">          <span class="string">'dataStatus|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="string">'remark|1-5'</span>: <span class="string">'str'</span>,</span><br><span class="line">          <span class="string">'record|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="string">'series|1-3'</span>: [&#123;</span><br><span class="line">            <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="string">'type|1-2'</span>: <span class="number">2</span>,</span><br><span class="line">            <span class="string">'name|1-2'</span>: <span class="string">'小云熊奇妙故事'</span>,</span><br><span class="line">            <span class="string">'mark'</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="string">'status'</span>: <span class="number">0</span></span><br><span class="line">          &#125;]</span><br><span class="line">        &#125;]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MockHandler</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(config) &#123;</span><br><span class="line">    <span class="keyword">this</span>.init(config);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.config = config;</span><br><span class="line">  &#125;</span><br><span class="line">  init(config) &#123;</span><br><span class="line">    <span class="built_in">Object</span>.keys(config).forEach(route =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> model = config[route];</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">callbackWarpper</span>(<span class="params">model</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">if</span> (isMock || !!req.query._is_mock) &#123;</span><br><span class="line">            <span class="keyword">var</span> data = Mock.mock(&#123;</span><br><span class="line">              code: <span class="number">0</span>,</span><br><span class="line">              data: model</span><br><span class="line">            &#125;);</span><br><span class="line">            res.json(data);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            next();</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">      &#125;</span><br><span class="line">      config[route] = callbackWarpper(model);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  handle(app, server) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> route <span class="keyword">in</span> <span class="keyword">this</span>.config) &#123;</span><br><span class="line">      <span class="keyword">let</span> [method, path] = route.split(<span class="string">' '</span>)</span><br><span class="line">      <span class="keyword">let</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(path);</span><br><span class="line">      <span class="keyword">let</span> callback = <span class="keyword">this</span>.config[route];</span><br><span class="line">      app[method.toLowerCase()](reg, callback);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>写到这里本以为自己写出了一手漂亮的代码，但是突然想起，app实例上有个use()可以用来忽略请求方法get/post，然后在内部对请求做匹配处理，这样代码会更加的精简和容易被理解：<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isMock = !!process.env.mock;</span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">    <span class="string">'/api/action/game/list'</span>: &#123;</span><br><span class="line">      code: <span class="number">0</span>,</span><br><span class="line">      data: &#123;</span><br><span class="line">        <span class="string">'totalCount|1-100'</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">'datas|1-10'</span>: [&#123;</span><br><span class="line">          <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="string">'dataName|1-5'</span>: <span class="string">'name'</span>,</span><br><span class="line">          <span class="string">'dataType|1-2'</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="string">'dataScope'</span>: <span class="string">'1,100'</span>,</span><br><span class="line">          <span class="string">'defaultValue|1-5'</span>: <span class="string">'value'</span>,</span><br><span class="line">          <span class="string">'dataStatus|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="string">'remark|1-5'</span>: <span class="string">'str'</span>,</span><br><span class="line">          <span class="string">'record|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="string">'series|1-3'</span>: [&#123;</span><br><span class="line">            <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="string">'type|1-2'</span>: <span class="number">2</span>,</span><br><span class="line">            <span class="string">'name|1-2'</span>: <span class="string">'小云熊奇妙故事'</span>,</span><br><span class="line">            <span class="string">'mark'</span>: <span class="keyword">null</span>,</span><br><span class="line">            <span class="string">'status'</span>: <span class="number">0</span></span><br><span class="line">          &#125;]</span><br><span class="line">        &#125;]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MockHandler</span> </span>&#123;</span><br><span class="line">  constructor(config) &#123;</span><br><span class="line">    <span class="keyword">this</span>.config = config;</span><br><span class="line">  &#125;</span><br><span class="line">  handle(app, server) &#123;</span><br><span class="line">    app.use((req, res, next) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (isMock || !!req.query._is_mock) &#123;</span><br><span class="line">        <span class="built_in">Object</span>.keys(<span class="keyword">this</span>.config).forEach(route =&gt; &#123;</span><br><span class="line">          <span class="keyword">const</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(route)</span><br><span class="line">          <span class="keyword">const</span> model = <span class="keyword">this</span>.config[route]</span><br><span class="line">          <span class="keyword">if</span> (reg.test(req.path)) &#123;</span><br><span class="line">            <span class="keyword">var</span> data = Mock.mock(&#123;</span><br><span class="line">              code: <span class="number">0</span>,</span><br><span class="line">              data: model</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">return</span> res.json(data);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        next()</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        next()</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个方案原理是利用webpack devServer在发送请求时候做了一层拦截，请求并没有经过真实的网络环境，但是利用webpack devServer其实有个弊端，当我想增加一条记录时，需要再次重启webpack，本身属于对webpack配置的修改，除利用node watch功能监听文件改动运行脚本重启的方法外，几乎想不出有更好的方法了，这个痛点用一个名词来形容就是不支持热插拔。</p>
+<h2 id="浏览器插件"><a href="#浏览器插件" class="headerlink" title="浏览器插件"></a>浏览器插件</h2><p>有没有不涉及到编程的mock方案呢？有，<strong>利用浏览器插件拦截请求或篡改响应。</strong></p>
+<p>这种方案属于利用工具，不用在代码层面引入mock层也可以拦击请求，好处是相对前面介绍的方案，更加的具有普适性，可以让测试小伙伴在后端接口发生异常的情况下依然畅通无阻的测试前端功能。</p>
+<p>这样的插件我推荐： <strong>Ajax Interceptor</strong> <a href="https://chrome.google.com/webstore/detail/ajax-interceptor/nhpjggchkhnlbgdfcbgpdpkifemomkpg" target="_blank" rel="external">下载</a> <a href="https://github.com/YGYOOO/ajax-interceptor" target="_blank" rel="external">源代码</a></p>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>不想用浏览器插件还有其他的工具吗？当然有，就是我们熟悉的postman，详细请参考下面文章：</p>
+<p><a href="https://blog.csdn.net/qq598535550/article/details/87924629" target="_blank" rel="external">Postman高级应用（11）：可以开始对接了吗——Mock服务</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatPay.png" alt="Leo WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/15/前端单元测试/" rel="next" title="前端单元测试">
+                <i class="fa fa-chevron-left"></i> 前端单元测试
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/16/02-代码规范-整理凌乱代码的有效姿势/" rel="prev" title="整理凌乱代码的有效姿势【工作日记02】">
+                整理凌乱代码的有效姿势【工作日记02】 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+ <div class="comments" id="comments">
+   
+        <div id="uyan_frame"></div>
+   
+ </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Leo" />
+          <p class="site-author-name" itemprop="name">Leo</p>
+          <p class="site-description motion-element" itemprop="description">“努力向前就对了”</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LaoLeo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="/resume" target="_blank" title="我的简历">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  我的简历
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mockjs"><span class="nav-number">1.</span> <span class="nav-text">mockjs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化mock层"><span class="nav-number">2.</span> <span class="nav-text">优化mock层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器插件"><span class="nav-number">3.</span> <span class="nav-text">浏览器插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工具"><span class="nav-number">4.</span> <span class="nav-text">工具</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leo</span>
+</div>
+
+<div class="powered-by">
+  <!--由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动-->
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+<div class="theme-info">
+  <!--
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+  -->
+
+  <span id="busuanzi_container_site_uv">
+    本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script type="text/javascript" color="11,236,124" opacity='0.7' zIndex="-2" count="99" src="/js/src/plug/canvas-nest.min.js"></script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+    
+      
+    
+
+   
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136427"></script>
+        <!-- UY END -->
+    
+  
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("tclwTLFzsKj58eErJvcmsYBe-gzGzoHsz", "IIVcrNlUlzbFRmRVxxCAIEjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

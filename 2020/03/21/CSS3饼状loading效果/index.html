@@ -1,0 +1,939 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="html5,css3," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="博客 web前端-Leo" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="垂直和水平居中水平居中是最简单的，在设置了大小的元素上加margin：0 auto关键是垂直居中使用定位position：absolution;  //脱离文档流        top: 50%;    //这时顶部处于中央位置       margin-top: -(height/2) px;或者第三句可以使用位移：transfrom：translateY(-50%)
+另一种方法是使用flex布">
+<meta property="og:type" content="article">
+<meta property="og:title" content="饼状loading效果">
+<meta property="og:url" content="/2020/03/21/CSS3饼状loading效果/index.html">
+<meta property="og:site_name" content="博客 web前端-Leo">
+<meta property="og:description" content="垂直和水平居中水平居中是最简单的，在设置了大小的元素上加margin：0 auto关键是垂直居中使用定位position：absolution;  //脱离文档流        top: 50%;    //这时顶部处于中央位置       margin-top: -(height/2) px;或者第三句可以使用位移：transfrom：translateY(-50%)
+另一种方法是使用flex布">
+<meta property="og:updated_time" content="2020-03-21T13:59:10.315Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="饼状loading效果">
+<meta name="twitter:description" content="垂直和水平居中水平居中是最简单的，在设置了大小的元素上加margin：0 auto关键是垂直居中使用定位position：absolution;  //脱离文档流        top: 50%;    //这时顶部处于中央位置       margin-top: -(height/2) px;或者第三句可以使用位移：transfrom：translateY(-50%)
+另一种方法是使用flex布">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="/2020/03/21/CSS3饼状loading效果/"/>
+
+
+  <title> 饼状loading效果 | 博客 web前端-Leo </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">博客 web前端-Leo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">“非宁静无以致远”</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                饼状loading效果
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2020-03-21T21:59:10+08:00" content="2020-03-21">
+              2020-03-21
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2020/03/21/CSS3饼状loading效果/" class="leancloud_visitors" data-flag-title="饼状loading效果">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="垂直和水平居中"><a href="#垂直和水平居中" class="headerlink" title="垂直和水平居中"></a>垂直和水平居中</h3><p>水平居中是最简单的，在设置了大小的元素上加margin：0 auto<br>关键是垂直居中<br>使用定位position：absolution;  //脱离文档流<br>        top: 50%;    //这时顶部处于中央位置<br>       margin-top: -(height/2) px;<br>或者第三句可以使用位移：transfrom：translateY(-50%)</p>
+<p>另一种方法是使用flex布局<br>在居中元素的父元素上：display：flex;<br>                   align-items:center; //垂直居中<br>                   justify: center;    //水平居中<br>可是flex布局存在兼容性问题  ，慎用！<br>参考：<a href="http://www.cnblogs.com/yugege/p/5246652.html" target="_blank" rel="external">http://www.cnblogs.com/yugege/p/5246652.html</a></p>
+<p><strong>让脱离了文档流的p标签垂直和水平居中</strong><br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">nav</span> class=<span class="string">"mynav"</span>&gt;</span><br><span class="line">		&lt;div&gt;</span><br><span class="line">			&lt;p&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;</span><br><span class="line">		&lt;/div&gt;		</span><br><span class="line">	&lt;/nav&gt;</span><br><span class="line">	</span><br><span class="line">&lt;style&gt;</span><br><span class="line">    .mynav&#123;</span><br><span class="line">    	<span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    	<span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    	<span class="attribute">margin-top</span>: <span class="number">70px</span>;	</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-class">.mynav</span> div&#123;</span><br><span class="line">    	<span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    	<span class="attribute">position</span>: relative; <span class="comment">//垂直</span></span><br><span class="line">    	<span class="attribute">text-align</span>: center; <span class="comment">//水平</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-class">.mynav</span> p&#123;	</span><br><span class="line">    	<span class="attribute">width</span>: <span class="number">100%</span>; <span class="comment">//水平</span></span><br><span class="line">    	<span class="attribute">position</span>: absolute; <span class="comment">//垂直</span></span><br><span class="line">    	<span class="attribute">top</span>: <span class="number">50%</span>;   <span class="comment">//垂直</span></span><br><span class="line">    	<span class="attribute">margin-top</span>: -<span class="number">12px</span>;  <span class="comment">//垂直</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-class">.mynav</span> <span class="selector-tag">p</span> span&#123;</span><br><span class="line">    	<span class="attribute">display</span>: inline-block;</span><br><span class="line">    	<span class="attribute">width</span>: <span class="number">24px</span>;</span><br><span class="line">    	<span class="attribute">height</span>: <span class="number">24px</span>;</span><br><span class="line">    	<span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">    	-webkit-<span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">    	<span class="attribute">background-color</span>: <span class="number">#000</span>;</span><br><span class="line">    	<span class="attribute">margin-right</span>: <span class="number">20px</span>;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p><a href="https://ww2.sinaimg.cn/large/006tNbRwly1fcr4ycdb9cg30d80dm0tf.gif" target="_blank" rel="external">查看效果</a></p>
+<p>这个loading效果分两部份，第一部分是四分之三圆，第二部份是中间的圆饼。<br>首先如何画圆呢？<br>一般是在一个正方形的div上设置border-radius=圆的半径<br>可是现在是用另外的方法，用border来画圆<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>:<span class="number">0</span>;</span><br><span class="line"><span class="attribute">height</span>:<span class="number">0</span>;</span><br><span class="line"><span class="attribute">border</span>:<span class="number">50px</span> solid <span class="number">#000</span>;</span><br><span class="line"><span class="attribute">border-radius</span>:<span class="number">50px</span>;</span><br></pre></td></tr></table></figure></p>
+<p>可以用border-top-color来设置圆的颜色，这样一个圆就可以有四种颜色，那么四分之三圆就是一部分的颜色设为透明transparent。<br>中间的圆饼其实是一个红色和粉红色的底圆和一个红半圆，一个粉红半圆实现的，半圆其实就是两部分的border颜色设为transparent</p>
+<p>一个红色和粉红色的底圆：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="number">0</span>;</span><br><span class="line"><span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line"><span class="attribute">border-radius</span>: <span class="number">50px</span>;</span><br><span class="line"><span class="attribute">border</span>:<span class="number">50px</span> solid;</span><br><span class="line"><span class="attribute">border-top-color</span>: rgb(<span class="number">251</span>,<span class="number">139</span>,<span class="number">189</span>);</span><br><span class="line"><span class="attribute">border-left-color</span>: rgb(<span class="number">255</span>,<span class="number">41</span>,<span class="number">140</span>);</span><br><span class="line"><span class="attribute">border-right-color</span>: rgb(<span class="number">251</span>,<span class="number">139</span>,<span class="number">189</span>);</span><br><span class="line"><span class="attribute">border-bottom-color</span>: rgb(<span class="number">255</span>,<span class="number">41</span>,<span class="number">140</span>);</span><br></pre></td></tr></table></figure></p>
+<p>一个红半圆：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="number">0</span>;</span><br><span class="line"> <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line"><span class="attribute">border-radius</span>: <span class="number">50px</span>;</span><br><span class="line"><span class="attribute">border</span>: solid rgb(<span class="number">251</span>,<span class="number">139</span>,<span class="number">189</span>) <span class="number">50px</span>  ;</span><br><span class="line"><span class="attribute">border-right-color</span>: transparent;</span><br><span class="line"> <span class="attribute">border-bottom-color</span>: transparent;</span><br></pre></td></tr></table></figure></p>
+<p>分析这个效果，其实是一开始是个红色的圆，然后粉色圆在慢慢出来，等整个圆是粉红色时，红圆慢慢出来。<br>我们可以这样两个半圆重叠，红色在其上，都放在底圆上，在动画框架的第一个过程上红圆转180deg，第二过程粉红圆转180deg，红圆继续保持位置，这个过程开始事时粉红圆的z - index大于红圆。第三个过程，红圆z-index还是小于粉红圆，红圆在转。第四个过程开始，红圆z-index大于粉红圆，粉红圆在转。</p>
+<p>对比下面的两个动画框架：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">keyframes</span> red-rotate&#123;</span><br><span class="line">		    0% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-45deg);</span><br><span class="line">		    &#125;</span><br><span class="line">		    25% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-225deg);</span><br><span class="line">		    &#125;</span><br><span class="line">		    50% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-225deg);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">2</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    75% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-405deg);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">3</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    100% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-405deg);</span><br><span class="line">		    &#125;		</span><br><span class="line">		&#125;</span><br><span class="line">		@<span class="keyword">keyframes</span> pink-rotate&#123;</span><br><span class="line">			0% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-45deg);		    	</span><br><span class="line">		    &#125;</span><br><span class="line">		    25% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-45deg);</span><br><span class="line">		    &#125;</span><br><span class="line">		    50% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-225deg);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">3</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    75% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-225deg);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">3</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    75<span class="selector-class">.001</span>% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-225deg);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">2</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    100% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-405deg);</span><br><span class="line">		    &#125; </span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后两个动画框架同时开始就大功告成了！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatPay.png" alt="Leo WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/html5/" rel="tag">#html5</a>
+          
+            <a href="/tags/css3/" rel="tag">#css3</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/21/CSS3实现3D轮播图/" rel="next" title="CSS3实现3D轮播图">
+                <i class="fa fa-chevron-left"></i> CSS3实现3D轮播图
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/21/JS之cookie/" rel="prev" title="JS之cookie.md">
+                JS之cookie.md <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+ <div class="comments" id="comments">
+   
+        <div id="uyan_frame"></div>
+   
+ </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Leo" />
+          <p class="site-author-name" itemprop="name">Leo</p>
+          <p class="site-description motion-element" itemprop="description">“努力向前就对了”</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LaoLeo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="/resume" target="_blank" title="我的简历">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  我的简历
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#垂直和水平居中"><span class="nav-number">1.</span> <span class="nav-text">垂直和水平居中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leo</span>
+</div>
+
+<div class="powered-by">
+  <!--由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动-->
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+<div class="theme-info">
+  <!--
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+  -->
+
+  <span id="busuanzi_container_site_uv">
+    本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script type="text/javascript" color="11,236,124" opacity='0.7' zIndex="-2" count="99" src="/js/src/plug/canvas-nest.min.js"></script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+    
+      
+    
+
+   
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136427"></script>
+        <!-- UY END -->
+    
+  
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("tclwTLFzsKj58eErJvcmsYBe-gzGzoHsz", "IIVcrNlUlzbFRmRVxxCAIEjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

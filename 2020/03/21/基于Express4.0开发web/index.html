@@ -1,0 +1,989 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="mongoDB,nodejs,express,grunt,router,MVC,jade," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="博客 web前端-Leo" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="1.快速搭建在全局下安装express1npm install -g express
+执行1234express -v yourProject 	或者cd yourProjectexpress
+就会快速在目录yourProject中搭建express，-v参数指定模板引擎，没写就默认为jade
+2.express中间件12345var app = requrie(&apos;express&apos;)();app.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Express4.0开发web">
+<meta property="og:url" content="/2020/03/21/基于Express4.0开发web/index.html">
+<meta property="og:site_name" content="博客 web前端-Leo">
+<meta property="og:description" content="1.快速搭建在全局下安装express1npm install -g express
+执行1234express -v yourProject 	或者cd yourProjectexpress
+就会快速在目录yourProject中搭建express，-v参数指定模板引擎，没写就默认为jade
+2.express中间件12345var app = requrie(&apos;express&apos;)();app.">
+<meta property="og:updated_time" content="2020-03-21T13:59:10.363Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Express4.0开发web">
+<meta name="twitter:description" content="1.快速搭建在全局下安装express1npm install -g express
+执行1234express -v yourProject 	或者cd yourProjectexpress
+就会快速在目录yourProject中搭建express，-v参数指定模板引擎，没写就默认为jade
+2.express中间件12345var app = requrie(&apos;express&apos;)();app.">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="/2020/03/21/基于Express4.0开发web/"/>
+
+
+  <title> 基于Express4.0开发web | 博客 web前端-Leo </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">博客 web前端-Leo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">“非宁静无以致远”</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                基于Express4.0开发web
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2020-03-21T21:59:10+08:00" content="2020-03-21">
+              2020-03-21
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2020/03/21/基于Express4.0开发web/" class="leancloud_visitors" data-flag-title="基于Express4.0开发web">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-快速搭建"><a href="#1-快速搭建" class="headerlink" title="1.快速搭建"></a>1.快速搭建</h3><p>在全局下安装express<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -g express</span><br></pre></td></tr></table></figure></p>
+<p>执行<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">express</span> -v yourProject 	</span><br><span class="line">或者</span><br><span class="line">cd yourProject</span><br><span class="line"><span class="built_in">express</span></span><br></pre></td></tr></table></figure></p>
+<p>就会快速在目录yourProject中搭建express，-v参数指定模板引擎，没写就默认为jade</p>
+<h3 id="2-express中间件"><a href="#2-express中间件" class="headerlink" title="2.express中间件"></a>2.express中间件</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = requrie(<span class="string">'express'</span>)();</span><br><span class="line">app.<span class="keyword">use</span> (<span class="function"><span class="keyword">function</span> <span class="params">(req, res, next)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    next()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>next()作用是交付控制权，前往下一个中间件<br>可以利用这一点做验证功能</p>
+<h3 id="3-MVC架构"><a href="#3-MVC架构" class="headerlink" title="3.MVC架构"></a>3.MVC架构</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/app</span><br><span class="line">    /controllers</span><br><span class="line">    /models</span><br><span class="line">    /schemas</span><br><span class="line">    /views</span><br><span class="line">/public</span><br><span class="line">    /libs</span><br><span class="line">    /css</span><br><span class="line">    /js</span><br><span class="line">/router</span><br><span class="line">    router<span class="selector-class">.js</span></span><br><span class="line">app<span class="selector-class">.js</span></span><br><span class="line">package<span class="selector-class">.json</span></span><br><span class="line"><span class="selector-class">.bowerrc</span></span><br><span class="line">bower<span class="selector-class">.json</span></span><br><span class="line">gruntfile<span class="selector-class">.js</span></span><br><span class="line">.gitignore</span><br></pre></td></tr></table></figure>
+<p>以上就是项目的架构，按照MVC架构，后台代码都放在app下，schemas存放mongodb的模式，可以看作是一张张表，models放生成模型的文件，模型与模式对接起来。public存放静态文件，/libs存放前端框架如bootstrap。把router路由模块抽离放在router目录。<br>bower模块用来安装项目依赖的前端框架。需要在全局安装bower<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -g bower</span><br></pre></td></tr></table></figure></p>
+<p>安装bootstrap<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bower </span>init</span><br><span class="line"><span class="keyword">bower </span><span class="keyword">install </span><span class="keyword">bootstrap</span></span><br></pre></td></tr></table></figure></p>
+<p>bower init 生成bower.json<br>然后安装bootstrap时，会根据.bowerrc文件<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"directory"</span>: <span class="string">"public/libs"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>把依赖的框架安装在public/libs下</p>
+<h3 id="4-项目管理工具grunt"><a href="#4-项目管理工具grunt" class="headerlink" title="4.项目管理工具grunt"></a>4.项目管理工具grunt</h3><p>gruntfile.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">grunt</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    grunt.initConfig(&#123;</span><br><span class="line">        watch: &#123;</span><br><span class="line">            jade: &#123;</span><br><span class="line">                files: [<span class="string">'views/**'</span>],</span><br><span class="line">                options: &#123;</span><br><span class="line">                    livereload: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            js: &#123;</span><br><span class="line">                files: [<span class="string">'public/js/**'</span>, <span class="string">'app/**/*.js'</span>],</span><br><span class="line">                <span class="comment">//tasks: ['jshint'],</span></span><br><span class="line">                options: &#123;</span><br><span class="line">                    livereload: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            uglify: &#123;</span><br><span class="line">                files: [<span class="string">'public/**/*.js'</span>],</span><br><span class="line">                tasks: [<span class="string">'jshint'</span>],</span><br><span class="line">                options: &#123;</span><br><span class="line">                    livereload: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            styles: &#123;</span><br><span class="line">                files: [<span class="string">'public/**/*.less'</span>],</span><br><span class="line">                tasks: [<span class="string">'less'</span>],</span><br><span class="line">                options: &#123;</span><br><span class="line">                    nospawn: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        nodemon: &#123;</span><br><span class="line">            dev: &#123;</span><br><span class="line">                script: <span class="string">'bin/www'</span>,  <span class="comment">//入口文件</span></span><br><span class="line">                options: &#123;</span><br><span class="line">                    nodeArgs: [<span class="string">'--debug'</span>], <span class="comment">//开启开发模式</span></span><br><span class="line">                    args:　[],</span><br><span class="line">                    ignoredFiles: [<span class="string">'README.md'</span>, <span class="string">'node_modules/**'</span>, <span class="string">'public/libs/**'</span>, <span class="string">'.vscode'</span>],</span><br><span class="line">                    watchedExtensions: [<span class="string">'js'</span>],</span><br><span class="line">                    watchedFolders: [<span class="string">'./'</span>], <span class="comment">//监听定义的文件夹,根目录</span></span><br><span class="line">                    debug: <span class="literal">true</span>,</span><br><span class="line">                    delayTime: <span class="number">1000</span>,</span><br><span class="line">                    env: &#123;</span><br><span class="line">                        PORT: <span class="number">3000</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    cwd: __dirname</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        jshint: &#123;</span><br><span class="line">            options: &#123;</span><br><span class="line">                jshintrc: <span class="string">'.jshintrc'</span>,</span><br><span class="line">                ignores: [<span class="string">'public/libs/**/*.js'</span>]</span><br><span class="line">            &#125;,</span><br><span class="line">            all: [<span class="string">'public/javascripts/*.js'</span>, <span class="string">'test/**/*.js'</span>, <span class="string">'app/**/*.js'</span>]</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        less: &#123;</span><br><span class="line">            development: &#123;</span><br><span class="line">                options: &#123;</span><br><span class="line">                    compress: <span class="literal">true</span>,</span><br><span class="line">                    yuicompress: <span class="literal">true</span>,</span><br><span class="line">                    optimization: <span class="number">2</span></span><br><span class="line">                &#125;,</span><br><span class="line">                files: &#123;</span><br><span class="line">                    <span class="string">'public/build/index.css'</span> : <span class="string">'public/less/index.less'</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        uglify: &#123;</span><br><span class="line">            development: &#123;</span><br><span class="line">                files: &#123;</span><br><span class="line">                <span class="string">'public/build/admin.min.js'</span>: <span class="string">'public/javascripts/admin.js'</span>,</span><br><span class="line">                <span class="string">'public/build/detail.min.js'</span>: [</span><br><span class="line">                    <span class="string">'public/javascripts/detail.js'</span></span><br><span class="line">                ]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        mochaTest: &#123;</span><br><span class="line">            options: &#123;</span><br><span class="line">                reporter: <span class="string">'spec'</span></span><br><span class="line">            &#125;,</span><br><span class="line">            src: [<span class="string">'test/**/*.js'</span>]</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        concurrent: &#123;</span><br><span class="line">            tasks: [<span class="string">'nodemon'</span>, <span class="string">'watch'</span>, <span class="string">'jshint'</span>, <span class="string">'less'</span>, <span class="string">'uglify'</span>],</span><br><span class="line">            options: &#123;</span><br><span class="line">                logConcurrentOutput: <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-contrib-watch'</span>); <span class="comment">//监控定义好的静态文件变动</span></span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-nodemon'</span>); <span class="comment">//监控入口文件变动</span></span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-concurrent'</span>); <span class="comment">//优化慢任务的构建时间，比如sass,less，并发执行多个阻塞的任务,比如nodemon和watch</span></span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-mocha-test'</span>);  <span class="comment">//测试框架</span></span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-contrib-less'</span>);</span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-contrib-uglify'</span>);</span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-contrib-jshint'</span>);</span><br><span class="line"></span><br><span class="line">    grunt.option(<span class="string">'force'</span>, <span class="literal">true</span>); <span class="comment">//避免程序因语法错误而终止执行</span></span><br><span class="line"></span><br><span class="line">    grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'concurrent'</span>]);</span><br><span class="line">    grunt.registerTask(<span class="string">'test'</span>, [<span class="string">'mochaTest'</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>前期开发只需要前面三个模块包即watch,nodemon,concurrent就行。</p>
+<h3 id="5-router模块"><a href="#5-router模块" class="headerlink" title="5.router模块"></a>5.router模块</h3><p>这里有两种方法<br>第一种是将路由分类<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">app.js</span><br><span class="line"><span class="comment">//挂载路由表</span></span><br><span class="line">app.<span class="keyword">use</span>(<span class="string">'/'</span>, index);</span><br><span class="line">app.<span class="keyword">use</span>(<span class="string">'/admin'</span>, admin);</span><br><span class="line">app.<span class="keyword">use</span>(<span class="string">'/user'</span>, user)</span><br><span class="line"></span><br><span class="line">user.js</span><br><span class="line"><span class="keyword">var</span> express = <span class="keyword">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> User = <span class="keyword">require</span>(<span class="string">'../models/user'</span>);</span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line"></span><br><span class="line"><span class="comment">//用户注册</span></span><br><span class="line">router.post(<span class="string">'/signup'</span>, <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">module.exports = router;</span><br></pre></td></tr></table></figure></p>
+<p>当url以/user开头时就会进入user.js文件。<br>第二种是路由全部写在一个文件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">app.js</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'./config/routers'</span>)(app); <span class="comment">//不能传入express.Router(),它只能作为中间件用,如上</span></span><br><span class="line"></span><br><span class="line">router.js</span><br><span class="line"><span class="keyword">var</span> Movie = <span class="built_in">require</span>(<span class="string">'../app/controllers/movie'</span>);</span><br><span class="line"><span class="keyword">var</span> Index = <span class="built_in">require</span>(<span class="string">'../app/controllers/index'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">app</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Index</span></span><br><span class="line">    app.get(<span class="string">'/'</span>, Index.index);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Movie</span></span><br><span class="line">    app.get(<span class="string">'/movie/:id'</span>, Movie.detail);</span><br><span class="line">    app.get(<span class="string">'/admin/movie/list'</span>,User.signinRequired,User.adminRequired, Movie.list);</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="6-数据库模块mongose"><a href="#6-数据库模块mongose" class="headerlink" title="6.数据库模块mongose"></a>6.数据库模块mongose</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">app.js</span><br><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</span><br><span class="line"><span class="keyword">var</span> dbURL = <span class="string">'mongodb://localhost:27017/movieWeb'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//连接数据库</span></span><br><span class="line">mongoose.Promise = global.Promise; <span class="comment">//避免控制台输出Promise错误 </span></span><br><span class="line">mongoose.connect(dbURL) <span class="comment">//数据库名为movieWeb</span></span><br><span class="line">mongoose.connection.on(<span class="string">'connected'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;    <span class="comment">//绑定connected函数，连接成功时触发</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Connection success!'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>模式schemas(表)<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</span><br><span class="line"><span class="keyword">var</span> Schema = mongoose.Schema;</span><br><span class="line"><span class="keyword">var</span> ObjectId = Schema.Types.ObjectId;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> MovieSchema = <span class="keyword">new</span> mongoose.Schema(&#123;  <span class="comment">//定义模式</span></span><br><span class="line">    doctor: <span class="built_in">String</span>,</span><br><span class="line">    title: <span class="built_in">String</span>,</span><br><span class="line">    language: <span class="built_in">String</span>,</span><br><span class="line">    country: <span class="built_in">String</span>,</span><br><span class="line">    summary: <span class="built_in">String</span>,</span><br><span class="line">    flash: <span class="built_in">String</span>,</span><br><span class="line">    poster: <span class="built_in">String</span>,</span><br><span class="line">    year: <span class="built_in">String</span>,</span><br><span class="line">    pv: &#123;</span><br><span class="line">        type: <span class="built_in">Number</span>,</span><br><span class="line">        <span class="keyword">default</span>: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    category: &#123;</span><br><span class="line">        type: ObjectId,</span><br><span class="line">        ref: <span class="string">'Category'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    meta: &#123;</span><br><span class="line">        createAt: &#123;</span><br><span class="line">            type: <span class="built_in">Date</span>,</span><br><span class="line">            <span class="keyword">default</span>: <span class="built_in">Date</span>.now()</span><br><span class="line">        &#125;,</span><br><span class="line">        updateAt: &#123;</span><br><span class="line">            type: <span class="built_in">Date</span>,</span><br><span class="line">            <span class="keyword">default</span>: <span class="built_in">Date</span>.now()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//每次存取数据之前，都调用save方法</span></span><br><span class="line">MovieSchema.pre(<span class="string">'save'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">next</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.isNew) &#123;</span><br><span class="line">        <span class="keyword">this</span>.meta.createAt = <span class="keyword">this</span>.meta.updateAt = <span class="built_in">Date</span>.now()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.meta.updateAt = <span class="built_in">Date</span>.now()  </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    next() <span class="comment">//将流程走下去</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">MovieSchema.statics = &#123;  <span class="comment">//实例化以后就会具有以下方法，相当于构造函数的成员方法</span></span><br><span class="line">    fetch: <span class="function"><span class="keyword">function</span>(<span class="params">cb</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">            .find(&#123;&#125;)</span><br><span class="line">            .sort(<span class="string">'meta.updateAt'</span>)</span><br><span class="line">            .exec(cb)</span><br><span class="line">    &#125;,</span><br><span class="line">    fetchById: <span class="function"><span class="keyword">function</span>(<span class="params">id, cb</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">            .findOne(&#123;_id: id&#125;)</span><br><span class="line">            .exec(cb)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = MovieSchema</span><br></pre></td></tr></table></figure></p>
+<p>模型models（模式跟模型对接）<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>)</span><br><span class="line"><span class="keyword">var</span> MovieSchema = <span class="built_in">require</span>(<span class="string">'../schemas/movie'</span>)</span><br><span class="line"><span class="keyword">var</span> Movie = mongoose.model(<span class="string">'Movie'</span>, MovieSchema)  <span class="comment">//模式和模型对接</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = Movie</span><br></pre></td></tr></table></figure></p>
+<p>值得注意的是，使用mongodb之前，需要在电脑上安装mongodb，并注册成一个服务，方便使用前开启，具体参考笔记：mongodb错误</p>
+<h3 id="7-将session存放在mongodb里"><a href="#7-将session存放在mongodb里" class="headerlink" title="7.将session存放在mongodb里"></a>7.将session存放在mongodb里</h3><p>session是会话支持，作为客户端的id，跟服务器交互<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用mongodb来储存sesion信息</span></span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="keyword">require</span>(<span class="string">'cookie-parser'</span>);</span><br><span class="line"><span class="keyword">var</span> session = <span class="keyword">require</span>(<span class="string">"express-session"</span>);</span><br><span class="line"><span class="keyword">var</span> MongoStore = <span class="keyword">require</span>(<span class="string">'connect-mongo'</span>)(session);</span><br><span class="line"></span><br><span class="line"><span class="comment">//配置session</span></span><br><span class="line">app.<span class="keyword">use</span>(cookieParser());</span><br><span class="line">app.<span class="keyword">use</span>(session(&#123;</span><br><span class="line">  secret: <span class="string">'imoocMovieWeb'</span>,</span><br><span class="line">  store: <span class="keyword">new</span> MongoStore(&#123;</span><br><span class="line">    url: dbURL,</span><br><span class="line">    collection: <span class="string">'sessions'</span></span><br><span class="line">  &#125;),</span><br><span class="line">  resave: <span class="keyword">true</span>,</span><br><span class="line">  saveUninitialized: <span class="keyword">true</span></span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure></p>
+<p>其中呢，cookieParser()中间件是session和bodyParser的依赖的中间件<br>bodyParser是解析request请求的中间价<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">配置</span><br><span class="line">app.<span class="keyword">use</span>(bodyParser.json());</span><br><span class="line">app.<span class="keyword">use</span>(bodyParser.urlencoded(&#123;<span class="symbol">extended:</span><span class="keyword">true</span>&#125;)); <span class="regexp">//extended</span>为<span class="keyword">true</span>则可以解析字符串和数组以外的数据</span><br></pre></td></tr></table></figure></p>
+<h3 id="8-前后台传数据"><a href="#8-前后台传数据" class="headerlink" title="8.前后台传数据"></a>8.前后台传数据</h3><p>可以用res.render方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">controllers/movie.js</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取后列表页</span></span><br><span class="line">exports.list = <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  Movie.fetch(<span class="function"><span class="keyword">function</span>(<span class="params">err, movies</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    res.render(<span class="string">'list'</span>, &#123;</span><br><span class="line">      title: <span class="string">'后台列表页'</span>,</span><br><span class="line">      movies: movies</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>还可以用res.locals，可以传递方法和变量<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">app.js</span><br><span class="line"></span><br><span class="line"><span class="comment">//前后台传递数据</span></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.locals.moment = moment;  <span class="comment">//向前台模板发送处理时间的moment方法</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">var</span> _user = req.session.user;</span><br><span class="line">  res.locals.user = _user; <span class="comment">//传递用户转态</span></span><br><span class="line"></span><br><span class="line">  next();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="8-各种用到的中间件"><a href="#8-各种用到的中间件" class="headerlink" title="8.各种用到的中间件"></a>8.各种用到的中间件</h3><ul>
+<li><p>flash  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> flash = <span class="keyword">require</span>(<span class="string">'connect-flash'</span>) <span class="comment">//存储变量的中间件，相当全局变量</span></span><br><span class="line">app.<span class="keyword">use</span>(flash())</span><br><span class="line"></span><br><span class="line">使用</span><br><span class="line"><span class="keyword">var</span> error = req.flash(<span class="string">'error'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>logger  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> logger = <span class="built_in">require</span>(<span class="string">'morgan'</span>); <span class="comment">//处理日志模块 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//日志文件</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> accessLogfile = fs.createWriteStream(<span class="string">'access.log'</span>, &#123;flags:<span class="string">'a'</span>&#125;);</span><br><span class="line"><span class="keyword">var</span> errorLogfile = fs.createWriteStream(<span class="string">'error.log'</span>, &#123;flags:<span class="string">'a'</span>&#125;);</span><br><span class="line"></span><br><span class="line">app.set(<span class="string">'env'</span>, <span class="string">'production'</span>);</span><br><span class="line">app.use(logger(&#123;stream: accessLogfile&#125;)); <span class="comment">//访问日志</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//处理错误日志，处理错误的中间件一定要写在路由后面</span></span><br><span class="line"><span class="keyword">if</span> (<span class="string">'production'</span> == app.get(<span class="string">'env'</span>)) &#123;</span><br><span class="line">  app.use(<span class="function"><span class="keyword">function</span>(<span class="params">err, req, res, next</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> meta = <span class="string">'['</span> + <span class="keyword">new</span> <span class="built_in">Date</span>() + <span class="string">'] '</span> + req.url + <span class="string">'\n'</span>;</span><br><span class="line">    errorLogfile.write(meta + err.stack + <span class="string">'\n'</span>);</span><br><span class="line">    next();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>moment  </p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">app.js</span><br><span class="line">var <span class="built_in">moment</span> = require('<span class="built_in">moment</span>'); <span class="comment">//处理时间格式</span></span><br><span class="line">在中间件里</span><br><span class="line">res.locals.<span class="built_in">moment</span> = <span class="built_in">moment</span>;  <span class="comment">//向前台模板发送处理时间的moment方法</span></span><br><span class="line"></span><br><span class="line">jade模板文件</span><br><span class="line"><span class="built_in">moment</span>(item.meta.updateAt).<span class="keyword">format</span>('MM/DD/YYYY') <span class="comment">//item.meta.updateAt是后台传过来的时间数据new Date()</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>bcrypt-nodejs 加盐模块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> bcrypt = <span class="built_in">require</span>(<span class="string">'bcrypt-nodejs'</span>);</span><br><span class="line"><span class="keyword">var</span> SALL_WORK_FACTOR = <span class="number">10</span>; <span class="comment">//数值越大，破解越复杂</span></span><br><span class="line">bcrypt.genSalt(SALL_WORK_FACTOR, <span class="function"><span class="keyword">function</span>(<span class="params">err, salt</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(err) <span class="keyword">return</span> next(err);</span><br><span class="line"></span><br><span class="line">        bcrypt.hash(user.password, salt, <span class="literal">null</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, hash</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err) <span class="keyword">return</span> next(err);</span><br><span class="line"></span><br><span class="line">            user.password = hash</span><br><span class="line">            next() <span class="comment">//将流程走下去</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>underscore （用到这模块的继承方法）  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _ = <span class="built_in">require</span>(<span class="string">'underscore'</span>);</span><br><span class="line">_movie = _.extend(movie, movieObj)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="9-jade模板引擎"><a href="#9-jade模板引擎" class="headerlink" title="9.jade模板引擎"></a>9.jade模板引擎</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">layout.jade 公用的部份</span><br><span class="line"></span><br><span class="line">doctype html</span><br><span class="line">html</span><br><span class="line">  head</span><br><span class="line">    meta(charset=&quot;utf-8&quot;)</span><br><span class="line">    title #&#123;title&#125; - imoocMovie</span><br><span class="line">    include ./includes/head</span><br><span class="line">  body</span><br><span class="line">    include ./includes/header</span><br><span class="line">    block content</span><br><span class="line">    include ./includes/footer</span><br></pre></td></tr></table></figure>
+<p>引进用include<br>block content是主体内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">extends ../layout  //-扩展layout</span><br><span class="line"></span><br><span class="line">block content</span><br><span class="line">  .container</span><br><span class="line">    .row</span><br><span class="line">      each cat in categories</span><br><span class="line">        .panel.panel-default</span><br><span class="line">          .panel-heading</span><br><span class="line">            h3</span><br><span class="line">              a(href=&apos;/results?cat=#&#123;cat._id&#125;&amp;p=0&apos;) #&#123;cat.name&#125;</span><br><span class="line">          .panel-body</span><br><span class="line">            if cat.movies &amp;&amp; cat.movies.length &gt; 0</span><br><span class="line">              each item in cat.movies</span><br><span class="line">                .col-md-2</span><br><span class="line">                  .thumbnail</span><br><span class="line">                    a(href=&quot;/movie/#&#123;item._id&#125;&quot;)</span><br><span class="line">                      if item.poster.indexOf(&apos;http:&apos;) &gt; -1</span><br><span class="line">                        img(src=&quot;#&#123;item.poster&#125;&quot;, alt=&quot;#&#123;item.title&#125;&quot;)</span><br><span class="line">                      else</span><br><span class="line">                        img(src=&quot;/upload/#&#123;item.poster&#125;&quot;, alt=&quot;#&#123;item.title&#125;&quot;)</span><br><span class="line">                    .caption</span><br><span class="line">                      h4 #&#123;item.title&#125;</span><br><span class="line">                      p: a.btn.btn-primary(href=&quot;/movie/#&#123;item._id&#125;&quot;, role=&quot;button&quot;) 观看预告片</span><br><span class="line">    script(src=&apos;/build/admin.min.js&apos;)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>request（发http请求）<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> request = <span class="keyword">require</span>(<span class="string">'request'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//用法</span></span><br><span class="line">request(&#123;url: url, json: <span class="literal">true</span>&#125;, function (error, response, body) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!error &amp;&amp; response.statusCode === <span class="number">200</span>) &#123;</span><br><span class="line">                <span class="built_in">var</span> <span class="built_in">data</span> = body;</span><br><span class="line">                <span class="built_in">var</span> now = (<span class="literal">new</span> <span class="built_in">Date</span>().getTime());</span><br><span class="line">                <span class="built_in">var</span> expires_in = now + (<span class="built_in">data</span>.expires_in - <span class="number">20</span>) * <span class="number">1000</span>;</span><br><span class="line">                <span class="built_in">data</span>.expires_in = expires_in;</span><br><span class="line">                resolve(<span class="built_in">data</span>);</span><br><span class="line">                <span class="comment">//console.log(data);</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                reject(<span class="string">'can not get ticket'</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatPay.png" alt="Leo WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mongoDB/" rel="tag">#mongoDB</a>
+          
+            <a href="/tags/nodejs/" rel="tag">#nodejs</a>
+          
+            <a href="/tags/express/" rel="tag">#express</a>
+          
+            <a href="/tags/grunt/" rel="tag">#grunt</a>
+          
+            <a href="/tags/router/" rel="tag">#router</a>
+          
+            <a href="/tags/MVC/" rel="tag">#MVC</a>
+          
+            <a href="/tags/jade/" rel="tag">#jade</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/21/使用javascript实现常见的排序算法/" rel="next" title="使用javascript实现常见的排序算法">
+                <i class="fa fa-chevron-left"></i> 使用javascript实现常见的排序算法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/21/有趣的鼠标悬浮效果/" rel="prev" title="有趣的鼠标悬浮效果">
+                有趣的鼠标悬浮效果 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+ <div class="comments" id="comments">
+   
+        <div id="uyan_frame"></div>
+   
+ </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Leo" />
+          <p class="site-author-name" itemprop="name">Leo</p>
+          <p class="site-description motion-element" itemprop="description">“努力向前就对了”</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/LaoLeo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="/resume" target="_blank" title="我的简历">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  我的简历
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-快速搭建"><span class="nav-number">1.</span> <span class="nav-text">1.快速搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-express中间件"><span class="nav-number">2.</span> <span class="nav-text">2.express中间件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-MVC架构"><span class="nav-number">3.</span> <span class="nav-text">3.MVC架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-项目管理工具grunt"><span class="nav-number">4.</span> <span class="nav-text">4.项目管理工具grunt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-router模块"><span class="nav-number">5.</span> <span class="nav-text">5.router模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-数据库模块mongose"><span class="nav-number">6.</span> <span class="nav-text">6.数据库模块mongose</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-将session存放在mongodb里"><span class="nav-number">7.</span> <span class="nav-text">7.将session存放在mongodb里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-前后台传数据"><span class="nav-number">8.</span> <span class="nav-text">8.前后台传数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-各种用到的中间件"><span class="nav-number">9.</span> <span class="nav-text">8.各种用到的中间件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-jade模板引擎"><span class="nav-number">10.</span> <span class="nav-text">9.jade模板引擎</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leo</span>
+</div>
+
+<div class="powered-by">
+  <!--由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动-->
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+<div class="theme-info">
+  <!--
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+  -->
+
+  <span id="busuanzi_container_site_uv">
+    本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  </span>
+</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script type="text/javascript" color="11,236,124" opacity='0.7' zIndex="-2" count="99" src="/js/src/plug/canvas-nest.min.js"></script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+    
+      
+    
+
+   
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2136427"></script>
+        <!-- UY END -->
+    
+  
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("tclwTLFzsKj58eErJvcmsYBe-gzGzoHsz", "IIVcrNlUlzbFRmRVxxCAIEjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>
