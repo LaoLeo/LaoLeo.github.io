@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 博客 web前端-Leo
-subtitle: “非宁静无以致远”
-description: “努力向前就对了”
-author: Leo
+title: 博客 Unity游戏开发
+subtitle: “要相信光，相信希望”
+description: “Unity,移动开发,Web”
+author: Walking 劳翼
 language: zh-Hans
 timezone: Asia/Shanghai
 
@@ -35,7 +35,10 @@ titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true
 relative_link: false
 future: true
 highlight:
