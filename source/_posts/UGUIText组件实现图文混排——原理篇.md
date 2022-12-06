@@ -2,7 +2,7 @@
 title: UGUIText组件实现图文混排——原理篇
 date: 2020-12-27
 tags: [emoji,图文混排]
-categories: [Unity游戏开发,业务系统]
+categories: [Unity游戏开发,业务系统,图文混排]
 ---
 
 <!-- more -->

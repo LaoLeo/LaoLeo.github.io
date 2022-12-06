@@ -2,7 +2,7 @@
 title: 图文混排-支持多个不同emoji来自不同图集和散图
 date: 2020-11-11
 tags: [emoji,图文混排]
-categories: [Unity游戏开发,业务系统]
+categories: [Unity游戏开发,业务系统,图文混排]
 ---
 
 <!-- more -->
