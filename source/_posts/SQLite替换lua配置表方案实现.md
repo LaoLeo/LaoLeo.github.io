@@ -122,7 +122,7 @@ C#方法获取的数值类型在lua中属于userdata，发现的影响是不能�
 
 配置表中常见的类型需要对应db的存储类型：
 
-| **配置表中的类型** | **number** | **string\|mlstring** | **float** | **boolean** | **datetime** | [**type**](https://file+.vscode-resource.vscode-cdn.net/c:/Users/laotuzhu/Desktop/\[number]\|\[string] "type") |
+| **配置表中的类型** | **number** | **string&mlstring** | **float** | **boolean** | **datetime** | [type] ([number]&[string])|
 | ----------- | ---------- | -------------------- | --------- | ----------- | ------------ | -------------------------------------------------------------------------------------------------------------- |
 | 对应的db存储的类型  | int64      | string               | float     | boolean     | string       | string                                                                                                         |
 
