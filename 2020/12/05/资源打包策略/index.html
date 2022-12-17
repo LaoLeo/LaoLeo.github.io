@@ -28,7 +28,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="项目打包策略">
 <meta property="og:url" content="https://laoleo.github.io/2020/12/05/%E8%B5%84%E6%BA%90%E6%89%93%E5%8C%85%E7%AD%96%E7%95%A5/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:description" content="项目打包策略打包策略：  A：把整个目录打进一个ab  B：把目录下的子目录中的资源打进子目录的ab中  C：把整个目录拷贝到ab目录不打ab  D：目录下的每一个资源打一个ab，不管是否重复  E：目录下的每一个资源打一个ab，每个依赖也打成一个ab，去除重复  F：图集的图片根据tag打ab，每个tag打一个ab  G：lua打包，一个目录打成一个ab，可以选择是否编码，编码为.bytes文">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-12-04T16:00:00.000Z">
@@ -50,7 +50,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>项目打包策略 | Unity游戏开发 博客</title>
+<title>项目打包策略 | Unity游戏开发</title>
   
 
 
@@ -111,7 +111,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -232,6 +232,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -273,7 +279,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -325,7 +331,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <a id="more"></a>
+        <span id="more"></span>
 <h2 id="项目打包策略"><a href="#项目打包策略" class="headerlink" title="项目打包策略"></a>项目打包策略</h2><p>打包策略：</p>
 <ul>
 <li><p>A：把整个目录打进一个ab</p>
@@ -562,7 +568,7 @@ luajit\_mac64/luajit
 <blockquote>
 <p>其实研究ab分组策略就是研究资源依赖树实现资源加载最优的问题。</p>
 </blockquote>
-<p>ab分组策略原则参考：<a href="https://zhuanlan.zhihu.com/p/91926428" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/91926428</a></p>
+<p>ab分组策略原则参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/91926428">https://zhuanlan.zhihu.com/p/91926428</a></p>
 <h2 id="build-package"><a href="#build-package" class="headerlink" title="build package"></a>build package</h2><p>项目构建包逻辑原理很简单，前面处理和准备好参数和数据，传递给BuildPipeline.BuildAssetBundles方法构建ab。</p>
 <p>工具面板上的参数解析：</p>
 <ul>

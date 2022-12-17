@@ -28,7 +28,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="source map小知识">
 <meta property="og:url" content="https://laoleo.github.io/2018/04/09/source%20map%E5%B0%8F%E7%9F%A5%E8%AF%86/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:description" content="前言前端项目的上线部署前，都需要经过合并压缩后，才能上线。这样会导致的一个问题就是，经过变换的代码，debug没办法定位到代码出错的准确位置。关于代码要压缩变换的原因：   合并能减少http请求数 压缩可以减少http请求量 经过编译后的得到的js，如es6，ts">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1524580962476&amp;di=2bb2f9b1075674dbb2b22354e010b724&amp;imgtype=0&amp;src=http%3A%2F%2Fwww.d1net.com%2Fuploadfile%2F2014%2F1215%2F20141215110355156.jpeg">
@@ -53,7 +53,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>source map小知识 | Unity游戏开发 博客</title>
+<title>source map小知识 | Unity游戏开发</title>
   
 
 
@@ -114,7 +114,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -235,6 +235,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -276,7 +282,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -329,14 +335,14 @@
 <li>经过编译后的得到的js，如es6，ts</li>
 </ol>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="source-map文件"><a href="#source-map文件" class="headerlink" title="source map文件"></a>source map文件</h2><p>source map文件就是用来定位代码的位置的，实质就是个记录代码位置信息的文件</p>
-<p>大概长这个样子<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"version"</span>: <span class="number">3</span>,</span><br><span class="line">    <span class="attr">"sources"</span>: [<span class="string">"hello.js"</span>],</span><br><span class="line">    <span class="attr">"names"</span>: [<span class="string">"sayHello"</span>, <span class="string">"greeting"</span>, <span class="string">"Name"</span>, <span class="string">"console"</span>, <span class="string">"log"</span>],</span><br><span class="line">    <span class="attr">"mappings"</span>: <span class="string">"AAAA,QAASA,KAEL,GACIC,GAAW,UAAYC,IAC3BC,SAAQC,IAAIH,GAGhBD"</span>,</span><br><span class="line">    <span class="attr">"file"</span>: <span class="string">"hello.min.js"</span>,</span><br><span class="line">    <span class="attr">"sourceRoot"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="attr">"sourcesContent"</span>: [<span class="string">"function sayHello()\n&#123;\n    var name = \"Fundebug\";\n    var greeting = \"Hello, \" + Name;\n    console.log(greeting);\n&#125;\n\nsayHello();\n"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>大概长这个样子<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;version&quot;</span>: <span class="number">3</span>,</span><br><span class="line">    <span class="string">&quot;sources&quot;</span>: [<span class="string">&quot;hello.js&quot;</span>],</span><br><span class="line">    <span class="string">&quot;names&quot;</span>: [<span class="string">&quot;sayHello&quot;</span>, <span class="string">&quot;greeting&quot;</span>, <span class="string">&quot;Name&quot;</span>, <span class="string">&quot;console&quot;</span>, <span class="string">&quot;log&quot;</span>],</span><br><span class="line">    <span class="string">&quot;mappings&quot;</span>: <span class="string">&quot;AAAA,QAASA,KAEL,GACIC,GAAW,UAAYC,IAC3BC,SAAQC,IAAIH,GAGhBD&quot;</span>,</span><br><span class="line">    <span class="string">&quot;file&quot;</span>: <span class="string">&quot;hello.min.js&quot;</span>,</span><br><span class="line">    <span class="string">&quot;sourceRoot&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;sourcesContent&quot;</span>: [<span class="string">&quot;function sayHello()<span class="subst">\n</span>&#123;<span class="subst">\n</span>    var name = <span class="subst">\&quot;</span>Fundebug<span class="subst">\&quot;</span>;<span class="subst">\n</span>    var greeting = <span class="subst">\&quot;</span>Hello, <span class="subst">\&quot;</span> + Name;<span class="subst">\n</span>    console.log(greeting);<span class="subst">\n</span>&#125;<span class="subst">\n</span><span class="subst">\n</span>sayHello();<span class="subst">\n</span>&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>version：Source Map的版本号。<br>sources：转换前的文件列表。<br>names：转换前的所有变量名和属性名。<br>mappings：记录位置信息的字符串，经过编码。<br>file：(可选)转换后的文件名。<br>sourceRoot：(可选)转换前的文件所在的目录。如果与转换前的文件在同一目录，该项为空。<br>sourcesContent:(可选)转换前的文件内容列表，与sources列表依次对应。</p>
 </blockquote>
-<p>source map文件会在压缩代码里面以url或者dataURK的形式与压缩文件产生关联<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">o</span>(<span class="params"></span>)</span>&#123;<span class="keyword">var</span> o=<span class="string">"Hello, "</span>+Name;<span class="built_in">console</span>.log(o)&#125;o();</span><br><span class="line"><span class="comment">//# sourceMappingURL=hello.min.js.map</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="webpack配置"><a href="#webpack配置" class="headerlink" title="webpack配置"></a>webpack配置</h2><p>webpack会把代码编译压缩，所以debug异常也需要source map文件的支持<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">devtool:</span> <span class="string">'#cheap-module-source-map'</span></span><br></pre></td></tr></table></figure></p>
+<p>source map文件会在压缩代码里面以url或者dataURK的形式与压缩文件产生关联<br><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">o</span>(<span class="params"></span>)&#123;<span class="keyword">var</span> o=<span class="string">&quot;Hello, &quot;</span>+Name;<span class="built_in">console</span>.<span class="built_in">log</span>(o)&#125;o();</span><br><span class="line"><span class="comment">//# sourceMappingURL=hello.min.js.map</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="webpack配置"><a href="#webpack配置" class="headerlink" title="webpack配置"></a>webpack配置</h2><p>webpack会把代码编译压缩，所以debug异常也需要source map文件的支持<br><figure class="highlight ldif"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">devtool</span>: &#x27;<span class="comment">#cheap-module-source-map&#x27;</span></span><br></pre></td></tr></table></figure></p>
 <p>要注意的是devtool配置source-map，常用的有一下几种模式：</p>
 <table>
 <thead>

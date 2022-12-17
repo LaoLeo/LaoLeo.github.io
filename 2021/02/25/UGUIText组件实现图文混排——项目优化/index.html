@@ -28,7 +28,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="UIGraphicText表情渲染优化-支持表情来自不同图集">
 <meta property="og:url" content="https://laoleo.github.io/2021/02/25/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:description" content="UIGraphicText表情渲染优化-支持表情来自不同图集背景当表情sprite没有被打到一个图集上，UIGraphicText类渲染表情或会错乱。 表情的渲染过程聊天窗口表情的渲染过程大致如何：   ui_emoji.asset包含所有emoji sprite信息，包括name、引用等。 UIGraphicText主要是解析输入内容字符串，得出sprite的顶点几何参数等。 CanvasRe">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://laoleo.github.io/2021/02/25/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/620aa9915773654e87c2ed8201b32736.png">
@@ -62,7 +62,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>UIGraphicText表情渲染优化-支持表情来自不同图集 | Unity游戏开发 博客</title>
+<title>UIGraphicText表情渲染优化-支持表情来自不同图集 | Unity游戏开发</title>
   
 
 
@@ -123,7 +123,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -244,6 +244,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -285,7 +291,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -337,18 +343,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <a id="more"></a>
+        <span id="more"></span>
 <h1 id="UIGraphicText表情渲染优化-支持表情来自不同图集"><a href="#UIGraphicText表情渲染优化-支持表情来自不同图集" class="headerlink" title="UIGraphicText表情渲染优化-支持表情来自不同图集"></a>UIGraphicText表情渲染优化-支持表情来自不同图集</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>当表情sprite没有被打到一个图集上，UIGraphicText类渲染表情或会错乱。</p>
 <h2 id="表情的渲染过程"><a href="#表情的渲染过程" class="headerlink" title="表情的渲染过程"></a>表情的渲染过程</h2><p>聊天窗口表情的渲染过程大致如何：</p>
-<img src="/2021/02/25/UGUIText组件实现图文混排——项目优化/620aa9915773654e87c2ed8201b32736.png" alt="C:\\454369bfe7514cfa65961fb357f5a99b" title="C:\\454369bfe7514cfa65961fb357f5a99b">
+<img src="/2021/02/25/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/620aa9915773654e87c2ed8201b32736.png" class="" title="C:\\454369bfe7514cfa65961fb357f5a99b">
 <ul>
 <li>ui_emoji.asset包含所有emoji sprite信息，包括name、引用等。</li>
 <li>UIGraphicText主要是解析输入内容字符串，得出sprite的顶点几何参数等。</li>
 <li>CanvasRender应是负责渲染的。</li>
-<li>UIGraphicTextSprites继承自<a href="https://docs.unity.cn/cn/current/ScriptReference/UI.MaskableGraphic.html" target="_blank" rel="external">MaskableGraphic</a>类，这个类的作用是管理源图集，截取源图集的某个区域。</li>
+<li>UIGraphicTextSprites继承自<a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/current/ScriptReference/UI.MaskableGraphic.html">MaskableGraphic</a>类，这个类的作用是管理源图集，截取源图集的某个区域。</li>
 </ul>
 <p>获取源图集的代码：</p>
-<img src="/2021/02/25/UGUIText组件实现图文混排——项目优化/78a230605169741abf7b42ea9cf32942.tmp" alt="C:\\5c36480e5fd362841a9fda19931987af" title="C:\\5c36480e5fd362841a9fda19931987af">
+<img src="/2021/02/25/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/78a230605169741abf7b42ea9cf32942.tmp" class="" title="C:\\5c36480e5fd362841a9fda19931987af">
 <p>表情的源图集引用被写死，默认第一个表情的源图集。这就是当表情来自其他图集时，显示错误的原因。</p>
 <h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>目前所有的表情会打到一个图集上，下面两种场景会导致表情打到不同图集：</p>
 <ol>
@@ -419,13 +425,13 @@
 <p>解决方法是在Update()中切换sprite截取参数同时改变UIGraphicTextSprites的mainTexture。</p>
 <p>更改commit看这里。</p>
 <h2 id="检验"><a href="#检验" class="headerlink" title="检验"></a>检验</h2><p>我的unity目标平台是android，先将textureImporter对安卓图片压缩格式更改代码注释掉，否则更改压缩格式会被重置。</p>
-<img src="/2021/02/25/UGUIText组件实现图文混排——项目优化/3dbde81dd90a3504f493adc0aeb348f5.tmp" alt="C:\\c1b700ce925f6782c0ddfad7ebaff16d" title="C:\\c1b700ce925f6782c0ddfad7ebaff16d">
+<img src="/2021/02/25/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/3dbde81dd90a3504f493adc0aeb348f5.tmp" class="" title="C:\\c1b700ce925f6782c0ddfad7ebaff16d">
 <p>更改1601_1,1602_1,1603_1的format为区别于ETC2_RGBA8的其他格式，测试不同压缩格式打包不同图集的场景：</p>
-<img src="/2021/02/25/UGUIText组件实现图文混排——项目优化/03742e0b64e62e87941c5ff8441ee88a.tmp" alt="C:\\fe883496df4caacccd989e850fccc8ca" title="C:\\fe883496df4caacccd989e850fccc8ca">
+<img src="/2021/02/25/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/03742e0b64e62e87941c5ff8441ee88a.tmp" class="" title="C:\\fe883496df4caacccd989e850fccc8ca">
 <p>更改1604_1,1605_1的tag，测试不同tag打包到不同图集的场景：</p>
-<img src="/2021/02/25/UGUIText组件实现图文混排——项目优化/c9e62ff06615ff8ab9ab1b914721f146.tmp" alt="C:\\f99e868b89f1a7b9ab3af6a5c9fdac1d" title="C:\\f99e868b89f1a7b9ab3af6a5c9fdac1d">
+<img src="/2021/02/25/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/c9e62ff06615ff8ab9ab1b914721f146.tmp" class="" title="C:\\f99e868b89f1a7b9ab3af6a5c9fdac1d">
 <p>sprite packer上pack图集，检查表情的确打到了三个不同的图集：</p>
-<p><img src="UGUIText组件实现图文混排——项目优化/10e1096586b53ed9f944e9d5101c4241.tmp" alt="C:\\883fd9a545661d5f5811d3edac78f399"><img src="UGUIText组件实现图文混排——项目优化/dc44a3625ccf585467173a0f9a8e574f.tmp" alt="C:\\c0bf4aa254b650fb676bfa50bfbec15f"> <img src="/2021/02/25/UGUIText组件实现图文混排——项目优化/1b0894421887907ac78332cb31b81eca.tmp" alt="C:\\094eb1d714aefb5993a488081c763144" title="C:\\094eb1d714aefb5993a488081c763144"> <img src="/2021/02/25/UGUIText组件实现图文混排——项目优化/ceb2cc566e9ddb1db29fc8a826ecd3a1.tmp" alt="C:\\e4ce0e9521e9b633c56b0d462711f669" title="C:\\e4ce0e9521e9b633c56b0d462711f669"></p>
+<p><img src="UGUIText组件实现图文混排——项目优化/10e1096586b53ed9f944e9d5101c4241.tmp" alt="C:\\883fd9a545661d5f5811d3edac78f399"><img src="UGUIText组件实现图文混排——项目优化/dc44a3625ccf585467173a0f9a8e574f.tmp" alt="C:\\c0bf4aa254b650fb676bfa50bfbec15f"> <img src="/2021/02/25/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/1b0894421887907ac78332cb31b81eca.tmp" class="" title="C:\\094eb1d714aefb5993a488081c763144"> <img src="/2021/02/25/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/ceb2cc566e9ddb1db29fc8a826ecd3a1.tmp" class="" title="C:\\e4ce0e9521e9b633c56b0d462711f669"></p>
 <p>pc上测试，正常。</p>
 <p>安卓上测试，正常。</p>
 

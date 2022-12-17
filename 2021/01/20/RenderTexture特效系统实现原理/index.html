@@ -28,7 +28,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="RenderTexture特效系统实现原理">
 <meta property="og:url" content="https://laoleo.github.io/2021/01/20/RenderTexture%E7%89%B9%E6%95%88%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:description" content="RenderTexture特效系统实现原理一、RenderTexture阐述食物语中的显示的特效一般是使用RenderTexture结合摄像机拍摄3D物体实现的，实际上游戏中显示的是一张加载好的RT。 什么是RT？为啥RT可以渲染一张动态的图片？ RT是一种特殊的Texture，可以在运行时实现更新内容。网上有句话可以概括：将一个FBO链接到server-side的texture对象上。通俗一点">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://laoleo.github.io/2021/01/20/RenderTexture%E7%89%B9%E6%95%88%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/image.png">
@@ -55,7 +55,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>RenderTexture特效系统实现原理 | Unity游戏开发 博客</title>
+<title>RenderTexture特效系统实现原理 | Unity游戏开发</title>
   
 
 
@@ -116,7 +116,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -237,6 +237,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -278,7 +284,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -330,7 +336,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <a id="more"></a>
+        <span id="more"></span>
 <h1 id="RenderTexture特效系统实现原理"><a href="#RenderTexture特效系统实现原理" class="headerlink" title="RenderTexture特效系统实现原理"></a>RenderTexture特效系统实现原理</h1><h2 id="一、RenderTexture阐述"><a href="#一、RenderTexture阐述" class="headerlink" title="一、RenderTexture阐述"></a>一、RenderTexture阐述</h2><p>食物语中的显示的特效一般是使用RenderTexture结合摄像机拍摄3D物体实现的，实际上游戏中显示的是一张加载好的RT。</p>
 <p>什么是RT？为啥RT可以渲染一张动态的图片？</p>
 <p>RT是一种特殊的Texture，可以在运行时实现更新内容。网上有句话可以概括：将一个FBO链接到server-side的texture对象上。通俗一点就是将渲染结果应用到gpu上的texture对象上，而texture对象就是游戏中的一张贴图，渲染结果（FBO的数据）可以动态变化，那么贴图的内容也跟着动态变化。</p>
@@ -342,7 +348,7 @@
 <h2 id="二、RT特效系统设计原理"><a href="#二、RT特效系统设计原理" class="headerlink" title="二、RT特效系统设计原理"></a>二、RT特效系统设计原理</h2><p>怎样实现RT特效？</p>
 <p>很简单就是创建一个RenderTexture对象，赋值给camera的targetTextrue属性，同时赋值给RawImage对象的texture属性。这就相当于camera将渲染结果（特效的表现）写入到了RenderTexture对象，RawImage对象作为一个显示窗口区域，连接到RenderTexture对象存储数据的FBO。</p>
 <p>着点于项目上，RT特效系统是如何设计的，这么设计的原因有是什么呢？先看以下系统关系图：</p>
-<img src="/2021/01/20/RenderTexture特效系统实现原理/image.png" alt="image.png" title="">
+<img src="/2021/01/20/RenderTexture%E7%89%B9%E6%95%88%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/image.png" class="">
 <p>图中清晰的表达了类之间数据流向，关键的就是传递RT和特效实例，各类发挥的作用：</p>
 <ol>
 <li>PhotoProducer负责创建RT、摄像机和特效实例的容器TargetContainer，相当于一块特效的渲染场景，而且这个渲染场景跟UI不是同一个渲染层，另外负责把RT传递给PhotoBase的RawImage组件上。</li>
@@ -361,7 +367,7 @@
 <p>RT特效系统中还处理了一种情况：显示多个同一类特效。</p>
 <p>当然RT肯定是同一张，但是需要创建多个PhotoMultiEffect的实例，进而实例化多个特效资源实例，这样就浪费资源了，创建多个特效实例可以省去，我们需要的是多个RT的承载体，也就是多个挂有RawImage组件的GameObject。</p>
 <p>所以就有PhotoEffectFactory类，负责管理同一类特效的多处显示情况。</p>
-<img src="/2021/01/20/RenderTexture特效系统实现原理/image_1.png" alt="image_1.png" title="">
+<img src="/2021/01/20/RenderTexture%E7%89%B9%E6%95%88%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/image_1.png" class="">
 
     </div>
 

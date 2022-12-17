@@ -26,9 +26,9 @@
   </script>
 <meta name="description" content="“Unity,移动开发,Web”">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Unity游戏开发 博客">
+<meta property="og:title" content="Unity游戏开发">
 <meta property="og:url" content="https://laoleo.github.io/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:description" content="“Unity,移动开发,Web”">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Walking 劳翼">
@@ -47,7 +47,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>Unity游戏开发 博客</title>
+<title>Unity游戏开发</title>
   
 
 
@@ -108,7 +108,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -228,6 +228,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -268,7 +274,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -290,7 +296,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-12-07 21:46:37" itemprop="dateModified" datetime="2022-12-07T21:46:37+08:00">2022-12-07</time>
+        <time title="修改时间：2022-12-17 22:04:08" itemprop="dateModified" datetime="2022-12-17T22:04:08+08:00">2022-12-17</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -316,247 +322,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<h1 id="SQLite替换lua配置表方案实现"><a href="#SQLite替换lua配置表方案实现" class="headerlink" title="SQLite替换lua配置表方案实现"></a>SQLite替换lua配置表方案实现</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目前游戏中的配置数据实在启动时一次性全部加载进内存，这种方式会造成一定的浪费。而SQLite是一个轻量级的、动态连接的数据库引擎。</p>
+          <!-- # SQLite替换lua配置表方案实现 -->
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目前游戏中的配置数据实在启动时一次性全部加载进内存，这种方式会造成一定的浪费。而SQLite是一个轻量级的、动态连接的数据库引擎。</p>
 <p>下文探索使用SQLite替换Lua配置表解决内存浪费方案的实现。</p>
-<h2 id="splite库的编译与引入"><a href="#splite库的编译与引入" class="headerlink" title="splite库的编译与引入"></a>splite库的编译与引入</h2><p>两个方向：</p>
-<p>1.C#层引入sqlite3.dll，写好接口，暴露给lua层调用。</p>
-<p>sqlite3.dll引入：<a href="https://cloud.tencent.com/developer/news/314242" title="https://cloud.tencent.com/developer/news/314242" target="_blank" rel="external">https://cloud.tencent.com/developer/news/314242</a></p>
-<p>2.lua层使用第三方库lsqlite3，将lsqlite3库编译进tolua.dll，在lua层直接链接并操作数据库。</p>
-<p>如何将三方库编译进tolua：<a href="https://blog.csdn.net/linxinfa/article/details/90046840。" title="https://blog.csdn.net/linxinfa/article/details/90046840。" target="_blank" rel="external">https://blog.csdn.net/linxinfa/article/details/90046840。</a></p>
-<p>这个方案代价是需要将各个平台的tolua动态库文件都编译一遍，将lsqlite3库包含进来。</p>
-<p>有两个三方库文件可以使用：</p>
-<p>1.lsqlite3：动态链接sqlite3（所以需要将sqlite3也编译进tolua）。</p>
-<p>2.lsqlite3complete：包含sqlite3在内，静态链接sqlite3（不用再将sqlite3编译进tolua）。</p>
-<h2 id="测试数据"><a href="#测试数据" class="headerlink" title="测试数据"></a>测试数据</h2><p>unity：2020.3.2f</p>
-<p>真机：联想 拯救者2 pro/CPU晓龙888/内存8GB/Android 11</p>
-<h3 id="1-堆内存对比"><a href="#1-堆内存对比" class="headerlink" title="1.堆内存对比"></a>1.堆内存对比</h3><table>
-<thead>
-<tr>
-<th></th>
-<th><strong>首次进入主界面</strong></th>
-<th><strong>播放剧情</strong></th>
-<th><strong>过一遍各个系统</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>lua配置表全加载</td>
-<td>11.2MB</td>
-<td>11.54MB</td>
-<td>16.4MB</td>
-</tr>
-<tr>
-<td>sqlite按需加载</td>
-<td>9.2MB</td>
-<td>9.45MB</td>
-<td>15.69MB</td>
-</tr>
-</tbody>
-</table>
-<p>由于2020unity打的包真机上连不上profiler，所以以上数据在<strong>Editor</strong>用工具测试lua内存。</p>
-<p>简单对比，sqlite按需加载配置方案在内存上比全加载lua配置表要<strong>节省内存。</strong> 理由可想而知，不必要的配置不用加载进内存。</p>
-<h3 id="2-执行时间对比"><a href="#2-执行时间对比" class="headerlink" title="2.执行时间对比"></a>2.执行时间对比</h3><p>a.启动方式耗时对比</p>
-<table>
-<thead>
-<tr>
-<th><strong>启动时配置的加载方式</strong></th>
-<th><strong>Editor-时间(s)</strong></th>
-<th><strong>Android-时间(s)</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>lua配置表全加载</td>
-<td>0.035</td>
-<td>0.030</td>
-</tr>
-<tr>
-<td>sqlite连接db，加载所有表并解析</td>
-<td>2.694</td>
-<td>1.242</td>
-</tr>
-<tr>
-<td>sqlite只链接db，按需加载表</td>
-<td>0.004</td>
-<td>0.016</td>
-</tr>
-</tbody>
-</table>
-<p>对比来看，启动时使用sqlite连接db按需加载表的方式快一点，但是比较是毫秒级别，原来的lua配置表全加载方式也不是很慢。</p>
-<p>b.查找时间对比</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th><strong>查1次</strong></th>
-<th><strong>查100次</strong></th>
-<th><strong>查10000次</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>lua配置表</td>
-<td>4.3e-05</td>
-<td>0.0005</td>
-<td>0.0025</td>
-</tr>
-<tr>
-<td>sqlite</td>
-<td>5.4e-05</td>
-<td>0.0285</td>
-<td>2.580</td>
-</tr>
-</tbody>
-</table>
-<p>配置表一般是只读，不会新增、修改、删除。从查找速度来看，肯定是lua配置表块，字典结构而且直接从内存中读，读取db就相对慢很多。单独看，单独一句查询id的sql执行效率也非常快。</p>
-<h3 id="3-热更新方式对比"><a href="#3-热更新方式对比" class="headerlink" title="3.热更新方式对比"></a>3.热更新方式对比</h3><p>数据量：</p>
-<ul>
-<li><p>小量数据：对标周更后的hotfix，一般只会修改一两处配置，修改数据量在个位数。</p>
-</li>
-<li><p>一般数据：对标周更，使用git命令统计食物语周更lua配置文件修改情况，大约会有20个左右文件被修改。</p>
-</li>
-<li><p>大量数据：对标月更，统计得出大约有150个lua配置文件被修改。</p>
-</li>
-</ul>
-<p>假设平均一个文件10行数据被修改，那么周更大约200条修改，月更大约1500条修改，一条修改对应一条sql语句。</p>
-<p>对于替换db的热更方式，不管数据量都是整个db替换。</p>
-<p>以下是测试数据，多次测量取平均的结果：</p>
-<table>
-<thead>
-<tr>
-<th><strong>【时间ms】</strong></th>
-<th><strong>小量数据(9)</strong></th>
-<th><strong>一般数据(200)</strong></th>
-<th><strong>一般数据(800)</strong></th>
-<th><strong>大量数据(1500)</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>热更sql （一个sql文件作为一条命令）</td>
-<td>12.9</td>
-<td>51.2</td>
-<td>892.3</td>
-<td>2717</td>
-</tr>
-</tbody>
-</table>
-<p>以下是热更不同大小db文件的统计情况：</p>
-<table>
-<thead>
-<tr>
-<th><strong>db大小</strong></th>
-<th><strong>1576kb（1.53MB）</strong></th>
-<th><strong>33.4MB</strong></th>
-<th><strong>60.6MB</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>压缩后</td>
-<td>284kb</td>
-<td>7.58MB</td>
-<td>15.7MB</td>
-</tr>
-<tr>
-<td>压缩率</td>
-<td>82%</td>
-<td>77%</td>
-<td>74%</td>
-</tr>
-<tr>
-<td>热更耗时ms (解压+替换+连接)</td>
-<td>81.6</td>
-<td>1000.5</td>
-<td>1778.7</td>
-</tr>
-</tbody>
-</table>
-<img src="/2022/09/30/SQLite替换lua配置表方案实现/image_gp3VMdO0Er.png" alt="image_gp3VMdO0Er.png" title="">
-<p>将两种方式放在一起对比，可以直观得出结论：<strong>hotfix、周更比较适合选sql方式，月更选替换db方式</strong>。</p>
-<p><strong>上面sql执行是一次性执行整个sql文件字符串，所以sql命令解析时间比较长。后面优化以行为单位执行sql文件，5000行左右的sql执行效率在0.5s左右，效率比替换30M DB还高。</strong></p>
-<h2 id="工作量设计"><a href="#工作量设计" class="headerlink" title="工作量设计"></a>工作量设计</h2><p>流程图：</p>
-<img src="/2022/09/30/SQLite替换lua配置表方案实现/image_iqXG1maoM7.png" alt="image_iqXG1maoM7.png" title="">
-<h3 id="1-导表工具改造，cvs表格导入db"><a href="#1-导表工具改造，cvs表格导入db" class="headerlink" title="1.导表工具改造，cvs表格导入db"></a>1.导表工具改造，cvs表格导入db</h3><p>a.类型转换</p>
-<p>C#方法获取的数值类型在lua中属于userdata，发现的影响是不能直接和string直接拼接，稳妥起见，最好使用tonumber(tostring(userdata))转换为lua的数值类型。</p>
-<p>配置表中常见的类型需要对应db的存储类型：</p>
-<table>
-<thead>
-<tr>
-<th><strong>配置表中的类型</strong></th>
-<th><strong>number</strong></th>
-<th><strong>string&amp;mlstring</strong></th>
-<th><strong>float</strong></th>
-<th><strong>boolean</strong></th>
-<th><strong>datetime</strong></th>
-<th>[type] ([number]&amp;[string])</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>对应的db存储的类型</td>
-<td>int64</td>
-<td>string</td>
-<td>float</td>
-<td>boolean</td>
-<td>string</td>
-<td>string</td>
-</tr>
-</tbody>
-</table>
-<p>说明：[type]表示数组类型，元素类型多为number或者string，db中存储为string类型即可，lua中取出来时再解析为table。存为string时候，开头添加标识符<code>[type]:</code>，表示需要被解析。</p>
-<p>lua中获取各类型转换方式如下：</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> fieldName, value = reader:GetName(i), <span class="literal">nil</span>;</span><br><span class="line"><span class="keyword">local</span> <span class="built_in">type</span> = reader:GetFieldType(i);</span><br><span class="line"><span class="built_in">type</span> = <span class="built_in">tostring</span>(<span class="built_in">type</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">type</span> == <span class="string">"System.Int64"</span> <span class="keyword">or</span> <span class="built_in">type</span> == <span class="string">"System.Int32"</span> <span class="keyword">or</span> <span class="built_in">type</span> == <span class="string">"System.Int16"</span> <span class="keyword">then</span></span><br><span class="line">    value = <span class="built_in">tonumber</span>(<span class="built_in">tostring</span>(reader:get_Item(fieldName)))</span><br><span class="line"><span class="keyword">elseif</span> <span class="built_in">type</span> == <span class="string">"System.Float"</span> <span class="keyword">then</span></span><br><span class="line">    value = <span class="built_in">tonumber</span>(<span class="built_in">tostring</span>(reader:GetFloat(i)))</span><br><span class="line"><span class="keyword">elseif</span> <span class="built_in">type</span> == <span class="string">"System.Double"</span> <span class="keyword">then</span></span><br><span class="line">    value = <span class="built_in">tonumber</span>(<span class="built_in">tostring</span>(reader:GetDouble(i)))</span><br><span class="line"><span class="keyword">elseif</span> <span class="built_in">type</span> == <span class="string">"System.Decimal"</span> <span class="keyword">then</span></span><br><span class="line">    value = <span class="built_in">tonumber</span>(<span class="built_in">tostring</span>(reader:GetDecimal(i)))</span><br><span class="line"><span class="keyword">elseif</span> <span class="built_in">type</span> == <span class="string">"System.Boolean"</span> <span class="keyword">then</span></span><br><span class="line">    value = <span class="built_in">tostring</span>(reader:GetBoolean(i))==<span class="string">"true"</span> <span class="keyword">and</span> <span class="literal">true</span> <span class="keyword">or</span> <span class="literal">false</span></span><br><span class="line"><span class="keyword">elseif</span> <span class="built_in">type</span> == <span class="string">"System.String"</span> <span class="keyword">then</span></span><br><span class="line">    value = <span class="built_in">tostring</span>(reader:get_Item(fieldName)</span><br><span class="line">   <span class="keyword">if</span> <span class="string">"[type]:"</span> == <span class="built_in">string</span>.<span class="built_in">sub</span>(value, <span class="number">1</span>, <span class="number">7</span>) <span class="keyword">then</span></span><br><span class="line">        value = GameUtils.json.decode(<span class="built_in">string</span>.<span class="built_in">sub</span>(value, <span class="number">8</span>))</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>b.cvs2db数据解析导入工具</p>
-<p>sqlite清空表不支持TRUNCATE TABLE语句，需用DELETE FROM TableName。</p>
-<p>sqlite语句和传统的sql语句不太一样，比如不支持多行插入数据，只支持单行插入。</p>
-<p>推荐<a href="http://sqlite.jsrun.net/" title="在线sqlite运行工具" target="_blank" rel="external">在线sqlite运行工具</a>测试语句，或者在<a href="https://www.navicat.com.cn/download/navicat-for-sqlite" title="Navicat for SQLite" target="_blank" rel="external">Navicat for SQLite</a>软件上新建查询执行sql语句。</p>
-<h3 id="2-config类接口适配"><a href="#2-config类接口适配" class="headerlink" title="2.config类接口适配"></a>2.config类接口适配</h3><p>需要在lua层链接数据库，查询表读出数据，然后将数据格式化成相同结构的lua配置表类（t_xxx.lua），这样就可以低成本适配config类接口。</p>
-<p>这里关键点在于处理db数据类型转换lua数据类型，也就是上述的lua中获取各类型转换方式。</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> M = class(<span class="string">"SqliteMonoMgr"</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">local</span> TInt64 = <span class="string">"Int64"</span></span><br><span class="line"><span class="keyword">local</span> TInt32 = <span class="string">"Int32"</span></span><br><span class="line"><span class="keyword">local</span> TInt16 = <span class="string">"Int16"</span></span><br><span class="line"><span class="keyword">local</span> TFloat = <span class="string">"Float"</span></span><br><span class="line"><span class="keyword">local</span> TDouble = <span class="string">"Double"</span></span><br><span class="line"><span class="keyword">local</span> TDecimal = <span class="string">"Decimal"</span></span><br><span class="line"><span class="keyword">local</span> TBoolean = <span class="string">"Boolean"</span></span><br><span class="line"><span class="keyword">local</span> TString = <span class="string">"String"</span></span><br><span class="line"><span class="keyword">local</span> TArrayPrefix = <span class="string">"[type]:"</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">M:loadConfigTable</span><span class="params">(tableName)</span></span></span><br><span class="line">    <span class="keyword">local</span> ret,reader = <span class="literal">true</span></span><br><span class="line"> </span><br><span class="line">    <span class="built_in">xpcall</span>(<span class="function"><span class="keyword">function</span> <span class="params">()</span></span></span><br><span class="line">        <span class="keyword">local</span> pks = self:_getPrimaryKeys(tableName)</span><br><span class="line">        reader = self._sqliteManager:SQLSelect(tableName)</span><br><span class="line">        <span class="keyword">if</span> reader <span class="keyword">and</span> <span class="keyword">not</span> reader.IsClosed <span class="keyword">then</span></span><br><span class="line">            self._cache[tableName] = self:_readConfigTable(reader, pks)</span><br><span class="line">            self._loadedTable[tableName] = <span class="literal">true</span></span><br><span class="line">            reader:Close()</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            ret = <span class="literal">false</span></span><br><span class="line">            printWarn(<span class="string">"not such table "</span>..tableName)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span>, <span class="function"><span class="keyword">function</span> <span class="params">(err)</span></span></span><br><span class="line">        ret = <span class="literal">false</span></span><br><span class="line">        <span class="keyword">if</span> reader <span class="keyword">then</span></span><br><span class="line">            reader:Close()</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        printError(err)</span><br><span class="line">        <span class="comment">-- self:close()</span></span><br><span class="line">    <span class="keyword">end</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line">     </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">M:_readConfigTable</span><span class="params">(reader, pks)</span></span></span><br><span class="line">    <span class="keyword">local</span> configTable = &#123;&#125;</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> reader.HasRows <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">return</span> configTable</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">     </span><br><span class="line">    <span class="keyword">local</span> dataList, title = self:_readDataListAndTitle(reader)</span><br><span class="line">    configTable.dataList = dataList</span><br><span class="line">    <span class="comment">-- 按索引构造字典</span></span><br><span class="line">    <span class="keyword">local</span> pkCount,temp = #pks,<span class="literal">nil</span></span><br><span class="line">    <span class="keyword">if</span> pkCount&gt;<span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">for</span> i,v <span class="keyword">in</span> <span class="built_in">ipairs</span>(dataList) <span class="keyword">do</span></span><br><span class="line">            temp = configTable</span><br><span class="line">            <span class="keyword">for</span> i=<span class="number">1</span>,pkCount,<span class="number">1</span> <span class="keyword">do</span></span><br><span class="line">                <span class="keyword">local</span> pk = pks[i]</span><br><span class="line">                <span class="keyword">local</span> pv = v[pk]</span><br><span class="line">                <span class="keyword">if</span> i==pkCount <span class="keyword">then</span></span><br><span class="line">                    temp[pv] = v</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> temp[pv] <span class="keyword">then</span></span><br><span class="line">                    temp[pv] = &#123;&#125;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">                temp = temp[pv]</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">         </span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> configTable</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">M:_readDataListAndTitle</span><span class="params">(reader)</span></span></span><br><span class="line">    <span class="keyword">local</span> title = &#123;&#125;</span><br><span class="line">    <span class="keyword">local</span> dataList = &#123;&#125;</span><br><span class="line">    <span class="keyword">while</span> reader:Read() <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">local</span> visibleFieldCount, row = reader.VisibleFieldCount, &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> i = <span class="number">0</span>, visibleFieldCount - <span class="number">1</span> <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">local</span> fieldName, value = reader:GetName(i), <span class="literal">nil</span>;</span><br><span class="line">            title[fieldName] = i+<span class="number">1</span></span><br><span class="line">            <span class="keyword">local</span> <span class="built_in">type</span> = reader:GetFieldType(i);</span><br><span class="line">            <span class="built_in">type</span> = <span class="built_in">string</span>.<span class="built_in">sub</span>(<span class="built_in">tostring</span>(<span class="built_in">type</span>), <span class="number">8</span>)</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">type</span> == TInt64 <span class="keyword">or</span> <span class="built_in">type</span> == TInt32 <span class="keyword">or</span> <span class="built_in">type</span> == TInt16 <span class="keyword">then</span></span><br><span class="line">                value = <span class="built_in">tonumber</span>(<span class="built_in">tostring</span>(reader:get_Item(fieldName)))</span><br><span class="line">            <span class="keyword">elseif</span> <span class="built_in">type</span> == TFloat <span class="keyword">then</span></span><br><span class="line">                value = <span class="built_in">tonumber</span>(<span class="built_in">tostring</span>(reader:GetFloat(i)))</span><br><span class="line">            <span class="keyword">elseif</span> <span class="built_in">type</span> == TDouble <span class="keyword">then</span></span><br><span class="line">                value = <span class="built_in">tonumber</span>(<span class="built_in">tostring</span>(reader:GetDouble(i)))</span><br><span class="line">            <span class="keyword">elseif</span> <span class="built_in">type</span> == TDecimal <span class="keyword">then</span></span><br><span class="line">                value = <span class="built_in">tonumber</span>(<span class="built_in">tostring</span>(reader:GetDecimal(i)))</span><br><span class="line">            <span class="keyword">elseif</span> <span class="built_in">type</span> == TBoolean <span class="keyword">then</span></span><br><span class="line">                value = <span class="built_in">tostring</span>(reader:GetBoolean(i))==<span class="string">"true"</span> <span class="keyword">and</span> <span class="literal">true</span> <span class="keyword">or</span> <span class="literal">false</span></span><br><span class="line">            <span class="keyword">elseif</span> <span class="built_in">type</span> == TString <span class="keyword">then</span></span><br><span class="line">                <span class="comment">-- value = reader:GetString(i)</span></span><br><span class="line">                value = <span class="built_in">tostring</span>(reader:get_Item(fieldName))</span><br><span class="line">                <span class="keyword">if</span> TArrayPrefix == <span class="built_in">string</span>.<span class="built_in">sub</span>(value, <span class="number">1</span>, <span class="number">7</span>) <span class="keyword">then</span></span><br><span class="line">                    value = GameUtils.json.decode(<span class="built_in">string</span>.<span class="built_in">sub</span>(value, <span class="number">8</span>))</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="built_in">table</span>.<span class="built_in">insert</span>(row, value)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="built_in">table</span>.<span class="built_in">insert</span>(dataList, row)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">     <span class="comment">-- 构造元表</span></span><br><span class="line">     <span class="keyword">local</span> mt = &#123;</span><br><span class="line">        <span class="built_in">__index</span> = <span class="function"><span class="keyword">function</span><span class="params">(t, key)</span></span></span><br><span class="line">            <span class="keyword">local</span> index = title[key]</span><br><span class="line">            <span class="keyword">if</span> index <span class="keyword">then</span></span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">rawget</span>(t, index)</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> i,v <span class="keyword">in</span> <span class="built_in">ipairs</span>(dataList) <span class="keyword">do</span></span><br><span class="line">        <span class="built_in">setmetatable</span>(v, mt)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> dataList, title</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">M:_getPrimaryKeys</span><span class="params">(tableName)</span></span></span><br><span class="line">    <span class="keyword">if</span> self._tablePrimaryKeyCache[tableName] <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">return</span> self._tablePrimaryKeyCache[tableName]</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">local</span> pks = &#123;&#125;</span><br><span class="line">    <span class="keyword">local</span> reader = self._sqliteManager:ExecuteReader(<span class="string">"PRAGMA table_info("</span>..tableName..<span class="string">")"</span>)</span><br><span class="line">    <span class="keyword">if</span> reader <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">while</span> reader:Read() <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">local</span> isPk = reader:GetBoolean(reader:GetOrdinal(<span class="string">"pk"</span>))</span><br><span class="line">            <span class="keyword">if</span> isPk <span class="keyword">then</span></span><br><span class="line">                <span class="built_in">table</span>.<span class="built_in">insert</span>(pks, reader:get_Item(<span class="string">"name"</span>))</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        reader:Close()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    self._tablePrimaryKeyCache[tableName] = pks</span><br><span class="line">    <span class="keyword">return</span> pks</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h3 id="3-按需加载表"><a href="#3-按需加载表" class="headerlink" title="3.按需加载表"></a>3.按需加载表</h3><p>可以利用lua元表，当table索引一个表时再去查询db读取整个表并解析成lua配置表类。</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> configDictMetaTable = &#123;</span><br><span class="line">    <span class="built_in">__index</span> = <span class="function"><span class="keyword">function</span><span class="params">(t, key)</span></span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">rawget</span>(t, key) <span class="keyword">then</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"sqlite 加载表："</span> .. key)</span><br><span class="line">            <span class="keyword">local</span> configTable = SqliteMonoMgr.instance:findAll(key)</span><br><span class="line">            <span class="built_in">rawset</span>(t, key, configTable)</span><br><span class="line">            <span class="keyword">return</span> configTable</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">ConfigMgr.instance.requestConfig = <span class="function"><span class="keyword">function</span><span class="params">(self, name, configObj)</span></span></span><br><span class="line">    <span class="keyword">local</span> mt = <span class="built_in">getmetatable</span>(configObj._dict)</span><br><span class="line">    <span class="keyword">if</span> mt ~= configDictMetaTable <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">setmetatable</span>(configObj._dict, configDictMetaTable)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">local</span> isExistInDB = SqliteMonoMgr.instance:isExistTable(name)</span><br><span class="line">    <span class="keyword">if</span> self._configDict[name] <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">local</span> content = self._configDict[name]</span><br><span class="line">        configObj:handleConfig(name, content)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">local</span> content</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isExistInDB <span class="keyword">then</span></span><br><span class="line">            <span class="keyword">local</span> <span class="built_in">path</span> = self._pathPrefix .. name</span><br><span class="line">            content = <span class="built_in">require</span>(<span class="built_in">path</span>)</span><br><span class="line">            self._configDict[name] = content</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        configObj:handleConfig(name, content)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>框架中lua配置是预加载+全加载的，其实也可以利用元表做到懒加载，当真正用到数据是才加载。</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">genProxyMt</span><span class="params">(name, path)</span></span></span><br><span class="line">    <span class="keyword">local</span> name = name</span><br><span class="line">    <span class="keyword">local</span> <span class="built_in">path</span> = <span class="built_in">path</span></span><br><span class="line">    <span class="keyword">local</span> <span class="built_in">loaded</span> = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">local</span> datasource = <span class="literal">nil</span></span><br><span class="line">     </span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="params">(t, k)</span></span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">loaded</span> <span class="keyword">then</span></span><br><span class="line">                datasource = <span class="built_in">require</span>(<span class="built_in">path</span>)</span><br><span class="line">                ConfigMgr.instance:_preProcessConfig(datasource, name)</span><br><span class="line">                <span class="built_in">loaded</span> = <span class="literal">true</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">return</span> datasource[k]</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ConfigMgr:requestConfig</span><span class="params">(name,configObj)</span></span></span><br><span class="line">    <span class="keyword">local</span> proxy = &#123;&#125;</span><br><span class="line">    <span class="keyword">local</span> mt_proxy = &#123;</span><br><span class="line">        <span class="built_in">__index</span> = genProxyMt(name, <span class="built_in">path</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">setmetatable</span>(proxy, mt_proxy)</span><br><span class="line">    configObj:handleConfig(name, proxy)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h3 id="4-单独一套sqlite-lua查询接口"><a href="#4-单独一套sqlite-lua查询接口" class="headerlink" title="4.单独一套sqlite lua查询接口"></a>4.单独一套sqlite lua查询接口</h3><p>用于业务查询配置，区别于以往方案的baseConfig类。</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> M = class(<span class="string">"SqliteMonoMgr"</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">-- 根据id查询</span></span><br><span class="line"><span class="comment">-- @return 返回主键查询结果，只有一条数据返回数据本身，多条数据返回table（多个主键的情况）</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">M:findById</span><span class="params">(tableName, value, pk)</span></span></span><br><span class="line">    <span class="keyword">if</span> GameUtils.isEmptyString(tableName) <span class="keyword">then</span></span><br><span class="line">        printError(<span class="string">"tableName is nil."</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">local</span> t = <span class="built_in">os</span>.<span class="built_in">clock</span>()</span><br><span class="line">    <span class="keyword">if</span> pk==<span class="literal">nil</span> <span class="keyword">then</span></span><br><span class="line">        pk = <span class="string">"id"</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">if</span> self._cache[tableName] <span class="keyword">and</span> self._cache[tableName][value] <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"findById 命中缓存耗时："</span>..<span class="built_in">os</span>.<span class="built_in">clock</span>()-t, tableName, value, pk)</span><br><span class="line">        <span class="keyword">return</span> self._cache[tableName][value]</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">local</span> reader = self._sqliteManager:SQLSelect(tableName, <span class="string">"*"</span>, <span class="built_in">string</span>.<span class="built_in">format</span>(<span class="string">"where %s=%s"</span>, pk, value))</span><br><span class="line">    <span class="keyword">if</span> reader <span class="keyword">and</span> <span class="keyword">not</span> reader.IsClosed <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">local</span> dataList = self:_readDataListAndTitle(reader)</span><br><span class="line">        reader:Close()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self._cache[tableName] <span class="keyword">then</span></span><br><span class="line">            self._cache[tableName] = &#123;&#125;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">if</span> #dataList==<span class="number">1</span> <span class="keyword">then</span></span><br><span class="line">            self._cache[tableName][value] = dataList[<span class="number">1</span>]</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"findById 耗时："</span>..<span class="built_in">os</span>.<span class="built_in">clock</span>()-t, tableName, value, pk)</span><br><span class="line">            <span class="keyword">return</span> dataList[<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"findById 耗时："</span>..<span class="built_in">os</span>.<span class="built_in">clock</span>()-t, tableName, value, pk)</span><br><span class="line">            self._cache[tableName][value] = dataList</span><br><span class="line">            <span class="keyword">return</span> dataList</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">-- 根据条件查询</span></span><br><span class="line"><span class="comment">-- @return 返回table</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">M:findAll</span><span class="params">(tableName, ...)</span></span></span><br><span class="line">    <span class="keyword">local</span> t = <span class="built_in">os</span>.<span class="built_in">clock</span>()</span><br><span class="line">    <span class="keyword">local</span> conditions = &#123;...&#125;</span><br><span class="line">    <span class="keyword">if</span> #conditions==<span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self._loadedTable[tableName] <span class="keyword">then</span></span><br><span class="line">            self:loadConfigTable(tableName)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"findAll 耗时："</span>..<span class="built_in">os</span>.<span class="built_in">clock</span>()-t, tableName)</span><br><span class="line">        <span class="keyword">return</span> self._cache[tableName]</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">local</span> conditionStr = <span class="string">"where"</span></span><br><span class="line">    <span class="keyword">for</span> i=<span class="number">1</span>,#conditions,<span class="number">2</span> <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">local</span> key = conditions[i]</span><br><span class="line">        <span class="keyword">local</span> value = conditions[i+<span class="number">1</span>]</span><br><span class="line">        conditionStr = conditionStr..<span class="built_in">string</span>.<span class="built_in">format</span>(<span class="string">" %s=%s and"</span>, key, value)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    conditionStr = <span class="built_in">string</span>.<span class="built_in">sub</span>(conditionStr, <span class="number">1</span>, <span class="number">-4</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"sql conditionStr:"</span>, conditionStr)</span><br><span class="line">    <span class="keyword">local</span> reader = self._sqliteManager:SQLSelect(tableName, <span class="string">"*"</span>, conditionStr)</span><br><span class="line">    <span class="keyword">if</span> reader <span class="keyword">and</span> <span class="keyword">not</span> reader.IsClosed <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">local</span> dataList = self:_readDataListAndTitle(reader)</span><br><span class="line">        reader:Close()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"findAll 耗时："</span>..<span class="built_in">os</span>.<span class="built_in">clock</span>()-t, tableName)</span><br><span class="line">        <span class="keyword">return</span> dataList</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">-- 通过输入sql查询</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">M:findAllBySql</span><span class="params">(sql)</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">string</span>.isEmptyString(sql) <span class="keyword">then</span> <span class="keyword">return</span> <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">local</span> t = <span class="built_in">os</span>.<span class="built_in">clock</span>()</span><br><span class="line">    <span class="keyword">local</span> reader = self._sqliteManager:ExecuteReader(sql)</span><br><span class="line">    <span class="keyword">if</span> reader <span class="keyword">and</span> <span class="keyword">not</span> reader.IsClosed <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">local</span> dataList = self:_readDataListAndTitle(reader)</span><br><span class="line">        reader:Close()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"findAllBySql 耗时："</span>..<span class="built_in">os</span>.<span class="built_in">clock</span>()-t)</span><br><span class="line">        <span class="keyword">return</span> dataList</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h3 id="5-db化整为零"><a href="#5-db化整为零" class="headerlink" title="5.db化整为零"></a>5.db化整为零</h3><p>导表工具按Excel目录划分db，一级子目录下Excel表导入到db中，db名以目录名命名。</p>
-<p>同时游戏运行时支持多db连接。</p>
-<p>表划分db分类：</p>
-<ul>
-<li><p>经常改动的配置</p>
-</li>
-<li><p>很少改动的配置</p>
-</li>
-<li><p>剧情表</p>
-</li>
-</ul>
-<h3 id="6-压缩和热更db"><a href="#6-压缩和热更db" class="headerlink" title="6.压缩和热更db"></a>6.压缩和热更db</h3><p>制作Editor工具，使用ICSharpCode.SharpZipLib.Zip库压缩db，这个库有个控制压缩率的参数compressionLevel(0-9)，以上实测得到的压缩率使用参数值为5，压缩率80%左右。</p>
-<p>热更db主要是解压缩和提取替换db文件。</p>
-<h3 id="7-数据量大的表的读取方式"><a href="#7-数据量大的表的读取方式" class="headerlink" title="7.数据量大的表的读取方式"></a>7.数据量大的表的读取方式</h3><p>比如language表有13w条数据，这样的表一般不能整个表加载，而要逐条根据id加载+缓存的方式，需要测试下性能。</p>
-<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><h3 id="1-Mono-Data-Sqlite-dll"><a href="#1-Mono-Data-Sqlite-dll" class="headerlink" title="1.Mono.Data.Sqlite.dll"></a>1.Mono.Data.Sqlite.dll</h3><p>根据网上的资料实测，不能使用Editor\Data\MonoBleedingEdge\lib\mono\2.0-api目录下的Mono.Data.Sqlite.dll，使用这个dll打成apk会报类的属性和方法引用空报错。说明不兼容。</p>
-<img src="/2022/09/30/SQLite替换lua配置表方案实现/image_SUK4XBL1kd.png" alt="image_SUK4XBL1kd.png" title="">
-<p>而应该引用\Editor\Data\Mono\lib\mono\2.0目录下的Mono.Data.Sqlite.dll，即使两者都是Targets .NET 3.5。</p>
-<p>使用的Unity版本是Unity2020.3.2f1，其下没有\Editor\Data\Mono目录，但发现<strong>2018.2.3f1，2017.4.37f1下</strong>有这个目录 <strong>。</strong></p>
-<p>一开始就使用了Editor\Data\MonoBleedingEdge\下的，Editor上测试正常使用，但是安卓上Mono.Data.Sqlite下的类的某些属性和方法会不兼容报空引用报错（state属性、CreateCommand方法）。</p>
-<p>从<strong>2018.2.3f1</strong>下拷贝过来使用，Editor和apk上测试正常了。理解应该是\Editor\Data\Mono\lib\mono\2.0下的dll才兼容，而且这个dll在vs上可以查看到源码。</p>
-<p>用ILSpy反编译dll对比：</p>
-<img src="/2022/09/30/SQLite替换lua配置表方案实现/image_S_dTSQElWB.png" alt="image_S_dTSQElWB.png" title="">
-<img src="/2022/09/30/SQLite替换lua配置表方案实现/image_DulaDCWifu.png" alt="image_DulaDCWifu.png" title="">
-<p>最大区别就是版本和Runtime不一样、一个包含源代码和一个只包含了元数据。空报错的原因最大可能是没有把执行代码编译进来。</p>
-<h3 id="2-Net-Standard-2-0和-Net-4-x"><a href="#2-Net-Standard-2-0和-Net-4-x" class="headerlink" title="2..Net Standard 2.0和.Net 4.x"></a>2..Net Standard <a href="http://2.xn--0-se9a.Net" title="2.0和.Net" target="_blank" rel="external">2.0和.Net</a> 4.x</h3><p>Project Setting&gt;player的Api Compatibility Level选择2.0或4.x，测试都是正常。</p>
-<h3 id="3-System-Data-dll"><a href="#3-System-Data-dll" class="headerlink" title="3.System.Data.dll"></a>3.System.Data.dll</h3><p>网上说需要引入这个dll，但是实测不引入也正常使用。</p>
-<h3 id="4-connectionString和db存放位置"><a href="#4-connectionString和db存放位置" class="headerlink" title="4.connectionString和db存放位置"></a>4.connectionString和db存放位置</h3><p>安卓上connectionString使用data source=或者URI=file:都可以，但是后面路径不能包内路径，即jar:file://开头的，不然读取失败报错：System.ArgumentException: Invalid ConnectionString format。</p>
-<p>db文件只能放在外部可读写目录，即Application.persistentDataPath。db位于包体内，需要拷贝到外部目录。</p>
-<p>参考：</p>
-<ul>
-<li><p><a href="https://stackoverflow.com/questions/50753569/setup-database-sqlite-for-unity" title="https://stackoverflow.com/questions/50753569/setup-database-sqlite-for-unity" target="_blank" rel="external">https://stackoverflow.com/questions/50753569/setup-database-sqlite-for-unity</a></p>
-</li>
-<li><p><a href="https://zhuanlan.zhihu.com/p/112232175" title="https://zhuanlan.zhihu.com/p/112232175" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/112232175</a></p>
-</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/30/SQLite%E6%9B%BF%E6%8D%A2lua%E9%85%8D%E7%BD%AE%E8%A1%A8%E6%96%B9%E6%A1%88%E5%AE%9E%E7%8E%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -591,7 +367,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -613,7 +389,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
+        <time title="修改时间：2022-12-17 21:53:29" itemprop="dateModified" datetime="2022-12-17T21:53:29+08:00">2022-12-17</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -639,16 +415,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<h1 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h1><img src="/2022/05/15/网络层/image_FgCmH2uIWr.png" alt="image_FgCmH2uIWr.png" title="">
-<p>数据传输格式使用protobuf工具协定，tolua集成了protobuf提供使用。</p>
-<p>protobuf.lua：构造协议体、赋值、扩展。</p>
-<img src="/2022/05/15/网络层/image_skRP8CouhK.png" alt="image_skRP8CouhK.png" title="">
-<p>数据上行下行序列化过程</p>
-<img src="/2022/05/15/网络层/image_UuuQAgKiON.png" alt="image_UuuQAgKiON.png" title="">
-<p>大小端</p>
-<p>大小端指数据在机器中的字节在内存中的排序方式。<a href="https://blog.csdn.net/wwwlyj123321/article/details/100066463" title="链接" target="_blank" rel="external">链接</a></p>
-<img src="/2022/05/15/网络层/image_Dxda6OJqZV.png" alt="image_Dxda6OJqZV.png" title="">
+          <img src="/2022/05/15/%E7%BD%91%E7%BB%9C%E5%B1%82/image_FgCmH2uIWr.png" class="">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/15/%E7%BD%91%E7%BB%9C%E5%B1%82/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -683,7 +458,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -705,7 +480,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
+        <time title="修改时间：2022-12-17 21:56:18" itemprop="dateModified" datetime="2022-12-17T21:56:18+08:00">2022-12-17</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -735,32 +510,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<h1 id="UIParticle-4-0-0研究"><a href="#UIParticle-4-0-0研究" class="headerlink" title="UIParticle\@4.0.0研究"></a>UIParticle\@4.0.0研究</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>UIParticle刚开始引进项目中的版本是@3.3.10，发现的问题比较多，材质数不能超8个的问题也在github上提了<a href="https://github.com/mob-sakai/ParticleEffectForUGUI/issues/122" title="bug#122" target="_blank" rel="external">bug#122</a>。</p>
-<p>作者最近升级UIParticle到v4，解决了一些问题和增加了新特性，其中包括bug#122。</p>
-<p>所以来研究一下，这个新版本的优化内容对项目有没有价值，考虑是否有必要升级版本。</p>
-<h2 id="bug修复"><a href="#bug修复" class="headerlink" title="bug修复"></a>bug修复</h2><p>1.submesh can not over 8问题修复</p>
-<p>即使是使用很多材质的特效，都没有输出警告了。</p>
-<p>2.使用meshRenderer和uv动画实现的烟雾渲染层级不在UI layer问题</p>
-<p>使用meshRenderer的粒子不会被UIParticle渲染，因为UIParticle使用了新类UIParticleRenderer进行渲染，同样不会处理非粒子系统下的网格和材质。</p>
-<p>3.共享材质问题</p>
-<p>动画修改材质属性，共享材质不会同步变化，估计是内部实现已经不使用sharedMaterial属性。</p>
-<p>4.ParticleSystem的所有的粒子都能被UIParticle渲染出来吗？</p>
-<p>还是拿家具抽奖的那个特效ui_jiajuchoujiang来测试，依然有部分没有渲染出来，而且跟渲染顺序无关。</p>
-<p>5.勾选ignoreCanvasScale后不同分辨率下大小不对问题</p>
-<p>放弃了ignoreCanvasScale属性，重构了ui缩放逻辑，所以这么问题应该是解决了。</p>
-<h2 id="新特性"><a href="#新特性" class="headerlink" title="新特性"></a>新特性</h2><p>1.UI自适应缩放</p>
-<p>也就是上述第5点。</p>
-<p>2.新增吸引子组件</p>
-<p>可以吸引粒子沿着某种路径到某个位置，属于效果扩展上的新特性。</p>
-<p>3.网格共享组</p>
-<p>渲染大量相同粒子时可以使用相同的网格共享组，属于性能优化上的改进。</p>
-<p>4.add overlay window</p>
-<p>overlay window是unity2021.2开始提供的scene window的覆盖窗口特性，可以自定义菜单，unity2020没有这个特效。</p>
-<p>另外Inspector面板做了优化，去掉了IgnoreCanvasScale属性，新增了mesh sharing接口，也支持输出一些警告。</p>
-<p>详细看看<a href="https://github.com/mob-sakai/ParticleEffectForUGUI/releases" title="更新日志" target="_blank" rel="external">更新日志</a>。</p>
-<p><strong>有个问题就是，升级后需要对UIparticle特效的scale重新调整，这点比较麻烦。</strong></p>
-
+          <h1 id="UIParticle-4-0-0研究"><a href="#UIParticle-4-0-0研究" class="headerlink" title="UIParticle\@4.0.0研究"></a>UIParticle\@4.0.0研究</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>UIParticle刚开始引进项目中的版本是@3.3.10，发现的问题比较多，材质数不能超8个的问题也在github上提了<a target="_blank" rel="noopener" href="https://github.com/mob-sakai/ParticleEffectForUGUI/issues/122" title="bug#122">bug#122</a>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/18/UIParticle@4.0.0%E7%A0%94%E7%A9%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -795,7 +553,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -817,7 +575,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
+        <time title="修改时间：2022-12-17 21:56:51" itemprop="dateModified" datetime="2022-12-17T21:56:51+08:00">2022-12-17</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -847,55 +605,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<h1 id="UIParticle组件的使用问题"><a href="#UIParticle组件的使用问题" class="headerlink" title="UIParticle组件的使用问题"></a>UIParticle组件的使用问题</h1><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
-<li><a href="#uiparticle组件的使用问题">UIParticle组件的使用问题</a><ul>
-<li><a href="#目录">目录</a></li>
-<li><a href="#一背景">一、背景</a></li>
-<li><a href="#二demo测试">二、demo测试</a></li>
-<li><a href="#三发现问题">三、发现问题</a></li>
-<li><a href="#四问题分析">四、问题分析</a><ul>
-<li><a href="#1为什么粒子材质会同时播放">1.为什么粒子材质会同时播放？</a></li>
-<li><a href="#2子网格数限制问题">2.子网格数限制问题</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h2><p>假如能通过代码，对原本的粒子特效prefab，动态添加UIPartcle组件，并且表现效果和RT一样，这样就能够自动化的优化项目中RT特效。</p>
-<h2 id="二、demo测试"><a href="#二、demo测试" class="headerlink" title="二、demo测试"></a>二、demo测试</h2><p>写个demo测试效果，各种RT规格特效选取几个，观察转换前后的效果。</p>
-<img src="/2022/03/05/UIParticle组件的使用问题/uiparticleCompare.gif" alt="uiparticleCompare.gif" title="">
-<h2 id="三、发现问题"><a href="#三、发现问题" class="headerlink" title="三、发现问题"></a>三、发现问题</h2><p>没有带动画的特效播放正常，带动画的特效发现几个问题，比如ui_jiajuchoujiang特效：</p>
-<p>1.代码上暂时没有找到更改Animatable Properties属性的接口，只能在Inspector上更改。</p>
-<p>2.代码上刚添加UIParticle组件，首次调用RefreshParticles函数刷新没效果。</p>
-<p>3.动画控制着材质属性Material._Main Tex_ST，用UIParticle方式播放时，播放的起始时间对不上，一下子全出来没有先后顺序。</p>
-<img src="/2022/03/05/UIParticle组件的使用问题/anim3__eYFZGZolQ.gif" alt="anim3__eYFZGZolQ.gif" title="">
-<p>上图，Inspector上添加动画属性_Main Tex_ST，点击Refresh按钮，然后动画属性_Main Tex_ST播放的起始时间不对。</p>
-<p>4.当特效下的网格数大于8个时会报警告：Mesh ‘’ has more than the 8 submeshes. Extra submeshes will be ignored.</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Mesh <span class="string">''</span> has more than the <span class="number">8</span> submeshes. Extra submeshes will be ignored.</span><br><span class="line">UnityEngine.StackTraceUtility:ExtractStackTrace ()</span><br><span class="line">Coffee.UIExtensions.UIParticleUpdater:Refresh (Coffee.UIExtensions.UIParticle) (at Library/PackageCache/com.coffee.ui-particle@<span class="number">5</span>a8f1263ef/Scripts/UIParticleUpdater.cs:<span class="number">85</span>)</span><br><span class="line">Coffee.UIExtensions.UIParticleUpdater:Refresh () (at Library/PackageCache/com.coffee.ui-particle@<span class="number">5</span>a8f1263ef/Scripts/UIParticleUpdater.cs:<span class="number">54</span>)</span><br><span class="line">UnityEngine.Canvas:SendWillRenderCanvases ()</span><br></pre></td></tr></table></figure>
-<p>网格数有限制，大于8个会被忽略，但是效果上看不出啥区别，github上有<a href="https://github.com/mob-sakai/ParticleEffectForUGUI/issues/186" title="提问bug" target="_blank" rel="external">提问bug</a>，但没有回复。</p>
-<h2 id="四、问题分析"><a href="#四、问题分析" class="headerlink" title="四、问题分析"></a>四、问题分析</h2><h3 id="1-为什么粒子材质会同时播放？"><a href="#1-为什么粒子材质会同时播放？" class="headerlink" title="1.为什么粒子材质会同时播放？"></a>1.为什么粒子材质会同时播放？</h3><p>查看源码发现，动画材质属性更改是通过从ParticleSystemRenderer拿出ShadeMaterials和MaterialPropertyBlock，传给CanvasRenderer，根据Inspector设置好的Animatable material ProPerties来更新Canvas上的材质。</p>
-<img src="/2022/03/05/UIParticle组件的使用问题/image_NcuDmPJzjI.png" alt="image_NcuDmPJzjI.png" title="">
-<img src="/2022/03/05/UIParticle组件的使用问题/image_ywMcu33ZPf.png" alt="image_ywMcu33ZPf.png" title="">
-<p>所以引起问题的是特效的几个节点引用了同一个材质，而这个材质设置数据后，几个节点就同步更新了。</p>
-<p>这里应该复制多个同个材质，分别设置上去，观察效果正常了。</p>
-<img src="/2022/03/05/UIParticle组件的使用问题/anim4_tx9hVKst4O.gif" alt="anim4_tx9hVKst4O.gif" title="">
-<p>上图引用同个材质，材质同时更新了。</p>
-<img src="/2022/03/05/UIParticle组件的使用问题/anim5_GKfO5IVVAN.gif" alt="anim5_GKfO5IVVAN.gif" title="">
-<p>上图复制了材质，单独引用，正常了。</p>
-<p>为了证实这个问题，可以自制一个UIparticle特效，下面有两种粒子（1白1蓝），都分别引用同一个材质，另外制作一个animator，只改动第一个粒子的材质颜色，由白到黑再到白。</p>
-<img src="/2022/03/05/UIParticle组件的使用问题/image_Uj6XZU2I6p.png" alt="image_Uj6XZU2I6p.png" title="">
-<img src="/2022/03/05/UIParticle组件的使用问题/image_67GP1vl5zt.png" alt="image_67GP1vl5zt.png" title="">
-<p>animation上只是改了第一个粒子的材质颜色，但是另一个粒子也受到影响。</p>
-<img src="/2022/03/05/UIParticle组件的使用问题/anim6_MAvMAv1XJM.gif" alt="anim6_MAvMAv1XJM.gif" title="">
-<h3 id="2-子网格数限制问题"><a href="#2-子网格数限制问题" class="headerlink" title="2.子网格数限制问题"></a>2.子网格数限制问题</h3><p>网格数大于8会出现不渲染元素的情况，下图tiao03、tiao04的渲染位置从排在后面调整为排在前面，两种情况都有元素丢失，但排在前面的显示出来了：</p>
-<img src="/2022/03/05/UIParticle组件的使用问题/anim2_ocvF-p7l04.gif" alt="anim2_ocvF-p7l04.gif" title="">
-<p>暂不清楚为什么要限制8个网格数，使用时注意引用材质不能太多，否则出现显示丢失元素情况。</p>
-<p>这个限制估计是CanvasRenderer的限制，写了段测试代码，CanvasRenderer的mesh合并超过8个子网格数：</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.UI;</span><br><span class="line"> </span><br><span class="line">public class MeshCombineForCanvas : Graphic</span><br><span class="line">&#123;</span><br><span class="line">    private CanvasRenderer m_canvasRenderer ;</span><br><span class="line">    private Mesh m_mesh ;</span><br><span class="line"> </span><br><span class="line">    protected override void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!m_canvasRenderer) &#123;</span><br><span class="line">            m_canvasRenderer = gameObject.GetComponent&lt;CanvasRenderer&gt;() ?? gameObject.AddComponent&lt;CanvasRenderer&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        m_mesh = CreateMesh();</span><br><span class="line">        // CombineMeshes(m_mesh, <span class="number">8</span>);</span><br><span class="line">        CombineMeshes(m_mesh, <span class="number">10</span>);</span><br><span class="line">        m_canvasRenderer.SetMesh(m_mesh);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    private Mesh CreateMesh()</span><br><span class="line">    &#123;</span><br><span class="line">        Vector3[] vertices = new Vector3[<span class="number">4</span>];</span><br><span class="line">        vertices[<span class="number">0</span>] = new Vector3(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">        vertices[<span class="number">1</span>] = new Vector3(<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>);</span><br><span class="line">        vertices[<span class="number">2</span>] = new Vector3(<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>);</span><br><span class="line">        vertices[<span class="number">3</span>] = new Vector3(<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">        int[] triangles = new int[<span class="number">6</span>];</span><br><span class="line">        triangles[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        triangles[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        triangles[<span class="number">2</span>] = <span class="number">2</span>;</span><br><span class="line">        triangles[<span class="number">3</span>] = <span class="number">2</span>;</span><br><span class="line">        triangles[<span class="number">4</span>] = <span class="number">3</span>;</span><br><span class="line">        triangles[<span class="number">5</span>] = <span class="number">0</span>;</span><br><span class="line">        Mesh mesh = new Mesh();</span><br><span class="line">        mesh.vertices = vertices;</span><br><span class="line">        mesh.triangles = triangles;</span><br><span class="line">        <span class="keyword">return</span> mesh;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    private void CombineMeshes(Mesh meshContainer, int count)</span><br><span class="line">    &#123;</span><br><span class="line">        CombineInstance[] src = new CombineInstance[count];</span><br><span class="line">        <span class="keyword">for</span> (int i=<span class="number">0</span>; i&lt;count; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            Mesh mesh = CreateMesh();</span><br><span class="line">            CombineInstance inst = new CombineInstance&#123; mesh = mesh &#125;;</span><br><span class="line">            src[i] = inst;</span><br><span class="line">        &#125;</span><br><span class="line">        meshContainer.CombineMeshes(src, <span class="literal">false</span>, <span class="literal">false</span>) ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行后同样会报Warning：</p>
-<img src="/2022/03/05/UIParticle组件的使用问题/image_db_KmLvzYS.png" alt="image_db_KmLvzYS.png" title="">
-
+          <h1 id="UIParticle组件的使用问题"><a href="#UIParticle组件的使用问题" class="headerlink" title="UIParticle组件的使用问题"></a>UIParticle组件的使用问题</h1><h2 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h2><p>假如能通过代码，对原本的粒子特效prefab，动态添加UIPartcle组件，并且表现效果和RT一样，这样就能够自动化的优化项目中RT特效。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/05/UIParticle%E7%BB%84%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -930,7 +648,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -952,7 +670,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-12-06 23:30:37" itemprop="dateModified" datetime="2022-12-06T23:30:37+08:00">2022-12-06</time>
+        <time title="修改时间：2022-12-17 21:52:23" itemprop="dateModified" datetime="2022-12-17T21:52:23+08:00">2022-12-17</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -982,83 +700,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<h1 id="ParticleEffectForUGUI（UIParticle）"><a href="#ParticleEffectForUGUI（UIParticle）" class="headerlink" title="ParticleEffectForUGUI（UIParticle）"></a>ParticleEffectForUGUI（UIParticle）</h1><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
-<li><a href="#particleeffectforuguiuiparticle">ParticleEffectForUGUI（UIParticle）</a><ul>
-<li><a href="#目录">目录</a></li>
-<li><a href="#一概述">一、概述</a></li>
-<li><a href="#二引入项目">二、引入项目</a><ul>
-<li><a href="#1导入package">1.导入package</a></li>
-<li><a href="#2添加uiparticle组件">2.添加UIParticle组件</a></li>
-<li><a href="#3编写工具类在lua层加载uiparticle并显示">3.编写工具类，在lua层加载UIParticle并显示</a></li>
-</ul>
-</li>
-<li><a href="#三uiparticle实现原理">三、UIParticle实现原理</a></li>
-<li><a href="#四性能对比">四、性能对比</a><ul>
-<li><a href="#1单个ui粒子特效对比">1.单个UI粒子特效对比</a></li>
-<li><a href="#2多个相同ui粒子特效对比">2.多个相同UI粒子特效对比</a></li>
-<li><a href="#总结">总结</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>ParticleEffectForUGUI插件，又名UIParticle，为UGUI渲染可遮罩、可排序的粒子特效，而且不需要额外摄像机、RT和Canvas。Unity 2018.2及以上版本支持。</p>
-<p>官方对其的使用和与其他方案对比的优缺点已给出详细说明，了解请访问<a href="https://github.com/mob-sakai/ParticleEffectForUGUI" title="ParticleEffectForUGUI" target="_blank" rel="external">ParticleEffectForUGUI</a>。</p>
-<p>下面研究如何引入到项目中使用，Unity版本是2019.4.35f1，并且和项目现使用的RT粒子特效方案做性能对比。</p>
-<h2 id="二、引入项目"><a href="#二、引入项目" class="headerlink" title="二、引入项目"></a>二、引入项目</h2><h4 id="1-导入package"><a href="#1-导入package" class="headerlink" title="1.导入package"></a>1.导入package</h4><p>使用manifest.json添加依赖方式导入。</p>
-<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- manifest.json</span><br><span class="line">dependencies:&#123;</span><br><span class="line">  <span class="string">"com.coffee.ui-particle"</span>: <span class="string">"[https://github.com/mob-sakai/ParticleEffectForUGUI.git#3.3.10](https://github.com/mob-sakai/ParticleEffectForUGUI.git#3.3.10)"</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>#3.3.10代表版本号。refresh一下就会导入package。</p>
-<h4 id="2-添加UIParticle组件"><a href="#2-添加UIParticle组件" class="headerlink" title="2.添加UIParticle组件"></a>2.添加UIParticle组件</h4><p>gameObject右键-UI中可以添加UIParticle组件。</p>
-<img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_2vkN8DyEOU.png" alt="image_2vkN8DyEOU.png" title="">
-<p>也可以将目前项目里的UI Effect Prefab转换成用UIParticle的方式，在其根节点上添加UIParticle组件即可。</p>
-<img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_TKk-_imcnM.png" alt="image_TKk-_imcnM.png" title="">
-<img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_ckbsiwRhQu.png" alt="image_ckbsiwRhQu.png" title="">
-<p>两者效果一致，而且UIParticle方式的特效可以自由缩放大小。</p>
-<h4 id="3-编写工具类，在lua层加载UIParticle并显示"><a href="#3-编写工具类，在lua层加载UIParticle并显示" class="headerlink" title="3.编写工具类，在lua层加载UIParticle并显示"></a>3.编写工具类，在lua层加载UIParticle并显示</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- UIParticle.lua</span></span><br><span class="line">module(<span class="string">"logic.common.ugui.UIParticle"</span>, <span class="built_in">package</span>.<span class="built_in">seeall</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">local</span> UIParticle = class(<span class="string">"UIParticle"</span>)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UIParticle:ctor</span><span class="params">(container)</span></span></span><br><span class="line">    self._go = container.gameObject</span><br><span class="line">    self._loader = PrefabLoader.Get(self._go)</span><br><span class="line">    self._url = <span class="literal">nil</span></span><br><span class="line">    self._goInst = <span class="literal">nil</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UIParticle:load</span><span class="params">(url)</span></span></span><br><span class="line">    <span class="keyword">if</span> GameUtils.isEmptyString(url) <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">if</span> url == self._url <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    self._url = url</span><br><span class="line">    self._loader:<span class="built_in">load</span>(url, self._onResLoaded, self)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UIParticle:_onResLoaded</span><span class="params">(loader)</span></span></span><br><span class="line">    <span class="keyword">local</span> goInst = loader <span class="keyword">and</span> loader:getInst()</span><br><span class="line">    <span class="keyword">if</span> goutil.isNil(goInst) <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    goutil.addChildToParent(goInst, self._go)</span><br><span class="line">    self._goInst = goInst</span><br><span class="line">    self._comUIParticle = goInst:GetComponent(typeof(Coffee.UIExtensions.UIParticle))</span><br><span class="line">    <span class="keyword">if</span> self._effectLoadedCallback <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">if</span> self._effectLoadedCallbackObj <span class="keyword">then</span></span><br><span class="line">            self._effectLoadedCallback(self._effectLoadedCallbackObj, goInst, res)</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            self._effectLoadedCallback(goInst, res)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">--检查美术是否有挂载EffectPlayer的组件</span></span><br><span class="line">    <span class="keyword">local</span> _effectCSComp = goInst:GetComponent(typeof(Pjg.EffectPlayer))</span><br><span class="line">    <span class="keyword">if</span> _effectCSComp <span class="keyword">and</span> <span class="keyword">not</span> goutil.isNil(_effectCSComp) <span class="keyword">then</span></span><br><span class="line">        <span class="comment">--参数默认以组件的，暂不支持外部设置参数</span></span><br><span class="line">        _effectCSComp:AddFinishListener(self._onEffectPlayFinish, self)</span><br><span class="line">        <span class="comment">--加载好就立即执行play</span></span><br><span class="line">        _effectCSComp:Play()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">--暂时没有全部播放完毕逻辑回调</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UIParticle:_onEffectPlayFinish</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">if</span> goutil.isNil(self._go) <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">if</span> self._effectFinishCallback <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">if</span> self._effectFinishCallbackObj <span class="keyword">then</span></span><br><span class="line">            self._effectFinishCallback(self._effectFinishCallbackObj, self)</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            self._effectFinishCallback()</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UIParticle:clear</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">if</span> goutil.isNil(self._goInst) <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">--检查美术是否有挂载EffectPlayer的组件</span></span><br><span class="line">    <span class="keyword">local</span> _effectCSComp = self._goInst:GetComponent(typeof(Pjg.EffectPlayer))</span><br><span class="line">    <span class="keyword">if</span> _effectCSComp <span class="keyword">and</span> <span class="keyword">not</span> goutil.isNil(_effectCSComp) <span class="keyword">then</span></span><br><span class="line">        _effectCSComp:Stop()</span><br><span class="line">        _effectCSComp:RemoveFinishListener()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UIParticle:OnDestroy</span><span class="params">()</span></span></span><br><span class="line">    self:clear()</span><br><span class="line">    self._go = <span class="literal">nil</span></span><br><span class="line">    self._loader = <span class="literal">nil</span></span><br><span class="line">    self._url = <span class="literal">nil</span></span><br><span class="line">    self._goInst = <span class="literal">nil</span></span><br><span class="line">    self._effectLoadedCallback = <span class="literal">nil</span></span><br><span class="line">    self._effectLoadedCallbackObj = <span class="literal">nil</span></span><br><span class="line">    self._effectFinishCallback = <span class="literal">nil</span></span><br><span class="line">    self._effectFinishCallbackObj = <span class="literal">nil</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UIParticle:getGo</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">return</span> self._go</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UIParticle:setEffectLoadedCallback</span><span class="params">(callback, callbackObj)</span></span></span><br><span class="line">    self._effectLoadedCallback = callback</span><br><span class="line">    self._effectLoadedCallbackObj = callbackObj</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UIParticle:setEffectFinishCallback</span><span class="params">(callback, callbackObj)</span></span></span><br><span class="line">    self._effectFinishCallback = callback</span><br><span class="line">    self._effectFinishCallbackObj = callbackObj</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UIParticle:play</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">if</span> goutil.isNil(self._goInst) <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">if</span> self._goInst.activeSelf <span class="keyword">then</span></span><br><span class="line">        goutil.setActive(self._goInst, <span class="literal">false</span>)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    goutil.setActive(self._goInst, <span class="literal">true</span>)</span><br><span class="line">    <span class="comment">--检查美术是否有挂载EffectPlayer的组件</span></span><br><span class="line">    <span class="keyword">local</span> _effectCSComp = self._goInst:GetComponent(typeof(Pjg.EffectPlayer))</span><br><span class="line">    <span class="keyword">if</span> _effectCSComp <span class="keyword">and</span> <span class="keyword">not</span> goutil.isNil(_effectCSComp) <span class="keyword">then</span></span><br><span class="line">        _effectCSComp:Stop()</span><br><span class="line">        _effectCSComp:RemoveFinishListener()</span><br><span class="line">        <span class="comment">--参数默认以组件的，暂不支持外部设置参数</span></span><br><span class="line">        _effectCSComp:AddFinishListener(self._onEffectPlayFinish, self)</span><br><span class="line">        _effectCSComp:Play()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UIParticle:setScale</span><span class="params">(scale)</span></span></span><br><span class="line">    self._comUIParticle.scale = scale</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UIParticle:setPos</span><span class="params">(x, y, z)</span></span></span><br><span class="line">    GameUtils.setLocalPos(self._goInst, x, y, z <span class="keyword">or</span> <span class="number">0</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">return</span> UIParticle</span><br></pre></td></tr></table></figure>
-<p>功能包括加载uiParticle Prefab，改变大小和位置。</p>
-<p>测试能够正常显示：</p>
-<img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/uiparticle_wQzXgIMX6n.gif" alt="uiparticle_wQzXgIMX6n.gif" title="">
-<h2 id="三、UIParticle实现原理"><a href="#三、UIParticle实现原理" class="headerlink" title="三、UIParticle实现原理"></a>三、UIParticle实现原理</h2><img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_tl8asSvA18.png" alt="image_tl8asSvA18.png" title="">
-<p>1.会先将粒子系统的共享材质传给CanvasRenderer</p>
-<p>2.在Canvas刷新前事件函数里，将粒子系统的网格经过烘焙后合并，将合并的烘焙网格传给CanvasRenderer.Mesh</p>
-<p>3.刷新材质属性时，从粒子系统材质上拿到材质属性数据，根据面板上设置好的动画材质属性类型，依次传给CanvasRenderer上的材质。</p>
-<p>4.相同材质的粒子会烘焙成网格并合并，UIParticle在烘焙前会对粒子排序，按材质实例ID、渲染队列、渲染顺序等排序，合并网格时将计算材质的hashCode，相等才能一起合并。</p>
-<img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_Lq8cKHXJpH.png" alt="image_Lq8cKHXJpH.png" title="">
-<h2 id="四、性能对比"><a href="#四、性能对比" class="headerlink" title="四、性能对比"></a>四、性能对比</h2><p>UIParticle和RT特效方式进行性能对比</p>
-<h4 id="1-单个UI粒子特效对比"><a href="#1-单个UI粒子特效对比" class="headerlink" title="1.单个UI粒子特效对比"></a>1.单个UI粒子特效对比</h4><img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_dlKUVIURur.png" alt="image_dlKUVIURur.png" title="">
-<img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_-AleO20bJE.png" alt="image_-AleO20bJE.png" title="">
-<p>左边UIParticle，右边RT。</p>
-<p>两者面数一样，UIParticle比RT方式少1个batches，其实差不多。</p>
-<p>对比内存：</p>
-<p><strong>1.1256*144RT与UIParticle内存占用对比：</strong></p>
-<img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_CVmGras3MP.png" alt="image_CVmGras3MP.png" title="">
-<p>256*144的RT特效内存加载情况，rt不是很大，只是占432kb。</p>
-<img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_S5b-ACEJZV.png" alt="image_S5b-ACEJZV.png" title="">
-<p>UIParticle内存特效加载后，scene memory只是上涨了0.2MB，而RT特效上涨0.6MB，RT特效占用较大；RT特效的Assets内存也大了0.2MB。</p>
-<p>1.2全屏1560*720RT和UIParticle内存占用对比：</p>
-<img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_oZQEU2PqwI.png" alt="image_oZQEU2PqwI.png" title="">
-<p>RT特效加载前后内存对比，可以看出加载后scene memory中rt占的内存较大，一张全屏RT占了近13MB。</p>
-<img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_0FbXJEVpBZ.png" alt="image_0FbXJEVpBZ.png" title="">
-<p>UIParticle特效加载前后对比，加载后scene memory中没有rt，内存上升不多。</p>
-<p>对比两者可以看出，particleSystem占的内存都一样，而全屏RT所以占用的内存就更明显了。</p>
-<h4 id="2-多个相同UI粒子特效对比"><a href="#2-多个相同UI粒子特效对比" class="headerlink" title="2.多个相同UI粒子特效对比"></a>2.多个相同UI粒子特效对比</h4><img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_2gDEMoHZdN.png" alt="image_2gDEMoHZdN.png" title="">
-<img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_dd56kuGgSY.png" alt="image_dd56kuGgSY.png" title="">
-<p>左边UIParticle，右边RT。</p>
-<p>UIParticle方式特效面数比RT多，batches数也比较多。相比下，RT方式更好。</p>
-<p>对比内存：</p>
-<img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_tWZrP03QQ1.png" alt="image_tWZrP03QQ1.png" title="">
-<p>加载10个UIParticle特效，particleSystem数量增加30（正常），scene memory增加1.6MB，assets增加1.4MB，Other上涨0.02GB。</p>
-<img src="/2022/01/10/ParticleEffectForUGUI（UIParticle）/image_4Tro4aIdsT.png" alt="image_4Tro4aIdsT.png" title="">
-<p>加个10个同个粒子的RT特效，RT增加一个（共用同一个255*144大小RT），scene memory增加0.6MB，assets增加0.2MB，Other上涨0.01GB。</p>
-<p>明显多个相同粒子特效，内存方面，RT方式优于UIParticle方式。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ol>
-<li><p>UI特效单独显示（比如全屏特效等）的情况，选择UIParticle方式。</p>
-</li>
-<li><p>UI特效多个相同显示，选择RT方式。</p>
-</li>
-</ol>
-
+          <h1 id="ParticleEffectForUGUI（UIParticle）"><a href="#ParticleEffectForUGUI（UIParticle）" class="headerlink" title="ParticleEffectForUGUI（UIParticle）"></a>ParticleEffectForUGUI（UIParticle）</h1><h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>ParticleEffectForUGUI插件，又名UIParticle，为UGUI渲染可遮罩、可排序的粒子特效，而且不需要额外摄像机、RT和Canvas。Unity 2018.2及以上版本支持。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/10/ParticleEffectForUGUI%EF%BC%88UIParticle%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

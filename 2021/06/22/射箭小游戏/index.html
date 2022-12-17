@@ -28,7 +28,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="射箭小游戏">
 <meta property="og:url" content="https://laoleo.github.io/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:description" content="射箭小游戏 碰撞检测属于2D游戏，没有深度，碰撞检测采用判断两线段是否相交的方法，即箭头两帧之间位置线段与箭靶中心为原点的xy轴中心线两线段。  之所以选择这种判断方法，是因为中靶的位置是算分数的一个因素，不能像射气球那种带碰撞盒的方式，箭进入碰撞盒后就会立刻停止。这样的得分效果不好，只能拿到击中边缘的3分。 假如两帧的线段同时与两中心线相交，优先取与y轴平行的中心线交点，因为箭停留在靶上的效果">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://laoleo.github.io/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/image_bPic0MSA86.png">
@@ -57,7 +57,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>射箭小游戏 | Unity游戏开发 博客</title>
+<title>射箭小游戏 | Unity游戏开发</title>
   
 
 
@@ -118,7 +118,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -239,6 +239,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -280,7 +286,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -332,10 +338,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <a id="more"></a>
-<h1 id="射箭小游戏"><a href="#射箭小游戏" class="headerlink" title="射箭小游戏"></a>射箭小游戏</h1><img src="/2021/06/22/射箭小游戏/image_bPic0MSA86.png" alt="image_bPic0MSA86.png" title="">
+        <span id="more"></span>
+<h1 id="射箭小游戏"><a href="#射箭小游戏" class="headerlink" title="射箭小游戏"></a>射箭小游戏</h1><img src="/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/image_bPic0MSA86.png" class="">
 <h3 id="碰撞检测"><a href="#碰撞检测" class="headerlink" title="碰撞检测"></a>碰撞检测</h3><p>属于2D游戏，没有深度，碰撞检测采用判断两线段是否相交的方法，即箭头两帧之间位置线段与箭靶中心为原点的xy轴中心线两线段。</p>
-<img src="/2021/06/22/射箭小游戏/image_jB99fdiEFy.png" alt="image_jB99fdiEFy.png" title="">
+<img src="/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/image_jB99fdiEFy.png" class="">
 <p>之所以选择这种判断方法，是因为中靶的位置是算分数的一个因素，不能像射气球那种带碰撞盒的方式，箭进入碰撞盒后就会立刻停止。这样的得分效果不好，只能拿到击中边缘的3分。</p>
 <p>假如两帧的线段同时与两中心线相交，优先取与y轴平行的中心线交点，因为箭停留在靶上的效果较好。</p>
 <p>实际效果发现与x轴平行的右半段，会很大概率挡住箭射中Y轴中心线，这样效果不好。右半段是为了托住箭避免没中Y轴线而穿靶，所以可以加个检测前提。</p>
@@ -345,23 +351,23 @@
 <ol>
 <li>两帧之间的位置坐标点不要采取预测下一帧位置的方式，而是保留上一帧位置。因为用默认一帧deltaTime（约0.034,30帧）预测下一帧位置，可能由于卡帧导致跟实际下一帧的位置出现带有隐患的相差，假如这个相差的距离刚好包含了中心位置，就会出现穿透现象。写这么长，不如画个图：</li>
 </ol>
-<img src="/2021/06/22/射箭小游戏/image_fNhLsjLAng.png" alt="image_fNhLsjLAng.png" title="">
+<img src="/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/image_fNhLsjLAng.png" class="">
 <ol>
 <li>浮点数运算精度缺失问题。坐标点的值时浮点数，判断相等时候要注意，不能使用全等，即使两个相等浮点数相减不一定每次都等于0，使用允许误差范围判断math.abs(a -b) &lt; c，c为使用场景下允许的最大误差.</li>
 </ol>
 <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (x - p0.x) * (x - p1.x) &lt;= <span class="number">0</span> <span class="keyword">and</span> </span><br><span class="line">        (y - p0.y) * (y - p1.y) &lt;= <span class="number">0</span> <span class="keyword">and</span> </span><br><span class="line">        (x - p2.x) * (x - p3.x) &lt;= <span class="number">0</span> <span class="keyword">and</span> </span><br><span class="line">        (y - p2.y) * (y - p3.y) &lt;= <span class="number">0</span></span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">改为：</span><br><span class="line"><span class="keyword">local</span> EPSINON = <span class="number">0.000001</span></span><br><span class="line"><span class="keyword">if</span> (x - p0.x) * (x - p1.x) &lt;= EPSINON <span class="keyword">and</span> </span><br><span class="line">        (y - p0.y) * (y - p1.y) &lt;= EPSINON <span class="keyword">and</span> </span><br><span class="line">        (x - p2.x) * (x - p3.x) &lt;= EPSINON <span class="keyword">and</span> </span><br><span class="line">        (y - p2.y) * (y - p3.y) &lt;= EPSINON </span><br><span class="line"><span class="keyword">then</span></span><br></pre></td></tr></table></figure>
 <p>3.检测移动靶的碰撞检测问题。当靶与箭相向运动，靶移动速度过快，同时箭的移动速度过慢（两帧之间线段太短），就会很大概率出现穿透问题。有个很简单的解决方法，检测移动靶时候箭两帧之间的线段不能过小 （小于阈值时适当延长），而且策划的配置不会配太快的靶，这样就基本能避免检测移动物体的穿透问题。有时候限制bug发生的条件也可以简单地解决问题。</p>
 <p>但是还是发现偶然小概率有穿靶情况，假如两帧之间最短距离定得太大，击中时箭会有种被靶吸附的效果，不太好。认真观察这个bug，箭刚好错过了移动靶的中位线时正好都未于靶右半部分。网上有个方法是增大碰撞区域，这里可以将靶右半部分作为碰撞盒，引入碰撞盒检测。</p>
-<img src="/2021/06/22/射箭小游戏/image_9kEuPrkNrd.png" alt="image_9kEuPrkNrd.png" title="">
+<img src="/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/image_9kEuPrkNrd.png" class="">
 <p>综上所述，得出碰撞检测的最佳实践是：</p>
 <p>1.优先检查Y轴中心线</p>
 <p>2.将x轴中心线以圆心分成两段，检测是否与半段相交。</p>
 <p>3.否则判断箭是否下落状态并且下落角度大于45度，检测是否与右半段相交。</p>
 <p>4.否则检测箭是否位于靶右半边区域，并且箭在上升，则碰撞；或者箭下降且到了中心点y轴一下区域，则碰撞。</p>
 <h3 id="摇杆拉弓效果"><a href="#摇杆拉弓效果" class="headerlink" title="摇杆拉弓效果"></a>摇杆拉弓效果</h3><p>摇杆拉弓弓弦表现伸缩性</p>
-<img src="/2021/06/22/射箭小游戏/image_eBJv4Og4HY.png" alt="image_eBJv4Og4HY.png" title="">
+<img src="/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/image_eBJv4Og4HY.png" class="">
 <p>通过拉伸弓弦图片width来实现，但有个问题是弓弦的粗细程度会跟着伸缩而改变，在大小比较小的情况下表现不太明显，可以接受。</p>
-<h3 id="轨迹预览"><a href="#轨迹预览" class="headerlink" title="轨迹预览"></a>轨迹预览</h3><img src="/2021/06/22/射箭小游戏/image_0xirtCNbHW.png" alt="image_0xirtCNbHW.png" title="">
+<h3 id="轨迹预览"><a href="#轨迹预览" class="headerlink" title="轨迹预览"></a>轨迹预览</h3><img src="/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/image_0xirtCNbHW.png" class="">
 <p>这个轨迹实现有三步：</p>
 <ol>
 <li><p>初始化克隆出一系列轨迹点</p>

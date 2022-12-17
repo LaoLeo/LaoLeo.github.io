@@ -28,7 +28,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="mongoDB常用知识整理">
 <meta property="og:url" content="https://laoleo.github.io/2017/07/10/mongoDB%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:description" content="mongoDB常用知识整理数据库恢复cd bin  进去bin目录，在该目录下有工具mongorestore，mongoimport，mongodump,mongoexport恢复数据库主要用mongorestore 使用命令：mongorestore -d  baifuCommune_db  --noIndexRestore   C:&#x2F;&#x2F;pathname--noIndexRestore  是忽略">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-07-09T16:00:00.000Z">
@@ -50,7 +50,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>mongoDB常用知识整理 | Unity游戏开发 博客</title>
+<title>mongoDB常用知识整理 | Unity游戏开发</title>
   
 
 
@@ -111,7 +111,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -232,6 +232,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -273,7 +279,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -312,45 +318,45 @@
 </code></pre><p>进去bin目录，在该目录下有工具<code>mongorestore</code>，<code>mongoimport</code>，<code>mongodump</code>,<code>mongoexport</code><br>恢复数据库主要用<code>mongorestore</code></p>
 <p>使用命令：<code>mongorestore -d  baifuCommune_db  --noIndexRestore   C://pathname</code><br><code>--noIndexRestore</code>  是忽略数据库版本不同引起的索引问题<br><code>-d</code>后接数据库名<br><code>C://pathname</code>是数据库目录</p>
 <blockquote>
-<p>注入此类请参考：<a href="http://www.cnblogs.com/yangxia-test/p/3983271.html" target="_blank" rel="external">mongoDB数据库导入、导出、备份</a></p>
+<p>注入此类请参考：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/yangxia-test/p/3983271.html">mongoDB数据库导入、导出、备份</a></p>
 </blockquote>
 <h2 id="mongoDB基础命令"><a href="#mongoDB基础命令" class="headerlink" title="mongoDB基础命令"></a>mongoDB基础命令</h2><pre><code>show dbs
 use dbname
 show collections
-db.collectionName.insert({x :  1})
-for(i = 3; i&lt; 100; i++)db.collectionName.insert({ x ： 1})
+db.collectionName.insert(&#123;x :  1&#125;)
+for(i = 3; i&lt; 100; i++)db.collectionName.insert(&#123; x ： 1&#125;)
 db.collectionName.find()
-db.collectionName.find({ x : 1 })
+db.collectionName.find(&#123; x : 1 &#125;)
 db.collectionName.find().count()
 
 
-db.collectionsName.find().skip(3).limit(2).sort({ x : 1 })
+db.collectionsName.find().skip(3).limit(2).sort(&#123; x : 1 &#125;)
 db.collectionName.drop()
-db.collectionName.update({ x : 1}, { x : 999 })    第二个json对象替换掉原有的对象
-db.collectionName.update({ z : 100}, { $set : { y : 99} })   只是更新了y值
-db.collectionName.update({ y : 100}, { y : 999 }, true)    假如更新的数据不存在就插入新数据
-db.collectionName.update({ x : 1}, { $set : { x : 999} }, false, true)   将第四个参数设为true，更新多条x为1的数据
-db.collectionName.remove( { x : 2 } )   删除x为2的数据
+db.collectionName.update(&#123; x : 1&#125;, &#123; x : 999 &#125;)    第二个json对象替换掉原有的对象
+db.collectionName.update(&#123; z : 100&#125;, &#123; $set : &#123; y : 99&#125; &#125;)   只是更新了y值
+db.collectionName.update(&#123; y : 100&#125;, &#123; y : 999 &#125;, true)    假如更新的数据不存在就插入新数据
+db.collectionName.update(&#123; x : 1&#125;, &#123; $set : &#123; x : 999&#125; &#125;, false, true)   将第四个参数设为true，更新多条x为1的数据
+db.collectionName.remove( &#123; x : 2 &#125; )   删除x为2的数据
 
 db.collectionName.getIndexes()    获取索引
-db.collectioname.ensureIndex( { x ： 1 } )     创建索引   
-db,collectionName.ensureIndex( { x : 1  }, { exprieAfterSeconds : 30} )  x为key，1表示升序，相反-1表示降序，exprieAfterSeconds 值为秒数，表示索引失效被删除的时间，到了时间不一定准时被删除
+db.collectioname.ensureIndex( &#123; x ： 1 &#125; )     创建索引   
+db,collectionName.ensureIndex( &#123; x : 1  &#125;, &#123; exprieAfterSeconds : 30&#125; )  x为key，1表示升序，相反-1表示降序，exprieAfterSeconds 值为秒数，表示索引失效被删除的时间，到了时间不一定准时被删除
 
 
-db.collectionName.ensureIndex( { &quot;article&quot;  : &quot;text&quot;} )  创建全文索引
-db.collectionName.find( $text : { $search : { &quot; aa  bb  cc &quot;}})  全文查询，默认是或查询
-db.collectionName.find( $text : { $search : { &quot; aa  bb  -cc &quot;}}   包含aa或bb，但不包含cc
-db.collectionName.find( $text : { $search : { &quot;  \&quot;aa\&quot;  \&quot; bb\&quot;   \&quot;cc\&quot; &quot; } } )  反斜杠是转义符， 既包含   
-db.collectionName.find( $text : { $search : { &quot; aa  bb  cc &quot;} }, { score :{$meta : &quot;textScore&quot;}}  ).sort({ score :{$meta : &quot;textScore&quot;})   相识度查询，文档里 会增加一个相识度的值，sort排序
+db.collectionName.ensureIndex( &#123; &quot;article&quot;  : &quot;text&quot;&#125; )  创建全文索引
+db.collectionName.find( $text : &#123; $search : &#123; &quot; aa  bb  cc &quot;&#125;&#125;)  全文查询，默认是或查询
+db.collectionName.find( $text : &#123; $search : &#123; &quot; aa  bb  -cc &quot;&#125;&#125;   包含aa或bb，但不包含cc
+db.collectionName.find( $text : &#123; $search : &#123; &quot;  \&quot;aa\&quot;  \&quot; bb\&quot;   \&quot;cc\&quot; &quot; &#125; &#125; )  反斜杠是转义符， 既包含   
+db.collectionName.find( $text : &#123; $search : &#123; &quot; aa  bb  cc &quot;&#125; &#125;, &#123; score :&#123;$meta : &quot;textScore&quot;&#125;&#125;  ).sort(&#123; score :&#123;$meta : &quot;textScore&quot;&#125;)   相识度查询，文档里 会增加一个相识度的值，sort排序
 
 地理位置查询
-db.collectionName.ensureIndex({ &quot;w&quot;  : &quot;2d&quot;})
-db.collectionName.insert( { w : [ 12, 12]})   经纬度  -180--180  -90--90
-db.collectionName.find( { w :{$near : [1,1]}})    返回一百个距离这个点最近的地点
-db.collectionName.find( { w :{$ geowithin : { $box : [ [0,0], [3,3] ]} } })    矩形内的点
-db.collectionName.find( { w :{$ geowithin : { $center : [ [0,0], 5 ]} } })   圆型
-db.collectionName.find( { w :{$ geowithin : { $ ploygon : [ [0,0], [3,3], [5,5] ]} } })  多边形
-db.runCommand({ geoNear : &quot;collectionName&quot;, near : [1,3], maxDistance : 10, num: 10})
+db.collectionName.ensureIndex(&#123; &quot;w&quot;  : &quot;2d&quot;&#125;)
+db.collectionName.insert( &#123; w : [ 12, 12]&#125;)   经纬度  -180--180  -90--90
+db.collectionName.find( &#123; w :&#123;$near : [1,1]&#125;&#125;)    返回一百个距离这个点最近的地点
+db.collectionName.find( &#123; w :&#123;$ geowithin : &#123; $box : [ [0,0], [3,3] ]&#125; &#125; &#125;)    矩形内的点
+db.collectionName.find( &#123; w :&#123;$ geowithin : &#123; $center : [ [0,0], 5 ]&#125; &#125; &#125;)   圆型
+db.collectionName.find( &#123; w :&#123;$ geowithin : &#123; $ ploygon : [ [0,0], [3,3], [5,5] ]&#125; &#125; &#125;)  多边形
+db.runCommand(&#123; geoNear : &quot;collectionName&quot;, near : [1,3], maxDistance : 10, num: 10&#125;)
 </code></pre>
     </div>
 

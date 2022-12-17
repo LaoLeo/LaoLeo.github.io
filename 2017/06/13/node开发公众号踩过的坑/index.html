@@ -24,12 +24,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="1  错误：1request &#x3D; Promise.promisify( require( ‘request’ ) ) 调用123456789101112return new Promise(function(resolve, reject)&amp;#123;       request(&amp;#123;url: url, json: true&amp;#125; ).then (function ( respon">
+<meta name="description" content="1  错误：1request &#x3D; Promise.promisify( require( ‘request’ ) )调用123456789101112return new Promise(function(resolve, reject)&amp;#123;       request(&amp;#123;url: url, json: true&amp;#125; ).then (function ( respons">
 <meta property="og:type" content="article">
 <meta property="og:title" content="node开发公众号踩过的坑">
 <meta property="og:url" content="https://laoleo.github.io/2017/06/13/node%E5%BC%80%E5%8F%91%E5%85%AC%E4%BC%97%E5%8F%B7%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
-<meta property="og:description" content="1  错误：1request &#x3D; Promise.promisify( require( ‘request’ ) ) 调用123456789101112return new Promise(function(resolve, reject)&amp;#123;       request(&amp;#123;url: url, json: true&amp;#125; ).then (function ( respon">
+<meta property="og:site_name" content="Unity游戏开发">
+<meta property="og:description" content="1  错误：1request &#x3D; Promise.promisify( require( ‘request’ ) )调用123456789101112return new Promise(function(resolve, reject)&amp;#123;       request(&amp;#123;url: url, json: true&amp;#125; ).then (function ( respons">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-06-12T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-12-06T15:30:38.478Z">
@@ -51,7 +51,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>node开发公众号踩过的坑 | Unity游戏开发 博客</title>
+<title>node开发公众号踩过的坑 | Unity游戏开发</title>
   
 
 
@@ -112,7 +112,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -232,6 +232,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -273,7 +279,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -311,8 +317,7 @@
         <blockquote>
 <p>1</p>
 </blockquote>
-<p><strong>错误</strong>：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request = <span class="built_in">Promise</span>.promisify( <span class="built_in">require</span>( ‘request’ ) )</span><br></pre></td></tr></table></figure></p>
-<p>调用<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">       request(&#123;<span class="attr">url</span>: url, <span class="attr">json</span>: <span class="literal">true</span>&#125; ).then (<span class="function"><span class="keyword">function</span> (<span class="params"> response </span>) </span>&#123;</span><br><span class="line">          </span><br><span class="line">                <span class="keyword">var</span> data = response[<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">var</span> now = (<span class="keyword">new</span> <span class="built_in">Date</span>().getTime());</span><br><span class="line">                <span class="keyword">var</span> expires_in = now + (data.expires_in - <span class="number">20</span>) * <span class="number">1000</span>;</span><br><span class="line">                data.expires_in = expires_in;</span><br><span class="line">                resolve(data);</span><br><span class="line">         </span><br><span class="line">        &#125;)</span><br><span class="line">  </span><br><span class="line">   &#125;)</span><br></pre></td></tr></table></figure></p>
+<p><strong>错误</strong>：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request = <span class="title class_">Promise</span>.<span class="title function_">promisify</span>( <span class="built_in">require</span>( ‘request’ ) )</span><br></pre></td></tr></table></figure><br>调用<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params">resolve, reject</span>)&#123;</span><br><span class="line">       <span class="title function_">request</span>(&#123;<span class="attr">url</span>: url, <span class="attr">json</span>: <span class="literal">true</span>&#125; ).<span class="property">then</span> (<span class="keyword">function</span> (<span class="params"> response </span>) &#123;</span><br><span class="line">          </span><br><span class="line">                <span class="keyword">var</span> data = response[<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">var</span> now = (<span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>());</span><br><span class="line">                <span class="keyword">var</span> expires_in = now + (data.<span class="property">expires_in</span> - <span class="number">20</span>) * <span class="number">1000</span>;</span><br><span class="line">                data.<span class="property">expires_in</span> = expires_in;</span><br><span class="line">                <span class="title function_">resolve</span>(data);</span><br><span class="line">         </span><br><span class="line">        &#125;)</span><br><span class="line">  </span><br><span class="line">   &#125;)</span><br></pre></td></tr></table></figure></p>
 <pre><code>**报错**：属性expires undefined
 
 本来以为request promise化后可以用then函数，所以一开始没有怀疑then的使用
@@ -320,13 +325,13 @@
 分析：expires没有定义，那么就跟data有关，data与response有关，假如没有获取的话，就会出错。那么，response是由request发请求后相应回来的数据，有理由怀疑是request使用的问题。
 分析报错信息，一步步追根溯源，才能找出问题所在。
 </code></pre><p><strong>解决</strong>：<br>Request的使用改为：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">       request(&#123;<span class="attr">url</span>: url, <span class="attr">json</span>: <span class="literal">true</span>&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">error, response, body</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!error &amp;&amp; response.statusCode === <span class="number">200</span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> data = body;</span><br><span class="line">                <span class="keyword">var</span> now = (<span class="keyword">new</span> <span class="built_in">Date</span>().getTime());</span><br><span class="line">                <span class="keyword">var</span> expires_in = now + (data.expires_in - <span class="number">20</span>) * <span class="number">1000</span>;</span><br><span class="line">                data.expires_in = expires_in;</span><br><span class="line">                resolve(data);</span><br><span class="line">                <span class="built_in">console</span>.log(data);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                reject()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);     </span><br><span class="line">   &#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params">resolve, reject</span>)&#123;</span><br><span class="line">       <span class="title function_">request</span>(&#123;<span class="attr">url</span>: url, <span class="attr">json</span>: <span class="literal">true</span>&#125;, <span class="keyword">function</span> (<span class="params">error, response, body</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!error &amp;&amp; response.<span class="property">statusCode</span> === <span class="number">200</span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> data = body;</span><br><span class="line">                <span class="keyword">var</span> now = (<span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>());</span><br><span class="line">                <span class="keyword">var</span> expires_in = now + (data.<span class="property">expires_in</span> - <span class="number">20</span>) * <span class="number">1000</span>;</span><br><span class="line">                data.<span class="property">expires_in</span> = expires_in;</span><br><span class="line">                <span class="title function_">resolve</span>(data);</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="title function_">reject</span>()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);     </span><br><span class="line">   &#125;)</span><br></pre></td></tr></table></figure>
 <p>没有使用promise化的then函数</p>
 <blockquote>
 <p>2</p>
 </blockquote>
 <p><strong>问题</strong>：客户端收不到微信服务器发来的消息，并显示”该公众号暂时无法提供服务“<br>为什么会这样呢？<br>第一步推断：假如微信服务器没有在5秒内接收到服务器发来的消息，会自动断开连接，重发请求，重复三次。所以可能是服务器或者代码程序的问题<br>进一步推断： 可是程序没有报错，昨天微信服务器是可以接受到第三方服务器的消息的。<br>反复的检查：发现发送过去的小xml格式如下：</p>
-<xml><br><tousername>&lt;![CDATA[  o1PAWszjPU3zudiu7yxmNg7hLp00 ]]&gt;</tousername><br> <fromusername>&lt;![CDATA[  gh_4a832c2991ae ]]&gt;</fromusername><br></xml>
+<xml><br><ToUserName>&lt;![CDATA[  o1PAWszjPU3zudiu7yxmNg7hLp00 ]]&gt;</ToUserName><br> <FromUserName>&lt;![CDATA[  gh_4a832c2991ae ]]&gt;</FromUserName><br></xml>
 
 <p>![CDATA][ ]里的内容是无法被服务器解析的，可是有一点很显眼，【】里面userId号的前面多了个空格，难道它连空格也不去除直接导致userId不正确，找不到用户吗？？<br>二话不说，直接测试一下….<br>丫的，还果真如此！哈哈，xml格式还真TM的严格<br>以后一定要注意![CDATA][ ]里首字母不能有空格！</p>
 <blockquote>
@@ -364,13 +369,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2017/06/13/node%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/" rel="prev" title="node开发微信公众号">
-                  <i class="fa fa-chevron-left"></i> node开发微信公众号
+                <a href="/2017/06/13/web%E7%A6%BB%E7%BA%BF%E5%BA%94%E7%94%A8/" rel="prev" title="Web离线应用">
+                  <i class="fa fa-chevron-left"></i> Web离线应用
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2017/06/13/web%E7%A6%BB%E7%BA%BF%E5%BA%94%E7%94%A8/" rel="next" title="Web离线应用">
-                  Web离线应用 <i class="fa fa-chevron-right"></i>
+                <a href="/2017/06/25/%E5%9F%BA%E4%BA%8EExpress4.0%E5%BC%80%E5%8F%91web/" rel="next" title="基于Express4.0开发web">
+                  基于Express4.0开发web <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

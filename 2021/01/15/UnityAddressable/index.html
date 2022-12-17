@@ -28,7 +28,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unity Addressable Asset System介绍、教程和原理讲解">
 <meta property="og:url" content="https://laoleo.github.io/2021/01/15/UnityAddressable/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:description" content="Unity Addressable Asset System介绍、教程和原理讲解1. 背景（怎么来的）Unity Addressable Asset System是官方推出的资源加载和资源管理的一套解决方案。 它使用异步加载的方式加载资源，提供统一的加载接口，不管资源放在哪个目录，不管资源的依赖有多复杂。 传统的资源管理方式严重将组织、构建、加载Asset的逻辑捆绑在一起，比如  资源存放在Re">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://laoleo.github.io/2021/01/15/UnityAddressable/image.png">
@@ -57,7 +57,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>Unity Addressable Asset System介绍、教程和原理讲解 | Unity游戏开发 博客</title>
+<title>Unity Addressable Asset System介绍、教程和原理讲解 | Unity游戏开发</title>
   
 
 
@@ -118,7 +118,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -239,6 +239,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -280,7 +286,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -332,7 +338,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <a id="more"></a>
+        <span id="more"></span>
 <h1 id="Unity-Addressable-Asset-System介绍、教程和原理讲解"><a href="#Unity-Addressable-Asset-System介绍、教程和原理讲解" class="headerlink" title="Unity Addressable Asset System介绍、教程和原理讲解"></a>Unity Addressable Asset System介绍、教程和原理讲解</h1><h2 id="1-背景（怎么来的）"><a href="#1-背景（怎么来的）" class="headerlink" title="1. 背景（怎么来的）"></a>1. 背景（怎么来的）</h2><p>Unity Addressable Asset System是官方推出的资源加载和资源管理的一套解决方案。</p>
 <p>它使用异步加载的方式加载资源，提供统一的加载接口，不管资源放在哪个目录，不管资源的依赖有多复杂。</p>
 <p>传统的资源管理方式严重将组织、构建、加载Asset的逻辑捆绑在一起，比如</p>
@@ -340,7 +346,7 @@
 <li>资源存放在Resource文件，那加载资源必须要用到Resources.Load方法，并且提供资源路径</li>
 <li>加载ab中的asset时，加载代码需要和构建策略捆绑在一起，先找出资源对应的bundle加载完成后，再加载需要的资源。</li>
 <li>以路径加载的代码，当资源路径发生改变往往要多次更改代码，这个更改可能涉及多处。</li>
-<li>资源位于远程，需要写代码管理资源的下载、加载、卸载和缓存。<img src="/2021/01/15/UnityAddressable/image.png" alt="image.png" title="">
+<li>资源位于远程，需要写代码管理资源的下载、加载、卸载和缓存。<img src="/2021/01/15/UnityAddressable/image.png" class="">
 基于以上种种不便，Unity Addressable Asset System（下文称AA系统）的一个重要好处就是解决以上种种痛点。<h2 id="2-特点（有何用）"><a href="#2-特点（有何用）" class="headerlink" title="2. 特点（有何用）"></a>2. 特点（有何用）</h2></li>
 </ol>
 <ul>
@@ -358,7 +364,7 @@
 </ul>
 <h3 id="Group-Schema"><a href="#Group-Schema" class="headerlink" title="Group Schema"></a>Group Schema</h3><p>group schema定义一组分配给group在构建使用的数据，可视为配置数据，决定group中Asset如何打包、打包粒度等等。</p>
 <p>点击group，查看这个group中添加的schema，和schema的配置：</p>
-<img src="/2021/01/15/UnityAddressable/image_1.png" alt="image_1.png" title="">
+<img src="/2021/01/15/UnityAddressable/image_1.png" class="">
 <p>包括三种Schema：</p>
 <ol>
 <li>Content Updage Restriction 主要决定ab可不可以更改<br> Update Restriction：决定改组内容打包成ab后，可不可以动态更新。can change post release：允许发布后变更；cannot change post release：不允许发布后变更。</li>
@@ -409,8 +415,8 @@
 <p>旧的非静态资源组bundle会在catalog文件中失去连接和记录，成为无效资源（这个无效资源会保留在用户设备上成为垃圾资源，应该要有个机制及时清理）。</p>
 <p>note：每次full build，bundle和catalog文件会重新生成，localBuildpath目录会清空，但是remoteBuildPath目录并不会清空，新生成的资源会跟旧资源混合。</p>
 <p>用一张图来阐述官方推荐的AA系统资源更新生命周期：</p>
-<img src="/2021/01/15/UnityAddressable/image_2.png" alt="image_2.png" title="">
-<img src="/2021/01/15/UnityAddressable/image_3.png" alt="image_3.png" title="">
+<img src="/2021/01/15/UnityAddressable/image_2.png" class="">
+<img src="/2021/01/15/UnityAddressable/image_3.png" class="">
 <h2 id="5-工具"><a href="#5-工具" class="headerlink" title="5. 工具"></a>5. 工具</h2><h3 id="Profiles"><a href="#Profiles" class="headerlink" title="Profiles"></a>Profiles</h3><p>通过菜单栏Window-&gt;Asset Management→Addressables→Profiles 或者 group面板的菜单栏tools→Profiles 打开Profiles面板。</p>
 <p>这个是AA系统用来管理一组组变量的解决方案。</p>
 <p>默认有以上5个变量，见名知义。</p>
@@ -430,7 +436,7 @@
 <li>Addressables.LoadSceneAsync &amp; Addressables.UnloadSceneAsync</li>
 <li>Addressables.InstantiateAsync &amp; Addressables.ReleaseInstance</li>
 </ul>
-<p>写段测试代码观察资源的引用情况：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.AddressableAssets;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.ResourceManagement.AsyncOperations;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Loader</span> :</span> MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnEnable</span><span class="params">()</span></span><br><span class="line">  </span>&#123;</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">"Assets/Local_static 1.prefab"</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">"Assets/Local_non_static.prefab"</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">"Assets/Remote_static 1.prefab"</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">"Assets/Remote_non_static.prefab"</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">"Assets/Local_static.prefab"</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">"Assets/Local_static 1.prefab"</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">"Assets/Local_non_static.prefab"</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">"Assets/Remote_static 1.prefab"</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">"Assets/Remote_non_static.prefab"</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">"Assets/Local_static.prefab"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">InstByLoadAssetAsync</span><span class="params">(<span class="built_in">string</span> address)</span></span><br><span class="line">  </span>&#123;</span><br><span class="line">    AsyncOperationHandle&lt;GameObject&gt; handle = Addressables.LoadAssetAsync&lt;GameObject&gt;(address);</span><br><span class="line">    handle.Completed += OnLoadDone;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnLoadDone</span><span class="params">(AsyncOperationHandle&lt;GameObject&gt; handle)</span></span><br><span class="line">  </span>&#123;</span><br><span class="line">    Instantiate(handle.Result);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">InstByInstantiateAsync</span><span class="params">(<span class="built_in">string</span> address)</span></span><br><span class="line">  </span>&#123;</span><br><span class="line">    Addressables.InstantiateAsync(address);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>写段测试代码观察资源的引用情况：<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.AddressableAssets;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.ResourceManagement.AsyncOperations;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Loader</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnEnable</span>()</span></span><br><span class="line">  &#123;</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">&quot;Assets/Local_static 1.prefab&quot;</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">&quot;Assets/Local_non_static.prefab&quot;</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">&quot;Assets/Remote_static 1.prefab&quot;</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">&quot;Assets/Remote_non_static.prefab&quot;</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">&quot;Assets/Local_static.prefab&quot;</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">&quot;Assets/Local_static 1.prefab&quot;</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">&quot;Assets/Local_non_static.prefab&quot;</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">&quot;Assets/Remote_static 1.prefab&quot;</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">&quot;Assets/Remote_non_static.prefab&quot;</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">&quot;Assets/Local_static.prefab&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">InstByLoadAssetAsync</span>(<span class="params"><span class="built_in">string</span> address</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    AsyncOperationHandle&lt;GameObject&gt; handle = Addressables.LoadAssetAsync&lt;GameObject&gt;(address);</span><br><span class="line">    handle.Completed += OnLoadDone;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnLoadDone</span>(<span class="params">AsyncOperationHandle&lt;GameObject&gt; handle</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    Instantiate(handle.Result);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">InstByInstantiateAsync</span>(<span class="params"><span class="built_in">string</span> address</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    Addressables.InstantiateAsync(address);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
 <p>play mode script选择use existing build，因为use asset database 模式没有统计资源依赖数据（实际上只有fps和Monoheap），线上是ab加载模式所以数据更加准确。</p>
 <p>通过tools-》Event Viewer打开面板：</p>
 <ul>
@@ -442,9 +448,9 @@
 </ul>
 <p>注意：当资源的引用计数为零时，并不代表该资源被回收，比如AB中的a资源引用未0，但AB自身的引用不为0，AB未被释放所以a也未释放。</p>
 <h2 id="6-代码层加载资源过程（如何实现）"><a href="#6-代码层加载资源过程（如何实现）" class="headerlink" title="6. 代码层加载资源过程（如何实现）"></a>6. 代码层加载资源过程（如何实现）</h2><p>第一步初始化，加载catalog文件，解析出资源定位信息。</p>
-<img src="/2021/01/15/UnityAddressable/image_4.png" alt="image_4.png" title="">
+<img src="/2021/01/15/UnityAddressable/image_4.png" class="">
 <p>接下来的过程可以简单分为两步：寻址和加载。</p>
-<img src="/2021/01/15/UnityAddressable/image_5.png" alt="image_5.png" title="">
+<img src="/2021/01/15/UnityAddressable/image_5.png" class="">
 <ol>
 <li>catalog文件会被加载并解析得出所有的Locator对象，Locator对象包括资源及其依赖的信息。</li>
 <li>遍历所有的Locator对象，匹配address key，找出对应的Locator，Locator下包含了资源的Location对象，这个对象管理资源地址及其依赖信息。</li>

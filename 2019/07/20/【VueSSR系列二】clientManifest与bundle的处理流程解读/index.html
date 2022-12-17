@@ -27,7 +27,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="【VueSSR系列二】clientManifest与bundle的处理流程解读">
 <meta property="og:url" content="https://laoleo.github.io/2019/07/20/%E3%80%90VueSSR%E7%B3%BB%E5%88%97%E4%BA%8C%E3%80%91clientManifest%E4%B8%8Ebundle%E7%9A%84%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.pixabay.com/photo/2016/03/26/13/09/cup-of-coffee-1280537__340.jpg">
 <meta property="og:image" content="http://m.qpic.cn/psb?/V12x89qA2LlAEO/SucTp5cC08NnxOrUu6IyCLb8OcB0vE7YqLIWyDYTheY!/b/dLYAAAAAAAAA&amp;bo=yAXeAsgF3gIDByI!&amp;rf=viewer_4">
@@ -55,7 +55,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>【VueSSR系列二】clientManifest与bundle的处理流程解读 | Unity游戏开发 博客</title>
+<title>【VueSSR系列二】clientManifest与bundle的处理流程解读 | Unity游戏开发</title>
   
 
 
@@ -116,7 +116,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -237,6 +237,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -278,7 +284,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -323,7 +329,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <p><img src="https://cdn.pixabay.com/photo/2016/03/26/13/09/cup-of-coffee-1280537__340.jpg" alt="我是图片"></p>
-<a id="more"></a>
+<span id="more"></span>
 <p>上一节讨论了VueSSR的构建流程，构建出来的clientManifest和serverBundle最终会被转换成html，这一节我们深入vue-server-renderer的核心内容，看看它们都经过了哪些的处理。这一节的内容包括：</p>
 <ul>
 <li>使用BundleRenderer的原因</li>
@@ -340,13 +346,12 @@
 <li>关键css注入</li>
 <li>资源注入<br>使用基本SSR（createRenderer）有一个问题，当源代码更新后需要重启服务器以获取最新代码，所以需要引入热重载。官方的做法就是通过webpack自定义插件将server bundle生成可传入renderer处理的特殊JSON文件，createBundleRender需要具备处理JSON文件能力以便支持热重载。当这一章不打算阐述SSr如何支持热重载，我们先来看看SSR最终是怎样输出html的。</li>
 </ul>
-<h2 id="服务端渲染的大体原理"><a href="#服务端渲染的大体原理" class="headerlink" title="服务端渲染的大体原理"></a>服务端渲染的大体原理</h2><p>源码看到最后，我发现了一段可以可以大致的理解它的脉络的代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// templateRenderer.render方法内</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.inject) &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        template.head(context) +</span><br><span class="line">        (context.head || <span class="string">''</span>) +</span><br><span class="line">        <span class="keyword">this</span>.renderResourceHints(context) +</span><br><span class="line">        <span class="keyword">this</span>.renderStyles(context) +</span><br><span class="line">        template.neck(context) +</span><br><span class="line">        content +</span><br><span class="line">        <span class="keyword">this</span>.renderState(context) +</span><br><span class="line">        <span class="keyword">this</span>.renderScripts(context) +</span><br><span class="line">        template.tail(context)</span><br><span class="line">    )</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        template.head(context) +</span><br><span class="line">        template.neck(context) +</span><br><span class="line">        content +</span><br><span class="line">        template.tail(context)</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>转换成图来展示：</p>
+<h2 id="服务端渲染的大体原理"><a href="#服务端渲染的大体原理" class="headerlink" title="服务端渲染的大体原理"></a>服务端渲染的大体原理</h2><p>源码看到最后，我发现了一段可以可以大致的理解它的脉络的代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// templateRenderer.render方法内</span></span><br><span class="line"><span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">inject</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        template.<span class="title function_">head</span>(context) +</span><br><span class="line">        (context.<span class="property">head</span> || <span class="string">&#x27;&#x27;</span>) +</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">renderResourceHints</span>(context) +</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">renderStyles</span>(context) +</span><br><span class="line">        template.<span class="title function_">neck</span>(context) +</span><br><span class="line">        content +</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">renderState</span>(context) +</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">renderScripts</span>(context) +</span><br><span class="line">        template.<span class="title function_">tail</span>(context)</span><br><span class="line">    )</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        template.<span class="title function_">head</span>(context) +</span><br><span class="line">        template.<span class="title function_">neck</span>(context) +</span><br><span class="line">        content +</span><br><span class="line">        template.<span class="title function_">tail</span>(context)</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>转换成图来展示：</p>
 <p><img src="http://m.qpic.cn/psb?/V12x89qA2LlAEO/yVo.O8FVlWuISuWAm2H4v27hL5ASz9zXsgZoXNZs5hg!/b/dIQAAAAAAAAA&amp;bo=mwNlApsDZQIDFzI!&amp;rf=viewer_4" alt="html分段图"></p>
 <p>原来bundleRenderer以字符串拼接的方式将html的片段组合成整个html文档，整个html文档会划分为几个部分，这里只列出主要的部分，分别是头部、资源预加载和预取资源、inlineStyle、正文、state、script。这几个主要字符片段跟辅助的片段结合就结合成了输出的服务端渲染的html内容。</p>
 <p>前面我们已经知道clientManifest的作用是记录文档资源文件的信息，bundleRenderer利用clientManifest的信息，推理出需要预加载和预取的资源和首屏加载的js资源文件，然后拼接成资源预加载和预取片段和script片段。而server bundle中记录中编译后的源代码，这正是html文档中正文的内容来源。</p>
 <h2 id="输出html正文过程"><a href="#输出html正文过程" class="headerlink" title="输出html正文过程"></a>输出html正文过程</h2><p>那么server bundle是如何被处理成正文的呢？我将bundle的处理过程中的关键步骤画成了流程图，如下：<br><img src="http://m.qpic.cn/psb?/V12x89qA2LlAEO/whA77ZoC2nwXNlTLdFS5Oo.6f*wotTd.oAOU.Kvsntg!/b/dL8AAAAAAAAA&amp;bo=9AJTA*QCUwMRBzA!&amp;rf=viewer_4" alt="vueSSR处理bundle生成正文流程"></p>
-<p>当执行createBundleRunner()时，在内部会执行compileModule()，生成一个处理编译后源码的函数evaluate。evaluate函数会将编译后文件源码包装成module对象，然后返回module.exports.defualt，它就是封装了文件源码的函数，执行这个函数就就相当于执行文件源码。当这个文件是入口文件时，返回的就是entry入口文件源码的封装函数，也就是runner，那么执行runner(context)相当于执行entry-server.js导出的函数，如下。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> context =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; app, router, store &#125; = createApp(context.url)</span><br><span class="line">    ...</span><br><span class="line">    resolve(app)</span><br><span class="line">    ...</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当执行createBundleRunner()时，在内部会执行compileModule()，生成一个处理编译后源码的函数evaluate。evaluate函数会将编译后文件源码包装成module对象，然后返回module.exports.defualt，它就是封装了文件源码的函数，执行这个函数就就相当于执行文件源码。当这个文件是入口文件时，返回的就是entry入口文件源码的封装函数，也就是runner，那么执行runner(context)相当于执行entry-server.js导出的函数，如下。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> context =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; app, router, store &#125; = <span class="title function_">createApp</span>(context.<span class="property">url</span>)</span><br><span class="line">    ...</span><br><span class="line">    <span class="title function_">resolve</span>(app)</span><br><span class="line">    ...</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>app就是执行该函数后，Promise状态为fulfilled时往下传递的单页应用的vue根实例。之后app会传入renderToString方法，该方法内会调用render函数，递归根实例中的每个子组件对象，渲染每个子组件的template然后组装template，最终生成html中的正文片段content。</p>
 <p>render函数内其实是执行了vue内部的render函数，执行组件的生命钩子函数，生成虚拟dom节点，只不过最后转化成了template字符串返回。最后templateRenderer.render方法将正文和其他文档片段组件成整个html文档返回。</p>
 <h2 id="预加载与预取资源"><a href="#预加载与预取资源" class="headerlink" title="预加载与预取资源"></a>预加载与预取资源</h2><p>bundle Renderer如何推断出预加载和预取资源的呢？</p>

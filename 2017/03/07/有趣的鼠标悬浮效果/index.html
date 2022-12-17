@@ -28,7 +28,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="有趣的鼠标悬浮效果">
 <meta property="og:url" content="https://laoleo.github.io/2017/03/07/%E6%9C%89%E8%B6%A3%E7%9A%84%E9%BC%A0%E6%A0%87%E6%82%AC%E6%B5%AE%E6%95%88%E6%9E%9C/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:description" content="1.文字的流光效果 关键代码：background-image: -webkit-linear-gradient(left, blue, red 25%, blue 50%, red 75%, blue 100%);这句代码设置背景色的线性渐变-webkit-background-clip: text;以文字的形状裁剪背景色，这时候文字颜色还在背景色之上-webkit-text-fill-colo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-03-06T16:00:00.000Z">
@@ -51,7 +51,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>有趣的鼠标悬浮效果 | Unity游戏开发 博客</title>
+<title>有趣的鼠标悬浮效果 | Unity游戏开发</title>
   
 
 
@@ -112,7 +112,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -232,6 +232,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -273,7 +279,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -309,8 +315,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <p><strong>1.文字的流光效果</strong></p>
-<p>关键代码：<code>background-image: -webkit-linear-gradient(left, blue, red 25%, blue 50%, red 75%, blue 100%);</code><br>这句代码设置背景色的线性渐变<br><code>-webkit-background-clip: text;</code><br>以文字的形状裁剪背景色，这时候文字颜色还在背景色之上<br><code>-webkit-text-fill-color: transparent;</code><br>将文字颜色设置为透明<br><code>background-size: 200% 100%;</code><br>设置一下背景色的大小，之所以设置宽为原来的两倍，是与前面设好的蓝红蓝相对应<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@keyframes</span> streamer &#123;</span><br><span class="line">    0%  &#123;</span><br><span class="line">        <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    100% &#123;</span><br><span class="line">        <span class="attribute">background-position</span>: -<span class="number">100%</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><code>animation: streamer 3s infinite linear;</code><br>最后让背景的位置移动就实现了流光效果，infinite（循环播放），linear（线性移动）</p>
+<p>关键代码：<code>background-image: -webkit-linear-gradient(left, blue, red 25%, blue 50%, red 75%, blue 100%);</code><br>这句代码设置背景色的线性渐变<br><code>-webkit-background-clip: text;</code><br>以文字的形状裁剪背景色，这时候文字颜色还在背景色之上<br><code>-webkit-text-fill-color: transparent;</code><br>将文字颜色设置为透明<br><code>background-size: 200% 100%;</code><br>设置一下背景色的大小，之所以设置宽为原来的两倍，是与前面设好的蓝红蓝相对应<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@keyframes</span> streamer &#123;</span><br><span class="line">    <span class="number">0%</span>  &#123;</span><br><span class="line">        <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="number">100%</span> &#123;</span><br><span class="line">        <span class="attribute">background-position</span>: -<span class="number">100%</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><code>animation: streamer 3s infinite linear;</code><br>最后让背景的位置移动就实现了流光效果，infinite（循环播放），linear（线性移动）</p>
 <p><strong>学习到的知识点</strong><br>linear-gradient(起点，开始颜色，结束颜色);<br>可参考<a href="http://">http://www.fx114.net/qa-264-77177.aspx</a><br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">background</span>-clip</span><br><span class="line"><span class="built_in">background</span>-clip: <span class="built_in">border</span>-<span class="built_in">box</span>|padding-<span class="built_in">box</span>|<span class="built_in">content</span>-<span class="built_in">box</span>|text(要加-webkit)</span><br></pre></td></tr></table></figure></p>
 <table>
 <thead>

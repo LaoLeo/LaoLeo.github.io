@@ -28,7 +28,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="踏平windows下安装fabric遇到的坑s">
 <meta property="og:url" content="https://laoleo.github.io/2018/04/15/%E8%B8%8F%E5%B9%B3windows%E4%B8%8B%E5%AE%89%E8%A3%85fabric%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91s/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:description" content="前言本文主要介绍python环境的文件上传部署工具，和在windows平台上安装fabric的过程遇到的坑和一些解决方案">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2127917617,591166268&amp;fm=27&amp;gp=0.jpg">
@@ -53,7 +53,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>踏平windows下安装fabric遇到的坑s | Unity游戏开发 博客</title>
+<title>踏平windows下安装fabric遇到的坑s | Unity游戏开发</title>
   
 
 
@@ -114,7 +114,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -235,6 +235,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -276,7 +282,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -322,7 +328,7 @@
     <div class="post-body" itemprop="articleBody">
         <p><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2127917617,591166268&amp;fm=27&amp;gp=0.jpg" alt="我是图片"></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文主要介绍python环境的文件上传部署工具，和在windows平台上安装fabric的过程遇到的坑和一些解决方案</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="fabric"><a href="#fabric" class="headerlink" title="fabric"></a>fabric</h1><p>fabric是一个用python开发的部署工具，最大的好处就是不用登陆服务器，在本地运行python脚本就可以轻松做到远程部署</p>
 <p>fabric提供了几个简单的api来完成所有的部署  </p>
 <ul>
@@ -332,34 +338,31 @@
 <li>with cd(‘/path/to/dir/‘) 指定服务器的目录</li>
 </ul>
 <p>在项目根目录下增加fabfile.py文件，这个文件就是控制部署的脚本</p>
-<p>详细请参考廖雪峰老师的fabric介绍：<a href="https://www.liaoxuefeng.com/article/001373892650475818672edc83c4c978a45195eab8dc753000" target="_blank" rel="external">https://www.liaoxuefeng.com/article/001373892650475818672edc83c4c978a45195eab8dc753000</a></p>
+<p>详细请参考廖雪峰老师的fabric介绍：<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/article/001373892650475818672edc83c4c978a45195eab8dc753000">https://www.liaoxuefeng.com/article/001373892650475818672edc83c4c978a45195eab8dc753000</a></p>
 <h1 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h1><p>所以这个工具依赖python环境，在下是windows系统，需要装python环境（不得不吐槽windows，安装这些环境过程中会遇到很多坑，不想mac系统，可以跟liunx流畅的打交道）</p>
-<p>python下载地址：<a href="https://www.python.org/getit/" target="_blank" rel="external">https://www.python.org/getit/</a><br>最稳地还是建议安装2.7版本，因为后面安装的一些依赖包依赖2.7版本</p>
+<p>python下载地址：<a target="_blank" rel="noopener" href="https://www.python.org/getit/">https://www.python.org/getit/</a><br>最稳地还是建议安装2.7版本，因为后面安装的一些依赖包依赖2.7版本</p>
 <h1 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h1><p>pip可以理解为python的一个包管理工具,用pip工具去安装fabric<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> fabric</span><br></pre></td></tr></table></figure></p>
-<p>pip下载地址：<a href="https://pypi.python.org/packages/source/p/pip/pip-8.0.2.tar.gz#md5=3a73c4188f8dbad6a1e6f6d44d117eeb" target="_blank" rel="external">https://pypi.python.org/packages/source/p/pip/pip-8.0.2.tar.gz#md5=3a73c4188f8dbad6a1e6f6d44d117eeb</a></p>
-<p>进入pip的安装目录，运行：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">python</span> setup.<span class="keyword">py</span> build</span><br><span class="line"><span class="keyword">python</span> setup.<span class="keyword">py</span> install</span><br></pre></td></tr></table></figure></p>
-<p>若此时出现错误说，not found module ‘setuptools’,需要补装一下<br>setuptools下载地址：<a href="https://pypi.python.org/packages/source/s/setuptools/setuptools-19.6.tar.gz#md5=c607dd118eae682c44ed146367a17e26" target="_blank" rel="external">https://pypi.python.org/packages/source/s/setuptools/setuptools-19.6.tar.gz#md5=c607dd118eae682c44ed146367a17e26</a></p>
+<p>pip下载地址：<a target="_blank" rel="noopener" href="https://pypi.python.org/packages/source/p/pip/pip-8.0.2.tar.gz#md5=3a73c4188f8dbad6a1e6f6d44d117eeb">https://pypi.python.org/packages/source/p/pip/pip-8.0.2.tar.gz#md5=3a73c4188f8dbad6a1e6f6d44d117eeb</a></p>
+<p>进入pip的安装目录，运行：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">python</span> setup.<span class="keyword">py</span> build</span><br><span class="line"><span class="keyword">python</span> setup.<span class="keyword">py</span> install</span><br></pre></td></tr></table></figure><br>若此时出现错误说，not found module ‘setuptools’,需要补装一下<br>setuptools下载地址：<a target="_blank" rel="noopener" href="https://pypi.python.org/packages/source/s/setuptools/setuptools-19.6.tar.gz#md5=c607dd118eae682c44ed146367a17e26">https://pypi.python.org/packages/source/s/setuptools/setuptools-19.6.tar.gz#md5=c607dd118eae682c44ed146367a17e26</a></p>
 <p>进入安装目录执行<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">python</span> setup.<span class="keyword">py</span> build</span><br><span class="line"><span class="keyword">python</span> setup.<span class="keyword">py</span> install</span><br></pre></td></tr></table></figure></p>
-<p>或者参考另一个方法：<a href="https://blog.csdn.net/newjueqi/article/details/47446965" target="_blank" rel="external">https://blog.csdn.net/newjueqi/article/details/47446965</a></p>
+<p>或者参考另一个方法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/newjueqi/article/details/47446965">https://blog.csdn.net/newjueqi/article/details/47446965</a></p>
 <p>此时还有一步，就是把pip的安装目录添加进环境变量(windows就是有点麻烦，有钱还是买个macbook)</p>
 <p>这时就可以用前面说的命令安装fabric了</p>
 <h1 id="运行fabfile-py"><a href="#运行fabfile-py" class="headerlink" title="运行fabfile.py"></a>运行fabfile.py</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fab <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
-<p>test是fabfile.py里定义的一个方法<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fabfile.<span class="keyword">py</span></span><br><span class="line"></span><br><span class="line">def test(remote=<span class="string">'121.41.121.230'</span>, <span class="keyword">make</span>=True):</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'开始同步代码...'</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">make</span>:</span><br><span class="line">        local(<span class="string">'make test'</span>)</span><br><span class="line">    remote_dir = <span class="string">'/home/lukou/app/paidan/test2'</span></span><br><span class="line">    sync_str = <span class="string">'rsync --delete-after -r %s %s@%s:%s'</span></span><br><span class="line">    local(sync_str % (os.<span class="built_in">getcwd</span>() + <span class="string">'/dist/*'</span>, env.user, remote, remote_dir))</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'同步完毕'</span></span><br></pre></td></tr></table></figure></p>
-<p>这时候window上会报错，说make test这命令执行出错  </p>
+<p>test是fabfile.py里定义的一个方法<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fabfile.py</span><br><span class="line"></span><br><span class="line">def test(<span class="attribute">remote</span>=<span class="string">&#x27;121.41.121.230&#x27;</span>, <span class="attribute">make</span>=<span class="literal">True</span>):</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&#x27;开始同步代码...&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> make:</span><br><span class="line">        local(<span class="string">&#x27;make test&#x27;</span>)</span><br><span class="line">    remote_dir = <span class="string">&#x27;/home/lukou/app/paidan/test2&#x27;</span></span><br><span class="line">    sync_str = <span class="string">&#x27;rsync --delete-after -r %s %s@%s:%s&#x27;</span></span><br><span class="line">    local(sync_str % (os.getcwd() + <span class="string">&#x27;/dist/*&#x27;</span>, env.user, remote, remote_dir))</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&#x27;同步完毕&#x27;</span></span><br></pre></td></tr></table></figure><br>这时候window上会报错，说make test这命令执行出错  </p>
 <p>前面已经说了，local()是执行本地命令，那么问题就是windows没有make这个命令，所以要安装make命令的工具</p>
 <p>其实不安装也可以，make test就是运行package.json里面的test脚本，直接把它改为npm run test就好</p>
 <p>在次运行fabfile脚本</p>
 <p>还是会出错，说没有rsync命令</p>
-<h2 id="安装rsync工具"><a href="#安装rsync工具" class="headerlink" title="安装rsync工具"></a>安装rsync工具</h2><p>cwrsync下载地址：<a href="https://www.itefix.net/cwrsync" target="_blank" rel="external">https://www.itefix.net/cwrsync</a><br>记得把安装目录添加到PATH</p>
+<h2 id="安装rsync工具"><a href="#安装rsync工具" class="headerlink" title="安装rsync工具"></a>安装rsync工具</h2><p>cwrsync下载地址：<a target="_blank" rel="noopener" href="https://www.itefix.net/cwrsync">https://www.itefix.net/cwrsync</a><br>记得把安装目录添加到PATH</p>
 <p>再次运行fabfile脚本</p>
-<p>还是会出错，错误信息如下：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">dup</span>() <span class="selector-tag">in</span>/<span class="selector-tag">out</span>/<span class="selector-tag">err</span> <span class="selector-tag">failed</span></span><br><span class="line"><span class="selector-tag">rsync</span>: <span class="selector-tag">connection</span> <span class="selector-tag">unexpectedly</span> <span class="selector-tag">closed</span> (<span class="number">0</span> bytes received so far) <span class="selector-attr">[sender]</span></span><br><span class="line"><span class="selector-tag">rsync</span> <span class="selector-tag">error</span>: <span class="selector-tag">unexplained</span> <span class="selector-tag">error</span> (code <span class="number">255</span>) <span class="selector-tag">at</span> <span class="selector-tag">io</span><span class="selector-class">.c</span>(<span class="number">226</span>) <span class="selector-attr">[sender=3.1.2]</span></span><br></pre></td></tr></table></figure></p>
-<p>百度了一下，找个了一个解决方案，原因是本地有两个ssh，而正在使用的ssh不是cwrsync下的ssh.exe，在windows下环境变量是从前到后查找的，假如找到ssh就不会往后找  </p>
-<p>解决方案参考：<a href="https://stackoverflow.com/questions/7261029/why-is-this-rsync-connection-unexpectedly-closed-on-windows" target="_blank" rel="external">https://stackoverflow.com/questions/7261029/why-is-this-rsync-connection-unexpectedly-closed-on-windows</a></p>
-<p>所以要把path里cwrsync的安装目录提前，像如下<br><figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ where ssh</span><br><span class="line">E:<span class="symbol">\P</span>rogramFiles<span class="symbol">\c</span>wRsync_5.5.0_x86_Free<span class="symbol">\b</span>in<span class="symbol">\s</span>sh.exe</span><br><span class="line">C:<span class="symbol">\P</span>rogram Files (x86)<span class="symbol">\G</span>it<span class="symbol">\u</span>sr<span class="symbol">\b</span>in<span class="symbol">\s</span>sh.exe</span><br></pre></td></tr></table></figure></p>
+<p>还是会出错，错误信息如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">dup</span><span class="params">()</span></span> <span class="keyword">in</span>/out/err failed</span><br><span class="line">rsync: connection unexpectedly closed (<span class="number">0</span> bytes received so far) <span class="selector-attr">[sender]</span></span><br><span class="line">rsync error: unexplained error (<span class="selector-tag">code</span> <span class="number">255</span>) at io<span class="selector-class">.c</span>(<span class="number">226</span>) <span class="selector-attr">[sender=3.1.2]</span></span><br></pre></td></tr></table></figure><br>百度了一下，找个了一个解决方案，原因是本地有两个ssh，而正在使用的ssh不是cwrsync下的ssh.exe，在windows下环境变量是从前到后查找的，假如找到ssh就不会往后找  </p>
+<p>解决方案参考：<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/7261029/why-is-this-rsync-connection-unexpectedly-closed-on-windows">https://stackoverflow.com/questions/7261029/why-is-this-rsync-connection-unexpectedly-closed-on-windows</a></p>
+<p>所以要把path里cwrsync的安装目录提前，像如下<br><figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">λ where ssh</span><br><span class="line"><span class="name">E</span>:\ProgramFiles\cwRsync_5<span class="number">.5</span><span class="number">.0</span>_x86_Free\bin\ssh.exe</span><br><span class="line"><span class="name">C</span>:\Program Files (x86)\Git\usr\bin\ssh.exe</span><br></pre></td></tr></table></figure></p>
 <p>再次运行fab test</p>
 <p>也还是会出错，就是这么皮。要不然这标题就不会在坑后面加s了</p>
 <p>这次报的错误主要是语法错误<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">The source <span class="keyword">and </span>destination cannot <span class="keyword">both </span><span class="keyword">be </span>remote.</span><br><span class="line">rsync error: syntax <span class="keyword">or </span>usage error (code <span class="number">1</span>) <span class="built_in">at</span> main.c(<span class="number">1274</span>) [Receiver=<span class="number">3</span>.<span class="number">1</span>.<span class="number">2</span>]</span><br></pre></td></tr></table></figure></p>
-<p>这下简单了，百度一下rsync命令在windows下的用法就行了，最后改成如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fabfile.py</span><br><span class="line"></span><br><span class="line">def <span class="built_in">test</span>(remote=<span class="string">'121.41.121.230'</span>, make=True):</span><br><span class="line">    <span class="built_in">print</span> <span class="string">'开始同步代码...'</span></span><br><span class="line">    <span class="keyword">if</span> make:</span><br><span class="line">        <span class="built_in">local</span>(<span class="string">'npm run test'</span>)</span><br><span class="line">    remote_dir = <span class="string">'app/paidan/test2'</span></span><br><span class="line">    sync_str = <span class="string">'rsync --delete-after -r %s %s@%s:%s'</span></span><br><span class="line">    <span class="built_in">local</span>(sync_str % (<span class="string">'/cygdrive/E/work/lukou/mirror/dist/*'</span>, env.user, remote, remote_dir))</span><br><span class="line">    <span class="built_in">print</span> <span class="string">'同步完毕'</span></span><br></pre></td></tr></table></figure></p>
+<p>这下简单了，百度一下rsync命令在windows下的用法就行了，最后改成如下：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fabfile.py</span><br><span class="line"></span><br><span class="line">def test(<span class="attribute">remote</span>=<span class="string">&#x27;121.41.121.230&#x27;</span>, <span class="attribute">make</span>=<span class="literal">True</span>):</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&#x27;开始同步代码...&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> make:</span><br><span class="line">        local(<span class="string">&#x27;npm run test&#x27;</span>)</span><br><span class="line">    remote_dir = <span class="string">&#x27;app/paidan/test2&#x27;</span></span><br><span class="line">    sync_str = <span class="string">&#x27;rsync --delete-after -r %s %s@%s:%s&#x27;</span></span><br><span class="line">    local(sync_str % (<span class="string">&#x27;/cygdrive/E/work/lukou/mirror/dist/*&#x27;</span>, env.user, remote, remote_dir))</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&#x27;同步完毕&#x27;</span></span><br></pre></td></tr></table></figure></p>
 <p>最后运行，输入密码就成功了！！！</p>
 <p><img src="http://p2.so.qhimgs1.com/bdr/_240_/t01b985b931a308278e.jpg" alt=""></p>
 

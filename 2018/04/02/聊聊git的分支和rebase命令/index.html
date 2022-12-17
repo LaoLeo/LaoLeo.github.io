@@ -28,7 +28,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊聊git的分支和rebase命令">
 <meta property="og:url" content="https://laoleo.github.io/2018/04/02/%E8%81%8A%E8%81%8Agit%E7%9A%84%E5%88%86%E6%94%AF%E5%92%8Crebase%E5%91%BD%E4%BB%A4/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:description" content="前言进入公司已经一周的时间，在项目的协作开发中，根据公司对代码提交的要求，对使用git所遇到的一些问题情况，做了一个简单的总结，以便帮助遇到同样问题的实习生，提高的解决问题效率，进而更快的适应公司的开发节奏。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=246425395,1170785252&amp;fm=27&amp;gp=0.jpg">
@@ -56,7 +56,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>聊聊git的分支和rebase命令 | Unity游戏开发 博客</title>
+<title>聊聊git的分支和rebase命令 | Unity游戏开发</title>
   
 
 
@@ -117,7 +117,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -238,6 +238,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -279,7 +285,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -325,7 +331,7 @@
     <div class="post-body" itemprop="articleBody">
         <p><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=246425395,1170785252&amp;fm=27&amp;gp=0.jpg" alt="我是图片"></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>进入公司已经一周的时间，在项目的协作开发中，根据公司对代码提交的要求，对使用git所遇到的一些问题情况，做了一个简单的总结，以便帮助遇到同样问题的实习生，提高的解决问题效率，进而更快的适应公司的开发节奏。</p>
-<a id="more"></a>
+<span id="more"></span>
 <blockquote>
 <p>目录</p>
 <ul>
@@ -335,7 +341,7 @@
 </ul>
 </blockquote>
 <h1 id="git简介"><a href="#git简介" class="headerlink" title="git简介"></a>git简介</h1><p>git是个分布式和渐进式的版本管理工具。分布式是指代码可以克隆很多份，不像svn（集中式版本管理工具）集中对一份代码进行版本管理，而git允许你将项目fork成自己一份。而渐进式是指git会智能的diff代码的改动情况，但不是记录文件的具体变化，而是保存一系列不同时刻的文件快照。</p>
-<p>具体参考廖雪峰老师的<a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/" target="_blank" rel="external">git教程</a>和<a href="https://git-scm.com/book/zh/v2/" target="_blank" rel="external">git官网</a></p>
+<p>具体参考廖雪峰老师的<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/">git教程</a>和<a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/">git官网</a></p>
 <h1 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h1><p>为了更好的使用git去解决一些复杂的版本冲突问题，有必要先理解git的分支。</p>
 <p><strong>快照</strong>  </p>
 <p>其实要理解git的分支，首先要了解git是如何保存文件的<br>git以文件快照的方式保存文件的更改情况，而不是cope每一份代码<br>那么如何理解文件快照的？  </p>
@@ -351,36 +357,24 @@
 <p><strong>分支指针</strong></p>
 <p>既然git是通过指针去追溯文件快照的，那么是不是可以创建多几个指针去多拿几张照片，进而多重现几个状态呢？<br>所以分支就是所谓的指针，那么git又是怎么知道我在哪个分支上呢？<br>没错，再创建一个指针去指向这个分支指针，来表示我当前所在的分支。<br><img src="https://git-scm.com/book/en/v2/images/branch-and-history.png" alt="分支简介图"><br>所有的提交都是以单链表结构连接起来的，通过这个指针来追溯到所需的commit对象  </p>
 <p>但是冲突是如何产生的呢？<br>看个图就明白了<br><img src="https://git-scm.com/book/en/v2/images/advance-master.png" alt="分支简介图"><br>其实就是多个commit对象中指向父对象的指针指向了同一个父对象。而两个照片中物体在同一个时刻有两个状态，所以就产生了冲突。  </p>
-<p>使用命令查看分支的指向情况，或者说项目的分叉情况<br><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">git</span> <span class="comment">log</span> --<span class="comment">oneline</span> --<span class="comment">decorate</span> --<span class="comment">graph</span> --<span class="comment">all</span></span><br></pre></td></tr></table></figure></p>
+<p>使用命令查看分支的指向情况，或者说项目的分叉情况<br><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">git log</span> <span class="literal">--</span><span class="comment">oneline</span> <span class="literal">--</span><span class="comment">decorate</span> <span class="literal">--</span><span class="comment">graph</span> <span class="literal">--</span><span class="comment">all</span>  </span><br></pre></td></tr></table></figure></p>
 <h1 id="rebase的两种用法"><a href="#rebase的两种用法" class="headerlink" title="rebase的两种用法"></a>rebase的两种用法</h1><p><strong>1. 合并commit</strong>  </p>
 <blockquote>
 <p>你肯定也试过这样的场景，leader交给你一个小需求，一个小时不到就解决了，提交一个commit，但过了一会，觉得代码还有可以改进的地方，作为一个努力上进的人，你肯定不会只求完成需求这么简单，所以再提了一版…</p>
 </blockquote>
 <p> 但这个几个commit都是为了同一个需求开发的，leader去review代码的时候，几个commit还好，但实际开发中有时是十几个commit，这样对于review代码和追踪版本时，就显的尤为困难了</p>
 <p> 所以需要将为同一个需求开发的这些commit合并成一个</p>
- <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HAED<span class="string">~n&lt;commitID&gt;</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i <span class="title class_">HAED</span><span class="string">~n&lt;commitID&gt;</span></span><br></pre></td></tr></table></figure>
 <p> 上面的n代指数字，表示包括当前以前的几个commit<br>或者把HAED~n替换为n的commitID，效果一样</p>
-<p>这是会出现一个编辑界面<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">pick <span class="number">5</span>e187c7dbe8    <span class="keyword">add</span><span class="bash"> center style indent  </span></span><br><span class="line">pick <span class="number">6</span>d577eb3440    <span class="keyword">add</span><span class="bash"> center style  </span></span><br><span class="line">pick f9b9508a3ab    <span class="keyword">add</span><span class="bash"> center style  </span></span><br><span class="line">pick <span class="number">111</span>ab9cc261    update templates  </span><br><span class="line"><span class="comment"># Rebase 150a643..2fad1ae onto 150a643  </span></span><br><span class="line"><span class="comment">#  </span></span><br><span class="line"><span class="comment"># Commands:  </span></span><br><span class="line"><span class="comment">#  p, pick = use commit  </span></span><br><span class="line"><span class="comment">#  r, reword = use commit, but edit the commit message  </span></span><br><span class="line"><span class="comment">#  e, edit = use commit, but stop for amending  </span></span><br><span class="line"><span class="comment">#  s, squash = use commit, but meld into previous commit</span></span><br></pre></td></tr></table></figure></p>
-<p>把第二到四行的pick更改为s，就会使用这个commit，并且合并前个commit</p>
-<p>若出现冲突，解决冲突，应用最新的版本，使用<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">add</span> . <span class="comment">//提交索引</span></span><br><span class="line">git rebase --<span class="keyword">continue</span> <span class="comment">//继续rebase操作</span></span><br></pre></td></tr></table></figure></p>
-<p>若在合并commit的过程中想放弃，可以使用命令<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase <span class="comment">--abort</span></span><br></pre></td></tr></table></figure></p>
-<p>此时会出现一个编辑窗口，保存退出就行</p>
-<p>最后把本地推上远程<br><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">push</span> -f <span class="comment">//必须带上-f，以本地覆盖远程</span></span><br><span class="line">或者指定远程和分支</span><br><span class="line">git <span class="keyword">push</span> (origin master) -f</span><br></pre></td></tr></table></figure></p>
-<p>因为本地的几个commit已经合并成了一个，而若远程还有这几个commit，需要以本地覆盖远程</p>
+<p>这是会出现一个编辑界面<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">pick 5e187c7dbe8    <span class="built_in">add</span> center style indent  </span><br><span class="line">pick 6d577eb3440    <span class="built_in">add</span> center style  </span><br><span class="line">pick f9b9508a3ab    <span class="built_in">add</span> center style  </span><br><span class="line">pick 111ab9cc261    update templates  </span><br><span class="line"><span class="comment"># Rebase 150a643..2fad1ae onto 150a643  </span></span><br><span class="line"><span class="comment">#  </span></span><br><span class="line"><span class="comment"># Commands:  </span></span><br><span class="line"><span class="comment">#  p, pick = use commit  </span></span><br><span class="line"><span class="comment">#  r, reword = use commit, but edit the commit message  </span></span><br><span class="line"><span class="comment">#  e, edit = use commit, but stop for amending  </span></span><br><span class="line"><span class="comment">#  s, squash = use commit, but meld into previous commit  </span></span><br></pre></td></tr></table></figure><br>把第二到四行的pick更改为s，就会使用这个commit，并且合并前个commit</p>
+<p>若出现冲突，解决冲突，应用最新的版本，使用<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add . <span class="regexp">//</span>提交索引</span><br><span class="line">git rebase --<span class="keyword">continue</span> <span class="regexp">//</span>继续rebase操作</span><br></pre></td></tr></table></figure><br>若在合并commit的过程中想放弃，可以使用命令<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase <span class="comment">--abort</span></span><br></pre></td></tr></table></figure><br>此时会出现一个编辑窗口，保存退出就行</p>
+<p>最后把本地推上远程<br><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">push</span> -f <span class="comment">//必须带上-f，以本地覆盖远程</span></span><br><span class="line">或者指定远程和分支</span><br><span class="line">git <span class="built_in">push</span> (origin master) -f</span><br></pre></td></tr></table></figure><br>因为本地的几个commit已经合并成了一个，而若远程还有这几个commit，需要以本地覆盖远程</p>
 <p><strong>2. 合并分支</strong>  </p>
-<p>有如下分支图<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">C2--&gt;C1</span><br><span class="line">C3--&gt;C2</span><br><span class="line">C4--&gt;C2</span><br><span class="line">master<span class="function"><span class="params">((master))</span>--&gt;</span>C3</span><br><span class="line">dev<span class="function"><span class="params">((dev))</span>--&gt;</span>C4</span><br></pre></td></tr></table></figure></p>
-<p>在master上合并dev我们一般用<br><figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">merge</span> dev</span><br></pre></td></tr></table></figure></p>
-<p>此时分支图就变为<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">C2--&gt;C1</span><br><span class="line">C3--&gt;C2</span><br><span class="line">C4--&gt;C2</span><br><span class="line">C5--&gt;C3</span><br><span class="line">C5--&gt;C4</span><br><span class="line">master<span class="function"><span class="params">((master))</span>--&gt;</span>C5</span><br><span class="line">dev<span class="function"><span class="params">((dev))</span>--&gt;</span>C4</span><br></pre></td></tr></table></figure></p>
-<p>这样分支图就显的很乱，使用rebase能够让合并后的分支图变得简洁<br>在最新的分支dev上<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase <span class="literal">master</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">C2--&gt;C1</span><br><span class="line">C3--&gt;C2</span><br><span class="line">C4--&gt;C2</span><br><span class="line"><span class="string">'C4'</span>--&gt;C3</span><br><span class="line">master<span class="function"><span class="params">((master))</span>--&gt;</span>C3</span><br><span class="line">dev<span class="function"><span class="params">((dev))</span>--&gt;</span><span class="string">'C4'</span></span><br></pre></td></tr></table></figure>
-<p>dev上的C4会被cope成’C4’并且dev指向’C4’,保存在rebase文件夹，然后’C4’指向C3，最后C4会当成垃圾清除，最后分支图就变为了<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">C2--&gt;C1</span><br><span class="line">C3--&gt;C2</span><br><span class="line"><span class="string">'C4'</span>--&gt;C3</span><br><span class="line">master<span class="function"><span class="params">((master))</span>--&gt;</span>C3</span><br><span class="line">dev<span class="function"><span class="params">((dev))</span>--&gt;</span><span class="string">'C4'</span></span><br></pre></td></tr></table></figure></p>
-<p>若有冲突,解决后<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">add</span> .</span><br><span class="line">git rebase --<span class="keyword">continue</span></span><br></pre></td></tr></table></figure></p>
-<p>随时放弃<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase <span class="comment">--abort</span></span><br></pre></td></tr></table></figure></p>
+<p>有如下分支图<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">C2--&gt;C1</span><br><span class="line">C3--&gt;C2</span><br><span class="line">C4--&gt;C2</span><br><span class="line">master<span class="function"><span class="params">((master))</span>--&gt;</span>C3</span><br><span class="line">dev<span class="function"><span class="params">((dev))</span>--&gt;</span>C4</span><br></pre></td></tr></table></figure><br>在master上合并dev我们一般用<br><figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">merge</span> dev</span><br></pre></td></tr></table></figure><br>此时分支图就变为<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">C2--&gt;C1</span><br><span class="line">C3--&gt;C2</span><br><span class="line">C4--&gt;C2</span><br><span class="line">C5--&gt;C3</span><br><span class="line">C5--&gt;C4</span><br><span class="line">master<span class="function"><span class="params">((master))</span>--&gt;</span>C5</span><br><span class="line">dev<span class="function"><span class="params">((dev))</span>--&gt;</span>C4</span><br></pre></td></tr></table></figure><br>这样分支图就显的很乱，使用rebase能够让合并后的分支图变得简洁<br>在最新的分支dev上<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase <span class="literal">master</span></span><br></pre></td></tr></table></figure><br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">C2--&gt;C1</span><br><span class="line">C3--&gt;C2</span><br><span class="line">C4--&gt;C2</span><br><span class="line"><span class="string">&#x27;C4&#x27;</span>--&gt;C3</span><br><span class="line">master<span class="function"><span class="params">((master))</span>--&gt;</span>C3</span><br><span class="line">dev<span class="function"><span class="params">((dev))</span>--&gt;</span><span class="string">&#x27;C4&#x27;</span></span><br></pre></td></tr></table></figure><br>dev上的C4会被cope成’C4’并且dev指向’C4’,保存在rebase文件夹，然后’C4’指向C3，最后C4会当成垃圾清除，最后分支图就变为了<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">C2--&gt;C1</span><br><span class="line">C3--&gt;C2</span><br><span class="line"><span class="string">&#x27;C4&#x27;</span>--&gt;C3</span><br><span class="line">master<span class="function"><span class="params">((master))</span>--&gt;</span>C3</span><br><span class="line">dev<span class="function"><span class="params">((dev))</span>--&gt;</span><span class="string">&#x27;C4&#x27;</span></span><br></pre></td></tr></table></figure><br>若有冲突,解决后<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">add</span> .</span><br><span class="line">git rebase --<span class="keyword">continue</span></span><br></pre></td></tr></table></figure><br>随时放弃<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase <span class="comment">--abort</span></span><br></pre></td></tr></table></figure></p>
 <p><strong>在拉去远程更新时也可以使用rebase</strong><br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git pull --rebase</span><br><span class="line">或者指定远程和分支</span><br><span class="line">git pull upstream <span class="keyword">master</span> <span class="title">--rebase</span></span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>ps:<br>倘若通过git pull –rebase导致在gitlab上发merge request时，出现了其他人的本已经提交了的commit信息，不妨用使用<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --<span class="keyword">soft</span> &lt;commitID&gt; <span class="comment">//保留更改回退</span></span><br></pre></td></tr></table></figure></p>
+<p>ps:<br>倘若通过git pull –rebase导致在gitlab上发merge request时，出现了其他人的本已经提交了的commit信息，不妨用使用<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --<span class="keyword">soft</span> &lt;commitID&gt; <span class="comment">//保留更改回退</span></span><br></pre></td></tr></table></figure><br>再次commit，在gitlab再发merge request，应该就干净了（只是自己的提交信息）</p>
 </blockquote>
-<p>再次commit，在gitlab再发merge request，应该就干净了（只是自己的提交信息）</p>
 <p><strong>回到最初</strong>  </p>
 <p>解决git复杂问题的前提还是得先看的明白git的分支图，清晰每条命令对git分支的影响。</p>
 

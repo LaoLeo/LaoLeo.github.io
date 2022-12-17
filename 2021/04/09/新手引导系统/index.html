@@ -28,7 +28,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="新手引导系统">
 <meta property="og:url" content="https://laoleo.github.io/2021/04/09/%E6%96%B0%E6%89%8B%E5%BC%95%E5%AF%BC%E7%B3%BB%E7%BB%9F/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:description" content="目录 新手引导系统 需求分析 系统设计架构 新手指引遮罩 行为树    新手引导系统需求分析 强制引导。必须要完成的，常见是进入游戏新手副本。  条件触发引导。由各种条件达成触发，如达到等级，通关副本等。  中断后再次执行。玩家因异常或主动退出中断引导，根据关键步是否完成情况决定是否再次打开。  异常处理。当条件不满足时执行具体的处理方法。比如提交物品，不存在对应物品，引导直接结束。  附加协议">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://laoleo.github.io/2021/04/09/%E6%96%B0%E6%89%8B%E5%BC%95%E5%AF%BC%E7%B3%BB%E7%BB%9F/image_BXoVzPQBan.png">
@@ -52,7 +52,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>新手引导系统 | Unity游戏开发 博客</title>
+<title>新手引导系统 | Unity游戏开发</title>
   
 
 
@@ -113,7 +113,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -234,6 +234,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -275,7 +281,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -323,7 +329,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <a id="more"></a>
+        <span id="more"></span>
 <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
 <li><a href="#新手引导系统">新手引导系统</a><ul>
 <li><a href="#需求分析">需求分析</a></li>
@@ -347,7 +353,7 @@
 <li><p>并行。引导动作是否并行执行，比如战斗引导中，英雄挂了，并行执行救援引导。</p>
 </li>
 </ol>
-<h2 id="系统设计架构"><a href="#系统设计架构" class="headerlink" title="系统设计架构"></a>系统设计架构</h2><img src="/2021/04/09/新手引导系统/image_BXoVzPQBan.png" alt="image_BXoVzPQBan.png" title="">
+<h2 id="系统设计架构"><a href="#系统设计架构" class="headerlink" title="系统设计架构"></a>系统设计架构</h2><img src="/2021/04/09/%E6%96%B0%E6%89%8B%E5%BC%95%E5%AF%BC%E7%B3%BB%E7%BB%9F/image_BXoVzPQBan.png" class="">
 <h2 id="新手指引遮罩"><a href="#新手指引遮罩" class="headerlink" title="新手指引遮罩"></a>新手指引遮罩</h2><p>挖空矩形遮罩上的目标显示区域实现</p>
 <ol>
 <li><p>编写继承Graphic的脚本类，绑定在mask view上</p>

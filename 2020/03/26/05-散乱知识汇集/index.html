@@ -28,7 +28,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="散乱知识汇集【工作日记05】">
 <meta property="og:url" content="https://laoleo.github.io/2020/03/26/05-%E6%95%A3%E4%B9%B1%E7%9F%A5%E8%AF%86%E6%B1%87%E9%9B%86/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:description" content="(权游Stark家族图徽)">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&amp;quality=100&amp;size=b4000_4000&amp;sec=1585232140&amp;di=19cede1f52e7d232878de1e59f7ef215&amp;src=http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/dbb44aed2e738bd4f69c4f49a58b87d6277ff90d.jpg">
@@ -57,7 +57,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>散乱知识汇集【工作日记05】 | Unity游戏开发 博客</title>
+<title>散乱知识汇集【工作日记05】 | Unity游戏开发</title>
   
 
 
@@ -118,7 +118,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -239,6 +239,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -280,7 +286,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -327,7 +333,7 @@
         <p><img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&amp;quality=100&amp;size=b4000_4000&amp;sec=1585232140&amp;di=19cede1f52e7d232878de1e59f7ef215&amp;src=http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/dbb44aed2e738bd4f69c4f49a58b87d6277ff90d.jpg" alt="Stark"></p>
 <center><i style="color:#333;">(权游Stark家族图徽)</i></center>
 
-<a id="more"></a>
+<span id="more"></span>
 <blockquote>
 <p>下面的内容是，我最近几个月工作遇到的零散的技术和知识点的汇聚，定期整理归类繁杂的知识，有利于形成知识的结构化。</p>
 </blockquote>
@@ -337,22 +343,22 @@
 <li>protobuf协议</li>
 <li>make构建</li>
 </ul>
-<h2 id="git相关"><a href="#git相关" class="headerlink" title="git相关"></a>git相关</h2><h3 id="git子模块"><a href="#git子模块" class="headerlink" title="git子模块"></a>git子模块</h3><p>允许git仓库做为另一个git仓库的子目录，同时保持自己的独立提交<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加子模块，同时会创建.gitmodules保存仓库子模块的映射信息</span></span><br><span class="line">git submodule add [url] </span><br><span class="line"></span><br><span class="line"><span class="comment"># clone含有子模块的项目后拉取子模块代码</span></span><br><span class="line">git clone [url]</span><br><span class="line">git submodule init</span><br><span class="line">git submodule <span class="keyword">update</span></span><br><span class="line"><span class="comment"># 加入--recursive 同等于上面</span></span><br><span class="line">git <span class="keyword">clone</span> <span class="comment">--recursive [url]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在子模块上更新代码</span></span><br><span class="line">git <span class="keyword">fetch</span></span><br><span class="line">git <span class="keyword">merge</span> origin/<span class="keyword">master</span></span><br><span class="line"><span class="comment"># 在主项目中执行下面命令同等于上面操作,缺少[submodule name]默认更新所有子模块</span></span><br><span class="line">git submodule <span class="keyword">update</span> <span class="comment">--remote [submodule name]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在主项目看到子模块的提交日志</span></span><br><span class="line">git <span class="keyword">log</span> -p <span class="comment">--submodule</span></span><br></pre></td></tr></table></figure></p>
-<p>git子模块：<a href="https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97" target="_blank" rel="external">https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97</a><br>业界文档：<a href="https://juejin.im/post/5addeb48518825672a028a3b" target="_blank" rel="external">https://juejin.im/post/5addeb48518825672a028a3b</a></p>
-<h3 id="git-diff命令"><a href="#git-diff命令" class="headerlink" title="git-diff命令"></a>git-diff命令</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示更改文件数</span></span><br><span class="line">git diff <span class="keyword">COMMIT</span> <span class="keyword">COMMIT</span> <span class="comment">--shortstat  </span></span><br><span class="line"><span class="comment">#显示更改的文件名</span></span><br><span class="line"><span class="comment">--name-status </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 筛选文件</span></span><br><span class="line"><span class="comment"># 合并后对比一些特定文件的情况下，这条命令尤为重要，后买可以接对多个文件名，用vscode的diff插件还要一个一个文件检查</span></span><br><span class="line"><span class="comment"># 假如合并文件有几百个，工作量是艰巨的，可以写个shell脚本处理对比结果，写进txt文件</span></span><br><span class="line"><span class="comment"># 我最近就有个这样的需求，幸好有这条命令</span></span><br><span class="line">git diff <span class="keyword">COMMIT</span> <span class="keyword">COMMIT</span> *.lua *.js </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 筛选具体目录下的目标文件，注意path从当前目录起始</span></span><br><span class="line">git diff <span class="keyword">COMMIT</span> <span class="keyword">COMMIT</span> <span class="keyword">path</span>/<span class="keyword">to</span>/target  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 版本信息</span></span><br><span class="line">git <span class="keyword">show</span> <span class="keyword">COMMIT</span></span><br></pre></td></tr></table></figure>
+<h2 id="git相关"><a href="#git相关" class="headerlink" title="git相关"></a>git相关</h2><h3 id="git子模块"><a href="#git子模块" class="headerlink" title="git子模块"></a>git子模块</h3><p>允许git仓库做为另一个git仓库的子目录，同时保持自己的独立提交<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加子模块，同时会创建.gitmodules保存仓库子模块的映射信息</span></span><br><span class="line">git <span class="keyword">submodule </span><span class="keyword">add </span>[url] </span><br><span class="line"></span><br><span class="line"><span class="comment"># clone含有子模块的项目后拉取子模块代码</span></span><br><span class="line">git <span class="keyword">clone </span>[url]</span><br><span class="line">git <span class="keyword">submodule </span>init</span><br><span class="line">git <span class="keyword">submodule </span>update</span><br><span class="line"><span class="comment"># 加入--recursive 同等于上面</span></span><br><span class="line">git <span class="keyword">clone </span>--recursive [url]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在子模块上更新代码</span></span><br><span class="line">git fetch</span><br><span class="line">git merge <span class="keyword">origin/master</span></span><br><span class="line"><span class="keyword"></span><span class="comment"># 在主项目中执行下面命令同等于上面操作,缺少[submodule name]默认更新所有子模块</span></span><br><span class="line">git <span class="keyword">submodule </span>update --remote [<span class="keyword">submodule </span>name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在主项目看到子模块的提交日志</span></span><br><span class="line">git log -p --<span class="keyword">submodule</span></span><br></pre></td></tr></table></figure></p>
+<p>git子模块：<a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97">https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97</a><br>业界文档：<a target="_blank" rel="noopener" href="https://juejin.im/post/5addeb48518825672a028a3b">https://juejin.im/post/5addeb48518825672a028a3b</a></p>
+<h3 id="git-diff命令"><a href="#git-diff命令" class="headerlink" title="git-diff命令"></a>git-diff命令</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 显示更改文件数</span><br><span class="line">git diff <span class="keyword">COMMIT</span> <span class="keyword">COMMIT</span> <span class="comment">--shortstat  </span></span><br><span class="line">#显示更改的文件名</span><br><span class="line"><span class="comment">--name-status </span></span><br><span class="line"></span><br><span class="line"># 筛选文件</span><br><span class="line"># 合并后对比一些特定文件的情况下，这条命令尤为重要，后买可以接对多个文件名，用vscode的diff插件还要一个一个文件检查</span><br><span class="line"># 假如合并文件有几百个，工作量是艰巨的，可以写个shell脚本处理对比结果，写进txt文件</span><br><span class="line"># 我最近就有个这样的需求，幸好有这条命令</span><br><span class="line">git diff <span class="keyword">COMMIT</span> <span class="keyword">COMMIT</span> *.lua *.js </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 筛选具体目录下的目标文件，注意<span class="type">path</span>从当前目录起始</span><br><span class="line">git diff <span class="keyword">COMMIT</span> <span class="keyword">COMMIT</span> <span class="type">path</span>/<span class="keyword">to</span>/target  </span><br><span class="line"></span><br><span class="line"># 版本信息</span><br><span class="line">git <span class="keyword">show</span> <span class="keyword">COMMIT</span> </span><br></pre></td></tr></table></figure>
 <h2 id="protobuf协议"><a href="#protobuf协议" class="headerlink" title="protobuf协议"></a>protobuf协议</h2><p>游戏中的数据通讯协议主要是Protobuf+socket，只有登录时拿到ID和session或token用到了http协议。对于数据响应要求高、低延迟甚至实时的应用程序，像游戏、直播、即时聊天，一般都会用到protobuf作为数据结构化和序列化的协议。</p>
 <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>Protobuf全称Protocol Buffer，是google内部广泛使用的结构化数据存储、数据序列化的协议。下面是google官方给出的定义：<br>Protocol Buffers 是一种轻便高效的结构化数据存储格式，可以用于结构化数据序列化，很适合做数据存储或 RPC 数据交换格式。它可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。</p>
 <h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><p>首先从定义上，可以看到一个描述protobuf的关键字：方便高效。</p>
 <ul>
 <li>proobuf的语法比xml简洁方便</li>
 </ul>
-<p>拿常见的数据序列化协议Json，xml与protobuf做对比：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.proto</span><br><span class="line">package lm; </span><br><span class="line">message helloworld </span><br><span class="line">&#123; </span><br><span class="line">   required int32     id = 1;  // ID </span><br><span class="line">   required string    str = 2;  // str </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.xml</span><br><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">helloword</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">id</span>&gt;</span>1<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">str</span>&gt;</span>helloworld<span class="tag">&lt;/<span class="name">str</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">note</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>拿常见的数据序列化协议Json，xml与protobuf做对比：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.proto</span><br><span class="line">package lm; </span><br><span class="line">message helloworld </span><br><span class="line">&#123; </span><br><span class="line">   required int32     id = 1;  // ID </span><br><span class="line">   required string    str = 2;  // str </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.xml</span><br><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">helloword</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">id</span>&gt;</span>1<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">str</span>&gt;</span>helloworld<span class="tag">&lt;/<span class="name">str</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">note</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>protobuf是二进制协议，比同为文本协议的json和xml的读写操作都要高效，快捷。<br>文本协议要读进内存，会被解析成二进制，而pb属于二进制协议，所以相对文本协议解析速度更快。</li>
 </ul>
 <p>官方针对protobuf的性能将其更各种数据协议做了测试比较，下图是通过各个协议对一个对象操作的时间–Total time，包括创建对象、将对象序列化为内存中的字节序列，然后再反序列化的过程。</p>
 <p><img src="http://m.qpic.cn/psc?/V12x89qA2LlAEO/YPhsM5mUO5.bFmyDEhTOh.bBxFLbiHnVZm4ijUstjs4299r7Qq73xp9N6FkEC3fTipoSpwWAoyqyDu6AavAyu7I6I3SMKyuZQdfOcLaFKu0!/b&amp;bo=sAKrAbACqwEDGTw!&amp;rf=viewer_4" alt="image"></p>
-<p>protobuf性能测试报告：<a href="https://code.google.com/archive/p/thrift-protobuf-compare/wikis/Benchmarking.wiki" target="_blank" rel="external">https://code.google.com/archive/p/thrift-protobuf-compare/wikis/Benchmarking.wiki</a></p>
+<p>protobuf性能测试报告：<a target="_blank" rel="noopener" href="https://code.google.com/archive/p/thrift-protobuf-compare/wikis/Benchmarking.wiki">https://code.google.com/archive/p/thrift-protobuf-compare/wikis/Benchmarking.wiki</a></p>
 <ul>
 <li>protobuf协议更小</li>
 </ul>
@@ -361,12 +367,12 @@
 <li>protobuf与平台无关，与语言无关，所以兼容性更好</li>
 </ul>
 <p>java中使用json和xml数据结构，使用使用相应的包支持的，jackson（java的标准json库）和javolution xmlformat（javolution库中格式化xml的API）。<br>而protobuf可以通过编译器将描述数据结构的.proto文件编译成各种目标语言，github仓库上标有目标语言有：c++、java、c#、JavaScript、Ruby、Go、PHP、Dart、Objective-C。</p>
-<p><a href="https://github.com/protocolbuffers/protobuf" target="_blank" rel="external">https://github.com/protocolbuffers/protobuf</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/protocolbuffers/protobuf">https://github.com/protocolbuffers/protobuf</a></p>
 <h2 id="make构建"><a href="#make构建" class="headerlink" title="make构建"></a>make构建</h2><p>make是一个常用的构建工具，多用于C语言项目，但在一些大型的项目中使用频率也比较高。</p>
 <p>假如一个工程里有个makefile文件，往往都需要用到make命令来构建。</p>
-<h3 id="详细介绍："><a href="#详细介绍：" class="headerlink" title="详细介绍："></a>详细介绍：</h3><p><a href="http://www.ruanyifeng.com/blog/2015/02/make.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2015/02/make.html</a></p>
-<h3 id="如何用make来构建node-js项目"><a href="#如何用make来构建node-js项目" class="headerlink" title="如何用make来构建node.js项目"></a>如何用make来构建node.js项目</h3><p><a href="http://www.ruanyifeng.com/blog/2015/03/build-website-with-make.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2015/03/build-website-with-make.html</a></p>
-<h3 id="windows下使用make命令安装教程"><a href="#windows下使用make命令安装教程" class="headerlink" title="windows下使用make命令安装教程"></a>windows下使用make命令安装教程</h3><p>下载MinGW：<a href="http://sourceforge.net/projects/mingw/files/latest/download?source=files" target="_blank" rel="external">http://sourceforge.net/projects/mingw/files/latest/download?source=files</a></p>
+<h3 id="详细介绍："><a href="#详细介绍：" class="headerlink" title="详细介绍："></a>详细介绍：</h3><p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/02/make.html">http://www.ruanyifeng.com/blog/2015/02/make.html</a></p>
+<h3 id="如何用make来构建node-js项目"><a href="#如何用make来构建node-js项目" class="headerlink" title="如何用make来构建node.js项目"></a>如何用make来构建node.js项目</h3><p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/03/build-website-with-make.html">http://www.ruanyifeng.com/blog/2015/03/build-website-with-make.html</a></p>
+<h3 id="windows下使用make命令安装教程"><a href="#windows下使用make命令安装教程" class="headerlink" title="windows下使用make命令安装教程"></a>windows下使用make命令安装教程</h3><p>下载MinGW：<a target="_blank" rel="noopener" href="http://sourceforge.net/projects/mingw/files/latest/download?source=files">http://sourceforge.net/projects/mingw/files/latest/download?source=files</a></p>
 <p>下载后假如没在bin下找make.exe，可以到MinGW instanllation manager中找到下载MinGW-make.exe，勾选包然后到左上角点击apply change下载(记得把MinGW-make改名成make)。最好把basic setup都下了。</p>
 <p>最后记得手动添加环境变量：path/to/MinGW/bin，就可以使用了。</p>
 

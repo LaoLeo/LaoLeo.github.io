@@ -26,9 +26,9 @@
   </script>
 <meta name="description" content="“Unity,移动开发,Web”">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Unity游戏开发 博客">
+<meta property="og:title" content="Unity游戏开发">
 <meta property="og:url" content="https://laoleo.github.io/page/4/index.html">
-<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:site_name" content="Unity游戏开发">
 <meta property="og:description" content="“Unity,移动开发,Web”">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Walking 劳翼">
@@ -47,7 +47,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>Unity游戏开发 博客</title>
+<title>Unity游戏开发</title>
   
 
 
@@ -108,7 +108,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <h1 class="site-title">Unity游戏开发</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
@@ -228,6 +228,12 @@
   </div>
 
 
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正研究WebGL...</p>
+  </div>
+
 
         </div>
       </div>
@@ -268,7 +274,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -320,7 +326,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
+          <span id="more"></span>
 <h2 id="项目打包策略"><a href="#项目打包策略" class="headerlink" title="项目打包策略"></a>项目打包策略</h2><p>打包策略：</p>
 <ul>
 <li><p>A：把整个目录打进一个ab</p>
@@ -557,7 +563,7 @@ luajit\_mac64/luajit
 <blockquote>
 <p>其实研究ab分组策略就是研究资源依赖树实现资源加载最优的问题。</p>
 </blockquote>
-<p>ab分组策略原则参考：<a href="https://zhuanlan.zhihu.com/p/91926428" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/91926428</a></p>
+<p>ab分组策略原则参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/91926428">https://zhuanlan.zhihu.com/p/91926428</a></p>
 <h2 id="build-package"><a href="#build-package" class="headerlink" title="build package"></a>build package</h2><p>项目构建包逻辑原理很简单，前面处理和准备好参数和数据，传递给BuildPipeline.BuildAssetBundles方法构建ab。</p>
 <p>工具面板上的参数解析：</p>
 <ul>
@@ -603,7 +609,7 @@ luajit\_mac64/luajit
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -651,9 +657,9 @@ luajit\_mac64/luajit
     
     
     <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
+          <span id="more"></span>
 <h1 id="场景控制流程解读"><a href="#场景控制流程解读" class="headerlink" title="场景控制流程解读"></a>场景控制流程解读</h1><h2 id="1-初始化流程"><a href="#1-初始化流程" class="headerlink" title="1 初始化流程"></a>1 初始化流程</h2><p>场景的初始化和进出控制有SceneMgr类负责管理，SceneMgr类实例化的时候，会对所有的场景类做一系列的初始化操作，包括场景类实例化，加入场景类中的功能组件类的实例化。</p>
-<img src="/2020/11/01/场景控制流程解读/image_SqQ7dNS1Cb.png" alt="image_SqQ7dNS1Cb.png" title="">
+<img src="/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/image_SqQ7dNS1Cb.png" class="">
 <ol>
 <li><p>实例化所有注册到SceneMgr:_registerScenes()中的场景类，然后在每个场景中注入onEnterFinished和onStageLoadFinished函数，分别在进入完成和舞台加载完成时调用，控制loading页面的关闭和资源的释放</p>
 </li>
@@ -672,18 +678,18 @@ luajit\_mac64/luajit
 <li><p>在SceneMgr:_registerScenes()注册场景类</p>
 </li>
 </ol>
-<h2 id="2-进入流程"><a href="#2-进入流程" class="headerlink" title="2 进入流程"></a>2 进入流程</h2><img src="/2020/11/01/场景控制流程解读/image_3NDenmx_Of.png" alt="image_3NDenmx_Of.png" title="">
+<h2 id="2-进入流程"><a href="#2-进入流程" class="headerlink" title="2 进入流程"></a>2 进入流程</h2><img src="/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/image_3NDenmx_Of.png" class="">
 <ol>
 <li><p>stage组件类中需要加入load函数，控制场景资源的加载，并且在资源加载完成回调中调用调用_onStageLoadFinished函数和_onAllLoaded函数</p>
 </li>
 <li><p>调用_onStageLoadFinished函数需在_onAllLoaded函数之前，_onAllLoaded函数其实就是调用了scene:onEnterFinished函数&#x20;</p>
 </li>
 </ol>
-<img src="/2020/11/01/场景控制流程解读/image_xvaTyll7c-.png" alt="image_xvaTyll7c-.png" title="">
+<img src="/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/image_xvaTyll7c-.png" class="">
 <ol>
 <li>场景资源其实是prefeb资源，实例化后被挂载在【SCENEROOT/场景名]】节点下</li>
 </ol>
-<h2 id="3-退出流程"><a href="#3-退出流程" class="headerlink" title="3 退出流程"></a>3 退出流程</h2><img src="/2020/11/01/场景控制流程解读/image_YlLPrr-tq-.png" alt="image_YlLPrr-tq-.png" title="">
+<h2 id="3-退出流程"><a href="#3-退出流程" class="headerlink" title="3 退出流程"></a>3 退出流程</h2><img src="/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/image_YlLPrr-tq-.png" class="">
 <h2 id="4-场景组件的类型和作用"><a href="#4-场景组件的类型和作用" class="headerlink" title="4 场景组件的类型和作用"></a>4 场景组件的类型和作用</h2><table>
 <thead>
 <tr>
@@ -790,7 +796,7 @@ luajit\_mac64/luajit
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -878,7 +884,7 @@ luajit\_mac64/luajit
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -969,7 +975,7 @@ luajit\_mac64/luajit
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发 博客">
+      <meta itemprop="name" content="Unity游戏开发">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
