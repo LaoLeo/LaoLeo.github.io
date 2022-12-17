@@ -1440,6 +1440,15 @@ pre code {
   font-size: 1em;
   margin-top: 5px;
 }
+.profiler {
+  width: 160px;
+  margin: 0 auto;
+}
+.profiler-item {
+  font-size: 0.8em;
+  margin: 0 0;
+  text-align: left;
+}
 .links-of-author a {
   font-size: 0.8125em;
 }
@@ -2972,7 +2981,7 @@ hr {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #0f78cb;
+  background: #5045ff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
