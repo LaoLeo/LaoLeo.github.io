@@ -5,30 +5,14 @@ tags: [UIParticle,特效]
 categories: [Unity游戏开发,Unity,特效]
 ---
 
-<!-- more -->
-
-
 
 # ParticleEffectForUGUI（UIParticle）
-
-## 目录
-
-- [ParticleEffectForUGUI（UIParticle）](#particleeffectforuguiuiparticle)
-  - [目录](#目录)
-  - [一、概述](#一概述)
-  - [二、引入项目](#二引入项目)
-      - [1.导入package](#1导入package)
-      - [2.添加UIParticle组件](#2添加uiparticle组件)
-      - [3.编写工具类，在lua层加载UIParticle并显示](#3编写工具类在lua层加载uiparticle并显示)
-  - [三、UIParticle实现原理](#三uiparticle实现原理)
-  - [四、性能对比](#四性能对比)
-      - [1.单个UI粒子特效对比](#1单个ui粒子特效对比)
-      - [2.多个相同UI粒子特效对比](#2多个相同ui粒子特效对比)
-      - [总结](#总结)
 
 ## 一、概述
 
 ParticleEffectForUGUI插件，又名UIParticle，为UGUI渲染可遮罩、可排序的粒子特效，而且不需要额外摄像机、RT和Canvas。Unity 2018.2及以上版本支持。
+
+<!-- more -->
 
 官方对其的使用和与其他方案对比的优缺点已给出详细说明，了解请访问[ParticleEffectForUGUI](https://github.com/mob-sakai/ParticleEffectForUGUI "ParticleEffectForUGUI")。
 

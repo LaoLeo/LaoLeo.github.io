@@ -5,10 +5,7 @@ tags: [SQLite,配置表]
 categories: [Unity游戏开发,基础系统]
 ---
 
-<!-- more -->
-
-
-# SQLite替换lua配置表方案实现
+<!-- # SQLite替换lua配置表方案实现 -->
 
 ## 前言
 
@@ -16,6 +13,7 @@ categories: [Unity游戏开发,基础系统]
 
 下文探索使用SQLite替换Lua配置表解决内存浪费方案的实现。
 
+<!-- more -->
 ## splite库的编译与引入
 
 两个方向：

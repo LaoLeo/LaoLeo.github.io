@@ -5,13 +5,14 @@ tags: [UIParticle,特效]
 categories: [Unity游戏开发,Unity,特效]
 ---
 
-<!-- more -->
 
 # UIParticle\@4.0.0研究
 
 ## 背景
 
 UIParticle刚开始引进项目中的版本是@3.3.10，发现的问题比较多，材质数不能超8个的问题也在github上提了[bug#122](https://github.com/mob-sakai/ParticleEffectForUGUI/issues/122 "bug#122")。
+
+<!-- more -->
 
 作者最近升级UIParticle到v4，解决了一些问题和增加了新特性，其中包括bug#122。
 

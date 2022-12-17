@@ -1,32 +1,71 @@
 {
-  "name": "hexo-theme-next",
-  "version": "5.0.0",
-  "description": "Elegant theme for Hexo",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
+  "_from": "hexo-theme-next@8.2.0",
+  "_id": "hexo-theme-next@8.2.0",
+  "_inBundle": false,
+  "_integrity": "sha512-whvcjF4Fl+afZxkuS0LbpREsO0f4otkTLH3rSuw2qkR0wI1yTTqZ4sTZc9P/9X87+CgYPuzS2AzurDQFaPXyAQ==",
+  "_location": "/hexo-theme-next",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "hexo-theme-next@8.2.0",
+    "name": "hexo-theme-next",
+    "escapedName": "hexo-theme-next",
+    "rawSpec": "8.2.0",
+    "saveSpec": null,
+    "fetchSpec": "8.2.0"
   },
-  "scripts": {
-    "test": "gulp"
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/hexo-theme-next/-/hexo-theme-next-8.2.0.tgz",
+  "_shasum": "e882343642b3d2061b66bb6cf58e4f435c3c7cde",
+  "_spec": "hexo-theme-next@8.2.0",
+  "_where": "E:\\projects\\LaoLeo.github.io",
+  "author": {
+    "name": "NexT",
+    "url": "https://theme-next.js.org"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/iissnan/hexo-theme-next.git"
+  "bugs": {
+    "url": "https://github.com/next-theme/hexo-theme-next/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Elegant and powerful theme for Hexo.",
+  "devDependencies": {
+    "@next-theme/eslint-config": "0.0.2",
+    "chai": "4.2.0",
+    "eslint": "7.16.0",
+    "hexo": "5.3.0",
+    "hexo-renderer-marked": "3.3.0",
+    "husky": "4.3.6",
+    "js-yaml": "3.14.1",
+    "mocha": "8.2.1",
+    "stylint": "2.0.0"
+  },
+  "homepage": "https://theme-next.js.org",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run eslint && npm test"
+    }
   },
   "keywords": [
-    "NexT",
-    "Hexo"
+    "hexo",
+    "theme",
+    "next"
   ],
-  "author": "iissnan <iissnan@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/iissnan/hexo-theme-next/issues"
+  "license": "AGPL-3.0-or-later",
+  "main": "package.json",
+  "name": "hexo-theme-next",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/next-theme/hexo-theme-next.git"
   },
-  "homepage": "https://github.com/iissnan/hexo-theme-next#readme",
-  "devDependencies": {
-    "coffee-script": "^1.10.0",
-    "gulp": "^3.9.0",
-    "gulp-jshint": "^1.12.0",
-    "jshint-stylish": "^2.1.0"
-  }
+  "scripts": {
+    "eslint": "eslint scripts/ source/js test/",
+    "stylint": "stylint source/css/",
+    "test": "mocha test/index.js"
+  },
+  "version": "8.2.0"
 }

@@ -1,36 +1,41 @@
 .post-nav {
-  overflow: hidden;
-  margin-top: 60px;
-  padding: 10px;
-  white-space: nowrap;
   border-top: 1px solid $gainsboro;
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+  margin-top: 1em;
+  padding: 10px 5px 0;
 }
 
 .post-nav-item {
-  display: inline-block;
-  width: 50%;
-  white-space: normal;
+  flex: 1;
 
   a {
-    position: relative;
-    display: inline-block;
-    line-height: 25px;
-    font-size: 14px;
-    color: $link-color;
-    border-bottom: none;
+    border-bottom: 0;
+    display: block;
+    font-size: $font-size-small;
+    line-height: 1.6;
 
-    &:hover {
-      color: $link-hover-color;
-      border-bottom: none;
+    &:active {
+      top: 2px;
     }
-
-    &:active { top: 2px; }
-
-    i { font-size: 12px; }
   }
 
+  .fa {
+    font-size: $font-size-smallest;
+  }
+
+  &:first-child {
+    .fa {
+      margin-right: 5px;
+    }
+  }
+
+  &:last-child {
+    text-align: right;
+
+    .fa {
+      margin-left: 5px;
+    }
+  }
 }
-
-.post-nav-next {}
-
-.post-nav-prev { text-align: right; }
