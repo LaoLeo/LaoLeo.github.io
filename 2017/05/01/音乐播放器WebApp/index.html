@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="前言花了差不多一周的时间，用html5的新标签audio制作了一个音乐播放器，感觉最多坑的地方在于前期的布局，逻辑代码的规划也很重要。 在布局上填了很多坑，比如资源税浮动父元素没了高度，用clear也解决不了，不得不利用js设置父的高度等之类的，发现布局也有大学问，这一点要注重。 第二点就是代码规划，因为刚学了前端js的MVC框架（将控制逻辑，模型，视图的js划分开），所以想尝试，在项目里我的mv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="音乐播放器WebApp有感">
+<meta property="og:url" content="https://laoleo.github.io/2017/05/01/%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8WebApp/index.html">
+<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:description" content="前言花了差不多一周的时间，用html5的新标签audio制作了一个音乐播放器，感觉最多坑的地方在于前期的布局，逻辑代码的规划也很重要。 在布局上填了很多坑，比如资源税浮动父元素没了高度，用clear也解决不了，不得不利用js设置父的高度等之类的，发现布局也有大学问，这一点要注重。 第二点就是代码规划，因为刚学了前端js的MVC框架（将控制逻辑，模型，视图的js划分开），所以想尝试，在项目里我的mv">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-04-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-12-06T15:30:38.863Z">
+<meta property="article:author" content="Walking 劳翼">
+<meta property="article:tag" content="animation">
+<meta property="article:tag" content="layout">
+<meta property="article:tag" content="clear">
+<meta property="article:tag" content="audio">
+<meta property="article:tag" content="进度条">
+<meta property="article:tag" content="播放按钮">
+<meta property="article:tag" content="QQ音乐API">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://laoleo.github.io/2017/05/01/%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8WebApp/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>音乐播放器WebApp有感 | Unity游戏开发 博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80"><span class="nav-number">2.</span> <span class="nav-text">圣杯布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#animition%E7%9A%84%E6%92%AD%E6%94%BE%E5%92%8C%E6%9A%82%E5%81%9C"><span class="nav-number">3.</span> <span class="nav-text">animition的播放和暂停</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%9D%A1%E7%9A%84%E5%88%B6%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">进度条的制作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%92%AD%E6%94%BE%E6%8C%89%E9%92%AE%E7%9A%84%E5%88%B6%E4%BD%9C%E5%92%8C%E5%8F%91%E5%85%89%E5%8A%A8%E7%94%BB"><span class="nav-number">5.</span> <span class="nav-text">播放按钮的制作和发光动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URI%E7%BC%96%E7%A0%81"><span class="nav-number">6.</span> <span class="nav-text">URI编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ajax%E8%B7%A8%E5%9F%9F"><span class="nav-number">7.</span> <span class="nav-text">ajax跨域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QQ%E9%9F%B3%E4%B9%90%E7%9A%84API"><span class="nav-number">8.</span> <span class="nav-text">QQ音乐的API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E6%97%B6%E5%99%A8"><span class="nav-number">9.</span> <span class="nav-text">计时器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BE%E5%BA%A6%E5%88%B0%E7%9A%84%E8%B5%84%E6%BA%90"><span class="nav-number">10.</span> <span class="nav-text">百度到的资源</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2017/05/01/%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8WebApp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          音乐播放器WebApp有感
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-05-01 00:00:00" itemprop="dateCreated datePublished" datetime="2017-05-01T00:00:00+08:00">2017-05-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>花了差不多一周的时间，用html5的新标签audio制作了一个音乐播放器，感觉最多坑的地方在于前期的布局，逻辑代码的规划也很重要。</p>
+<p>在布局上填了很多坑，比如资源税浮动父元素没了高度，用clear也解决不了，不得不利用js设置父的高度等之类的，发现布局也有大学问，这一点要注重。</p>
+<p>第二点就是代码规划，因为刚学了前端js的MVC框架（将控制逻辑，模型，视图的js划分开），所以想尝试，在项目里我的mvc框架为：</p>
+<ul>
+<li>controller/appController.js   控制器总开关，程序的入   口，将controllers连接起来</li>
+<li>controller/playerController.js  播放器的控制器</li>
+<li>view/pageStyle.js 页面样式的改变逻辑</li>
+<li>view/scale.js  进度条对象</li>
+<li>songs.js  全局的songs模型</li>
+</ul>
+<p>结合面向对象的方法，我在点击播放器按钮的时候，进度条，图片旋转和audio同时开始工作，所以把他们捆绑起来会比较好。</p>
+<p>下面就这个项目里一些零散的知识点做些记录，以便一下使用。</p>
+<h2 id="圣杯布局"><a href="#圣杯布局" class="headerlink" title="圣杯布局"></a>圣杯布局</h2><p>圣杯布局是三栏布局的经典布局方式，两侧固定宽度中间自适应。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">div</span> class=<span class="string">"both"</span>&gt;</span><br><span class="line">    &lt;<span class="selector-tag">div</span> class=<span class="string">"middle"</span>&gt;中间&lt;/div&gt; <span class="comment">//优先加载</span></span><br><span class="line">    &lt;<span class="selector-tag">div</span> class=<span class="string">"left"</span>&gt;左边&lt;/div&gt;</span><br><span class="line">    &lt;<span class="selector-tag">div</span> class=<span class="string">"right"</span>&gt;右边&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">    .box&#123;</span><br><span class="line">        <span class="attribute">padding-left</span>: <span class="number">250px</span>;  <span class="comment">//关键</span></span><br><span class="line">        <span class="attribute">padding-right</span>: <span class="number">250px</span>;  <span class="comment">//关键</span></span><br><span class="line">        <span class="attribute">line-height</span>: <span class="number">200px</span>;</span><br><span class="line">        <span class="attribute">text-align</span>: center;</span><br><span class="line">        <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-class">.box</span>:before,<span class="selector-class">.box</span>:after&#123; <span class="comment">//伪类清除浮动，父元素有高度</span></span><br><span class="line">        <span class="attribute">content</span>: <span class="string">'.'</span>;</span><br><span class="line">        <span class="attribute">display</span>: block;</span><br><span class="line">        <span class="attribute">clear</span>:　both;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">0</span>；</span><br><span class="line">        <span class="attribute">visibility</span>: hidden; <span class="comment">//元素不可见,但占据空间</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-class">.middle</span>,<span class="selector-class">.left</span>,.<span class="attribute">right</span>&#123;</span><br><span class="line">        <span class="attribute">float</span>: left;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    .middle&#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">        <span class="attribute">background-color</span>: red;</span><br><span class="line">    &#125;</span><br><span class="line">    .<span class="attribute">left</span>&#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">250px</span>;</span><br><span class="line">        <span class="attribute">background-color</span>: blue;</span><br><span class="line">        <span class="attribute">margin-left</span>: -<span class="number">250px</span>; <span class="comment">//关键</span></span><br><span class="line">    &#125;</span><br><span class="line">    .<span class="attribute">right</span>&#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">250px</span>;</span><br><span class="line">        <span class="attribute">background-color</span>: yellow;</span><br><span class="line">        <span class="attribute">margin-right</span>: -<span class="number">250px</span>; <span class="comment">//关键</span></span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></p>
+<p>三栏布局的另一经典是双飞翼布局，原理是middlediv下内嵌类为inner的div，利用inner的margin-left和margin-right。左右侧栏div分别float左右。<br>另一种方法是利用定位：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">  <span class="params">&lt;style&gt;</span></span><br><span class="line">   body&#123;margin:<span class="number">0</span>; padding:<span class="number">0</span>;&#125;</span><br><span class="line">   <span class="meta">#left&#123;float:left;width:150px;background:red;&#125;</span></span><br><span class="line">   <span class="meta">#right&#123;float:right;width:200px;background:green;&#125;</span></span><br><span class="line">   <span class="meta">#middle&#123;</span></span><br><span class="line"><span class="symbol">   position:</span>absolute; <span class="comment">//关键</span></span><br><span class="line"><span class="symbol">   left:</span><span class="number">150</span>px;</span><br><span class="line"><span class="symbol">   right:</span><span class="number">200</span>px;</span><br><span class="line">   word-wrap:break-word;  <span class="comment">//让字体打断，不会超出div</span></span><br><span class="line"><span class="symbol">   background:</span>blue;</span><br><span class="line">   &#125;</span><br><span class="line"><span class="params">&lt;/style&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="params">&lt;div id="middle"&gt;</span></span><br><span class="line">        middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;</span><br><span class="line">        middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;middle;</span><br><span class="line"><span class="params">&lt;/div&gt;</span></span><br><span class="line"><span class="params">&lt;div id="left"&gt;</span>left<span class="params">&lt;/div&gt;</span></span><br><span class="line"><span class="params">&lt;div id="right"&gt;</span>right<span class="params">&lt;/div&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>关于布局，还有很多种，请参考：<br><a href="前端布局">http://blog.csdn.net/andiqu/article/details/50045609</a><br>关注弹性布局（flex），和rem</p>
+<h2 id="animition的播放和暂停"><a href="#animition的播放和暂停" class="headerlink" title="animition的播放和暂停"></a>animition的播放和暂停</h2><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-webkit-animation-play-state: running <span class="string">| paused</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">animation-fill-mode</span>: backwards | forwards | both; <span class="comment">//播放前显示动画第一帧，播放完显示动画的最后一帧，向前和向后模式都被应用</span></span><br><span class="line"><span class="attribute">animation-direction</span>: reverse | alternate; <span class="comment">//播放顺序，resverse反向</span></span><br><span class="line"><span class="attribute">animation-iteration-count</span>: num | infinite // <span class="number">2</span> | 循环</span><br></pre></td></tr></table></figure>
+<h2 id="进度条的制作"><a href="#进度条的制作" class="headerlink" title="进度条的制作"></a>进度条的制作</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"lanren"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"curr"</span>&gt;</span>00:00<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"progress"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"scale"</span> <span class="attr">id</span>=<span class="string">"bar"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"btn"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"total"</span>&gt;</span>00:10<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span><br><span class="line"><span class="selector-tag">body</span>&#123;<span class="attribute">margin</span>:<span class="number">0</span>;<span class="attribute">padding</span>:<span class="number">0</span>;<span class="attribute">font-size</span>:<span class="number">12px</span>;&#125;</span><br><span class="line"><span class="selector-tag">ul</span><span class="selector-id">#lanren</span>&#123; <span class="attribute">margin</span>:<span class="number">50px</span> auto; <span class="attribute">overflow</span>: hidden; <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">50px</span> <span class="number">0</span> <span class="number">50px</span>;&#125;</span><br><span class="line"><span class="selector-id">#lanren</span> <span class="selector-tag">li</span>&#123;<span class="attribute">font-size</span>:<span class="number">12px</span>;<span class="attribute">line-height</span>:<span class="number">24px</span>; <span class="attribute">height</span>:<span class="number">24px</span>;<span class="attribute">list-style</span>:none; <span class="attribute">position</span>: relative; <span class="attribute">float</span>: left;&#125;</span><br><span class="line"><span class="selector-tag">li</span><span class="selector-class">.progress</span>&#123;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">li</span><span class="selector-class">.curr</span>&#123;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line">	<span class="attribute">margin-right</span>: -<span class="number">50px</span>;</span><br><span class="line">	<span class="attribute">left</span>: -<span class="number">50px</span>;</span><br><span class="line">	<span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">li</span><span class="selector-class">.total</span>&#123;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line">	<span class="attribute">margin-left</span>: -<span class="number">50px</span>;</span><br><span class="line">	<span class="attribute">right</span>: -<span class="number">50px</span>;</span><br><span class="line">	<span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.scale</span>&#123; <span class="attribute">background-color</span>: <span class="number">#E4E4E4</span>; <span class="attribute">border-left</span>: <span class="number">1px</span> <span class="number">#83BBD9</span> solid;  <span class="attribute">width</span>: <span class="number">100%</span>; <span class="attribute">height</span>: <span class="number">3px</span>; <span class="attribute">position</span>: relative; <span class="attribute">font-size</span>: <span class="number">0px</span>; <span class="attribute">border-radius</span>: <span class="number">3px</span>; <span class="attribute">top</span>:<span class="number">11px</span>;&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.scale</span> <span class="selector-tag">span</span>&#123;<span class="attribute">width</span>:<span class="number">8px</span>;<span class="attribute">height</span>:<span class="number">8px</span>;<span class="attribute">position</span>:absolute;<span class="attribute">left</span>:-<span class="number">2px</span>;<span class="attribute">top</span>:-<span class="number">2.5px</span>;<span class="attribute">cursor</span>:pointer; <span class="attribute">background-color</span>: <span class="number">#000</span>; <span class="attribute">display</span>: inline-block; <span class="attribute">-webkit-border-radius</span>: <span class="number">50%</span>;&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.scale</span> <span class="selector-tag">div</span>&#123; <span class="attribute">background-color</span>: <span class="number">#3BE3FF</span>; <span class="attribute">width</span>: <span class="number">0px</span>; <span class="attribute">position</span>: absolute; <span class="attribute">height</span>: <span class="number">3px</span>; <span class="attribute">width</span>: <span class="number">0</span>; <span class="attribute">left</span>: <span class="number">0</span>; <span class="attribute">bottom</span>: <span class="number">0</span>; &#125;</span><br><span class="line"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="播放按钮的制作和发光动画"><a href="#播放按钮的制作和发光动画" class="headerlink" title="播放按钮的制作和发光动画"></a>播放按钮的制作和发光动画</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">div</span> class=<span class="string">"playContainer"</span>&gt;</span><br><span class="line">	&lt;<span class="selector-tag">li</span> class=<span class="string">"rewindBtn"</span>&gt;  </span><br><span class="line">	    &lt;<span class="selector-tag">a</span> href=<span class="string">"javascript:;"</span> title=<span class="string">"rewind"</span>&gt;Rewind&lt;/a&gt;  </span><br><span class="line">	    &lt;<span class="selector-tag">a</span> href=<span class="string">"javascript:;"</span> title=<span class="string">"rewind"</span>&gt;Rewind&lt;/a&gt;  </span><br><span class="line">	&lt;/li&gt;</span><br><span class="line">	&lt;<span class="selector-tag">li</span> class=<span class="string">"playBtn BtnBig"</span>&gt;  </span><br><span class="line">	    &lt;<span class="selector-tag">a</span> href=<span class="string">"javascript:;"</span> title=<span class="string">"start"</span>&gt;Start&lt;/a&gt;  </span><br><span class="line">	&lt;/li&gt;</span><br><span class="line">	&lt;!--</span><br><span class="line">	&lt;<span class="selector-tag">li</span> class=<span class="string">"pauseBtn"</span>&gt;  </span><br><span class="line">	    &lt;<span class="selector-tag">a</span> href=<span class="string">"#"</span> title=<span class="string">"pause"</span>&gt;Pause&lt;/a&gt;  </span><br><span class="line">	&lt;/li&gt; </span><br><span class="line">	--&gt; </span><br><span class="line">	 </span><br><span class="line">	&lt;<span class="selector-tag">li</span> class=<span class="string">"forwardBtn playBtn"</span>&gt;  </span><br><span class="line">	    &lt;<span class="selector-tag">a</span> href=<span class="string">"javascript:;"</span> title=<span class="string">"forward"</span>&gt;Forward&lt;/a&gt;  </span><br><span class="line">	    &lt;<span class="selector-tag">a</span> href=<span class="string">"javascript:;"</span> title=<span class="string">"forward"</span>&gt;Forward&lt;/a&gt;  </span><br><span class="line">	&lt;/li&gt;  </span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line"><span class="selector-class">.playContainer</span> <span class="selector-tag">li</span> &#123; </span><br><span class="line">	<span class="attribute">position</span>: relative; </span><br><span class="line">	<span class="attribute">float</span>: left; </span><br><span class="line">	<span class="attribute">border</span>: <span class="number">50px</span> solid <span class="number">#404040</span>; </span><br><span class="line">	<span class="attribute">border-color</span>: rgba(<span class="number">119</span>, <span class="number">119</span>, <span class="number">119</span>, <span class="number">0.3</span>);</span><br><span class="line">	<span class="attribute">color</span>: transparent; </span><br><span class="line">	<span class="attribute">height</span>: <span class="number">0</span>; </span><br><span class="line">	<span class="attribute">width</span>: <span class="number">0</span>; </span><br><span class="line">	-webkit-<span class="attribute">border-radius</span>: <span class="number">100%</span>; </span><br><span class="line">	-moz-<span class="attribute">border-radius</span>: <span class="number">100%</span>; </span><br><span class="line">	-o-<span class="attribute">border-radius</span>: <span class="number">100%</span>; </span><br><span class="line">	<span class="attribute">border-radius</span>: <span class="number">100%</span>; </span><br><span class="line">	<span class="attribute">margin</span>: <span class="number">0</span> <span class="number">50px</span>; </span><br><span class="line">&#125;  </span><br><span class="line"><span class="selector-class">.playContainer</span> <span class="selector-tag">a</span> &#123; </span><br><span class="line">	<span class="attribute">border-style</span>: solid; </span><br><span class="line">	<span class="attribute">text-indent</span>: -<span class="number">9999px</span>; </span><br><span class="line">	<span class="attribute">position</span>: absolute; </span><br><span class="line">	<span class="attribute">top</span>: -<span class="number">16px</span>; </span><br><span class="line">	<span class="attribute">left</span>: -<span class="number">6px</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="selector-tag">li</span>.BtnBig&#123;</span><br><span class="line">	<span class="attribute">border-width</span>: <span class="number">70px</span>;</span><br><span class="line">	<span class="attribute">margin-top</span>: -<span class="number">15px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.playBtn</span> <span class="selector-tag">a</span> &#123; </span><br><span class="line">	<span class="attribute">border-color</span>: transparent transparent transparent <span class="number">#fff</span>;  </span><br><span class="line">	<span class="attribute">width</span>: <span class="number">0</span>; </span><br><span class="line">	<span class="attribute">height</span>: <span class="number">0</span>; </span><br><span class="line">	<span class="attribute">border-width</span>: <span class="number">24px</span> <span class="number">0</span> <span class="number">24px</span> <span class="number">36px</span>;</span><br><span class="line">	<span class="attribute">left</span>: -<span class="number">10px</span>;</span><br><span class="line">	<span class="attribute">top</span>: -<span class="number">22px</span>;</span><br><span class="line">&#125;  </span><br><span class="line"><span class="selector-class">.pauseBtn</span> <span class="selector-tag">a</span> &#123; </span><br><span class="line">	<span class="attribute">border-color</span>: transparent white;  </span><br><span class="line">	<span class="attribute">border-width</span>: <span class="number">0</span> <span class="number">14px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">36px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">left</span>: -<span class="number">20px</span>;</span><br><span class="line">&#125;    </span><br><span class="line"><span class="selector-class">.forwardBtn</span> <span class="selector-tag">a</span> &#123; </span><br><span class="line">	<span class="attribute">border-left-width</span>: <span class="number">16px</span>; </span><br><span class="line">	<span class="attribute">left</span>: <span class="number">2px</span>;</span><br><span class="line">	<span class="attribute">border-width</span>: <span class="number">16px</span> <span class="number">0</span> <span class="number">16px</span> <span class="number">16px</span>;</span><br><span class="line">	<span class="attribute">top</span>: -<span class="number">15px</span>;</span><br><span class="line">&#125;  </span><br><span class="line"><span class="selector-class">.forwardBtn</span> <span class="selector-tag">a</span>:first-child &#123; </span><br><span class="line">	<span class="attribute">margin-left</span>: -<span class="number">14px</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="selector-class">.rewindBtn</span> <span class="selector-tag">a</span> &#123; </span><br><span class="line">	<span class="attribute">border-width</span>: <span class="number">16px</span> <span class="number">16px</span> <span class="number">16px</span> <span class="number">0</span>; </span><br><span class="line">	<span class="attribute">border-color</span>: transparent <span class="number">#fff</span> transparent transparent; </span><br><span class="line">	<span class="attribute">width</span>: <span class="number">0</span>; </span><br><span class="line">	<span class="attribute">height</span>: <span class="number">0</span>; </span><br><span class="line">&#125;  </span><br><span class="line"><span class="selector-class">.rewindBtn</span> <span class="selector-tag">a</span>:first-child &#123; </span><br><span class="line">	<span class="attribute">margin-left</span>: -<span class="number">14px</span>; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">//发光动画</span></span><br><span class="line">@-webkit-keyframes bs &#123;</span><br><span class="line">  <span class="number">0%</span> &#123;</span><br><span class="line">    <span class="attribute">box-shadow</span>: inset -<span class="number">1px</span> <span class="number">1px</span> <span class="number">3px</span> <span class="number">2px</span> <span class="number">#444444</span>, inset <span class="number">1px</span> -<span class="number">1px</span> <span class="number">3px</span> <span class="number">2px</span> <span class="number">#222222</span>, <span class="number">0</span> <span class="number">0</span> <span class="number">0px</span> <span class="number">0</span> <span class="number">#787776</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="number">50%</span> &#123;</span><br><span class="line">    <span class="attribute">box-shadow</span>: inset -<span class="number">1px</span> <span class="number">1px</span> <span class="number">3px</span> <span class="number">2px</span> <span class="number">#444444</span>, inset <span class="number">1px</span> -<span class="number">1px</span> <span class="number">3px</span> <span class="number">2px</span> <span class="number">#222222</span>, <span class="number">0</span> <span class="number">0</span> <span class="number">40px</span> <span class="number">0</span> <span class="number">#ffffff</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="number">100%</span> &#123;</span><br><span class="line">    <span class="attribute">box-shadow</span>: inset -<span class="number">1px</span> <span class="number">1px</span> <span class="number">3px</span> <span class="number">2px</span> <span class="number">#444444</span>, inset <span class="number">1px</span> -<span class="number">1px</span> <span class="number">3px</span> <span class="number">2px</span> <span class="number">#222222</span>, <span class="number">0</span> <span class="number">0</span> <span class="number">0px</span> <span class="number">0</span> <span class="number">#b2ff1a</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="URI编码"><a href="#URI编码" class="headerlink" title="URI编码"></a>URI编码</h2><p>url里的中文服务器是识别不了的，要经过URI编码成Unicode编码，统一资源标识符，浏览器才能准确的找到资源。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">encodeURI</span><span class="params">(<span class="string">"春节"</span>)</span></span> <span class="comment">//%DD%DD%DD</span></span><br><span class="line"><span class="function"><span class="title">decodeURI</span><span class="params">(<span class="string">"%DD%DD%DD"</span>)</span></span>  <span class="comment">//解码：春节</span></span><br><span class="line">相同：</span><br><span class="line"><span class="function"><span class="title">escape</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">unescape</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="ajax跨域"><a href="#ajax跨域" class="headerlink" title="ajax跨域"></a>ajax跨域</h2><p>不涉及后台的跨域，直接用ajax发http请求：<br><a href="http://note.youdao.com/" target="_blank" rel="external">https://bird.ioliu.cn/#interface</a><br>其他的跨域都要设计到后台<br>与jsonp有关</p>
+<h2 id="QQ音乐的API"><a href="#QQ音乐的API" class="headerlink" title="QQ音乐的API"></a>QQ音乐的API</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">songsAPI = <span class="string">http:</span><span class="comment">//s.music.qq.com/fcgi-bin/music_search_new_platform?t=0&amp;n=10&amp;aggr=1&amp;cr=1&amp;loginUin=0&amp;format=json&amp;inCharset=GB2312&amp;outCharset=utf-8&amp;notice=0&amp;platform=jqminiframe.json&amp;needNewCode=0&amp;p=1&amp;catZhida=0&amp;remoteplace=sizer.newclient.next_song&amp;w=&#123;0&#125;</span></span><br><span class="line"></span><br><span class="line">n= <span class="number">10</span> ,搜索的数据条目</span><br><span class="line">w= content ,搜索内容</span><br><span class="line">返回的数据中有个f属性，</span><br><span class="line">DATA.data.song.list[i].<span class="string">f:</span> xxx|xxx|xxx.....</span><br><span class="line">其中第一个是songID,第五个是imgID</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">imgAPI = <span class="string">http:</span><span class="comment">//imgcache.qq.com/music/photo/album_500/imgID后面两个数/500_albumpic_imgID_0.jpg</span></span><br><span class="line"></span><br><span class="line"><span class="number">500</span>是图片的大小，支持<span class="number">300</span>和<span class="number">500</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">srcAPI = <span class="string">http:</span><span class="comment">//210.38.1.134:9999/ws.stream.qqmusic.qq.com/songID.m4a?fromtag=46</span></span><br></pre></td></tr></table></figure>
+<h2 id="计时器"><a href="#计时器" class="headerlink" title="计时器"></a>计时器</h2><p>当在页面要多次用到定时器时，可以考虑把它挂载到全局。<br>当用到多个计时器是可以把它放在一个数组里，方便管理。</p>
+<h2 id="百度到的资源"><a href="#百度到的资源" class="headerlink" title="百度到的资源"></a>百度到的资源</h2><p>专门说进度条的网站：<a href="https://usablica.github.io/progress.js/" target="_blank" rel="external">https://usablica.github.io/progress.js/</a><br>js,jq获取div高度：<a href="http://www.cnblogs.com/xiaopin/archive/2012/03/26/2418152.html" target="_blank" rel="external">http://www.cnblogs.com/xiaopin/archive/2012/03/26/2418152.html</a><br><a href="http://blog.csdn.net/zy1281539626/article/details/61913770" target="_blank" rel="external">获取div的margin，border，padding，content的宽高</a><br>js控制audio标签：<a href="http://blog.csdn.net/u014520745/article/details/52412427" target="_blank" rel="external">http://blog.csdn.net/u014520745/article/details/52412427</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Walking 劳翼 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/animation/" rel="tag"># animation</a>
+              <a href="/tags/layout/" rel="tag"># layout</a>
+              <a href="/tags/clear/" rel="tag"># clear</a>
+              <a href="/tags/audio/" rel="tag"># audio</a>
+              <a href="/tags/%E8%BF%9B%E5%BA%A6%E6%9D%A1/" rel="tag"># 进度条</a>
+              <a href="/tags/%E6%92%AD%E6%94%BE%E6%8C%89%E9%92%AE/" rel="tag"># 播放按钮</a>
+              <a href="/tags/QQ%E9%9F%B3%E4%B9%90API/" rel="tag"># QQ音乐API</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/03/07/%E6%9C%89%E8%B6%A3%E7%9A%84%E9%BC%A0%E6%A0%87%E6%82%AC%E6%B5%AE%E6%95%88%E6%9E%9C/" rel="prev" title="有趣的鼠标悬浮效果">
+                  <i class="fa fa-chevron-left"></i> 有趣的鼠标悬浮效果
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/06/13/node%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/" rel="next" title="node开发微信公众号">
+                  node开发微信公众号 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

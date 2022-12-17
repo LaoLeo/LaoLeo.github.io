@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="垂直和水平居中水平居中是最简单的，在设置了大小的元素上加margin：0 auto关键是垂直居中使用定位position：absolution;  &#x2F;&#x2F;脱离文档流        top: 50%;    &#x2F;&#x2F;这时顶部处于中央位置       margin-top: -(height&#x2F;2) px;或者第三句可以使用位移：transfrom：translateY(-50%) 另一种方法是使用flex布">
+<meta property="og:type" content="article">
+<meta property="og:title" content="饼状loading效果">
+<meta property="og:url" content="https://laoleo.github.io/2017/09/20/CSS3%E9%A5%BC%E7%8A%B6loading%E6%95%88%E6%9E%9C/index.html">
+<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:description" content="垂直和水平居中水平居中是最简单的，在设置了大小的元素上加margin：0 auto关键是垂直居中使用定位position：absolution;  &#x2F;&#x2F;脱离文档流        top: 50%;    &#x2F;&#x2F;这时顶部处于中央位置       margin-top: -(height&#x2F;2) px;或者第三句可以使用位移：transfrom：translateY(-50%) 另一种方法是使用flex布">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-09-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-12-06T15:30:37.619Z">
+<meta property="article:author" content="Walking 劳翼">
+<meta property="article:tag" content="html5">
+<meta property="article:tag" content="css3">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://laoleo.github.io/2017/09/20/CSS3%E9%A5%BC%E7%8A%B6loading%E6%95%88%E6%9E%9C/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>饼状loading效果 | Unity游戏开发 博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%82%E7%9B%B4%E5%92%8C%E6%B0%B4%E5%B9%B3%E5%B1%85%E4%B8%AD"><span class="nav-number">1.</span> <span class="nav-text">垂直和水平居中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2017/09/20/CSS3%E9%A5%BC%E7%8A%B6loading%E6%95%88%E6%9E%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          饼状loading效果
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-09-20 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-20T00:00:00+08:00">2017-09-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:37" itemprop="dateModified" datetime="2022-12-06T23:30:37+08:00">2022-12-06</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="垂直和水平居中"><a href="#垂直和水平居中" class="headerlink" title="垂直和水平居中"></a>垂直和水平居中</h3><p>水平居中是最简单的，在设置了大小的元素上加margin：0 auto<br>关键是垂直居中<br>使用定位position：absolution;  //脱离文档流<br>        top: 50%;    //这时顶部处于中央位置<br>       margin-top: -(height/2) px;<br>或者第三句可以使用位移：transfrom：translateY(-50%)</p>
+<p>另一种方法是使用flex布局<br>在居中元素的父元素上：display：flex;<br>                   align-items:center; //垂直居中<br>                   justify: center;    //水平居中<br>可是flex布局存在兼容性问题  ，慎用！<br>参考：<a href="http://www.cnblogs.com/yugege/p/5246652.html" target="_blank" rel="external">http://www.cnblogs.com/yugege/p/5246652.html</a></p>
+<p><strong>让脱离了文档流的p标签垂直和水平居中</strong><br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="params">&lt;nav class="mynav"&gt;</span></span><br><span class="line">		<span class="params">&lt;div&gt;</span></span><br><span class="line">			<span class="params">&lt;p&gt;</span><span class="params">&lt;span&gt;</span><span class="params">&lt;/span&gt;</span><span class="params">&lt;span&gt;</span><span class="params">&lt;/span&gt;</span><span class="params">&lt;span&gt;</span><span class="params">&lt;/span&gt;</span><span class="params">&lt;/p&gt;</span></span><br><span class="line">		<span class="params">&lt;/div&gt;</span>		</span><br><span class="line">	<span class="params">&lt;/nav&gt;</span></span><br><span class="line">	</span><br><span class="line"><span class="params">&lt;style&gt;</span></span><br><span class="line">    .mynav&#123;</span><br><span class="line"><span class="symbol">    	height:</span> <span class="number">100</span>px;</span><br><span class="line"><span class="symbol">    	width:</span> <span class="number">100</span>%;</span><br><span class="line">    	margin-top: <span class="number">70</span>px;	</span><br><span class="line">    &#125;</span><br><span class="line">    .mynav div&#123;</span><br><span class="line"><span class="symbol">    	height:</span> <span class="number">100</span>%;</span><br><span class="line"><span class="symbol">    	position:</span> relative; <span class="comment">//垂直</span></span><br><span class="line">    	text-align: center; <span class="comment">//水平</span></span><br><span class="line">    &#125;</span><br><span class="line">    .mynav p&#123;	</span><br><span class="line"><span class="symbol">    	width:</span> <span class="number">100</span>%; <span class="comment">//水平</span></span><br><span class="line"><span class="symbol">    	position:</span> absolute; <span class="comment">//垂直</span></span><br><span class="line"><span class="symbol">    	top:</span> <span class="number">50</span>%;   <span class="comment">//垂直</span></span><br><span class="line">    	margin-top: <span class="number">-12</span>px;  <span class="comment">//垂直</span></span><br><span class="line">    &#125;</span><br><span class="line">    .mynav p span&#123;</span><br><span class="line"><span class="symbol">    	display:</span> inline-block;</span><br><span class="line"><span class="symbol">    	width:</span> <span class="number">24</span>px;</span><br><span class="line"><span class="symbol">    	height:</span> <span class="number">24</span>px;</span><br><span class="line">    	border-radius: <span class="number">50</span>%;</span><br><span class="line">    	-webkit-border-radius: <span class="number">50</span>%;</span><br><span class="line">    	background-color: <span class="meta">#000;</span></span><br><span class="line">    	margin-right: <span class="number">20</span>px;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line"><span class="params">&lt;/style&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p><a href="https://ww2.sinaimg.cn/large/006tNbRwly1fcr4ycdb9cg30d80dm0tf.gif" target="_blank" rel="external">查看效果</a></p>
+<p>这个loading效果分两部份，第一部分是四分之三圆，第二部份是中间的圆饼。<br>首先如何画圆呢？<br>一般是在一个正方形的div上设置border-radius=圆的半径<br>可是现在是用另外的方法，用border来画圆<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>:<span class="number">0</span>;</span><br><span class="line"><span class="attribute">height</span>:<span class="number">0</span>;</span><br><span class="line"><span class="attribute">border</span>:<span class="number">50px</span> solid <span class="number">#000</span>;</span><br><span class="line"><span class="attribute">border-radius</span>:<span class="number">50px</span>;</span><br></pre></td></tr></table></figure></p>
+<p>可以用border-top-color来设置圆的颜色，这样一个圆就可以有四种颜色，那么四分之三圆就是一部分的颜色设为透明transparent。<br>中间的圆饼其实是一个红色和粉红色的底圆和一个红半圆，一个粉红半圆实现的，半圆其实就是两部分的border颜色设为transparent</p>
+<p>一个红色和粉红色的底圆：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="number">0</span>;</span><br><span class="line"><span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line"><span class="attribute">border-radius</span>: <span class="number">50px</span>;</span><br><span class="line"><span class="attribute">border</span>:<span class="number">50px</span> solid;</span><br><span class="line"><span class="attribute">border-top-color</span>: rgb(<span class="number">251</span>,<span class="number">139</span>,<span class="number">189</span>);</span><br><span class="line"><span class="attribute">border-left-color</span>: rgb(<span class="number">255</span>,<span class="number">41</span>,<span class="number">140</span>);</span><br><span class="line"><span class="attribute">border-right-color</span>: rgb(<span class="number">251</span>,<span class="number">139</span>,<span class="number">189</span>);</span><br><span class="line"><span class="attribute">border-bottom-color</span>: rgb(<span class="number">255</span>,<span class="number">41</span>,<span class="number">140</span>);</span><br></pre></td></tr></table></figure></p>
+<p>一个红半圆：<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="number">0</span>;</span><br><span class="line"> <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line"><span class="attribute">border-radius</span>: <span class="number">50px</span>;</span><br><span class="line"><span class="attribute">border</span>: solid rgb(<span class="number">251</span>,<span class="number">139</span>,<span class="number">189</span>) <span class="number">50px</span>  ;</span><br><span class="line"><span class="attribute">border-right-color</span>: transparent;</span><br><span class="line"> <span class="attribute">border-bottom-color</span>: transparent;</span><br></pre></td></tr></table></figure></p>
+<p>分析这个效果，其实是一开始是个红色的圆，然后粉色圆在慢慢出来，等整个圆是粉红色时，红圆慢慢出来。<br>我们可以这样两个半圆重叠，红色在其上，都放在底圆上，在动画框架的第一个过程上红圆转180deg，第二过程粉红圆转180deg，红圆继续保持位置，这个过程开始事时粉红圆的z - index大于红圆。第三个过程，红圆z-index还是小于粉红圆，红圆在转。第四个过程开始，红圆z-index大于粉红圆，粉红圆在转。</p>
+<p>对比下面的两个动画框架：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@keyframes</span> red-rotate&#123;</span><br><span class="line">		    0% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">45deg</span>);</span><br><span class="line">		    &#125;</span><br><span class="line">		    25% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">225deg</span>);</span><br><span class="line">		    &#125;</span><br><span class="line">		    50% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">225deg</span>);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">2</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    75% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">405deg</span>);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">3</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    100% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">405deg</span>);</span><br><span class="line">		    &#125;		</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">@keyframes</span> pink-rotate&#123;</span><br><span class="line">			0% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">45deg</span>);		    	</span><br><span class="line">		    &#125;</span><br><span class="line">		    25% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">45deg</span>);</span><br><span class="line">		    &#125;</span><br><span class="line">		    50% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">225deg</span>);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">3</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    75% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">225deg</span>);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">3</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    75<span class="selector-class">.001</span>% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">225deg</span>);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">2</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    100% &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">405deg</span>);</span><br><span class="line">		    &#125; </span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后两个动画框架同时开始就大功告成了！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Walking 劳翼 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/html5/" rel="tag"># html5</a>
+              <a href="/tags/css3/" rel="tag"># css3</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/07/20/js%E6%8E%A7%E5%88%B6%E8%BF%90%E5%8A%A8%E6%A1%86%E6%9E%B6animation/" rel="prev" title="js控制运动框架animation">
+                  <i class="fa fa-chevron-left"></i> js控制运动框架animation
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/09/25/CSS3%E5%AE%9E%E7%8E%B03D%E8%BD%AE%E6%92%AD%E5%9B%BE/" rel="next" title="CSS3实现3D轮播图">
+                  CSS3实现3D轮播图 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

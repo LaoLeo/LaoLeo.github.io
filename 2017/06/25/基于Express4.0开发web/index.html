@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="1.快速搭建在全局下安装express1npm install -g express 执行1234express -v yourProject 	或者cd yourProjectexpress 就会快速在目录yourProject中搭建express，-v参数指定模板引擎，没写就默认为jade 2.express中间件12345var app &#x3D; requrie(&#39;express&#39;)();app.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Express4.0开发web">
+<meta property="og:url" content="https://laoleo.github.io/2017/06/25/%E5%9F%BA%E4%BA%8EExpress4.0%E5%BC%80%E5%8F%91web/index.html">
+<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:description" content="1.快速搭建在全局下安装express1npm install -g express 执行1234express -v yourProject 	或者cd yourProjectexpress 就会快速在目录yourProject中搭建express，-v参数指定模板引擎，没写就默认为jade 2.express中间件12345var app &#x3D; requrie(&#39;express&#39;)();app.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-06-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-12-06T15:30:38.576Z">
+<meta property="article:author" content="Walking 劳翼">
+<meta property="article:tag" content="mongoDB">
+<meta property="article:tag" content="nodejs">
+<meta property="article:tag" content="express">
+<meta property="article:tag" content="grunt">
+<meta property="article:tag" content="router">
+<meta property="article:tag" content="MVC">
+<meta property="article:tag" content="jade">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://laoleo.github.io/2017/06/25/%E5%9F%BA%E4%BA%8EExpress4.0%E5%BC%80%E5%8F%91web/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>基于Express4.0开发web | Unity游戏开发 博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA"><span class="nav-number">1.</span> <span class="nav-text">1.快速搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-express%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">2.express中间件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-MVC%E6%9E%B6%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">3.MVC架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7grunt"><span class="nav-number">4.</span> <span class="nav-text">4.项目管理工具grunt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-router%E6%A8%A1%E5%9D%97"><span class="nav-number">5.</span> <span class="nav-text">5.router模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%9D%97mongose"><span class="nav-number">6.</span> <span class="nav-text">6.数据库模块mongose</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%B0%86session%E5%AD%98%E6%94%BE%E5%9C%A8mongodb%E9%87%8C"><span class="nav-number">7.</span> <span class="nav-text">7.将session存放在mongodb里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E5%89%8D%E5%90%8E%E5%8F%B0%E4%BC%A0%E6%95%B0%E6%8D%AE"><span class="nav-number">8.</span> <span class="nav-text">8.前后台传数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E5%90%84%E7%A7%8D%E7%94%A8%E5%88%B0%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">9.</span> <span class="nav-text">8.各种用到的中间件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-jade%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E"><span class="nav-number">10.</span> <span class="nav-text">9.jade模板引擎</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2017/06/25/%E5%9F%BA%E4%BA%8EExpress4.0%E5%BC%80%E5%8F%91web/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基于Express4.0开发web
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-06-25 00:00:00" itemprop="dateCreated datePublished" datetime="2017-06-25T00:00:00+08:00">2017-06-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="1-快速搭建"><a href="#1-快速搭建" class="headerlink" title="1.快速搭建"></a>1.快速搭建</h3><p>在全局下安装express<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -g express</span><br></pre></td></tr></table></figure></p>
+<p>执行<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">express</span> -v yourProject 	</span><br><span class="line">或者</span><br><span class="line">cd yourProject</span><br><span class="line"><span class="built_in">express</span></span><br></pre></td></tr></table></figure></p>
+<p>就会快速在目录yourProject中搭建express，-v参数指定模板引擎，没写就默认为jade</p>
+<h3 id="2-express中间件"><a href="#2-express中间件" class="headerlink" title="2.express中间件"></a>2.express中间件</h3><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = requrie(<span class="string">'express'</span>)();</span><br><span class="line">app.use (<span class="function"><span class="keyword">function</span> <span class="params">(req, res, next)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    next()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>next()作用是交付控制权，前往下一个中间件<br>可以利用这一点做验证功能</p>
+<h3 id="3-MVC架构"><a href="#3-MVC架构" class="headerlink" title="3.MVC架构"></a>3.MVC架构</h3><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/app</span><br><span class="line">    /controllers</span><br><span class="line">    /models</span><br><span class="line">    /schemas</span><br><span class="line">    /views</span><br><span class="line">/<span class="meta">public</span></span><br><span class="line">    /libs</span><br><span class="line">    /css</span><br><span class="line">    /<span class="keyword">js</span></span><br><span class="line">/router</span><br><span class="line">    router<span class="number">.</span><span class="keyword">js</span></span><br><span class="line">app<span class="number">.</span><span class="keyword">js</span></span><br><span class="line">package<span class="number">.</span>json</span><br><span class="line"><span class="meta">.bowerrc</span></span><br><span class="line">bower<span class="number">.</span>json</span><br><span class="line">gruntfile<span class="number">.</span><span class="keyword">js</span></span><br><span class="line"><span class="meta">.gitignore</span></span><br></pre></td></tr></table></figure>
+<p>以上就是项目的架构，按照MVC架构，后台代码都放在app下，schemas存放mongodb的模式，可以看作是一张张表，models放生成模型的文件，模型与模式对接起来。public存放静态文件，/libs存放前端框架如bootstrap。把router路由模块抽离放在router目录。<br>bower模块用来安装项目依赖的前端框架。需要在全局安装bower<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -g bower</span><br></pre></td></tr></table></figure></p>
+<p>安装bootstrap<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bower </span>init</span><br><span class="line"><span class="keyword">bower </span><span class="keyword">install </span><span class="keyword">bootstrap</span></span><br></pre></td></tr></table></figure></p>
+<p>bower init 生成bower.json<br>然后安装bootstrap时，会根据.bowerrc文件<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"directory"</span>: <span class="string">"public/libs"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>把依赖的框架安装在public/libs下</p>
+<h3 id="4-项目管理工具grunt"><a href="#4-项目管理工具grunt" class="headerlink" title="4.项目管理工具grunt"></a>4.项目管理工具grunt</h3><p>gruntfile.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">grunt</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    grunt.initConfig(&#123;</span><br><span class="line">        <span class="attr">watch</span>: &#123;</span><br><span class="line">            <span class="attr">jade</span>: &#123;</span><br><span class="line">                <span class="attr">files</span>: [<span class="string">'views/**'</span>],</span><br><span class="line">                <span class="attr">options</span>: &#123;</span><br><span class="line">                    <span class="attr">livereload</span>: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">js</span>: &#123;</span><br><span class="line">                <span class="attr">files</span>: [<span class="string">'public/js/**'</span>, <span class="string">'app/**/*.js'</span>],</span><br><span class="line">                <span class="comment">//tasks: ['jshint'],</span></span><br><span class="line">                <span class="attr">options</span>: &#123;</span><br><span class="line">                    <span class="attr">livereload</span>: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">uglify</span>: &#123;</span><br><span class="line">                <span class="attr">files</span>: [<span class="string">'public/**/*.js'</span>],</span><br><span class="line">                <span class="attr">tasks</span>: [<span class="string">'jshint'</span>],</span><br><span class="line">                <span class="attr">options</span>: &#123;</span><br><span class="line">                    <span class="attr">livereload</span>: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">styles</span>: &#123;</span><br><span class="line">                <span class="attr">files</span>: [<span class="string">'public/**/*.less'</span>],</span><br><span class="line">                <span class="attr">tasks</span>: [<span class="string">'less'</span>],</span><br><span class="line">                <span class="attr">options</span>: &#123;</span><br><span class="line">                    <span class="attr">nospawn</span>: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        <span class="attr">nodemon</span>: &#123;</span><br><span class="line">            <span class="attr">dev</span>: &#123;</span><br><span class="line">                <span class="attr">script</span>: <span class="string">'bin/www'</span>,  <span class="comment">//入口文件</span></span><br><span class="line">                <span class="attr">options</span>: &#123;</span><br><span class="line">                    <span class="attr">nodeArgs</span>: [<span class="string">'--debug'</span>], <span class="comment">//开启开发模式</span></span><br><span class="line">                    <span class="attr">args</span>:　[],</span><br><span class="line">                    <span class="attr">ignoredFiles</span>: [<span class="string">'README.md'</span>, <span class="string">'node_modules/**'</span>, <span class="string">'public/libs/**'</span>, <span class="string">'.vscode'</span>],</span><br><span class="line">                    <span class="attr">watchedExtensions</span>: [<span class="string">'js'</span>],</span><br><span class="line">                    <span class="attr">watchedFolders</span>: [<span class="string">'./'</span>], <span class="comment">//监听定义的文件夹,根目录</span></span><br><span class="line">                    <span class="attr">debug</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">delayTime</span>: <span class="number">1000</span>,</span><br><span class="line">                    <span class="attr">env</span>: &#123;</span><br><span class="line">                        <span class="attr">PORT</span>: <span class="number">3000</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="attr">cwd</span>: __dirname</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        <span class="attr">jshint</span>: &#123;</span><br><span class="line">            <span class="attr">options</span>: &#123;</span><br><span class="line">                <span class="attr">jshintrc</span>: <span class="string">'.jshintrc'</span>,</span><br><span class="line">                <span class="attr">ignores</span>: [<span class="string">'public/libs/**/*.js'</span>]</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">all</span>: [<span class="string">'public/javascripts/*.js'</span>, <span class="string">'test/**/*.js'</span>, <span class="string">'app/**/*.js'</span>]</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        <span class="attr">less</span>: &#123;</span><br><span class="line">            <span class="attr">development</span>: &#123;</span><br><span class="line">                <span class="attr">options</span>: &#123;</span><br><span class="line">                    <span class="attr">compress</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">yuicompress</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">optimization</span>: <span class="number">2</span></span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">files</span>: &#123;</span><br><span class="line">                    <span class="string">'public/build/index.css'</span> : <span class="string">'public/less/index.less'</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        <span class="attr">uglify</span>: &#123;</span><br><span class="line">            <span class="attr">development</span>: &#123;</span><br><span class="line">                <span class="attr">files</span>: &#123;</span><br><span class="line">                <span class="string">'public/build/admin.min.js'</span>: <span class="string">'public/javascripts/admin.js'</span>,</span><br><span class="line">                <span class="string">'public/build/detail.min.js'</span>: [</span><br><span class="line">                    <span class="string">'public/javascripts/detail.js'</span></span><br><span class="line">                ]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        <span class="attr">mochaTest</span>: &#123;</span><br><span class="line">            <span class="attr">options</span>: &#123;</span><br><span class="line">                <span class="attr">reporter</span>: <span class="string">'spec'</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">src</span>: [<span class="string">'test/**/*.js'</span>]</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        <span class="attr">concurrent</span>: &#123;</span><br><span class="line">            <span class="attr">tasks</span>: [<span class="string">'nodemon'</span>, <span class="string">'watch'</span>, <span class="string">'jshint'</span>, <span class="string">'less'</span>, <span class="string">'uglify'</span>],</span><br><span class="line">            <span class="attr">options</span>: &#123;</span><br><span class="line">                <span class="attr">logConcurrentOutput</span>: <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-contrib-watch'</span>); <span class="comment">//监控定义好的静态文件变动</span></span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-nodemon'</span>); <span class="comment">//监控入口文件变动</span></span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-concurrent'</span>); <span class="comment">//优化慢任务的构建时间，比如sass,less，并发执行多个阻塞的任务,比如nodemon和watch</span></span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-mocha-test'</span>);  <span class="comment">//测试框架</span></span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-contrib-less'</span>);</span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-contrib-uglify'</span>);</span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-contrib-jshint'</span>);</span><br><span class="line"></span><br><span class="line">    grunt.option(<span class="string">'force'</span>, <span class="literal">true</span>); <span class="comment">//避免程序因语法错误而终止执行</span></span><br><span class="line"></span><br><span class="line">    grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'concurrent'</span>]);</span><br><span class="line">    grunt.registerTask(<span class="string">'test'</span>, [<span class="string">'mochaTest'</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>前期开发只需要前面三个模块包即watch,nodemon,concurrent就行。</p>
+<h3 id="5-router模块"><a href="#5-router模块" class="headerlink" title="5.router模块"></a>5.router模块</h3><p>这里有两种方法<br>第一种是将路由分类<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">app.js</span><br><span class="line"><span class="comment">//挂载路由表</span></span><br><span class="line">app.use(<span class="string">'/'</span>, index);</span><br><span class="line">app.use(<span class="string">'/admin'</span>, admin);</span><br><span class="line">app.use(<span class="string">'/user'</span>, user)</span><br><span class="line"></span><br><span class="line">user.js</span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> User = <span class="built_in">require</span>(<span class="string">'../models/user'</span>);</span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line"></span><br><span class="line"><span class="comment">//用户注册</span></span><br><span class="line">router.post(<span class="string">'/signup'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = router;</span><br></pre></td></tr></table></figure></p>
+<p>当url以/user开头时就会进入user.js文件。<br>第二种是路由全部写在一个文件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">app.js</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'./config/routers'</span>)(app); <span class="comment">//不能传入express.Router(),它只能作为中间件用,如上</span></span><br><span class="line"></span><br><span class="line">router.js</span><br><span class="line"><span class="keyword">var</span> Movie = <span class="built_in">require</span>(<span class="string">'../app/controllers/movie'</span>);</span><br><span class="line"><span class="keyword">var</span> Index = <span class="built_in">require</span>(<span class="string">'../app/controllers/index'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">app</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Index</span></span><br><span class="line">    app.get(<span class="string">'/'</span>, Index.index);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Movie</span></span><br><span class="line">    app.get(<span class="string">'/movie/:id'</span>, Movie.detail);</span><br><span class="line">    app.get(<span class="string">'/admin/movie/list'</span>,User.signinRequired,User.adminRequired, Movie.list);</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="6-数据库模块mongose"><a href="#6-数据库模块mongose" class="headerlink" title="6.数据库模块mongose"></a>6.数据库模块mongose</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">app.js</span><br><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</span><br><span class="line"><span class="keyword">var</span> dbURL = <span class="string">'mongodb://localhost:27017/movieWeb'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//连接数据库</span></span><br><span class="line">mongoose.Promise = global.Promise; <span class="comment">//避免控制台输出Promise错误 </span></span><br><span class="line">mongoose.connect(dbURL) <span class="comment">//数据库名为movieWeb</span></span><br><span class="line">mongoose.connection.on(<span class="string">'connected'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;    <span class="comment">//绑定connected函数，连接成功时触发</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Connection success!'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>模式schemas(表)<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</span><br><span class="line"><span class="keyword">var</span> Schema = mongoose.Schema;</span><br><span class="line"><span class="keyword">var</span> ObjectId = Schema.Types.ObjectId;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> MovieSchema = <span class="keyword">new</span> mongoose.Schema(&#123;  <span class="comment">//定义模式</span></span><br><span class="line">    <span class="attr">doctor</span>: <span class="built_in">String</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="built_in">String</span>,</span><br><span class="line">    <span class="attr">language</span>: <span class="built_in">String</span>,</span><br><span class="line">    <span class="attr">country</span>: <span class="built_in">String</span>,</span><br><span class="line">    <span class="attr">summary</span>: <span class="built_in">String</span>,</span><br><span class="line">    <span class="attr">flash</span>: <span class="built_in">String</span>,</span><br><span class="line">    <span class="attr">poster</span>: <span class="built_in">String</span>,</span><br><span class="line">    <span class="attr">year</span>: <span class="built_in">String</span>,</span><br><span class="line">    <span class="attr">pv</span>: &#123;</span><br><span class="line">        <span class="attr">type</span>: <span class="built_in">Number</span>,</span><br><span class="line">        <span class="attr">default</span>: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">category</span>: &#123;</span><br><span class="line">        <span class="attr">type</span>: ObjectId,</span><br><span class="line">        <span class="attr">ref</span>: <span class="string">'Category'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">meta</span>: &#123;</span><br><span class="line">        <span class="attr">createAt</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="built_in">Date</span>,</span><br><span class="line">            <span class="attr">default</span>: <span class="built_in">Date</span>.now()</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">updateAt</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="built_in">Date</span>,</span><br><span class="line">            <span class="attr">default</span>: <span class="built_in">Date</span>.now()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//每次存取数据之前，都调用save方法</span></span><br><span class="line">MovieSchema.pre(<span class="string">'save'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">next</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.isNew) &#123;</span><br><span class="line">        <span class="keyword">this</span>.meta.createAt = <span class="keyword">this</span>.meta.updateAt = <span class="built_in">Date</span>.now()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.meta.updateAt = <span class="built_in">Date</span>.now()  </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    next() <span class="comment">//将流程走下去</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">MovieSchema.statics = &#123;  <span class="comment">//实例化以后就会具有以下方法，相当于构造函数的成员方法</span></span><br><span class="line">    <span class="attr">fetch</span>: <span class="function"><span class="keyword">function</span>(<span class="params">cb</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">            .find(&#123;&#125;)</span><br><span class="line">            .sort(<span class="string">'meta.updateAt'</span>)</span><br><span class="line">            .exec(cb)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">fetchById</span>: <span class="function"><span class="keyword">function</span>(<span class="params">id, cb</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">            .findOne(&#123;<span class="attr">_id</span>: id&#125;)</span><br><span class="line">            .exec(cb)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = MovieSchema</span><br></pre></td></tr></table></figure></p>
+<p>模型models（模式跟模型对接）<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>)</span><br><span class="line"><span class="keyword">var</span> MovieSchema = <span class="built_in">require</span>(<span class="string">'../schemas/movie'</span>)</span><br><span class="line"><span class="keyword">var</span> Movie = mongoose.model(<span class="string">'Movie'</span>, MovieSchema)  <span class="comment">//模式和模型对接</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = Movie</span><br></pre></td></tr></table></figure></p>
+<p>值得注意的是，使用mongodb之前，需要在电脑上安装mongodb，并注册成一个服务，方便使用前开启，具体参考笔记：mongodb错误</p>
+<h3 id="7-将session存放在mongodb里"><a href="#7-将session存放在mongodb里" class="headerlink" title="7.将session存放在mongodb里"></a>7.将session存放在mongodb里</h3><p>session是会话支持，作为客户端的id，跟服务器交互<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用mongodb来储存sesion信息</span></span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>);</span><br><span class="line"><span class="keyword">var</span> session = <span class="built_in">require</span>(<span class="string">"express-session"</span>);</span><br><span class="line"><span class="keyword">var</span> MongoStore = <span class="built_in">require</span>(<span class="string">'connect-mongo'</span>)(session);</span><br><span class="line"></span><br><span class="line"><span class="comment">//配置session</span></span><br><span class="line">app.use(cookieParser());</span><br><span class="line">app.use(session(&#123;</span><br><span class="line">  <span class="attr">secret</span>: <span class="string">'imoocMovieWeb'</span>,</span><br><span class="line">  <span class="attr">store</span>: <span class="keyword">new</span> MongoStore(&#123;</span><br><span class="line">    <span class="attr">url</span>: dbURL,</span><br><span class="line">    <span class="attr">collection</span>: <span class="string">'sessions'</span></span><br><span class="line">  &#125;),</span><br><span class="line">  <span class="attr">resave</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">saveUninitialized</span>: <span class="literal">true</span></span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure></p>
+<p>其中呢，cookieParser()中间件是session和bodyParser的依赖的中间件<br>bodyParser是解析request请求的中间价<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">配置</span><br><span class="line">app.<span class="keyword">use</span>(<span class="title">bodyParser</span>.<span class="title">json</span>());</span><br><span class="line">app.<span class="keyword">use</span>(<span class="title">bodyParser</span>.<span class="title">urlencoded</span>(&#123;<span class="title">extended</span>:<span class="title">true</span>&#125;)); <span class="comment">//extended为true则可以解析字符串和数组以外的数据</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="8-前后台传数据"><a href="#8-前后台传数据" class="headerlink" title="8.前后台传数据"></a>8.前后台传数据</h3><p>可以用res.render方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">controllers/movie.js</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取后列表页</span></span><br><span class="line">exports.list = <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  Movie.fetch(<span class="function"><span class="keyword">function</span>(<span class="params">err, movies</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    res.render(<span class="string">'list'</span>, &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">'后台列表页'</span>,</span><br><span class="line">      <span class="attr">movies</span>: movies</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>还可以用res.locals，可以传递方法和变量<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">app.js</span><br><span class="line"></span><br><span class="line"><span class="comment">//前后台传递数据</span></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.locals.moment = moment;  <span class="comment">//向前台模板发送处理时间的moment方法</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">var</span> _user = req.session.user;</span><br><span class="line">  res.locals.user = _user; <span class="comment">//传递用户转态</span></span><br><span class="line"></span><br><span class="line">  next();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="8-各种用到的中间件"><a href="#8-各种用到的中间件" class="headerlink" title="8.各种用到的中间件"></a>8.各种用到的中间件</h3><ul>
+<li><p>flash  </p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> flash = require('connect-flash') <span class="comment">//存储变量的中间件，相当全局变量</span></span><br><span class="line"><span class="keyword">app</span>.<span class="keyword">use</span>(flash())</span><br><span class="line"></span><br><span class="line">使用</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">error</span> = req.flash('<span class="keyword">error</span>')</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>logger  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> logger = <span class="built_in">require</span>(<span class="string">'morgan'</span>); <span class="comment">//处理日志模块 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//日志文件</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> accessLogfile = fs.createWriteStream(<span class="string">'access.log'</span>, &#123;<span class="attr">flags</span>:<span class="string">'a'</span>&#125;);</span><br><span class="line"><span class="keyword">var</span> errorLogfile = fs.createWriteStream(<span class="string">'error.log'</span>, &#123;<span class="attr">flags</span>:<span class="string">'a'</span>&#125;);</span><br><span class="line"></span><br><span class="line">app.set(<span class="string">'env'</span>, <span class="string">'production'</span>);</span><br><span class="line">app.use(logger(&#123;<span class="attr">stream</span>: accessLogfile&#125;)); <span class="comment">//访问日志</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//处理错误日志，处理错误的中间件一定要写在路由后面</span></span><br><span class="line"><span class="keyword">if</span> (<span class="string">'production'</span> == app.get(<span class="string">'env'</span>)) &#123;</span><br><span class="line">  app.use(<span class="function"><span class="keyword">function</span>(<span class="params">err, req, res, next</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> meta = <span class="string">'['</span> + <span class="keyword">new</span> <span class="built_in">Date</span>() + <span class="string">'] '</span> + req.url + <span class="string">'\n'</span>;</span><br><span class="line">    errorLogfile.write(meta + err.stack + <span class="string">'\n'</span>);</span><br><span class="line">    next();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>moment  </p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">app.js</span><br><span class="line">var moment = <span class="built_in">require</span>('<span class="built_in">moment</span>'); <span class="comment">//处理时间格式</span></span><br><span class="line">在中间件里</span><br><span class="line">res.locals.moment = <span class="built_in">moment</span>;  <span class="comment">//向前台模板发送处理时间的moment方法</span></span><br><span class="line"></span><br><span class="line">jade模板文件</span><br><span class="line"><span class="built_in">moment</span>(item.meta.updateAt).<span class="keyword">format</span>('MM/DD/YYYY') <span class="comment">//item.meta.updateAt是后台传过来的时间数据new Date()</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>bcrypt-nodejs 加盐模块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> bcrypt = <span class="built_in">require</span>(<span class="string">'bcrypt-nodejs'</span>);</span><br><span class="line"><span class="keyword">var</span> SALL_WORK_FACTOR = <span class="number">10</span>; <span class="comment">//数值越大，破解越复杂</span></span><br><span class="line">bcrypt.genSalt(SALL_WORK_FACTOR, <span class="function"><span class="keyword">function</span>(<span class="params">err, salt</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(err) <span class="keyword">return</span> next(err);</span><br><span class="line"></span><br><span class="line">        bcrypt.hash(user.password, salt, <span class="literal">null</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, hash</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err) <span class="keyword">return</span> next(err);</span><br><span class="line"></span><br><span class="line">            user.password = hash</span><br><span class="line">            next() <span class="comment">//将流程走下去</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>underscore （用到这模块的继承方法）  </p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="literal">_</span> = require(<span class="string">'underscore'</span>);</span><br><span class="line">_movie = <span class="literal">_</span>.extend(movie, movieObj)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="9-jade模板引擎"><a href="#9-jade模板引擎" class="headerlink" title="9.jade模板引擎"></a>9.jade模板引擎</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">layout.jade 公用的部份</span><br><span class="line"></span><br><span class="line">doctype html</span><br><span class="line">html</span><br><span class="line">  head</span><br><span class="line">    meta(charset=&quot;utf-8&quot;)</span><br><span class="line">    title #&#123;title&#125; - imoocMovie</span><br><span class="line">    include ./includes/head</span><br><span class="line">  body</span><br><span class="line">    include ./includes/header</span><br><span class="line">    block content</span><br><span class="line">    include ./includes/footer</span><br></pre></td></tr></table></figure>
+<p>引进用include<br>block content是主体内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">extends ../layout  //-扩展layout</span><br><span class="line"></span><br><span class="line">block content</span><br><span class="line">  .container</span><br><span class="line">    .row</span><br><span class="line">      each cat in categories</span><br><span class="line">        .panel.panel-default</span><br><span class="line">          .panel-heading</span><br><span class="line">            h3</span><br><span class="line">              a(href=&apos;/results?cat=#&#123;cat._id&#125;&amp;p=0&apos;) #&#123;cat.name&#125;</span><br><span class="line">          .panel-body</span><br><span class="line">            if cat.movies &amp;&amp; cat.movies.length &gt; 0</span><br><span class="line">              each item in cat.movies</span><br><span class="line">                .col-md-2</span><br><span class="line">                  .thumbnail</span><br><span class="line">                    a(href=&quot;/movie/#&#123;item._id&#125;&quot;)</span><br><span class="line">                      if item.poster.indexOf(&apos;http:&apos;) &gt; -1</span><br><span class="line">                        img(src=&quot;#&#123;item.poster&#125;&quot;, alt=&quot;#&#123;item.title&#125;&quot;)</span><br><span class="line">                      else</span><br><span class="line">                        img(src=&quot;/upload/#&#123;item.poster&#125;&quot;, alt=&quot;#&#123;item.title&#125;&quot;)</span><br><span class="line">                    .caption</span><br><span class="line">                      h4 #&#123;item.title&#125;</span><br><span class="line">                      p: a.btn.btn-primary(href=&quot;/movie/#&#123;item._id&#125;&quot;, role=&quot;button&quot;) 观看预告片</span><br><span class="line">    script(src=&apos;/build/admin.min.js&apos;)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>request（发http请求）<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> request = <span class="keyword">require</span>(<span class="string">'request'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//用法</span></span><br><span class="line">request(&#123;url: url, json: <span class="literal">true</span>&#125;, function (error, response, body) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!error &amp;&amp; response.statusCode === <span class="number">200</span>) &#123;</span><br><span class="line">                <span class="built_in">var</span> <span class="built_in">data</span> = body;</span><br><span class="line">                <span class="built_in">var</span> now = (<span class="literal">new</span> <span class="built_in">Date</span>().getTime());</span><br><span class="line">                <span class="built_in">var</span> expires_in = now + (<span class="built_in">data</span>.expires_in - <span class="number">20</span>) * <span class="number">1000</span>;</span><br><span class="line">                <span class="built_in">data</span>.expires_in = expires_in;</span><br><span class="line">                resolve(<span class="built_in">data</span>);</span><br><span class="line">                <span class="comment">//console.log(data);</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                reject(<span class="string">'can not get ticket'</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Walking 劳翼 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/mongoDB/" rel="tag"># mongoDB</a>
+              <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+              <a href="/tags/express/" rel="tag"># express</a>
+              <a href="/tags/grunt/" rel="tag"># grunt</a>
+              <a href="/tags/router/" rel="tag"># router</a>
+              <a href="/tags/MVC/" rel="tag"># MVC</a>
+              <a href="/tags/jade/" rel="tag"># jade</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/06/13/web%E7%A6%BB%E7%BA%BF%E5%BA%94%E7%94%A8/" rel="prev" title="Web离线应用">
+                  <i class="fa fa-chevron-left"></i> Web离线应用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/07/10/mongoDB%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/" rel="next" title="mongoDB常用知识整理">
+                  mongoDB常用知识整理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

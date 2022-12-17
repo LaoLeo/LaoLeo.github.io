@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="(权游Stark家族图徽)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="散乱知识汇集【工作日记05】">
+<meta property="og:url" content="https://laoleo.github.io/2020/03/26/05-%E6%95%A3%E4%B9%B1%E7%9F%A5%E8%AF%86%E6%B1%87%E9%9B%86/index.html">
+<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:description" content="(权游Stark家族图徽)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&amp;quality=100&amp;size=b4000_4000&amp;sec=1585232140&amp;di=19cede1f52e7d232878de1e59f7ef215&amp;src=http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/dbb44aed2e738bd4f69c4f49a58b87d6277ff90d.jpg">
+<meta property="og:image" content="http://m.qpic.cn/psc?/V12x89qA2LlAEO/YPhsM5mUO5.bFmyDEhTOh.bBxFLbiHnVZm4ijUstjs4299r7Qq73xp9N6FkEC3fTipoSpwWAoyqyDu6AavAyu7I6I3SMKyuZQdfOcLaFKu0!/b&amp;bo=sAKrAbACqwEDGTw!&amp;rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psc?/V12x89qA2LlAEO/NZ9C4PTRAOGVNvAxFZDwtwanSqa8Dd8UwWZwMJTLqealcb2nqDNffsJmDvN0EJWV7GIgHvUar5NDR37*AGkxwA!!/b&amp;bo=SwTNAUsEzQEDCSw!&amp;rf=viewer_4">
+<meta property="article:published_time" content="2020-03-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-12-06T15:30:37.614Z">
+<meta property="article:author" content="Walking 劳翼">
+<meta property="article:tag" content="git">
+<meta property="article:tag" content="protobuf">
+<meta property="article:tag" content="Protocol Buffer">
+<meta property="article:tag" content="make">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&amp;quality=100&amp;size=b4000_4000&amp;sec=1585232140&amp;di=19cede1f52e7d232878de1e59f7ef215&amp;src=http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/dbb44aed2e738bd4f69c4f49a58b87d6277ff90d.jpg">
+
+
+<link rel="canonical" href="https://laoleo.github.io/2020/03/26/05-%E6%95%A3%E4%B9%B1%E7%9F%A5%E8%AF%86%E6%B1%87%E9%9B%86/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>散乱知识汇集【工作日记05】 | Unity游戏开发 博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git%E7%9B%B8%E5%85%B3"><span class="nav-number">1.</span> <span class="nav-text">git相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#git%E5%AD%90%E6%A8%A1%E5%9D%97"><span class="nav-number">1.1.</span> <span class="nav-text">git子模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-diff%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">git-diff命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#protobuf%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.</span> <span class="nav-text">protobuf协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF"><span class="nav-number">2.2.</span> <span class="nav-text">优势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#make%E6%9E%84%E5%BB%BA"><span class="nav-number">3.</span> <span class="nav-text">make构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">详细介绍：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8make%E6%9D%A5%E6%9E%84%E5%BB%BAnode-js%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.2.</span> <span class="nav-text">如何用make来构建node.js项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#windows%E4%B8%8B%E4%BD%BF%E7%94%A8make%E5%91%BD%E4%BB%A4%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B"><span class="nav-number">3.3.</span> <span class="nav-text">windows下使用make命令安装教程</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2020/03/26/05-%E6%95%A3%E4%B9%B1%E7%9F%A5%E8%AF%86%E6%B1%87%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          散乱知识汇集【工作日记05】
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-03-26 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-26T00:00:00+08:00">2020-03-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:37" itemprop="dateModified" datetime="2022-12-06T23:30:37+08:00">2022-12-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&amp;quality=100&amp;size=b4000_4000&amp;sec=1585232140&amp;di=19cede1f52e7d232878de1e59f7ef215&amp;src=http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/dbb44aed2e738bd4f69c4f49a58b87d6277ff90d.jpg" alt="Stark"></p>
+<center><i style="color:#333;">(权游Stark家族图徽)</i></center>
+
+<a id="more"></a>
+<blockquote>
+<p>下面的内容是，我最近几个月工作遇到的零散的技术和知识点的汇聚，定期整理归类繁杂的知识，有利于形成知识的结构化。</p>
+</blockquote>
+<p>目录：</p>
+<ul>
+<li>git相关</li>
+<li>protobuf协议</li>
+<li>make构建</li>
+</ul>
+<h2 id="git相关"><a href="#git相关" class="headerlink" title="git相关"></a>git相关</h2><h3 id="git子模块"><a href="#git子模块" class="headerlink" title="git子模块"></a>git子模块</h3><p>允许git仓库做为另一个git仓库的子目录，同时保持自己的独立提交<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加子模块，同时会创建.gitmodules保存仓库子模块的映射信息</span></span><br><span class="line">git submodule add [url] </span><br><span class="line"></span><br><span class="line"><span class="comment"># clone含有子模块的项目后拉取子模块代码</span></span><br><span class="line">git clone [url]</span><br><span class="line">git submodule init</span><br><span class="line">git submodule <span class="keyword">update</span></span><br><span class="line"><span class="comment"># 加入--recursive 同等于上面</span></span><br><span class="line">git <span class="keyword">clone</span> <span class="comment">--recursive [url]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在子模块上更新代码</span></span><br><span class="line">git <span class="keyword">fetch</span></span><br><span class="line">git <span class="keyword">merge</span> origin/<span class="keyword">master</span></span><br><span class="line"><span class="comment"># 在主项目中执行下面命令同等于上面操作,缺少[submodule name]默认更新所有子模块</span></span><br><span class="line">git submodule <span class="keyword">update</span> <span class="comment">--remote [submodule name]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在主项目看到子模块的提交日志</span></span><br><span class="line">git <span class="keyword">log</span> -p <span class="comment">--submodule</span></span><br></pre></td></tr></table></figure></p>
+<p>git子模块：<a href="https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97" target="_blank" rel="external">https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97</a><br>业界文档：<a href="https://juejin.im/post/5addeb48518825672a028a3b" target="_blank" rel="external">https://juejin.im/post/5addeb48518825672a028a3b</a></p>
+<h3 id="git-diff命令"><a href="#git-diff命令" class="headerlink" title="git-diff命令"></a>git-diff命令</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示更改文件数</span></span><br><span class="line">git diff <span class="keyword">COMMIT</span> <span class="keyword">COMMIT</span> <span class="comment">--shortstat  </span></span><br><span class="line"><span class="comment">#显示更改的文件名</span></span><br><span class="line"><span class="comment">--name-status </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 筛选文件</span></span><br><span class="line"><span class="comment"># 合并后对比一些特定文件的情况下，这条命令尤为重要，后买可以接对多个文件名，用vscode的diff插件还要一个一个文件检查</span></span><br><span class="line"><span class="comment"># 假如合并文件有几百个，工作量是艰巨的，可以写个shell脚本处理对比结果，写进txt文件</span></span><br><span class="line"><span class="comment"># 我最近就有个这样的需求，幸好有这条命令</span></span><br><span class="line">git diff <span class="keyword">COMMIT</span> <span class="keyword">COMMIT</span> *.lua *.js </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 筛选具体目录下的目标文件，注意path从当前目录起始</span></span><br><span class="line">git diff <span class="keyword">COMMIT</span> <span class="keyword">COMMIT</span> <span class="keyword">path</span>/<span class="keyword">to</span>/target  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 版本信息</span></span><br><span class="line">git <span class="keyword">show</span> <span class="keyword">COMMIT</span></span><br></pre></td></tr></table></figure>
+<h2 id="protobuf协议"><a href="#protobuf协议" class="headerlink" title="protobuf协议"></a>protobuf协议</h2><p>游戏中的数据通讯协议主要是Protobuf+socket，只有登录时拿到ID和session或token用到了http协议。对于数据响应要求高、低延迟甚至实时的应用程序，像游戏、直播、即时聊天，一般都会用到protobuf作为数据结构化和序列化的协议。</p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>Protobuf全称Protocol Buffer，是google内部广泛使用的结构化数据存储、数据序列化的协议。下面是google官方给出的定义：<br>Protocol Buffers 是一种轻便高效的结构化数据存储格式，可以用于结构化数据序列化，很适合做数据存储或 RPC 数据交换格式。它可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。</p>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><p>首先从定义上，可以看到一个描述protobuf的关键字：方便高效。</p>
+<ul>
+<li>proobuf的语法比xml简洁方便</li>
+</ul>
+<p>拿常见的数据序列化协议Json，xml与protobuf做对比：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.proto</span><br><span class="line">package lm; </span><br><span class="line">message helloworld </span><br><span class="line">&#123; </span><br><span class="line">   required int32     id = 1;  // ID </span><br><span class="line">   required string    str = 2;  // str </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.xml</span><br><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">helloword</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">id</span>&gt;</span>1<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">str</span>&gt;</span>helloworld<span class="tag">&lt;/<span class="name">str</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">note</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>protobuf是二进制协议，比同为文本协议的json和xml的读写操作都要高效，快捷。<br>文本协议要读进内存，会被解析成二进制，而pb属于二进制协议，所以相对文本协议解析速度更快。</li>
+</ul>
+<p>官方针对protobuf的性能将其更各种数据协议做了测试比较，下图是通过各个协议对一个对象操作的时间–Total time，包括创建对象、将对象序列化为内存中的字节序列，然后再反序列化的过程。</p>
+<p><img src="http://m.qpic.cn/psc?/V12x89qA2LlAEO/YPhsM5mUO5.bFmyDEhTOh.bBxFLbiHnVZm4ijUstjs4299r7Qq73xp9N6FkEC3fTipoSpwWAoyqyDu6AavAyu7I6I3SMKyuZQdfOcLaFKu0!/b&amp;bo=sAKrAbACqwEDGTw!&amp;rf=viewer_4" alt="image"></p>
+<p>protobuf性能测试报告：<a href="https://code.google.com/archive/p/thrift-protobuf-compare/wikis/Benchmarking.wiki" target="_blank" rel="external">https://code.google.com/archive/p/thrift-protobuf-compare/wikis/Benchmarking.wiki</a></p>
+<ul>
+<li>protobuf协议更小</li>
+</ul>
+<p>各协议的字节码大小对比：<br><img src="http://m.qpic.cn/psc?/V12x89qA2LlAEO/NZ9C4PTRAOGVNvAxFZDwtwanSqa8Dd8UwWZwMJTLqealcb2nqDNffsJmDvN0EJWV7GIgHvUar5NDR37*AGkxwA!!/b&amp;bo=SwTNAUsEzQEDCSw!&amp;rf=viewer_4" alt="image"></p>
+<ul>
+<li>protobuf与平台无关，与语言无关，所以兼容性更好</li>
+</ul>
+<p>java中使用json和xml数据结构，使用使用相应的包支持的，jackson（java的标准json库）和javolution xmlformat（javolution库中格式化xml的API）。<br>而protobuf可以通过编译器将描述数据结构的.proto文件编译成各种目标语言，github仓库上标有目标语言有：c++、java、c#、JavaScript、Ruby、Go、PHP、Dart、Objective-C。</p>
+<p><a href="https://github.com/protocolbuffers/protobuf" target="_blank" rel="external">https://github.com/protocolbuffers/protobuf</a></p>
+<h2 id="make构建"><a href="#make构建" class="headerlink" title="make构建"></a>make构建</h2><p>make是一个常用的构建工具，多用于C语言项目，但在一些大型的项目中使用频率也比较高。</p>
+<p>假如一个工程里有个makefile文件，往往都需要用到make命令来构建。</p>
+<h3 id="详细介绍："><a href="#详细介绍：" class="headerlink" title="详细介绍："></a>详细介绍：</h3><p><a href="http://www.ruanyifeng.com/blog/2015/02/make.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2015/02/make.html</a></p>
+<h3 id="如何用make来构建node-js项目"><a href="#如何用make来构建node-js项目" class="headerlink" title="如何用make来构建node.js项目"></a>如何用make来构建node.js项目</h3><p><a href="http://www.ruanyifeng.com/blog/2015/03/build-website-with-make.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2015/03/build-website-with-make.html</a></p>
+<h3 id="windows下使用make命令安装教程"><a href="#windows下使用make命令安装教程" class="headerlink" title="windows下使用make命令安装教程"></a>windows下使用make命令安装教程</h3><p>下载MinGW：<a href="http://sourceforge.net/projects/mingw/files/latest/download?source=files" target="_blank" rel="external">http://sourceforge.net/projects/mingw/files/latest/download?source=files</a></p>
+<p>下载后假如没在bin下找make.exe，可以到MinGW instanllation manager中找到下载MinGW-make.exe，勾选包然后到左上角点击apply change下载(记得把MinGW-make改名成make)。最好把basic setup都下了。</p>
+<p>最后记得手动添加环境变量：path/to/MinGW/bin，就可以使用了。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Walking 劳翼 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/git/" rel="tag"># git</a>
+              <a href="/tags/protobuf/" rel="tag"># protobuf</a>
+              <a href="/tags/Protocol-Buffer/" rel="tag"># Protocol Buffer</a>
+              <a href="/tags/make/" rel="tag"># make</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/12/20/04-%E4%B8%8D%E5%BE%97%E4%B8%8D%E6%87%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%BC%98%E5%8C%96%E6%8A%80%E8%83%BD/" rel="prev" title="不得不懂的工作流优化技能【工作日记04】">
+                  <i class="fa fa-chevron-left"></i> 不得不懂的工作流优化技能【工作日记04】
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/" rel="next" title="场景控制流程解读">
+                  场景控制流程解读 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

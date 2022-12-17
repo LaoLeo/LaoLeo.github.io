@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="前言我为什么会选择阅读这一本书呢？书中给出的原因简介明了：首先我是程序员，第二我想成为更好的程序员。从这两点我们可以看得出来，作者的对于程序的看法是，能写出“整洁”代码的程序员必定是个优秀的程序员，写出“整洁”代码在作者看来是一个程序员需要发展和具备的一项素质。至于什么是“整洁的代码”，将会在下文进行讨论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《代码整洁之道》读书笔记">
+<meta property="og:url" content="https://laoleo.github.io/2018/04/20/%E3%80%8A%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:description" content="前言我为什么会选择阅读这一本书呢？书中给出的原因简介明了：首先我是程序员，第二我想成为更好的程序员。从这两点我们可以看得出来，作者的对于程序的看法是，能写出“整洁”代码的程序员必定是个优秀的程序员，写出“整洁”代码在作者看来是一个程序员需要发展和具备的一项素质。至于什么是“整洁的代码”，将会在下文进行讨论">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=133076365,2636556812&amp;fm=27&amp;gp=0.jpg">
+<meta property="article:published_time" content="2018-04-20T12:20:01.000Z">
+<meta property="article:modified_time" content="2022-12-06T15:30:38.492Z">
+<meta property="article:author" content="Walking 劳翼">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=133076365,2636556812&amp;fm=27&amp;gp=0.jpg">
+
+
+<link rel="canonical" href="https://laoleo.github.io/2018/04/20/%E3%80%8A%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>《代码整洁之道》读书笔记 | Unity游戏开发 博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B4%E6%B4%81%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">什么是整洁的代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E6%B4%81%E4%BB%A3%E7%A0%81%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">整洁代码的重要性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%87%BA%E6%95%B4%E6%B4%81%E4%BB%A3%E7%A0%81%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="nav-number">4.</span> <span class="nav-text">写出整洁代码的小技巧</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2018/04/20/%E3%80%8A%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《代码整洁之道》读书笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-04-20 20:20:01" itemprop="dateCreated datePublished" datetime="2018-04-20T20:20:01+08:00">2018-04-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=133076365,2636556812&amp;fm=27&amp;gp=0.jpg" alt="我是图片"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我为什么会选择阅读这一本书呢？书中给出的原因简介明了：首先我是程序员，第二我想成为更好的程序员。从这两点我们可以看得出来，作者的对于程序的看法是，能写出“整洁”代码的程序员必定是个优秀的程序员，写出“整洁”代码在作者看来是一个程序员需要发展和具备的一项素质。至于什么是“整洁的代码”，将会在下文进行讨论</p>
+<a id="more"></a>
+<h2 id="什么是整洁的代码"><a href="#什么是整洁的代码" class="headerlink" title="什么是整洁的代码"></a>什么是整洁的代码</h2><p>在理解什么是整洁代码的时候，有必要先了解什么是糟糕的代码，以及糟糕代码带来的危害性。</p>
+<p>当然，我并不会粘贴出那些写的很糟糕的代码，因为我觉得这样没有任何一点意义，因为糟糕的代码千差万别，因为每个程序员的代码风格不一样。糟糕代码给人的感觉都是一样的，可以用一个词来形容：沼泽。就像你躺过代码的水域，想穿过灌木密布、瀑布暗藏的沼泽地，但是最后越陷越深。书中的举了个例子，指出糟糕的代码会使生产力下降，严重可以毁掉一家公司。</p>
+<p>那么是什么原因导致写出糟糕的代码呢。总结有一下几点：</p>
+<ul>
+<li>技术水平低</li>
+<li>项目紧迫时间不足</li>
+<li>缺少整洁代码的意识</li>
+<li>先上线后优化，但是没有列入工作任务中导致忘掉</li>
+</ul>
+<p>纵观以上几点，可以看出即使是有经验的程序员也有可能写出糟糕的代码。、</p>
+<p>那么整洁的代码给人是什么样的感觉呢？</p>
+<p>书中用了一个形容词非常形象的说明了这个问题：愉悦。</p>
+<p>书中引用了很多名人的话语来说明了整洁代码所具备的几点特性：</p>
+<ol>
+<li><p><strong>优雅和高效</strong>  </p>
+<p>代码逻辑应当直截了当，叫缺陷难以隐藏；尽量减少依赖关系，使之便于维护；依据某种分层战略完善错误处理代码；性能调至最优，省得引诱别人做没规矩的优化</p>
+</li>
+<li><p><strong>整洁的代码只做好一件事</strong>  </p>
+<p> 整洁的代码力求集中。每个函数、每个类和每个模块都全神贯注于一事，完全不受四周细节的干扰和污染。</p>
+</li>
+<li><p><strong>整洁的代码简单直接</strong>  </p>
+<p> 整洁的代码如同优美的散文。整洁的代码从不隐藏设计者的意图，充满了干净利落的抽象和直截了当的控制语句。</p>
+</li>
+</ol>
+<h2 id="整洁代码的重要性"><a href="#整洁代码的重要性" class="headerlink" title="整洁代码的重要性"></a>整洁代码的重要性</h2><p>了解糟糕代码的严重性后，代码整洁的重要性其实也不言而喻了，那为什么我还要再次声明呢？不为别的，就是因为写出整洁的代码是在是太重要了。</p>
+<p>那我们实习生举例，刚进来公司的实习生，公司一般都是交付现有项目上的一些新需求，不会让一个实习生去从0到1的做一个项目，说白了就是要维护公司的项目。在我接触熊猫后台的这个月时间里，发现了项目中有些代码不容易维护，或者扩展，有些组件用起来感觉有依赖性。</p>
+<p>当然这个项目大部分都是容易维护的，我只是拿这个例子来显出代码整洁的重要性，因为我们大部分的时间都在维护代码，而不是去创造代码，先阶段写出的代码整洁与否，直接决定了项目维护成本的走向。</p>
+<p>有些人认为代码是写给机器执行的，我不那么认为。</p>
+<p>代码是写给人看的。</p>
+<p>先有人写出代码，机器才能执行，连代码看都看不懂，更别说写的出来了，写不出了就证明代码维护成本实在太高。我并不是在危言耸听，可能有个说法是以后人工智能和机器学习可以创造出代码，先不讨论研发出这一技术体系的时间，首先我们写业务要深入业务的各方各面，甚至整一条业务链，业务千千万万，变化也千千万万，而每一个业务都是有精确性的。</p>
+<p>代码确然是我们最终用来表达需求的某种语言。我们可以创造各种与需求接近的语言。我们可以创造帮助把需求解析和汇整为正式结构的各种工具。然而，我们永远无法抛弃必要的精确性–所以代码永存。</p>
+<p>所以整洁代码是势之所驱。</p>
+<p>下面我们就来讨论下写出整洁代码的方法论。</p>
+<h2 id="写出整洁代码的小技巧"><a href="#写出整洁代码的小技巧" class="headerlink" title="写出整洁代码的小技巧"></a>写出整洁代码的小技巧</h2><p>写出整洁代码的首要原则，我觉得是态度。</p>
+<p>只有在态度上明确要写出整洁的代码，自然会在编码过程中把写出整洁代码的小技巧给运用起来。</p>
+<p>我总结了几点小技巧：</p>
+<ol>
+<li>贯彻单一原则，把耦合的函数才分成最小的功能单元，函数只做一件事</li>
+<li><p>提高表达力  </p>
+<p> 在必要的一些特殊说明的地方要写TODO注释，提醒下别人</p>
+</li>
+<li><p>命名规范</p>
+<p> 最好的是对变量和函数的命名上下功夫，函数的首单词最好是个动词，读起来就知道是干嘛的</p>
+</li>
+<li><p>减少重复代码</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Walking 劳翼 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/15/%E8%B8%8F%E5%B9%B3windows%E4%B8%8B%E5%AE%89%E8%A3%85fabric%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91s/" rel="prev" title="踏平windows下安装fabric遇到的坑s">
+                  <i class="fa fa-chevron-left"></i> 踏平windows下安装fabric遇到的坑s
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/08/16/%E8%85%BE%E8%AE%AF%E5%A4%96%E5%8C%85%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%8E%86%E6%80%BB%E7%BB%93/" rel="next" title="腾讯外包面试经历总结">
+                  腾讯外包面试经历总结 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

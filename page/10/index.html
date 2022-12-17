@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="“Unity,移动开发,Web”">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Unity游戏开发 博客">
+<meta property="og:url" content="https://laoleo.github.io/page/10/index.html">
+<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:description" content="“Unity,移动开发,Web”">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Walking 劳翼">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://laoleo.github.io/page/10/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Unity游戏开发 博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2017/02/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84checkbox,radio%E6%A0%B7%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2017/02/15/%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84checkbox,radio%E6%A0%B7%E5%BC%8F/" class="post-title-link" itemprop="url">自定义的checkbox,radio样式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-02-15 00:00:00" itemprop="dateCreated datePublished" datetime="2017-02-15T00:00:00+08:00">2017-02-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>雪碧图</strong></p>
+<p>雪碧图即CSS Sprite，是一种图像合并技术，将网站用到的小图标和背景图都合并在一张图片上，用background-image和background-position来显示需要的图片部份。</p>
+<p><strong>自定义checkbox,radio样式</strong></p>
+<p>Input标签后面跟一个label标签，然后input标签隐藏，通过label标签的for属性，来与input的id对应起来，这样点击label标签，对应的input标签就会被选中。<br>在该方法下，checkbox，radio的样式就可以通过设置label的背景图来控制，在结合雪碧图，各种各样的样式都可以弄出来。</p>
+<p><strong>思路：</strong></p>
+<p>1.用visibility：hidden将input标签隐藏<br>2.准备雪碧图，label的大小设置为图标的大小，通过定位显示需要的图片部分<br>3.使用：checked伪类选择器改变label的背景图定位，定位为选中的图标</p>
+<p><strong>遇到的问题：</strong></p>
+<p>1.使用伪元素方法时，：after伪类给元素添加content的时候，要给设置定位，：after的样式相对label定位，使两者置于不同的文本流，避免出现节点相拥挤的浮动问题。</p>
+<ol start="2">
+<li>样式 .example2 input[type=’checkbox’]:checked + label{} 要在样式.example2 input[type=’checkbox’]:checked + label:after之前，否则不起作用。</li>
+</ol>
+<p><strong>雪碧图与伪元素方式对比：</strong><br>1.用雪碧图的的方式，虽然在减少网络请求优化性能方面有明显作用外，可是一个小图标的大小应该比几十行的伪元素代码大一点，对文件大小方面可能不利。优点可能就是使用图片可以做出很美观的效果。<br>2.使用伪类元素的方式就相对复杂一下，遇到的问题也会比较多。但结合css3可以做出很简洁美观的效果。</p>
+<p><strong>总结</strong><br>这两种方法各有优劣，采用哪种方式还是要按照项目的具体要求吧，不能一概而论。比如做移动端的话，个人感觉使用后者会计较好，因为请求一张雪碧图的流量会很大，消耗流量。而在pc端的网站，考虑前者也是一个不错的选择。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2017/02/10/%E8%B0%83%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2017/02/10/%E8%B0%83%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/" class="post-title-link" itemprop="url">调用定时器的正确姿势</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-02-10 00:00:00" itemprop="dateCreated datePublished" datetime="2017-02-10T00:00:00+08:00">2017-02-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="定时器最怕的问题"><a href="#定时器最怕的问题" class="headerlink" title="定时器最怕的问题"></a>定时器最怕的问题</h2><p>用到定时器最多的运动效果和时钟，玩过的人都知道，当业务逻辑越来越复杂的时候，假如定时器调用频繁，最怕的是不知道内存里还有几个定时器没清除。  </p>
+<p>最近在做一个音乐播放，在进度条这块，为了让进度条跑动，在进度条对象的原型链上调用了定时器。  </p>
+<p>在调用的时候，犯了新手很容易犯的错误。在播放下一首的时候，又生成了另一个进度条对象，所以页面开了两个定时器，管理定时器很麻烦。</p>
+<p>而且这个定时器会在别的页面调用，就涉及到如何正确的把这个定时器导出去。另外，调用的时候，我要逻辑立即跑一次，就是让定时器立即执行，而不是等到规定的时间去执行，那就慢了一步。</p>
+<p>废话不多说，调用定时器的正确姿势如下图(code)：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//进度计时</span></span><br><span class="line">		<span class="attr">timing</span>: <span class="function"><span class="keyword">function</span>(<span class="params">speed</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">			<span class="comment">//计时</span></span><br><span class="line">			<span class="keyword">var</span> n = ++<span class="keyword">this</span>.n;</span><br><span class="line">			<span class="keyword">var</span> m = <span class="built_in">parseInt</span>(n/<span class="number">60</span>);</span><br><span class="line">			<span class="keyword">var</span> s = <span class="built_in">parseInt</span>(n%<span class="number">60</span>);</span><br><span class="line">			<span class="keyword">var</span> curr = <span class="keyword">this</span>.toDub(m) + <span class="string">':'</span> + <span class="keyword">this</span>.toDub(s);</span><br><span class="line">			<span class="keyword">this</span>.currNode.innerHTML = curr;</span><br><span class="line"></span><br><span class="line">			<span class="comment">//progress</span></span><br><span class="line">			<span class="keyword">this</span>.steps += speed;</span><br><span class="line">			<span class="keyword">if</span>(<span class="keyword">this</span>.steps &gt;= <span class="keyword">this</span>.max*<span class="number">100</span>) clearInterval(<span class="keyword">this</span>.timer);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">this</span>.step.style.width = <span class="built_in">Math</span>.min(<span class="keyword">this</span>.steps/<span class="number">100</span>, <span class="keyword">this</span>.max) + <span class="string">'px'</span>;</span><br><span class="line">			<span class="keyword">this</span>.btn.style.left = <span class="built_in">Math</span>.min(<span class="keyword">this</span>.steps/<span class="number">100</span>, <span class="keyword">this</span>.max) + <span class="string">'px'</span>;</span><br><span class="line">	</span><br><span class="line">		&#125;,</span><br><span class="line"></span><br><span class="line">		<span class="attr">running</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">			<span class="keyword">var</span> speed = (that.max/that.sum).toFixed(<span class="number">2</span>);</span><br><span class="line">			speed = <span class="built_in">parseFloat</span>(speed) * <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">			<span class="comment">//播放时立即调用</span></span><br><span class="line">			<span class="keyword">this</span>.timing(speed);	</span><br><span class="line"></span><br><span class="line">			clearInterval(<span class="keyword">this</span>.timer);</span><br><span class="line">			<span class="comment">//必须返回出去，在外才能清除计时器</span></span><br><span class="line">			<span class="keyword">this</span>.timer = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">					<span class="comment">//计时</span></span><br><span class="line">					<span class="keyword">var</span> n = ++that.n;</span><br><span class="line">					<span class="keyword">if</span>(n &gt; that.sum) &#123;</span><br><span class="line">						n = that.sum</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="keyword">var</span> m = <span class="built_in">parseInt</span>(n/<span class="number">60</span>);</span><br><span class="line">					<span class="keyword">var</span> s = <span class="built_in">parseInt</span>(n%<span class="number">60</span>);</span><br><span class="line">					<span class="keyword">var</span> curr = that.toDub(m) + <span class="string">':'</span> + that.toDub(s);</span><br><span class="line">					that.currNode.innerHTML = curr;</span><br><span class="line"></span><br><span class="line">					<span class="comment">//progress</span></span><br><span class="line">					that.steps += speed;</span><br><span class="line">					<span class="keyword">if</span>(that.steps &gt;= that.max*<span class="number">100</span>) clearInterval(that.timer);</span><br><span class="line"></span><br><span class="line">					that.step.style.width = <span class="built_in">Math</span>.min(that.steps/<span class="number">100</span>, that.max) + <span class="string">'px'</span>;</span><br><span class="line">					that.btn.style.left = <span class="built_in">Math</span>.min(that.steps/<span class="number">100</span>, that.max) + <span class="string">'px'</span>;</span><br><span class="line">				&#125;, <span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">this</span>.timer</span><br><span class="line">		&#125;,</span><br></pre></td></tr></table></figure></p>
+<p>想要在别的页面调用，那就要把定时器赋值给全局的变量。页面上只有一个全局对象Audio，可以这样做：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Audio.timer = progress.running;</span><br></pre></td></tr></table></figure></p>
+<p>这样清楚定时器也方便：<br>·<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clearInterval(<span class="name">Audio</span>.timer)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2016/06/02/JS%E4%B9%8Bcookie/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/06/02/JS%E4%B9%8Bcookie/" class="post-title-link" itemprop="url">JS之cookie.md</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-06-02 00:00:00" itemprop="dateCreated datePublished" datetime="2016-06-02T00:00:00+08:00">2016-06-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:37" itemprop="dateModified" datetime="2022-12-06T23:30:37+08:00">2022-12-06</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>页面用来保存信息，比如保存用户名，自动登陆</p>
+<h4 id="cookie的特性"><a href="#cookie的特性" class="headerlink" title="cookie的特性"></a>cookie的特性</h4><ul>
+<li>同个网站中所有页面公享一套cookie</li>
+<li>数量，大小有限</li>
+<li>过期时间，可用js来控制。给expries赋值设置时间</li>
+<li>cookie存在于客户端，据说只有在狐火上可以单独使用，或者说在火狐上运行的问题很少</li>
+</ul>
+<h4 id="js中使用cookie"><a href="#js中使用cookie" class="headerlink" title="js中使用cookie"></a>js中使用cookie</h4><ul>
+<li>document.cookie</li>
+</ul>
+<h4 id="cookie的操作"><a href="#cookie的操作" class="headerlink" title="cookie的操作"></a>cookie的操作</h4><blockquote>
+<p>设置cookie</p>
+<ul>
+<li>格式：名字 = 值</li>
+<li>不会覆盖，等号是添加的意思<br>*过期事件：expries = 时间</li>
+</ul>
+</blockquote>
+<h4 id="练习代码"><a href="#练习代码" class="headerlink" title="练习代码"></a>练习代码</h4><ul>
+<li><p>设置cookie</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setCookie</span>(<span class="params">name ,value, iDay</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">var</span> oDate = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">	oDate.setDate(oDate.getDate() + iDay);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">document</span>.cookie = name +<span class="string">'='</span>+value+<span class="string">';expires='</span>+oDate;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">	<span class="comment">/*document.cookie = "user = Leo;expires=" +oDate ;</span><br><span class="line">	document.cookie = "pass = 123";*/</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>读取cookie</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getcookie</span>(<span class="params">name</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">//username=laotuzhu; passwork=123456789; user=Leo;...</span></span><br><span class="line">	<span class="keyword">var</span> arr = <span class="built_in">document</span>.cookie.split(<span class="string">'; '</span>); <span class="comment">//千万不能少空格，因为cookie中的元素是是以；和空格分开的，少了就只能get第一个元素</span></span><br><span class="line">	<span class="comment">//arr-&gt;['username=laotuzhu','passwork=123456789','user=Leo',..]</span></span><br><span class="line">	<span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(i= <span class="number">0</span>; i&lt;arr.length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">var</span> arr2 = arr[i].split(<span class="string">'='</span>);</span><br><span class="line">		<span class="comment">// arr2-&gt;['username','laotuzhu', ...]</span></span><br><span class="line">		<span class="keyword">if</span> (arr2[<span class="number">0</span>] == name) &#123;</span><br><span class="line">			<span class="keyword">return</span> arr2[<span class="number">1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="string">''</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><em>主要是将字符串分割split</em><br><em>注意： var arr = document.cookie.split(‘; ‘); //千万不能少空格，因为cookie中的元素是是以；和空格分开的，少了就只能get第一个元素</em></p>
+<ul>
+<li>删除cookie<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeCookie</span>(<span class="params">name</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	setCookie(name,<span class="string">'1'</span>,<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><em>将时间设置为过期时间</em> </p>
+<h4 id="cookie的使用"><a href="#cookie的使用" class="headerlink" title="cookie的使用"></a>cookie的使用</h4><ul>
+<li>记录div的位置<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">		#div1&#123;</span><br><span class="line">			width: 100px;</span><br><span class="line">			height: 100px;</span><br><span class="line">			background-color: red;</span><br><span class="line">			position: absolute;</span><br><span class="line">		&#125;</span><br><span class="line">	&lt;/style&gt;</span><br><span class="line">	&lt;script&gt;</span><br><span class="line">function setCookie(name ,value, iDay)</span><br><span class="line">&#123;</span><br><span class="line">	var oDate = new Date();</span><br><span class="line"></span><br><span class="line">	oDate.setDate(oDate.getDate() + iDay);</span><br><span class="line"></span><br><span class="line">	document.cookie = name +'='+value+';expires='+oDate;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function getcookie(name)</span><br><span class="line">&#123;</span><br><span class="line">	//username=laotuzhu; passwork=123456789; user=Leo;...</span><br><span class="line">	var arr = document.cookie.split('; '); //千万不能少空格，因为cookie中的元素是是以；和空格分开的，少了就只能get第一个元素</span><br><span class="line">	//arr-&gt;['username=laotuzhu','passwork=123456789','user=Leo',..]</span><br><span class="line">	var i = 0;</span><br><span class="line"></span><br><span class="line">	for(i= 0; i&lt;arr.length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		var arr2 = arr[i].split('=');</span><br><span class="line">		// arr2-&gt;['username','laotuzhu', ...]</span><br><span class="line">		if (arr2[0] == name) &#123;</span><br><span class="line">			return arr2[1];</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	return '';</span><br><span class="line">&#125;</span><br><span class="line">function removeCookie(name)</span><br><span class="line">&#123;	setCookie(name,'1',-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">	window.onload =function()&#123;</span><br><span class="line">			var oDiv = document.getElementById('div1');</span><br><span class="line">			var disX =0;</span><br><span class="line">			var disY =0;</span><br><span class="line"></span><br><span class="line">			var x = getcookie('x');</span><br><span class="line">			var y = getcookie('y');</span><br><span class="line">			if(x)</span><br><span class="line">			&#123;</span><br><span class="line">				oDiv.style.left =x+ 'px';</span><br><span class="line">				oDiv.style.top = y+ 'px';	</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		oDiv.onmousedown = function(ev)&#123;</span><br><span class="line">				var oEvent = ev || event;</span><br><span class="line"></span><br><span class="line">				disX = oEvent.clientX- oDiv.offsetLeft;</span><br><span class="line">				disY = oEvent.clientY- oDiv.offsetTop;</span><br><span class="line"></span><br><span class="line">				document.onmousemove=function(ev)&#123;</span><br><span class="line">					var oEvent = ev || event;</span><br><span class="line"></span><br><span class="line">					var l = oEvent.clientX-disX;</span><br><span class="line">					var t = oEvent.clientY-disY;</span><br><span class="line"></span><br><span class="line">					if (l&lt;0) &#123;  //限制div移出可视区</span><br><span class="line">						l=0;</span><br><span class="line">					&#125;else if(l&gt;document.documentElement.clientWidth- oDiv.offsetWidth)&#123;</span><br><span class="line">						l = document.documentElement.clientWidth- oDiv.offsetWidth;</span><br><span class="line">					&#125;;</span><br><span class="line">					if (t&lt;0) &#123;</span><br><span class="line">						t = 0;</span><br><span class="line">					&#125;else if(t&gt;document.documentElement.clientHeight- oDiv.offsetHeight)&#123;</span><br><span class="line">						t =document.documentElement.clientHeight- oDiv.offsetHeight;</span><br><span class="line">					&#125;</span><br><span class="line"></span><br><span class="line">					oDiv.style.left = l+'px';</span><br><span class="line">					oDiv.style.top = t+'px';</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				document.onmouseup = function()&#123;</span><br><span class="line">					document.onmousemove = null;</span><br><span class="line">					document.onmouseup = null;</span><br><span class="line"></span><br><span class="line">					setCookie('x',oDiv.offsetLeft, 30);</span><br><span class="line">					setCookie('y',oDiv.offsetTop,30);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;div id="div1"&gt;&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><em>在onload下定好div位置，在ondown下记录</em></p>
+<ul>
+<li>记录用户名<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	function setCookie(name ,value, iDay)</span><br><span class="line">&#123;</span><br><span class="line">	var oDate = new Date();</span><br><span class="line">	oDate.setDate(oDate.getDate() + iDay);</span><br><span class="line"></span><br><span class="line">	document.cookie = name +'='+value+';expires='+oDate;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">	/*document.cookie = "user = Leo;expires=" +oDate ;</span><br><span class="line">	document.cookie = "pass = 123";*/</span><br><span class="line"></span><br><span class="line">function getcookie(name)</span><br><span class="line">&#123;</span><br><span class="line">	//username=laotuzhu; passwork=123456789; user=Leo;...</span><br><span class="line">	var arr = new Array();</span><br><span class="line">	var arr = document.cookie.split(';');</span><br><span class="line">	//arr-&gt;['username=laotuzhu','passwork=123456789','user=Leo',..]</span><br><span class="line">	var i = 0;</span><br><span class="line"></span><br><span class="line">	for(i= 0; i&lt;arr.length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		var arr2 = arr[i].split('=');</span><br><span class="line">		// arr2-&gt;['username','laotuzhu', ...]</span><br><span class="line">		if (arr2[0] ==name) &#123;</span><br><span class="line">			return arr2[1];</span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	return '';</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function removeCookie(name)</span><br><span class="line">&#123;</span><br><span class="line">	setCookie(name,'1',-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">window.onload = function()</span><br><span class="line">&#123;</span><br><span class="line">	var form = document.getElementById('form1');</span><br><span class="line">	var oUser = document.getElementsByName('user')[0];</span><br><span class="line">	var a = document.getElementsByTagName('a')[0];</span><br><span class="line"></span><br><span class="line">	form.onsubmit = function()</span><br><span class="line">	&#123;</span><br><span class="line">		setCookie('user',oUser.value,2);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	a.onclick = function ()</span><br><span class="line">	&#123;</span><br><span class="line">		removeCookie('user');</span><br><span class="line">		oUser.value = '';</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;form id="form1" action="www.baidu.com"&gt;</span><br><span class="line">		用户名：&lt;input type="text" name="user"&gt;</span><br><span class="line">		密码：&lt;input type="password"&gt;</span><br><span class="line">		&lt;input type="submit" value="登陆"&gt;</span><br><span class="line">		&lt;a href="javascript:;"&gt;清除记录&lt;/a&gt;</span><br><span class="line">	&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2016/05/29/js%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BB%A7%E6%89%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/29/js%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BB%A7%E6%89%BF/" class="post-title-link" itemprop="url">js面向对象编程之继承</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-05-29 00:00:00" itemprop="dateCreated datePublished" datetime="2016-05-29T00:00:00+08:00">2016-05-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1310394567,277925733&amp;fm=27&amp;gp=0.jpg" alt="我是图片"></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>javascript本身不是静态语言，是一门动态语言，变量只有在运行的时候才知道是什么类型，严格上也没有像Java静态语言的类的概念((当然在ES6中提出了类的语法)，那么它是如何实现类的继承的呢？</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/05/29/js%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BB%A7%E6%89%BF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2016/05/20/js%E7%B3%BB%E5%88%97%E4%B9%8BBOM%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/20/js%E7%B3%BB%E5%88%97%E4%B9%8BBOM%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">js系列之BOM基础</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-05-20 00:00:00" itemprop="dateCreated datePublished" datetime="2016-05-20T00:00:00+08:00">2016-05-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文章是本人在学习js时候的知识总结，涉及到学习过程中的一些知识点，代码练习以及新手常犯的错误与解决方法，希望对js的爱好者有帮助。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/05/20/js%E7%B3%BB%E5%88%97%E4%B9%8BBOM%E5%9F%BA%E7%A1%80/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

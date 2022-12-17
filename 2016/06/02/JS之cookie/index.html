@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="cookie页面用来保存信息，比如保存用户名，自动登陆 cookie的特性 同个网站中所有页面公享一套cookie 数量，大小有限 过期时间，可用js来控制。给expries赋值设置时间 cookie存在于客户端，据说只有在狐火上可以单独使用，或者说在火狐上运行的问题很少  js中使用cookie document.cookie  cookie的操作 设置cookie  格式：名字 &#x3D; 值 不会覆">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS之cookie.md">
+<meta property="og:url" content="https://laoleo.github.io/2016/06/02/JS%E4%B9%8Bcookie/index.html">
+<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:description" content="cookie页面用来保存信息，比如保存用户名，自动登陆 cookie的特性 同个网站中所有页面公享一套cookie 数量，大小有限 过期时间，可用js来控制。给expries赋值设置时间 cookie存在于客户端，据说只有在狐火上可以单独使用，或者说在火狐上运行的问题很少  js中使用cookie document.cookie  cookie的操作 设置cookie  格式：名字 &#x3D; 值 不会覆">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-06-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-12-06T15:30:37.623Z">
+<meta property="article:author" content="Walking 劳翼">
+<meta property="article:tag" content="js">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://laoleo.github.io/2016/06/02/JS%E4%B9%8Bcookie/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>JS之cookie.md | Unity游戏开发 博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie"><span class="nav-number">1.</span> <span class="nav-text">cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cookie%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text">cookie的特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#js%E4%B8%AD%E4%BD%BF%E7%94%A8cookie"><span class="nav-number">1.2.</span> <span class="nav-text">js中使用cookie</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cookie%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.</span> <span class="nav-text">cookie的操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%E4%BB%A3%E7%A0%81"><span class="nav-number">1.4.</span> <span class="nav-text">练习代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cookie%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.5.</span> <span class="nav-text">cookie的使用</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2016/06/02/JS%E4%B9%8Bcookie/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS之cookie.md
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-06-02 00:00:00" itemprop="dateCreated datePublished" datetime="2016-06-02T00:00:00+08:00">2016-06-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:37" itemprop="dateModified" datetime="2022-12-06T23:30:37+08:00">2022-12-06</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>页面用来保存信息，比如保存用户名，自动登陆</p>
+<h4 id="cookie的特性"><a href="#cookie的特性" class="headerlink" title="cookie的特性"></a>cookie的特性</h4><ul>
+<li>同个网站中所有页面公享一套cookie</li>
+<li>数量，大小有限</li>
+<li>过期时间，可用js来控制。给expries赋值设置时间</li>
+<li>cookie存在于客户端，据说只有在狐火上可以单独使用，或者说在火狐上运行的问题很少</li>
+</ul>
+<h4 id="js中使用cookie"><a href="#js中使用cookie" class="headerlink" title="js中使用cookie"></a>js中使用cookie</h4><ul>
+<li>document.cookie</li>
+</ul>
+<h4 id="cookie的操作"><a href="#cookie的操作" class="headerlink" title="cookie的操作"></a>cookie的操作</h4><blockquote>
+<p>设置cookie</p>
+<ul>
+<li>格式：名字 = 值</li>
+<li>不会覆盖，等号是添加的意思<br>*过期事件：expries = 时间</li>
+</ul>
+</blockquote>
+<h4 id="练习代码"><a href="#练习代码" class="headerlink" title="练习代码"></a>练习代码</h4><ul>
+<li><p>设置cookie</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setCookie</span>(<span class="params">name ,value, iDay</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">var</span> oDate = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">	oDate.setDate(oDate.getDate() + iDay);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">document</span>.cookie = name +<span class="string">'='</span>+value+<span class="string">';expires='</span>+oDate;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">	<span class="comment">/*document.cookie = "user = Leo;expires=" +oDate ;</span><br><span class="line">	document.cookie = "pass = 123";*/</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>读取cookie</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getcookie</span>(<span class="params">name</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">//username=laotuzhu; passwork=123456789; user=Leo;...</span></span><br><span class="line">	<span class="keyword">var</span> arr = <span class="built_in">document</span>.cookie.split(<span class="string">'; '</span>); <span class="comment">//千万不能少空格，因为cookie中的元素是是以；和空格分开的，少了就只能get第一个元素</span></span><br><span class="line">	<span class="comment">//arr-&gt;['username=laotuzhu','passwork=123456789','user=Leo',..]</span></span><br><span class="line">	<span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(i= <span class="number">0</span>; i&lt;arr.length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">var</span> arr2 = arr[i].split(<span class="string">'='</span>);</span><br><span class="line">		<span class="comment">// arr2-&gt;['username','laotuzhu', ...]</span></span><br><span class="line">		<span class="keyword">if</span> (arr2[<span class="number">0</span>] == name) &#123;</span><br><span class="line">			<span class="keyword">return</span> arr2[<span class="number">1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="string">''</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><em>主要是将字符串分割split</em><br><em>注意： var arr = document.cookie.split(‘; ‘); //千万不能少空格，因为cookie中的元素是是以；和空格分开的，少了就只能get第一个元素</em></p>
+<ul>
+<li>删除cookie<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeCookie</span>(<span class="params">name</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	setCookie(name,<span class="string">'1'</span>,<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><em>将时间设置为过期时间</em> </p>
+<h4 id="cookie的使用"><a href="#cookie的使用" class="headerlink" title="cookie的使用"></a>cookie的使用</h4><ul>
+<li>记录div的位置<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">		#div1&#123;</span><br><span class="line">			width: 100px;</span><br><span class="line">			height: 100px;</span><br><span class="line">			background-color: red;</span><br><span class="line">			position: absolute;</span><br><span class="line">		&#125;</span><br><span class="line">	&lt;/style&gt;</span><br><span class="line">	&lt;script&gt;</span><br><span class="line">function setCookie(name ,value, iDay)</span><br><span class="line">&#123;</span><br><span class="line">	var oDate = new Date();</span><br><span class="line"></span><br><span class="line">	oDate.setDate(oDate.getDate() + iDay);</span><br><span class="line"></span><br><span class="line">	document.cookie = name +'='+value+';expires='+oDate;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function getcookie(name)</span><br><span class="line">&#123;</span><br><span class="line">	//username=laotuzhu; passwork=123456789; user=Leo;...</span><br><span class="line">	var arr = document.cookie.split('; '); //千万不能少空格，因为cookie中的元素是是以；和空格分开的，少了就只能get第一个元素</span><br><span class="line">	//arr-&gt;['username=laotuzhu','passwork=123456789','user=Leo',..]</span><br><span class="line">	var i = 0;</span><br><span class="line"></span><br><span class="line">	for(i= 0; i&lt;arr.length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		var arr2 = arr[i].split('=');</span><br><span class="line">		// arr2-&gt;['username','laotuzhu', ...]</span><br><span class="line">		if (arr2[0] == name) &#123;</span><br><span class="line">			return arr2[1];</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	return '';</span><br><span class="line">&#125;</span><br><span class="line">function removeCookie(name)</span><br><span class="line">&#123;	setCookie(name,'1',-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">	window.onload =function()&#123;</span><br><span class="line">			var oDiv = document.getElementById('div1');</span><br><span class="line">			var disX =0;</span><br><span class="line">			var disY =0;</span><br><span class="line"></span><br><span class="line">			var x = getcookie('x');</span><br><span class="line">			var y = getcookie('y');</span><br><span class="line">			if(x)</span><br><span class="line">			&#123;</span><br><span class="line">				oDiv.style.left =x+ 'px';</span><br><span class="line">				oDiv.style.top = y+ 'px';	</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		oDiv.onmousedown = function(ev)&#123;</span><br><span class="line">				var oEvent = ev || event;</span><br><span class="line"></span><br><span class="line">				disX = oEvent.clientX- oDiv.offsetLeft;</span><br><span class="line">				disY = oEvent.clientY- oDiv.offsetTop;</span><br><span class="line"></span><br><span class="line">				document.onmousemove=function(ev)&#123;</span><br><span class="line">					var oEvent = ev || event;</span><br><span class="line"></span><br><span class="line">					var l = oEvent.clientX-disX;</span><br><span class="line">					var t = oEvent.clientY-disY;</span><br><span class="line"></span><br><span class="line">					if (l&lt;0) &#123;  //限制div移出可视区</span><br><span class="line">						l=0;</span><br><span class="line">					&#125;else if(l&gt;document.documentElement.clientWidth- oDiv.offsetWidth)&#123;</span><br><span class="line">						l = document.documentElement.clientWidth- oDiv.offsetWidth;</span><br><span class="line">					&#125;;</span><br><span class="line">					if (t&lt;0) &#123;</span><br><span class="line">						t = 0;</span><br><span class="line">					&#125;else if(t&gt;document.documentElement.clientHeight- oDiv.offsetHeight)&#123;</span><br><span class="line">						t =document.documentElement.clientHeight- oDiv.offsetHeight;</span><br><span class="line">					&#125;</span><br><span class="line"></span><br><span class="line">					oDiv.style.left = l+'px';</span><br><span class="line">					oDiv.style.top = t+'px';</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				document.onmouseup = function()&#123;</span><br><span class="line">					document.onmousemove = null;</span><br><span class="line">					document.onmouseup = null;</span><br><span class="line"></span><br><span class="line">					setCookie('x',oDiv.offsetLeft, 30);</span><br><span class="line">					setCookie('y',oDiv.offsetTop,30);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;div id="div1"&gt;&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><em>在onload下定好div位置，在ondown下记录</em></p>
+<ul>
+<li>记录用户名<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	function setCookie(name ,value, iDay)</span><br><span class="line">&#123;</span><br><span class="line">	var oDate = new Date();</span><br><span class="line">	oDate.setDate(oDate.getDate() + iDay);</span><br><span class="line"></span><br><span class="line">	document.cookie = name +'='+value+';expires='+oDate;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">	/*document.cookie = "user = Leo;expires=" +oDate ;</span><br><span class="line">	document.cookie = "pass = 123";*/</span><br><span class="line"></span><br><span class="line">function getcookie(name)</span><br><span class="line">&#123;</span><br><span class="line">	//username=laotuzhu; passwork=123456789; user=Leo;...</span><br><span class="line">	var arr = new Array();</span><br><span class="line">	var arr = document.cookie.split(';');</span><br><span class="line">	//arr-&gt;['username=laotuzhu','passwork=123456789','user=Leo',..]</span><br><span class="line">	var i = 0;</span><br><span class="line"></span><br><span class="line">	for(i= 0; i&lt;arr.length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		var arr2 = arr[i].split('=');</span><br><span class="line">		// arr2-&gt;['username','laotuzhu', ...]</span><br><span class="line">		if (arr2[0] ==name) &#123;</span><br><span class="line">			return arr2[1];</span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	return '';</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function removeCookie(name)</span><br><span class="line">&#123;</span><br><span class="line">	setCookie(name,'1',-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">window.onload = function()</span><br><span class="line">&#123;</span><br><span class="line">	var form = document.getElementById('form1');</span><br><span class="line">	var oUser = document.getElementsByName('user')[0];</span><br><span class="line">	var a = document.getElementsByTagName('a')[0];</span><br><span class="line"></span><br><span class="line">	form.onsubmit = function()</span><br><span class="line">	&#123;</span><br><span class="line">		setCookie('user',oUser.value,2);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	a.onclick = function ()</span><br><span class="line">	&#123;</span><br><span class="line">		removeCookie('user');</span><br><span class="line">		oUser.value = '';</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;form id="form1" action="www.baidu.com"&gt;</span><br><span class="line">		用户名：&lt;input type="text" name="user"&gt;</span><br><span class="line">		密码：&lt;input type="password"&gt;</span><br><span class="line">		&lt;input type="submit" value="登陆"&gt;</span><br><span class="line">		&lt;a href="javascript:;"&gt;清除记录&lt;/a&gt;</span><br><span class="line">	&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Walking 劳翼 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/js/" rel="tag"># js</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/05/29/js%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BB%A7%E6%89%BF/" rel="prev" title="js面向对象编程之继承">
+                  <i class="fa fa-chevron-left"></i> js面向对象编程之继承
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/02/10/%E8%B0%83%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/" rel="next" title="调用定时器的正确姿势">
+                  调用定时器的正确姿势 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

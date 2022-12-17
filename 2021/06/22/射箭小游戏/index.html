@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="射箭小游戏 碰撞检测属于2D游戏，没有深度，碰撞检测采用判断两线段是否相交的方法，即箭头两帧之间位置线段与箭靶中心为原点的xy轴中心线两线段。  之所以选择这种判断方法，是因为中靶的位置是算分数的一个因素，不能像射气球那种带碰撞盒的方式，箭进入碰撞盒后就会立刻停止。这样的得分效果不好，只能拿到击中边缘的3分。 假如两帧的线段同时与两中心线相交，优先取与y轴平行的中心线交点，因为箭停留在靶上的效果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="射箭小游戏">
+<meta property="og:url" content="https://laoleo.github.io/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/index.html">
+<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:description" content="射箭小游戏 碰撞检测属于2D游戏，没有深度，碰撞检测采用判断两线段是否相交的方法，即箭头两帧之间位置线段与箭靶中心为原点的xy轴中心线两线段。  之所以选择这种判断方法，是因为中靶的位置是算分数的一个因素，不能像射气球那种带碰撞盒的方式，箭进入碰撞盒后就会立刻停止。这样的得分效果不好，只能拿到击中边缘的3分。 假如两帧的线段同时与两中心线相交，优先取与y轴平行的中心线交点，因为箭停留在靶上的效果">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://laoleo.github.io/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/image_bPic0MSA86.png">
+<meta property="og:image" content="https://laoleo.github.io/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/image_jB99fdiEFy.png">
+<meta property="og:image" content="https://laoleo.github.io/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/image_fNhLsjLAng.png">
+<meta property="og:image" content="https://laoleo.github.io/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/image_9kEuPrkNrd.png">
+<meta property="og:image" content="https://laoleo.github.io/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/image_eBJv4Og4HY.png">
+<meta property="og:image" content="https://laoleo.github.io/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/image_0xirtCNbHW.png">
+<meta property="article:published_time" content="2021-06-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-12-07T13:35:47.417Z">
+<meta property="article:author" content="Walking 劳翼">
+<meta property="article:tag" content="小游戏">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://laoleo.github.io/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/image_bPic0MSA86.png">
+
+
+<link rel="canonical" href="https://laoleo.github.io/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>射箭小游戏 | Unity游戏开发 博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F"><span class="nav-number">1.</span> <span class="nav-text">射箭小游戏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B"><span class="nav-number">1.0.1.</span> <span class="nav-text">碰撞检测</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">关键代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%91%87%E6%9D%86%E6%8B%89%E5%BC%93%E6%95%88%E6%9E%9C"><span class="nav-number">1.0.2.</span> <span class="nav-text">摇杆拉弓效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%A8%E8%BF%B9%E9%A2%84%E8%A7%88"><span class="nav-number">1.0.3.</span> <span class="nav-text">轨迹预览</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2021/06/22/%E5%B0%84%E7%AE%AD%E5%B0%8F%E6%B8%B8%E6%88%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          射箭小游戏
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-22 00:00:00" itemprop="dateCreated datePublished" datetime="2021-06-22T00:00:00+08:00">2021-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-07 21:35:47" itemprop="dateModified" datetime="2022-12-07T21:35:47+08:00">2022-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Unity游戏开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E4%B8%9A%E5%8A%A1%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">业务系统</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E4%B8%9A%E5%8A%A1%E7%B3%BB%E7%BB%9F/%E5%B0%8F%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">小游戏</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<h1 id="射箭小游戏"><a href="#射箭小游戏" class="headerlink" title="射箭小游戏"></a>射箭小游戏</h1><img src="/2021/06/22/射箭小游戏/image_bPic0MSA86.png" alt="image_bPic0MSA86.png" title="">
+<h3 id="碰撞检测"><a href="#碰撞检测" class="headerlink" title="碰撞检测"></a>碰撞检测</h3><p>属于2D游戏，没有深度，碰撞检测采用判断两线段是否相交的方法，即箭头两帧之间位置线段与箭靶中心为原点的xy轴中心线两线段。</p>
+<img src="/2021/06/22/射箭小游戏/image_jB99fdiEFy.png" alt="image_jB99fdiEFy.png" title="">
+<p>之所以选择这种判断方法，是因为中靶的位置是算分数的一个因素，不能像射气球那种带碰撞盒的方式，箭进入碰撞盒后就会立刻停止。这样的得分效果不好，只能拿到击中边缘的3分。</p>
+<p>假如两帧的线段同时与两中心线相交，优先取与y轴平行的中心线交点，因为箭停留在靶上的效果较好。</p>
+<p>实际效果发现与x轴平行的右半段，会很大概率挡住箭射中Y轴中心线，这样效果不好。右半段是为了托住箭避免没中Y轴线而穿靶，所以可以加个检测前提。</p>
+<h4 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h4><p>判断二维平面两线段是否相交代码：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 求线段交点，以解线性方程组的方式</span></span><br><span class="line"><span class="comment">-- @param p0 Vector2</span></span><br><span class="line"><span class="comment">-- @return 线段是否相交,交点</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">GameUtils.calcIntersectionOfLinear2D</span><span class="params">(p0, p1, p2, p3)</span></span></span><br><span class="line">    <span class="comment">-- 直线的一般方程为F(x) = ax + by + c = 0</span></span><br><span class="line">    <span class="comment">-- 已知两点可得：a = y0 – y1, b = x1 – x0, c = x0y1 – x1y0</span></span><br><span class="line">    <span class="comment">-- 可推出两直线交点：</span></span><br><span class="line">    <span class="comment">-- x = (b0*c1 – b1*c0)/D</span></span><br><span class="line">    <span class="comment">-- y = (a1*c0 – a0*c1)/D</span></span><br><span class="line">    <span class="comment">-- D = a0*b1 – a1*b0， (D为0时，表示两直线重合)</span></span><br><span class="line">    <span class="keyword">local</span> a0=p0.y-p1.y</span><br><span class="line">  <span class="keyword">local</span> b0=p1.x-p0.x</span><br><span class="line">  <span class="keyword">local</span> c0=p0.x*p1.y-p0.y*p1.x</span><br><span class="line">    <span class="keyword">local</span> a1=p2.y-p3.y</span><br><span class="line">  <span class="keyword">local</span> b1=p3.x-p2.x</span><br><span class="line">  <span class="keyword">local</span> c1=p2.x*p3.y-p2.y*p3.x</span><br><span class="line">    <span class="keyword">local</span> D=a0*b1-a1*b0</span><br><span class="line">    <span class="keyword">if</span> D == <span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">local</span> x=(b0*c1-b1*c0)/D</span><br><span class="line">    <span class="keyword">local</span> y=(c0*a1-c1*a0)/D</span><br><span class="line">    <span class="comment">-- 判断交点是否在两条线段上</span></span><br><span class="line">    <span class="keyword">local</span> EPSINON = <span class="number">0.000001</span> <span class="comment">--浮点数相减的结果的不精确问题</span></span><br><span class="line">    <span class="keyword">if</span> (x - p0.x) * (x - p1.x) &lt;= EPSINON <span class="keyword">and</span> </span><br><span class="line">        (y - p0.y) * (y - p1.y) &lt;= EPSINON <span class="keyword">and</span> </span><br><span class="line">        (x - p2.x) * (x - p3.x) &lt;= EPSINON <span class="keyword">and</span> </span><br><span class="line">        (y - p2.y) * (y - p3.y) &lt;= EPSINON </span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>, Vector2.New(x, y)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>, Vector2.New(x, y)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>在实现线段的碰撞检测中踩了些坑，总结两点注意点：</p>
+<ol>
+<li>两帧之间的位置坐标点不要采取预测下一帧位置的方式，而是保留上一帧位置。因为用默认一帧deltaTime（约0.034,30帧）预测下一帧位置，可能由于卡帧导致跟实际下一帧的位置出现带有隐患的相差，假如这个相差的距离刚好包含了中心位置，就会出现穿透现象。写这么长，不如画个图：</li>
+</ol>
+<img src="/2021/06/22/射箭小游戏/image_fNhLsjLAng.png" alt="image_fNhLsjLAng.png" title="">
+<ol>
+<li>浮点数运算精度缺失问题。坐标点的值时浮点数，判断相等时候要注意，不能使用全等，即使两个相等浮点数相减不一定每次都等于0，使用允许误差范围判断math.abs(a -b) &lt; c，c为使用场景下允许的最大误差.</li>
+</ol>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (x - p0.x) * (x - p1.x) &lt;= <span class="number">0</span> <span class="keyword">and</span> </span><br><span class="line">        (y - p0.y) * (y - p1.y) &lt;= <span class="number">0</span> <span class="keyword">and</span> </span><br><span class="line">        (x - p2.x) * (x - p3.x) &lt;= <span class="number">0</span> <span class="keyword">and</span> </span><br><span class="line">        (y - p2.y) * (y - p3.y) &lt;= <span class="number">0</span></span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">改为：</span><br><span class="line"><span class="keyword">local</span> EPSINON = <span class="number">0.000001</span></span><br><span class="line"><span class="keyword">if</span> (x - p0.x) * (x - p1.x) &lt;= EPSINON <span class="keyword">and</span> </span><br><span class="line">        (y - p0.y) * (y - p1.y) &lt;= EPSINON <span class="keyword">and</span> </span><br><span class="line">        (x - p2.x) * (x - p3.x) &lt;= EPSINON <span class="keyword">and</span> </span><br><span class="line">        (y - p2.y) * (y - p3.y) &lt;= EPSINON </span><br><span class="line"><span class="keyword">then</span></span><br></pre></td></tr></table></figure>
+<p>3.检测移动靶的碰撞检测问题。当靶与箭相向运动，靶移动速度过快，同时箭的移动速度过慢（两帧之间线段太短），就会很大概率出现穿透问题。有个很简单的解决方法，检测移动靶时候箭两帧之间的线段不能过小 （小于阈值时适当延长），而且策划的配置不会配太快的靶，这样就基本能避免检测移动物体的穿透问题。有时候限制bug发生的条件也可以简单地解决问题。</p>
+<p>但是还是发现偶然小概率有穿靶情况，假如两帧之间最短距离定得太大，击中时箭会有种被靶吸附的效果，不太好。认真观察这个bug，箭刚好错过了移动靶的中位线时正好都未于靶右半部分。网上有个方法是增大碰撞区域，这里可以将靶右半部分作为碰撞盒，引入碰撞盒检测。</p>
+<img src="/2021/06/22/射箭小游戏/image_9kEuPrkNrd.png" alt="image_9kEuPrkNrd.png" title="">
+<p>综上所述，得出碰撞检测的最佳实践是：</p>
+<p>1.优先检查Y轴中心线</p>
+<p>2.将x轴中心线以圆心分成两段，检测是否与半段相交。</p>
+<p>3.否则判断箭是否下落状态并且下落角度大于45度，检测是否与右半段相交。</p>
+<p>4.否则检测箭是否位于靶右半边区域，并且箭在上升，则碰撞；或者箭下降且到了中心点y轴一下区域，则碰撞。</p>
+<h3 id="摇杆拉弓效果"><a href="#摇杆拉弓效果" class="headerlink" title="摇杆拉弓效果"></a>摇杆拉弓效果</h3><p>摇杆拉弓弓弦表现伸缩性</p>
+<img src="/2021/06/22/射箭小游戏/image_eBJv4Og4HY.png" alt="image_eBJv4Og4HY.png" title="">
+<p>通过拉伸弓弦图片width来实现，但有个问题是弓弦的粗细程度会跟着伸缩而改变，在大小比较小的情况下表现不太明显，可以接受。</p>
+<h3 id="轨迹预览"><a href="#轨迹预览" class="headerlink" title="轨迹预览"></a>轨迹预览</h3><img src="/2021/06/22/射箭小游戏/image_0xirtCNbHW.png" alt="image_0xirtCNbHW.png" title="">
+<p>这个轨迹实现有三步：</p>
+<ol>
+<li><p>初始化克隆出一系列轨迹点</p>
+</li>
+<li><p>抽离出箭移动公式，输入时刻输出位置</p>
+</li>
+<li><p>在拖拽监听中设置一系列轨迹点的位置</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Walking 劳翼 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%B0%8F%E6%B8%B8%E6%88%8F/" rel="tag"># 小游戏</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/09/%E6%96%B0%E6%89%8B%E5%BC%95%E5%AF%BC%E7%B3%BB%E7%BB%9F/" rel="prev" title="新手引导系统">
+                  <i class="fa fa-chevron-left"></i> 新手引导系统
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/10/%E6%B8%B8%E6%88%8F%E7%83%AD%E6%9B%B4%E6%96%B0/" rel="next" title="游戏热更新">
+                  游戏热更新 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

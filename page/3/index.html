@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="“Unity,移动开发,Web”">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Unity游戏开发 博客">
+<meta property="og:url" content="https://laoleo.github.io/page/3/index.html">
+<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:description" content="“Unity,移动开发,Web”">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Walking 劳翼">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://laoleo.github.io/page/3/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Unity游戏开发 博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2021/03/18/%E6%B5%B7%E5%A4%96%E7%89%88%E6%9C%ACdiff%E5%B7%A5%E5%85%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/03/18/%E6%B5%B7%E5%A4%96%E7%89%88%E6%9C%ACdiff%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">海外版本diff工具</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-18 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-18T00:00:00+08:00">2021-03-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-07 21:35:29" itemprop="dateModified" datetime="2022-12-07T21:35:29+08:00">2022-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Unity游戏开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%9F%BA%E7%A1%80%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">基础系统</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="#海外版本diff工具">海外版本diff工具</a><ul>
+<li><a href="#一背景">一、背景</a></li>
+<li><a href="#二使用介绍">二、使用介绍</a></li>
+<li><a href="#三实现思路">三、实现思路</a></li>
+<li><a href="#四sh脚本语法">四、sh脚本语法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="海外版本diff工具"><a href="#海外版本diff工具" class="headerlink" title="海外版本diff工具"></a>海外版本diff工具</h1><h2 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h2><p>海外版本是从国内版本基础上做差异化替换而来，代码上采用replaceModule的方式覆盖重写module的方法，资源上优先加载对应语言目录下的替换资源。</p>
+<p>这种方案决定了，大多数替换内容（代码、预制物等） 是在源内容的基础上演变而来，依赖源内容。当合并国内版本后，需要检查源内容做了什么哪些修改，代码上有没有逻辑冲突，预制资源方面需不需要更新。</p>
+<p>可以总结有两个需求：</p>
+<ol>
+<li><p>检查replace的module在合并前后代码有哪些更新</p>
+</li>
+<li><p>检查出替换的预制在合并前后有哪些是更新了</p>
+</li>
+</ol>
+<p>更新：</p>
+<p>追加了其他两个需求：</p>
+<p>1.检查多语言的scene目录资源在合并前后的更改和新增情况</p>
+<p>2.检查fmod资源的更新情况</p>
+<h2 id="二、使用介绍"><a href="#二、使用介绍" class="headerlink" title="二、使用介绍"></a>二、使用介绍</h2><img src="/2021/03/18/海外版本diff工具/image_lch2ake5uD.png" alt="image_lch2ake5uD.png" title="">
+<p>选项介绍：</p>
+<ul>
+<li><p>语言类型：选择当前语言类型，必填。</p>
+</li>
+<li><p>合并后版本号：海外dev分支合并国服版本后的commitID，commitID太长不一定需要填全部，git能够识别commit即可，必填。</p>
+</li>
+<li><p>合并前版本号：海外的dev分支合并国服版本前的commitID，必填。</p>
+</li>
+<li><p>自定义执行shell文件的exe路径：用于执行diff.sh脚本的shell exe路径。假如你的系统有git-bash.exe，填它的路径也可以。windows上必填，因为windows上默认的终端可能是cmd.exe，它执行shell文件会不成功。mac系统可以不填。</p>
+</li>
+</ul>
+<p>比如台湾版本：</p>
+<p>语言类型选：tw</p>
+<p>合并前后版本到gitlab pjg-client仓库commit栏目上找commitID。</p>
+<p>功能介绍：</p>
+<ul>
+<li><p>导出replace module更改：将replace module代码文件的差异导出到桌面上，文件名replace-module-{commitID0}-{commitID1}.diff。</p>
+</li>
+<li><p>导出多语言目录zh/ui/views下的预制perfab文件更新情况：将多语言目录下ui的prefab文件对应的zh目录源文件在两个版本间的差异，和zh目录下新增但海外语言目录没有的预制内容导出到桌边，文件名zh-UIPrefab-{commitID0}-{commitID1}.diff。</p>
+</li>
+<li><p>导出多语言目录zh/scene下所有资源的更新情况：同上，多语言目录的资源对应的zh目录下的资源，对比两个版本前后zh目录的资源更新情况和新增情况，然后由场景决定是否需要更新对应多语言（如tw）目录的资源。执行会导出diff文件到桌面。</p>
+</li>
+<li><p>导出fmod event的更改情况：检出更改的文件，决定是否更改对应多语言目录下的文件。</p>
+</li>
+</ul>
+<h2 id="三、实现思路"><a href="#三、实现思路" class="headerlink" title="三、实现思路"></a>三、实现思路</h2><img src="/2021/03/18/海外版本diff工具/image_y5ou7bMrqO.png" alt="image_y5ou7bMrqO.png" title="">
+<p>实现原理很简单，就是找出相应的文件名，调用git diff命令输出差异即可。</p>
+<h2 id="四、sh脚本语法"><a href="#四、sh脚本语法" class="headerlink" title="四、sh脚本语法"></a>四、sh脚本语法</h2><p>工具利用c# API Process类执行sh脚本，diff.sh脚本主要做两件事情，一是解析参数，二是调用git diff命令。</p>
+<p>这里简单解析下sh语法，帮助理解代码。</p>
+<p>1、获取参数<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\<span class="variable">$@</span></span><br></pre></td></tr></table></figure></p>
+<p>2、定义数组<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">commitIdArr</span>=()</span><br></pre></td></tr></table></figure></p>
+<p>3、数值自增<br><figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((<span class="name">commitIdArr</span>\_index++))</span><br></pre></td></tr></table></figure></p>
+<p>4、获取变量值<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$moduleNameArr_index</span>或者<span class="variable">$&#123;outputFileName&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>5、输出数组内容<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo moduleNameArr\[<span class="symbol">@]</span></span><br></pre></td></tr></table></figure></p>
+<p>6、数组长度<br><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">\$</span><span class="template-tag">&#123;#<span class="name">moduleNameArr</span>\[@]&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>学习shell脚本语法可以查看这里：<a href="https://www.runoob.com/linux/linux-shell.html" title="shell教程" target="_blank" rel="external">shell教程</a>。</p>
+<p>代码：</p>
+<p><a href="海外版本diff工具/LanguageDiffWindow_xSMzWdHsMs.cs">LanguageDiffWindow.cs</a></p>
+<p><a href="海外版本diff工具/diff_7U8prTz5se.sh">diff.sh</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2021/02/25/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/02/25/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">UIGraphicText表情渲染优化-支持表情来自不同图集</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-02-25 00:00:00" itemprop="dateCreated datePublished" datetime="2021-02-25T00:00:00+08:00">2021-02-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-07 21:35:21" itemprop="dateModified" datetime="2022-12-07T21:35:21+08:00">2022-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Unity游戏开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E4%B8%9A%E5%8A%A1%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">业务系统</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E4%B8%9A%E5%8A%A1%E7%B3%BB%E7%BB%9F/%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92/" itemprop="url" rel="index"><span itemprop="name">图文混排</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<h1 id="UIGraphicText表情渲染优化-支持表情来自不同图集"><a href="#UIGraphicText表情渲染优化-支持表情来自不同图集" class="headerlink" title="UIGraphicText表情渲染优化-支持表情来自不同图集"></a>UIGraphicText表情渲染优化-支持表情来自不同图集</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>当表情sprite没有被打到一个图集上，UIGraphicText类渲染表情或会错乱。</p>
+<h2 id="表情的渲染过程"><a href="#表情的渲染过程" class="headerlink" title="表情的渲染过程"></a>表情的渲染过程</h2><p>聊天窗口表情的渲染过程大致如何：</p>
+<img src="/2021/02/25/UGUIText组件实现图文混排——项目优化/620aa9915773654e87c2ed8201b32736.png" alt="C:\\454369bfe7514cfa65961fb357f5a99b" title="C:\\454369bfe7514cfa65961fb357f5a99b">
+<ul>
+<li>ui_emoji.asset包含所有emoji sprite信息，包括name、引用等。</li>
+<li>UIGraphicText主要是解析输入内容字符串，得出sprite的顶点几何参数等。</li>
+<li>CanvasRender应是负责渲染的。</li>
+<li>UIGraphicTextSprites继承自<a href="https://docs.unity.cn/cn/current/ScriptReference/UI.MaskableGraphic.html" target="_blank" rel="external">MaskableGraphic</a>类，这个类的作用是管理源图集，截取源图集的某个区域。</li>
+</ul>
+<p>获取源图集的代码：</p>
+<img src="/2021/02/25/UGUIText组件实现图文混排——项目优化/78a230605169741abf7b42ea9cf32942.tmp" alt="C:\\5c36480e5fd362841a9fda19931987af" title="C:\\5c36480e5fd362841a9fda19931987af">
+<p>表情的源图集引用被写死，默认第一个表情的源图集。这就是当表情来自其他图集时，显示错误的原因。</p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>目前所有的表情会打到一个图集上，下面两种场景会导致表情打到不同图集：</p>
+<ol>
+<li>表情增加，直到2048*2048大小装不下（图集maxsize为2048是项目组限制，因为在一些低端机上加载不了大于2048的图）</li>
+<li>表情sprite的tag不一致，需要用别的tag划分表情（tag决定sprite所属的图集）</li>
+</ol>
+<p>为了满足以上两种场景，需要对这个系统进行优化，支持表情来自不同的图集。</p>
+<p>有两个步骤：</p>
+<ol>
+<li>更改mainTexture获取</li>
+</ol>
+<p>展开源码</p>
+<p>// UIGraphicTextSprites.cs</p>
+<p>public class UIGraphicTextSprites : MaskableGraphic</p>
+<p>{</p>
+<p>…</p>
+<p>private Texture _texSource; // 由外部传入改写mainTexture</p>
+<p>public override Texture mainTexture</p>
+<p>{</p>
+<p>get</p>
+<p>{</p>
+<p>if (m_spriteAsset == null)</p>
+<p>return s_WhiteTexture;</p>
+<p>if (m_spriteAsset.listSpriteInfor == null || m_spriteAsset.listSpriteInfor.Count == 0)</p>
+<p>{</p>
+<p>return s_WhiteTexture;</p>
+<p>}</p>
+<p>if (_texSource != null)</p>
+<p>{</p>
+<p>return _texSource;</p>
+<p>}</p>
+<p>var texSource = m_spriteAsset.listSpriteInfor[0].sprite.texture;</p>
+<p>if (texSource == null)</p>
+<p>return s_WhiteTexture;</p>
+<p>else</p>
+<p>return texSource;</p>
+<p>}</p>
+<p>}</p>
+<p>public void SetMainTexture(Texture t)</p>
+<p>{</p>
+<p>_texSource = t;</p>
+<p>}</p>
+<p>…</p>
+<p>}</p>
+<p>2. 更改对应的源图集</p>
+<p>展开源码</p>
+<p>// UIGraphicText.cs</p>
+<p>void CalcQuadTag(IList\&lt;UIVertex> verts)</p>
+<p>{</p>
+<p>…</p>
+<p>Texture texSource = listSpriteInfor[0].sprite.texture;</p>
+<p>for (int j = 0; j \&lt; listSpriteInfor.Count; j++)</p>
+<p>{</p>
+<p>//通过标签的名称去索引spriteAsset里所对应的sprite的名称</p>
+<p>if (listTagInfor[i].name == listSpriteInfor[j].name) {</p>
+<p>spriteRect = listSpriteInfor[j].sprite.textureRect;</p>
+<p>texSource = listSpriteInfor[j].sprite.texture;</p>
+<p>m_spriteGraphic.SetMainTexture(texSource);</p>
+<p>break;</p>
+<p>}</p>
+<p>}</p>
+<p>// Texture texSource = listSpriteInfor[0].sprite.texture;</p>
+<p>…</p>
+<p>}</p>
+<h3 id="0714更新"><a href="#0714更新" class="headerlink" title="0714更新"></a>0714更新</h3><p>发现动态表情在pc上不打图集情况下显示有问题，表情并没有想预期一样动，有的甚至不动。</p>
+<p>动态表情的实现原理是按一定的帧率改变sprite的顶点、uv和网格三角形参数，通过CanvasRenderer组件和UIGraphicTextSprites组件（继承MaskableGraphic），截取源图texture（sprite或者图集）得到显示区域。</p>
+<p>原因是不打图集时，动态表情的源图获取不正确，截取的源图永远是第一张。</p>
+<p>解决方法是在Update()中切换sprite截取参数同时改变UIGraphicTextSprites的mainTexture。</p>
+<p>更改commit看这里。</p>
+<h2 id="检验"><a href="#检验" class="headerlink" title="检验"></a>检验</h2><p>我的unity目标平台是android，先将textureImporter对安卓图片压缩格式更改代码注释掉，否则更改压缩格式会被重置。</p>
+<img src="/2021/02/25/UGUIText组件实现图文混排——项目优化/3dbde81dd90a3504f493adc0aeb348f5.tmp" alt="C:\\c1b700ce925f6782c0ddfad7ebaff16d" title="C:\\c1b700ce925f6782c0ddfad7ebaff16d">
+<p>更改1601_1,1602_1,1603_1的format为区别于ETC2_RGBA8的其他格式，测试不同压缩格式打包不同图集的场景：</p>
+<img src="/2021/02/25/UGUIText组件实现图文混排——项目优化/03742e0b64e62e87941c5ff8441ee88a.tmp" alt="C:\\fe883496df4caacccd989e850fccc8ca" title="C:\\fe883496df4caacccd989e850fccc8ca">
+<p>更改1604_1,1605_1的tag，测试不同tag打包到不同图集的场景：</p>
+<img src="/2021/02/25/UGUIText组件实现图文混排——项目优化/c9e62ff06615ff8ab9ab1b914721f146.tmp" alt="C:\\f99e868b89f1a7b9ab3af6a5c9fdac1d" title="C:\\f99e868b89f1a7b9ab3af6a5c9fdac1d">
+<p>sprite packer上pack图集，检查表情的确打到了三个不同的图集：</p>
+<p><img src="UGUIText组件实现图文混排——项目优化/10e1096586b53ed9f944e9d5101c4241.tmp" alt="C:\\883fd9a545661d5f5811d3edac78f399"><img src="UGUIText组件实现图文混排——项目优化/dc44a3625ccf585467173a0f9a8e574f.tmp" alt="C:\\c0bf4aa254b650fb676bfa50bfbec15f"> <img src="/2021/02/25/UGUIText组件实现图文混排——项目优化/1b0894421887907ac78332cb31b81eca.tmp" alt="C:\\094eb1d714aefb5993a488081c763144" title="C:\\094eb1d714aefb5993a488081c763144"> <img src="/2021/02/25/UGUIText组件实现图文混排——项目优化/ceb2cc566e9ddb1db29fc8a826ecd3a1.tmp" alt="C:\\e4ce0e9521e9b633c56b0d462711f669" title="C:\\e4ce0e9521e9b633c56b0d462711f669"></p>
+<p>pc上测试，正常。</p>
+<p>安卓上测试，正常。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2021/01/25/%E6%B8%B8%E6%88%8F%E4%B8%AD%E7%89%B9%E6%95%88%E5%8A%A0%E8%BD%BD%E5%8E%9F%E7%90%86%E5%92%8C%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/01/25/%E6%B8%B8%E6%88%8F%E4%B8%AD%E7%89%B9%E6%95%88%E5%8A%A0%E8%BD%BD%E5%8E%9F%E7%90%86%E5%92%8C%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">游戏中特效加载原理和优化方法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-01-25 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-25T00:00:00+08:00">2021-01-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-07 21:34:27" itemprop="dateModified" datetime="2022-12-07T21:34:27+08:00">2022-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Unity游戏开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/%E7%89%B9%E6%95%88/" itemprop="url" rel="index"><span itemprop="name">特效</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>游戏项目中一般会用到一些优化手段，大部分优化的是资源的大小对内存的影响，比如项目中特效的加载会拥有两个类：photoFactoryEffect和photoMutilEffect</p>
+<p><strong>photoFactory与photoMutil的区别</strong></p>
+<p>photoFactory是一个优化类，作用就是减轻通过photoMutil生成的特效克隆go的大小，优化的是内存</p>
+<p>photoMutil生成一个挂载特效rt的go，真正管理特效的是photoProducer。</p>
+<p><strong>特效加载原理</strong></p>
+<p>特效的gameObject通过camaro和rt映射到其他的gameObject上，一个特效只会加载一次，利用rt分发多份。</p>
+<p>// PhotoEffectFactory.lua  module(“logic.common.ugui.PhotoEffectFactory”,package.seeall)  local PhotoEffectFactory = class(“PhotoEffectFactory”)  function PhotoEffectFactory:ctor()     self._factoryContainer = goutil.create(“PHOTOFACTORYROOT”, false)     GameUtils.setPos(self._factoryContainer, -2500, 0, 0)     – 所有生效的特效     self._effects={}     – 池化     self._pool=ObjectPool.New(20,PhotoEffectFactory._createEffect,         PhotoEffectFactory._disposeEffect,         PhotoEffectFactory._resetEffect         ) end  function PhotoEffectFactory._createEffect()     local effect = {}     local container = goutil.create(“eff”, true)     container.layer = Framework.LayerUtil.NameToLayer(SceneLayer.UI)     effect.container = container     effect.photoEff = Framework.LuaComponentContainer.Add(container, PhotoMultiEffect)     effect.photoEff:setEffectLoadedCallback(PhotoEffectFactory._onEffectLoaded, PhotoEffectFactory.instance)     –克隆的特效     effect.clones={}     – 引用数     effect.count=0     return effect end  function PhotoEffectFactory._resetEffect(effect)     effect.count=0     effect.clones={}     effect.photoEff:clear() end  function PhotoEffectFactory._disposeEffect(effect)     if not goutil.isNil(effect.container) then          goutil.destroy(effect.container)     end end  – 外部接口：提供256 * 144规格的RT特效克隆体 –uiWidth, uiHeight  需要显示的ui尺寸，请根据具体界面情况传入 function PhotoEffectFactory:getSmallClonePhotoEffect(url, uiWidth, uiHeight)     return self:getClonePhotoEffect(url, PhotoUtil.SmallRTWidth, PhotoUtil.SmallRTHeight, uiWidth, uiHeight) end  – 外部接口：重新播放RT特效 function PhotoEffectFactory:rePlayPhotoEffect(url)     local photoData = url and self._effects[url]     if photoData then         if not goutil.isNil(photoData.orgGoInst) then             goutil.setActive(photoData.orgGoInst, false)             goutil.setActive(photoData.orgGoInst, true)         end     end end  – 获取克隆的RT特效预制物 –uiWidth, uiHeight  需要显示的ui尺寸，请根据具体界面情况传入 function PhotoEffectFactory:getClonePhotoEffect(url, rtWidth, rtHeight, uiWidth, uiHeight)     if GameUtils.isEmptyString(url) then         return     end     – 如果未生成     local eff=self._effects[url]     if eff==nil then         eff=self._pool:fetchObject()         local container=eff.container         rtWidth = rtWidth or PhotoUtil.PartRTWidth         rtHeight = rtHeight or PhotoUtil.PartRTHeight         goutil.setWidth(container.transform, uiWidth or rtWidth)–ui尺寸默认是rt大小         goutil.setHeight(container.transform, uiHeight or rtHeight)         – 放在factory root 下         goutil.addChildToParent(eff.container, self._factoryContainer)         – rename         eff.container.name=url         self._effects[url]=eff         –临时处理，后续优化         if rtWidth == PhotoUtil.SmallRTWidth and rtHeight == PhotoUtil.SmallRTHeight then             eff.photoEff:showSmallEffect(url)         else                     eff.photoEff:showPartEffect(url)         end     end      eff.count = eff.count + 1     –只是克隆rawImage，transform     local objClone = goutil.create(tostring(eff.count),true)     objClone.layer = Framework.LayerUtil.NameToLayer(SceneLayer.UI)     GameUtils.copyRectTransform(objClone:GetComponent(goutil.Type_RectTransform), eff.container:GetComponent(goutil.Type_RectTransform))     GameUtils.copyRawImage(objClone:AddComponent(typeof(UnityEngine.UI.RawImage)), eff.container:GetComponent(typeof(UnityEngine.UI.RawImage)))     – local objClone = goutil.clone(self._urlToPhotoDict[url].container, tostring(self._urlToPhotoDict[url].count))     —————————–     – 判断当前特效是否已经加载完成，是则直接显示     if eff.photoEff:checkIsFinishLoadByUrl(url) then         local rawImageComp = objClone:GetComponent(typeof(UnityEngine.UI.RawImage))         if rawImageComp then             rawImageComp.enabled = true         end     end     table.insert(eff.clones, objClone)     return objClone end  – 判断创建出来的GameObject的RT与复制品的RT是否指向同一张RT，如果不是，则需要将复制品指向的RT修改过来 function PhotoEffectFactory:_pointToSameRT(url)     local photoData = self._effects[url]     if photoData and photoData.photoEff then         local orgRawImage = photoData.photoEff:getRawImage()         if orgRawImage then             local goCopy = photoData.clones and photoData.clones[1]             if not goutil.isNil(goCopy) then                 local copyRawImage = goCopy:GetComponent(typeof(UnityEngine.UI.RawImage))                 if copyRawImage and orgRawImage.texture ~= copyRawImage.texture then                     for i = 1, #photoData.clones do                         goCopy = photoData.clones[i]                         if not goutil.isNil(goCopy) then                             copyRawImage = goCopy:GetComponent(typeof(UnityEngine.UI.RawImage))                             if copyRawImage then                                 copyRawImage.texture = orgRawImage.texture                             end                         end                     end                 end             end         end     end end  function PhotoEffectFactory:turnOn(url)     if self._effects and self._effects[url] then         if self._effects[url].photoEff then             self._effects[url].photoEff:turnOn()             self:_pointToSameRT(url)         end     end end  function PhotoEffectFactory:turnOff(url)     if self._effects and self._effects[url] then         if self._effects[url].photoEff then             self._effects[url].photoEff:turnOff()           end     end end  function PhotoEffectFactory:_onEffectLoaded(goInst, res)     if res and res.ResPath then         local data = self._effects and self._effects[res.ResPath]         if data then             data.orgGoInst = goInst             if data.clones then                 local rawImageComp                 for i = 1, #data.clones do                     if not goutil.isNil(data.clones[i]) then                         rawImageComp = data.clones[i]:GetComponent(typeof(UnityEngine.UI.RawImage))                         if rawImageComp then                             rawImageComp.enabled = true                         end                     end                 end             end         end     end end  function PhotoEffectFactory:destroyClonePhotoEffect(url,justclear)     local photoEffect=self._effects and self._effects[url]      if photoEffect then         photoEffect.count = photoEffect.count - 1         if photoEffect.count &lt;= 0 then             self._pool:returnObject(photoEffect)             self._effects[url]=nil         end     end end   – 预留接口：清除所有的PhotoEffect function PhotoEffectFactory:destroy()     if self._effects then         self._pool:clear()         self._effects={}     end end  PhotoEffectFactory.instance = PhotoEffectFactory.New()  return PhotoEffectFactory</p>
+<p>// photoMultiEffect.lua  module(“logic.common.ugui.PhotoMultiEffect”, package.seeall)  local PhotoMultiEffect = class(“PhotoMultiEffect”)  function PhotoMultiEffect:ctor(compContainer)     self._compContainer = compContainer     self._go = self._compContainer.gameObject     self._multiLoader = MultiResLoader.New() –资源的引用都在这里引用     self._photo = Framework.PhotoBase.Add(self._go)     self._rtWidth = PhotoUtil.PartRTWidth     self._rtHeight = PhotoUtil.PartRTHeight     self._effectLoadedCallback = nil     self._effectLoadedCallbackObj = nil     self._effectOnePlayFinishCallback = nil     self._effectOnePlayFinishCallbackObj = nil     self._bInitUVRect = true     self._urls = {}     self._goInstList = {}     PhotoUtil.initPhotoSetting()     self:_initRawImage() end  function PhotoMultiEffect:_initRawImage()     if not goutil.isNil(self._go) then         self._rawImage = self._go:GetComponent(typeof(UnityEngine.UI.RawImage))         if self._rawImage == nil then             self._rawImage = self._go:AddComponent(typeof(UnityEngine.UI.RawImage))         end         self._rawImage.enabled = false         self._rawImage.raycastTarget = false         self._rawImage.material = PhotoUtil.getEffMaterial()     end end  function PhotoMultiEffect:_setRawImageUVRect(rtWidth, rtHeight)     if self._bInitUVRect and self._rawImage then         self._rtWidth = rtWidth         self._rtHeight = rtHeight         PhotoUtil.setRTCapacity(rtWidth, rtHeight)         –计算RawImage的大小以及偏移         local uvRectW = math.min(1, goutil.getWidth(self._go.transform) / rtWidth)         local uvRectH = math.min(1, goutil.getHeight(self._go.transform) / rtHeight)         local uvRectX = (1 - uvRectW) * 0.5         local uvRectY = (1 - uvRectH) * 0.5         self._rawImage.uvRect = UnityEngine.Rect.New(uvRectX, uvRectY, uvRectW, uvRectH)         self._bInitUVRect = false     end end  – 该接口只提供给PhotoEffectFactory使用，其他地方不允许调用 function PhotoMultiEffect:getRawImage()     return self._rawImage end  function PhotoMultiEffect:setEffectLoadedCallback(callback, callbackObj)     self._effectLoadedCallback = callback     self._effectLoadedCallbackObj = callbackObj end  function PhotoMultiEffect:setEffectOnePlayFinishCallback(callback, callbackObj)     self._effectOnePlayFinishCallback = callback     self._effectOnePlayFinishCallbackObj = callbackObj end  function PhotoMultiEffect:setClickEnable(bRaycastTarget)     if self._rawImage then         self._rawImage.raycastTarget = bRaycastTarget     end end  function PhotoMultiEffect:setClickCallback(callback, callbackObj)     if callback == nil then         return     end     if goutil.isNil(self._go) then         return     end     if not self._btnClick then         local compButton = self._go:GetComponent(typeof(UnityEngine.UI.Button))         if compButton == nil then             self._go:AddComponent(typeof(UnityEngine.UI.Button))         end         self._btnClick = Framework.ButtonAdapter.Get(self._go)         self._btnClick:AddClickListener(callback, callbackObj)     end end  – 小图标规格的RT特效 256 * 144 function PhotoMultiEffect:showSmallEffect(…)     local urls = {…}     if not urls or #urls == 0 then         return     end     self:loadRes(urls, PhotoUtil.SmallRTWidth, PhotoUtil.SmallRTHeight) end  – 中等规格的RT特效 512 * 288 function PhotoMultiEffect:showPartEffect(…)     local urls = {…}     if not urls or #urls == 0 then         return     end     self:loadRes(urls, PhotoUtil.PartRTWidth, PhotoUtil.PartRTHeight) end  – 全屏规格的RT特效 1280 * 720 function PhotoMultiEffect:showFullScreneEffect(…)     local urls = {…}     if not urls or #urls == 0 then         return     end     self:loadRes(urls, PhotoUtil.RTWidth, PhotoUtil.RTHeight) end  – 最大全屏规格的RT特效 1560 * 720，不能再接受更大的尺寸规格 function PhotoMultiEffect:showMaxScreneEffect(…)     local urls = {…}     if not urls or #urls == 0 then         return     end     self:loadRes(urls, PhotoUtil.MaxRTWidth, PhotoUtil.MaxRTHeight) end  function PhotoMultiEffect:loadRes(urls, rtWidth, rtHeight)     if self._photo == nil then         return     end     self:_setRawImageUVRect(rtWidth, rtHeight)     self._photo:TurnOn(rtWidth, rtHeight)     self._isOn = true     local renderTexture = self._photo and self._photo.producer and self._photo.producer.renderTexture     if renderTexture == nil then         printError(“renderTexture is nil, self._go=”, self._go.name)         self._rawImage.enabled = false         return     – 重复 photobase.turnOn里已经做了     – else         – self._rawImage.texture = renderTexture     end     local len = #urls     for i = 1, len do         if not self._urls then             self._urls = {}         end         table.insert(self._urls, urls[i])         self._multiLoader:addResPath(urls[i])     end     PhotoUtil.addUsingRTCount(self, rtWidth, rtHeight)     –暂时没有全部加载完毕逻辑回调     self._multiLoader:load(_, self._onSingleResLoaded, self) end  function PhotoMultiEffect:_onSingleResLoaded(res)     if res.IsSuccess then         if goutil.isNil(self._go) or self._photo == nil then             self:clear()             return         end         –9/4修改：self._isOn为false表示有两种情况，一种是在特效加载完成之前调用了turnOff接口，一种是调用了clear接口；         –按道理调用clear接口并不会回调到这里，所以处理第一种情况就好         if not self._isOn then             if self._urls == nil or #self._urls == 0 then                 self:turnOff()                 return             end         end         local goInst         if self._urls then             for i = #self._urls, 1, -1 do                 if res.ResPath == self._urls[i] then                     table.remove(self._urls, i)                     goInst = goutil.clone(res:GetAsset(nil, nil))                     goInst.layer = Framework.LayerUtil.NameToLayer(PhotoUtil.LayerName)                     table.insert(self._goInstList, goInst)                     break                 end             end         end         if goInst then             if self._photo then                 –检查当前是turnOff还是turnOn                 – goutil.setActive(goInst, self._isOn)                 self._rawImage.enabled = self._isOn                 if self._isOn then                     self._photo:ShowTarget(goInst, true)                 else                     goutil.addChildToParent(goInst, self._go)                 end             end             if self._effectLoadedCallback then                 if self._effectLoadedCallbackObj then                     self._effectLoadedCallback(self._effectLoadedCallbackObj, goInst, res)                 else                     self._effectLoadedCallback(goInst, res)                 end             end             –检查美术是否有挂载EffectPlayer的组件             local _effectCSComp = goInst:GetComponent(typeof(Pjg.EffectPlayer))             if _effectCSComp and not goutil.isNil(_effectCSComp) then                 –参数默认以组件的，暂不支持外部设置参数                 _effectCSComp:AddFinishListener(self._onEffectOnePlayFinish, self)                 –加载好就立即执行play                 _effectCSComp:Play()             end         end     end end  –暂时没有全部播放完毕逻辑回调 function PhotoMultiEffect:_onEffectOnePlayFinish()     if goutil.isNil(self._go) then         return     end     if self._effectOnePlayFinishCallback then         if self._effectOnePlayFinishCallbackObj then             self._effectOnePlayFinishCallback(self._effectOnePlayFinishCallbackObj)         else             self._effectOnePlayFinishCallback()         end     end end  function PhotoMultiEffect:getFirstUrl()     return self._urls and self._urls[1] end  function PhotoMultiEffect:getUrlString()     return table.concat(self._urls, “#”) end  – 根据传入的路径判断该特效是否已经加载完成 function PhotoMultiEffect:checkIsFinishLoadByUrl(url)     local bLoaded = false     if self._multiLoader and self._multiLoader:getResource(url) then         return true     end end  – bReplay：是否重播，有些特效需要再次打开的时候调用 – 注意：重播只针对本身是显示状态的特效，如果本身特效由于功能需要自己被隐藏，bReplay传入true也是没法重播 function PhotoMultiEffect:turnOn(bReplay)     if not self._isOn then         if self._rawImage then             self._rawImage.enabled = true         end         if self._goInstList and self._photo then             self._photo:TurnOn(self._rtWidth, self._rtHeight)             PhotoUtil.addUsingRTCount(self, self._rtWidth, self._rtHeight)             local goInst             for i = 1, #self._goInstList do                 goInst = self._goInstList[i]                 if not goutil.isNil(goInst) then                     if bReplay and goInst.activeSelf then                         goutil.setActive(goInst, false)                         goutil.setActive(goInst, true)                     end                     –检查美术是否有挂载EffectPlayer的组件                     local _effectCSComp = goInst:GetComponent(typeof(Pjg.EffectPlayer))                     if _effectCSComp and not goutil.isNil(_effectCSComp) then                         _effectCSComp:Stop()                         _effectCSComp:RemoveFinishListener()                         –参数默认以组件的，暂不支持外部设置参数                         _effectCSComp:AddFinishListener(self._onEffectOnePlayFinish, self)                         _effectCSComp:Play()                     end                     self._photo:ShowTarget(goInst, true)                 end             end         end         self._isOn = true     end end  function PhotoMultiEffect:turnOff()     if goutil.isNil(self._go) then         return     end     if self._isOn then         if self._rawImage then             self._rawImage.enabled = false         end         if self._goInstList and self._photo then             for i = 1, #self._goInstList do                 if not goutil.isNil(self._goInstList[i]) then                     –goutil.setActive(self._goInstList[i], false)                     goutil.addChildToParent(self._goInstList[i], self._go)                 end             end         end         if self._photo then             self._photo:TurnOff()             PhotoUtil.reduceUsingRTCount(self, self._rtWidth, self._rtHeight)         end         self._isOn = false     end end  function PhotoMultiEffect:clear()     self._urls = {}     if self._multiLoader then         self._multiLoader:clear()     end     if self._goInstList then         for i = 1, #self._goInstList do             if not goutil.isNil(self._goInstList[i]) then                 –检查美术是否有挂载EffectPlayer的组件                 local _effectCSComp = self._goInstList[i]:GetComponent(typeof(Pjg.EffectPlayer))                 if _effectCSComp and not goutil.isNil(_effectCSComp) then                     _effectCSComp:Stop()                     _effectCSComp:RemoveFinishListener()                 end                 goutil.destroy(self._goInstList[i])             end         end         self._goInstList = {}     end     if self._photo then         self._photo:TurnOff()         PhotoUtil.reduceUsingRTCount(self, self._rtWidth, self._rtHeight)     end     self._isOn = false     if goutil.isNil(self._go) then         return     end     if self._rawImage then         self._rawImage.enabled = false     end     self._bInitUVRect = true end  function PhotoMultiEffect:OnDestroy()     self:clear()     self._multiLoader=nil     self._compContainer = nil     self._go = nil     self._photo = nil     self._rawImage = nil     self._effectLoadedCallback = nil     self._effectLoadedCallbackObj = nil     self._effectOnePlayFinishCallback = nil     self._effectOnePlayFinishCallbackObj = nil     self._urls = nil     self._goInstList = nil      if self._btnClick then         self._btnClick:RemoveClickListener()         self._btnClick = nil     end end – 判断是否是空闲，需要加载特效 function PhotoMultiEffect:isFree()     return not self._isOn and self._multiLoader.totalCount==0 end  return PhotoMultiEffect</p>
+<p>// PhotoBase.cs  using System.Collections; using System.Collections.Generic; using UnityEngine; using UnityEngine.UI;  namespace Framework {     public class PhotoBase : MonoBehaviour      {         protected PhotoProducer _producer;         protected RawImage _rawImg;          public static PhotoBase Add(GameObject go)         {             return go.AddComponentOnce<photobase>();         }          void Awake()         {             //2018/8/8修改,防止gameObject或父节点被隐藏，lua已经初始化RawImage后显示gameObject的时候Awake接口被调用             _rawImg = gameObject.GetComponent<rawimage> ();             if (_rawImg == null) {                 _rawImg = gameObject.AddComponentOnce<rawimage>();                 _rawImg.raycastTarget = false;                 _rawImg.texture = null;                 _rawImg.material = PhotoProducerCache.Instance.GetPhotoMaterial();             }         }          protected virtual void OnEnable()         {             if(_producer != null)             {                 _producer.producerContainer.SetActive(true);             }         }          protected virtual void OnDisable()         {             if(_producer != null &amp;&amp; _producer.producerContainer != null)             {                 _producer.producerContainer.SetActive(false);             }         }          public void EnableClick(bool isEnable)         {             if(isEnable)             {                 _rawImg.raycastTarget = true;             }             else             {                 _rawImg.raycastTarget = false;             }         }          //在turn on的时候才有值         public PhotoProducer producer         {             get{ return _producer;}         }          //在turn on的时候才能调用         public void SetCameraPosition(float x,float y,float z)         {             GlobalObject.gVec3.x = x;             GlobalObject.gVec3.y = y;             GlobalObject.gVec3.z = z;              _producer.rtCamera.transform.localPosition = GlobalObject.gVec3;         }          //在turn on的时候才能调用         public void SetCameraRotation(float x,float y,float z)         {             _producer.rtCamera.transform.localRotation = Quaternion.Euler(x,y,z);         }          /**          *  将一个物体放入拍摄空间内          * */         public void ShowTarget(GameObject go,bool allSameLayer)         {             if(allSameLayer)                 go.SetLayerRecursively(PhotoProducerCache.Instance.GetCullingLayer());             else                 go.layer = PhotoProducerCache.Instance.GetCullingLayer();                          go.transform.SetParent(_producer.targetContainer.transform,false);         }          /**          *  把拍摄目标全部移除          * */         public void RemoveAllTargets()         {             GameObjectUtil.ClearChildren(_producer.targetContainer);         }                      public void TurnOn()         {             if(_producer == null)             {                 Rect size = (gameObject.transform as RectTransform).rect;                 _producer = PhotoProducerCache.Instance.Fetch(Mathf.CeilToInt(size.width),Mathf.CeilToInt(size.height));                 _rawImg.texture = _producer.renderTexture;              }              if(this.gameObject.activeInHierarchy)             {                 _producer.producerContainer.SetActive(true);             }             else             {                 _producer.producerContainer.SetActive(false);             }         }          /// <summary>         /// 重载TurnOn接口，支持外部传入需要创建的RT大小         /// </summary>         public void TurnOn(float width, float height)         {             if(_producer == null)             {                 if (_rawImg == null) {                     _rawImg = gameObject.GetComponent<rawimage> ();                 }                 _producer = PhotoProducerCache.Instance.Fetch(Mathf.CeilToInt(width),Mathf.CeilToInt(height));                 _rawImg.texture = _producer.renderTexture;              }              if(this.gameObject.activeInHierarchy)             {                 _producer.producerContainer.SetActive(true);             }             else             {                 _producer.producerContainer.SetActive(false);             }         }          public bool IsOn         {             get{ return _producer != null;}         }          public void TurnOff()         {             if(_producer != null)             {                 PhotoProducerCache.Instance.Return(_producer);                 _producer = null;             }         }          void OnDestroy()         {             TurnOff();         }     } }</rawimage></rawimage></rawimage></photobase></p>
+<p>// photoProducer.cs  using System.Collections; using System.Collections.Generic; using UnityEngine;  namespace Framework  {     public class PhotoProducer     {         private GameObject _rtContainer;         private GameObject _targetContainer;         private Camera _rtCamera;         private RenderTexture _rt;          public GameObject producerContainer         {             get { return _rtContainer;}         }          public GameObject targetContainer         {             get {return _targetContainer;}         }          public Camera rtCamera         {             get {return _rtCamera;}         }          public RenderTexture renderTexture         {             get {return _rt;}         }          public PhotoProducer(int width,int height,int cullingMask,int rtDepth,RenderTextureFormat rtFormat,int antiAliasing)         {             _rtContainer = new GameObject(“PhotoProducer_“ + PhotoProducerCounter.GetCounter());              _targetContainer = new GameObject(“TargetContainer”);             _targetContainer.transform.SetParent(_rtContainer.transform,false);              _rtContainer.transform.position = PhotoProducerCounter.GenPosition();             GameObject.DontDestroyOnLoad(_rtContainer);              GameObject cameraObj = new GameObject(“Camera”);             cameraObj.transform.SetParent(_rtContainer.transform, false);             this._rtCamera = cameraObj.AddComponent<camera>();             this._rtCamera.useOcclusionCulling = false;              _rtCamera.enabled = true;             _rtCamera.clearFlags = CameraClearFlags.SolidColor;             _rtCamera.backgroundColor = new Color(0, 0, 0, 0);             _rtCamera.cullingMask = cullingMask;             _rtCamera.targetTexture = _rt;             _rtCamera.farClipPlane = 1000;              _rt = new RenderTexture(width, height,rtDepth,rtFormat);             if(antiAliasing &gt; 0)                 _rt.antiAliasing = antiAliasing;              _rtCamera.targetTexture = _rt;         }          public void Dispose()         {             if (_rtCamera != null) {                 _rtCamera.targetTexture = null;             }             if(_rt != null)             {                 GameObject.Destroy(_rt);                 _rt = null;             }             GameObjectUtil.Destroy(_rtContainer);         }     } }</camera></p>
+<p>// photoProducerCache.cs  using System.Collections.Generic; using UnityEngine;  namespace Framework {     /**      *  UI特效公用的RenderTexture缓存 以及 用于绘制的Camera和GameObject      *  RenderTexture的大小  有若干种规格,游戏项目中规划好预定的几种规格规范      *  规格1   1136 640                                    *  规格2   200*200      * */     public class PhotoProducerCache : Singleton<photoproducercache>     {         //一些设置         private int _photoCullingLayer = 0;         private int _photoCullingMask = 0;          private int _rtDepth = 32;         private RenderTextureFormat _rtFormat = RenderTextureFormat.ARGB32;          private int _antiAliasing = 2;         private Material _photoMat;          //每种规格 对应的 缓存RenderTexture列表         private Dictionary&lt;int,List<photoproducer>&gt; _cache = new Dictionary&lt;int,List<photoproducer>&gt;();         private Dictionary&lt;int,int&gt; _capacityDict = new Dictionary&lt;int, int&gt;();          public void SetAALevel(int aaLevel)         {             this._antiAliasing = aaLevel;         }          public void SetCullingLayer(int mask)         {             _photoCullingLayer = mask;             _photoCullingMask = 1&lt;&lt;_photoCullingLayer;         }          public int GetCullingLayer()         {             return _photoCullingLayer;         }                      public void SetRenderTextureDepth(int depth)         {             _rtDepth = depth;         }          public void SetRenderTextureFormat(RenderTextureFormat format)         {             _rtFormat = format;         }                      public void SetCapacity(int width,int height,int capacity)         {             int key = (width &lt;&lt; 16) + height;             _capacityDict[key] = capacity;         }          public void SetPhotoMaterial(Material mat)         {             _photoMat = mat;         }          public Material GetPhotoMaterial()         {             return _photoMat;         }                      public PhotoProducer Fetch(int width,int height)         {             if(width &lt;= 0 || height &lt;= 0) return null;             int key = (width &lt;&lt; 16) + height;             PhotoProducer producer;             if(_cache.ContainsKey(key))             {                 List<photoproducer> producers = _cache[key];                 if(producers.Count &gt; 0)                 {                     producer = producers[producers.Count-1];                     producer.targetContainer.SetActive(true);                     producers.RemoveAt(producers.Count-1);                 }                 else                 {                     producer =  new PhotoProducer(width,height,_photoCullingMask,_rtDepth,_rtFormat,_antiAliasing);                 }             }             else             {                 producer = new PhotoProducer(width,height,_photoCullingMask,_rtDepth,_rtFormat,_antiAliasing);             }             return producer;         }          public void Return(PhotoProducer producer)         {             if(producer == null) return;             RenderTexture rt = producer.renderTexture;             int key = (rt.width &lt;&lt; 16) + rt.height;             int capacity;             _capacityDict.TryGetValue(key,out capacity);              if(capacity &gt; 0)             {                 List<photoproducer> producers;                 _cache.TryGetValue(key,out producers);                 if(producers == null)                 {                     producers = new List<photoproducer>();                     _cache[key] = producers;                 }                  if(producers.Count &lt; capacity)                   {                     if (producer.producerContainer) {                         producer.producerContainer.SetActive(false);                     }                     producers.Add(producer);                 }                 else //剩余容量不够了，销毁掉                 {                     producer.Dispose();                 }             }             else //不需要缓存的             {                 producer.Dispose();             }         }            } }</photoproducer></photoproducer></photoproducer></photoproducer></photoproducer></photoproducercache></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2021/01/20/RenderTexture%E7%89%B9%E6%95%88%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/01/20/RenderTexture%E7%89%B9%E6%95%88%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">RenderTexture特效系统实现原理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-01-20 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-20T00:00:00+08:00">2021-01-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-07 21:34:13" itemprop="dateModified" datetime="2022-12-07T21:34:13+08:00">2022-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Unity游戏开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/%E7%89%B9%E6%95%88/" itemprop="url" rel="index"><span itemprop="name">特效</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<h1 id="RenderTexture特效系统实现原理"><a href="#RenderTexture特效系统实现原理" class="headerlink" title="RenderTexture特效系统实现原理"></a>RenderTexture特效系统实现原理</h1><h2 id="一、RenderTexture阐述"><a href="#一、RenderTexture阐述" class="headerlink" title="一、RenderTexture阐述"></a>一、RenderTexture阐述</h2><p>食物语中的显示的特效一般是使用RenderTexture结合摄像机拍摄3D物体实现的，实际上游戏中显示的是一张加载好的RT。</p>
+<p>什么是RT？为啥RT可以渲染一张动态的图片？</p>
+<p>RT是一种特殊的Texture，可以在运行时实现更新内容。网上有句话可以概括：将一个FBO链接到server-side的texture对象上。通俗一点就是将渲染结果应用到gpu上的texture对象上，而texture对象就是游戏中的一张贴图，渲染结果（FBO的数据）可以动态变化，那么贴图的内容也跟着动态变化。</p>
+<p>FBO全称：FrameBufferObject，gpu上的一块buffer区域，用来存储渲染结果。一般有个默认的FBO直接连接显示器窗口区域，其他的FBO存储渲染结果供需要时使用，正是这时候，RT作为一块渲染区域应用这些FBO。</p>
+<p>server-side：cpu加载贴图资源到内存，叫做client-side；cpu将资源从内存拷贝到gpu中，叫做发送到server-side。</p>
+<p>为什么特效需要用RT应用到项目中，而不直接加载呢？</p>
+<p>关键的原因是项目中一般在UI上挂特效，特效资源的渲染层跟UI不属于同一个渲染层级，所以总是在UI资源之前或之后，没办法在两个UI资源之间，让特效显示在最上层的话，那么就会挡住比如断线重连这类层级优先级最高的UI。</p>
+<p>所以要利用RT渲染特效，作为一个UI资源加载进来。</p>
+<h2 id="二、RT特效系统设计原理"><a href="#二、RT特效系统设计原理" class="headerlink" title="二、RT特效系统设计原理"></a>二、RT特效系统设计原理</h2><p>怎样实现RT特效？</p>
+<p>很简单就是创建一个RenderTexture对象，赋值给camera的targetTextrue属性，同时赋值给RawImage对象的texture属性。这就相当于camera将渲染结果（特效的表现）写入到了RenderTexture对象，RawImage对象作为一个显示窗口区域，连接到RenderTexture对象存储数据的FBO。</p>
+<p>着点于项目上，RT特效系统是如何设计的，这么设计的原因有是什么呢？先看以下系统关系图：</p>
+<img src="/2021/01/20/RenderTexture特效系统实现原理/image.png" alt="image.png" title="">
+<p>图中清晰的表达了类之间数据流向，关键的就是传递RT和特效实例，各类发挥的作用：</p>
+<ol>
+<li>PhotoProducer负责创建RT、摄像机和特效实例的容器TargetContainer，相当于一块特效的渲染场景，而且这个渲染场景跟UI不是同一个渲染层，另外负责把RT传递给PhotoBase的RawImage组件上。</li>
+<li>PhotoProducerCache作为对象池，管理PhotoProducer的分配和回收。</li>
+<li>PhotoBase就是作为承载RT的容器，显示在UI上。</li>
+<li>PhotoMultiEffect负责通过url加载特效资源，并将特效资源实例传递到Pruducer中的TargetContainer容器。</li>
+</ol>
+<p>另外这些类通过turnOn和turnOff方法控制特效的显示和隐藏。</p>
+<ul>
+<li>turnOn方法：将Effect Inst加到TargetContainer节点下，将RT跟Camera和RawImage连接起来。</li>
+<li>TurnOff方法：将RawImage置为不可用enable为false，将Effect Inst移出TargetContainer，并且将ProducerContainer置为不可见，归还Producer到对象池以便供其他特效使用。</li>
+</ul>
+<p>还有一点，PhotoProducerCache的主要优化手段是将RT缓存起来，用RT的规格（宽高）作为索引来复用RT。项目中规定了RT的几种规则：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--最大规格RT尺寸(不能再大了) 1560 * 720</span></span><br><span class="line">PhotoUtil.MaxRTWidth = <span class="number">1560</span></span><br><span class="line">PhotoUtil.MaxRTHeight = <span class="number">720</span></span><br><span class="line"><span class="comment">--大规格RT尺寸 1280 * 720</span></span><br><span class="line">PhotoUtil.RTWidth = <span class="number">1280</span></span><br><span class="line">PhotoUtil.RTHeight = <span class="number">720</span></span><br><span class="line"><span class="comment">--中等规格RT尺寸 512 * 288</span></span><br><span class="line">PhotoUtil.PartRTWidth = <span class="number">512</span></span><br><span class="line">PhotoUtil.PartRTHeight = <span class="number">288</span></span><br><span class="line"><span class="comment">--小规格RT尺寸 256 * 144</span></span><br><span class="line">PhotoUtil.SmallRTWidth = <span class="number">256</span></span><br><span class="line">PhotoUtil.SmallRTHeight = <span class="number">144</span></span><br></pre></td></tr></table></figure>
+<p>这样做应该是为限制RT规则来方便复用吧，而且面对各种规则的RT特效复用可能会出现特效裁边这种问题。</p>
+<p>RT特效系统中还处理了一种情况：显示多个同一类特效。</p>
+<p>当然RT肯定是同一张，但是需要创建多个PhotoMultiEffect的实例，进而实例化多个特效资源实例，这样就浪费资源了，创建多个特效实例可以省去，我们需要的是多个RT的承载体，也就是多个挂有RawImage组件的GameObject。</p>
+<p>所以就有PhotoEffectFactory类，负责管理同一类特效的多处显示情况。</p>
+<img src="/2021/01/20/RenderTexture特效系统实现原理/image_1.png" alt="image_1.png" title="">
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2021/01/15/UnityAddressable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/01/15/UnityAddressable/" class="post-title-link" itemprop="url">Unity Addressable Asset System介绍、教程和原理讲解</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-01-15 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-15T00:00:00+08:00">2021-01-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Unity游戏开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">资源管理</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<h1 id="Unity-Addressable-Asset-System介绍、教程和原理讲解"><a href="#Unity-Addressable-Asset-System介绍、教程和原理讲解" class="headerlink" title="Unity Addressable Asset System介绍、教程和原理讲解"></a>Unity Addressable Asset System介绍、教程和原理讲解</h1><h2 id="1-背景（怎么来的）"><a href="#1-背景（怎么来的）" class="headerlink" title="1. 背景（怎么来的）"></a>1. 背景（怎么来的）</h2><p>Unity Addressable Asset System是官方推出的资源加载和资源管理的一套解决方案。</p>
+<p>它使用异步加载的方式加载资源，提供统一的加载接口，不管资源放在哪个目录，不管资源的依赖有多复杂。</p>
+<p>传统的资源管理方式严重将组织、构建、加载Asset的逻辑捆绑在一起，比如</p>
+<ol>
+<li>资源存放在Resource文件，那加载资源必须要用到Resources.Load方法，并且提供资源路径</li>
+<li>加载ab中的asset时，加载代码需要和构建策略捆绑在一起，先找出资源对应的bundle加载完成后，再加载需要的资源。</li>
+<li>以路径加载的代码，当资源路径发生改变往往要多次更改代码，这个更改可能涉及多处。</li>
+<li>资源位于远程，需要写代码管理资源的下载、加载、卸载和缓存。<img src="/2021/01/15/UnityAddressable/image.png" alt="image.png" title="">
+基于以上种种不便，Unity Addressable Asset System（下文称AA系统）的一个重要好处就是解决以上种种痛点。<h2 id="2-特点（有何用）"><a href="#2-特点（有何用）" class="headerlink" title="2. 特点（有何用）"></a>2. 特点（有何用）</h2></li>
+</ol>
+<ul>
+<li>快速迭代：解耦组织、构建、加载Asset的逻辑，通过[address]和统一接口加载资源，不管资源放是否来自Resources目录，或者将来重命名或者路径变更，不管资源如何构建，都不用再修改加载代码。</li>
+<li>依赖管理：当加载一个资源的时候，AA系统会先加载完这个资源的所有依赖，然后再返回这个资源。</li>
+<li>内存管理：自动管理资源加载卸载的引用计数，并提供工具探测内存泄露问题。</li>
+<li>内容打包：当资源变更时能够有效打包资源，更容易管理本地和远程打包资源和有效减小应用大小。</li>
+<li>配置文件：统一管理资源如何打包的变量，避免配置分散多处修改问题。</li>
+</ul>
+<h2 id="3-概念"><a href="#3-概念" class="headerlink" title="3. 概念"></a>3. 概念</h2><h3 id="Group"><a href="#Group" class="headerlink" title="Group"></a>Group</h3><p>group定义一组在构建时可处理的Addressable Asset集合。</p>
+<p>默认有两个group，如上图：</p>
+<ul>
+<li>Built In Data。内置的group，包含Resources文件夹，这个group不支持修改。</li>
+<li>Default Local Group。在Inspector标记Addresables的Asset会默认添加进这里，支持修改，包括改名和添加Schema。</li>
+</ul>
+<h3 id="Group-Schema"><a href="#Group-Schema" class="headerlink" title="Group Schema"></a>Group Schema</h3><p>group schema定义一组分配给group在构建使用的数据，可视为配置数据，决定group中Asset如何打包、打包粒度等等。</p>
+<p>点击group，查看这个group中添加的schema，和schema的配置：</p>
+<img src="/2021/01/15/UnityAddressable/image_1.png" alt="image_1.png" title="">
+<p>包括三种Schema：</p>
+<ol>
+<li>Content Updage Restriction 主要决定ab可不可以更改<br> Update Restriction：决定改组内容打包成ab后，可不可以动态更新。can change post release：允许发布后变更；cannot change post release：不允许发布后变更。</li>
+<li>Content Packing &amp; Loading <strong>决定打包方式和加载的配置</strong>，包括构建目录、压缩、打包模式等等<br> 下面是几个重要的配置，鼠标移动到变量名上可以显示该配置作用介绍：<br> Build Path：打包后的发布路径。可分为本地和远程路径。<br> Load Path：加载ab的路径，可分为本地和远程路径。<br> 这些的路径变量来自Profiles中定义的变量，Profiles的解析请看下面。<br> Compression：支持三种压缩方式，包括不压缩、LZ4和LZMA。<br> Include In Build：勾选才会将该group纳入构建进程中。<br> Use Asset Bundle Cache：勾选会将加载的ab加进缓存目录中，远程bundle才需要勾选。<br> Bundle Mode：打包模式，分别是Pack Separately单独打包，Pack Together全部达成一个包，Pack Together By Label根据label划分打包。<br> Bundle Naming：bundle的命名规则。<br> Asset Provider：加载和解析Asset的类，不同的资源类型对应不同的provider。<br> Asset bundle Provider：加载和解析Asset bundle的类，默认为AssetBundleProvider。</li>
+<li>Resources and Build In Scenes<strong> 是否将Resources和Build Setting Scenes包含进来打包</strong><br> Include Resources Folders：是否将Resources文件夹下的Asset包含进group。Resources下的Asset会打包进包体，一般不需要勾选。<br> Include Build Setting Scenes：是否包含Build Setting添加的Scenes。</li>
+</ol>
+<h3 id="Addressable-Asset-Settings"><a href="#Addressable-Asset-Settings" class="headerlink" title="Addressable Asset Settings"></a>Addressable Asset Settings</h3><p>作为AA系统全局的配置文件，在初始化的时候生成。以下介绍几个重要的变量：</p>
+<p>属性介绍：</p>
+<p>Disable Catalog Update on Startup：勾选则在AA系统初始化时候不检查catalog文件更新。</p>
+<p><strong>Build Remote Catalog</strong>： 勾选则生成远程ab的catalog文件，需要配置remote catalog文件的build path和load path。</p>
+<p>Send Profiler Event：勾选则开启分析器。</p>
+<p>Unique Bundle IDs：给bundle分配独一无二的ID。因为catalog文件可以在初始化以外的时候更新，当旧资源已经在内存中时，但unity无法下载两个同internal name的资源，这种情况资源无法及时更新。要么先卸载重新资源重新下载，要么分配给bundle单独的id来区分。开启这个选项，当资源更新时不仅仅是更新该资源，也会更新依赖链，带来一定的性能花销。</p>
+<p>Contiguous Bundle：基于源资源的排序来排序Bundle，可以加快Asset加载速度。</p>
+<p><strong>Build and Play Mode Scripts</strong></p>
+<p>Use Asset Database （fastest）：加载源文件模式，不用打ab和分析。</p>
+<p>Simulate Groups（Advanced）：模拟组模式，以不打ab方式来分析内容的布局和依赖。用类似加载ab的方式，通过ResourceManager从AssetDatabase加载。这个模式用于模拟加载策略，调整和平衡内容的分布。</p>
+<p>Use Existing Build：使用构建好的ab加载，需要提前构建好ab。</p>
+<p>Default Build Script：默认的构建脚本。</p>
+<p>可选的Build Script都是ScriptableObject的Asset。假如需要扩展，可以新建脚本，继承IDataBuilder接口。添加可以选择左下角+，添加Build Script Asset。</p>
+<p>前三个Play Mode Script分别对应Assetables Groups-》Play Mode Script下的三个模式。</p>
+<p>Default Build Script对应Assetables Groups-》Build-》New Build-》Default Build Script。</p>
+<p>Asset Group Template：group模板，Assetables Groups面板下Create→Group下，或者group右键菜单可以选择。在Project面板目录上右键菜单Create-》Addressables-》Group Templates-》Blank Group Template可以创建模板。</p>
+<h2 id="4-使用流程（怎么用）"><a href="#4-使用流程（怎么用）" class="headerlink" title="4. 使用流程（怎么用）"></a>4. 使用流程（怎么用）</h2><h3 id="step1-安装"><a href="#step1-安装" class="headerlink" title="step1 安装"></a>step1 安装</h3><p>到Package Manager安装以下两个package：</p>
+<ul>
+<li>Addressables，基本包，本文章使用的版本是1.16.15</li>
+<li>Scriptable Build Pipeline package，依赖包</li>
+</ul>
+<h3 id="step2-初始化"><a href="#step2-初始化" class="headerlink" title="step2 初始化"></a>step2 初始化</h3><p>安装包后，通过菜单栏Window-&gt;Asset Management-&gt;Addressables→Groups 可以打开AA系统的管理面板</p>
+<p>未初始化会出现初始化按钮，点击后Asset目录下会出现一个AddressableAssetsData目录，存放着一些配置文件。</p>
+<h3 id="step3-标记可寻址"><a href="#step3-标记可寻址" class="headerlink" title="step3 标记可寻址"></a>step3 标记可寻址</h3><p>需要将Asset标记为Addressable，才能纳入AA系统的管理。标记为Addressable Asset有两个途径：</p>
+<p>通过Inspector。勾选，会将Asset添加进默认的group（Default Local Group），以相对Assets目录的地址作为AA系统寻找该Asset的【address】，这个地址支持修改。</p>
+<ol>
+<li>拖动Asset进group。<h3 id="step4-配置远程打包路径"><a href="#step4-配置远程打包路径" class="headerlink" title="step4 配置远程打包路径"></a>step4 配置远程打包路径</h3>unity官方推荐新建一个profile为hosting service所用，配置正确的build path和load path，可以上可以填上Hosting Service 变量：<br>并在需要在AddressableAssetSettings上开启构建远程catelog，选用Editor Hosted Profile，选择build path 和 load path：<br>Addressables Group面板上选择Editor Hosted Profile<br>最后在group Inspector面板中选择内容构建输出的目录，若为远程资源则选择RemoteBuildPath。<br>这就配置完了Hosting Services的使用流程。<h3 id="step5-打包"><a href="#step5-打包" class="headerlink" title="step5 打包"></a>step5 打包</h3>前面已经了解到Group Schema控制打包方式，主要用到两个Schema：content update restriction 和 content packing &amp; loading<br>打出的ab类型可分为远程和本地，静态和非静态（can change post release为非静态）。两两结合可以分为四个组，每个组下各包含两个资源：<br>点击Addressables Groups菜单栏build-》new build-》default build script，开始构建。<br>ab构建完成后，可以看到本地ab和远程ab分别打包到了各自的目录：<br>local和remote各自有一份catalog json文件，remote多了一份hash文件，记录catalog文件的hash值，用于判断catalog文件的更新。<br>catalog文件里记录了address到资源的映射关系，用于定位资源和决定如何加载资源（where和how），每当资源发生变动后构建完成时，catalog文件重新生成。<h3 id="step6-更新"><a href="#step6-更新" class="headerlink" title="step6 更新"></a>step6 更新</h3>再看看更新资源后，各组间的资源打包后如何组织？<br>每个组更改第一个资源后，点击Tools-》check for content update restriction，检查更新<br>这时候会打开窗口选择addressables_content_state.bin文件，文件位于Assets/AddressableAssetsData/[platform]下，发布哪个平台选择哪个平台，一般是Android和Windows。<br>为什么要选择这个bin文件？<br>使用过BuildPipeline构建ab都知道有个manifest文件记录资源间依赖关系，AA系统会将资源间依赖关系记录进这个bin文件，作为对比找出更改的资源。<br>这步过后，会检查出更改的资源：<br>为什么所有资源都有更改，只检查出两个有更新，并且两个资源都来自静态组？<br>unity推荐打包内容分两种类型：</li>
+</ol>
+<ul>
+<li>can change post release：期望更新的动态内容。一般打成小包，以控制精准更新，减少包中其他没有更新的资源的不必要更新。</li>
+<li>cannot change post release：不期望更新的静态内容。一般打到一个很少更新的大包中。</li>
+</ul>
+<p>addressables_content_state.bin文件只是记录了静态资源的hash和依赖关系，动态资源的依赖关系动态计算没有记录到bin文件中，所以check for content update restriction只是作用于static组，对nonStatic组没有作用，也即是对设置了can change post release的组没有作用。</p>
+<p>点击apply changes按钮，groups会出现变化：</p>
+<p>static组中更改的资源会移动到一个新组content update group：</p>
+<p>content update group属于remote non static组</p>
+<p>点击build-》update a previous build，选择刚才的bin文件，增量更新</p>
+<p>对比发现：</p>
+<p>catalog json和hash文件会更新，被重写。</p>
+<p>静态组资源bundle并不会被重写更改或者重生生成，静态组中更改的资源会被移动进content update group重新打包到remote目录。</p>
+<p>非静态资源组的bundle包虽然不会被重写，但是会被重新生成，hash值也会更新。</p>
+<p>旧的非静态资源组bundle会在catalog文件中失去连接和记录，成为无效资源（这个无效资源会保留在用户设备上成为垃圾资源，应该要有个机制及时清理）。</p>
+<p>note：每次full build，bundle和catalog文件会重新生成，localBuildpath目录会清空，但是remoteBuildPath目录并不会清空，新生成的资源会跟旧资源混合。</p>
+<p>用一张图来阐述官方推荐的AA系统资源更新生命周期：</p>
+<img src="/2021/01/15/UnityAddressable/image_2.png" alt="image_2.png" title="">
+<img src="/2021/01/15/UnityAddressable/image_3.png" alt="image_3.png" title="">
+<h2 id="5-工具"><a href="#5-工具" class="headerlink" title="5. 工具"></a>5. 工具</h2><h3 id="Profiles"><a href="#Profiles" class="headerlink" title="Profiles"></a>Profiles</h3><p>通过菜单栏Window-&gt;Asset Management→Addressables→Profiles 或者 group面板的菜单栏tools→Profiles 打开Profiles面板。</p>
+<p>这个是AA系统用来管理一组组变量的解决方案。</p>
+<p>默认有以上5个变量，见名知义。</p>
+<p>从变量的值中发现有两种符号：[]和{}。</p>
+<p>[]：定义编辑时的变量。比如UnityEditor.EditorUserBuildSettings.activeBuildTarget，在编辑时就可以得到的值。</p>
+<p>{}：定义运行时的变量。比如UnityEngine.AddressableAssets.Addressables.RuntimePath，在运行时才知道值。</p>
+<p>左上角可以添加变量和Profile，在变量上右键可以删除和更名变量。</p>
+<p>在AddressableAssetSettings Inspector上可以选择使用哪一份Profilles，这里使用Default Profiles。</p>
+<h3 id="Hosting-Services"><a href="#Hosting-Services" class="headerlink" title="Hosting Services"></a>Hosting Services</h3><p>AA系统提供本地资源服务器，模拟远程资源加载。被设计的目的是为了在测试打包内容时加快迭代速度，不需要另外写一套远程资源下载加载代码。它能够为本地或者远端的客户端提供内容。</p>
+<p>Addressables Groups-》tools-》Hosting Services-》Create-》Local Hosting创建本地资源服务器：</p>
+<p>勾选Enable会分配端口号启动服务器，也可以指定端口号。</p>
+<p>开启后，hosting services会以每个group的build path为资源目录提供内容。</p>
+<h3 id="内存管理memory-management"><a href="#内存管理memory-management" class="headerlink" title="内存管理memory management"></a>内存管理memory management</h3><p>AA系统通过Addressables API来管理资源的引用计数，提供Event Viewer工具监测资源对象被引用和内存占用情况。</p>
+<p>Addressables常见的资源加卸载API：</p>
+<ul>
+<li>Addressables.LoadAssetAsync &amp; Addressables.Release </li>
+<li>Addressables.LoadSceneAsync &amp; Addressables.UnloadSceneAsync</li>
+<li>Addressables.InstantiateAsync &amp; Addressables.ReleaseInstance</li>
+</ul>
+<p>写段测试代码观察资源的引用情况：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.AddressableAssets;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.ResourceManagement.AsyncOperations;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Loader</span> :</span> MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnEnable</span><span class="params">()</span></span><br><span class="line">  </span>&#123;</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">"Assets/Local_static 1.prefab"</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">"Assets/Local_non_static.prefab"</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">"Assets/Remote_static 1.prefab"</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">"Assets/Remote_non_static.prefab"</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">"Assets/Local_static.prefab"</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">"Assets/Local_static 1.prefab"</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">"Assets/Local_non_static.prefab"</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">"Assets/Remote_static 1.prefab"</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">"Assets/Remote_non_static.prefab"</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">"Assets/Local_static.prefab"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">InstByLoadAssetAsync</span><span class="params">(<span class="built_in">string</span> address)</span></span><br><span class="line">  </span>&#123;</span><br><span class="line">    AsyncOperationHandle&lt;GameObject&gt; handle = Addressables.LoadAssetAsync&lt;GameObject&gt;(address);</span><br><span class="line">    handle.Completed += OnLoadDone;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnLoadDone</span><span class="params">(AsyncOperationHandle&lt;GameObject&gt; handle)</span></span><br><span class="line">  </span>&#123;</span><br><span class="line">    Instantiate(handle.Result);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">InstByInstantiateAsync</span><span class="params">(<span class="built_in">string</span> address)</span></span><br><span class="line">  </span>&#123;</span><br><span class="line">    Addressables.InstantiateAsync(address);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>play mode script选择use existing build，因为use asset database 模式没有统计资源依赖数据（实际上只有fps和Monoheap），线上是ab加载模式所以数据更加准确。</p>
+<p>通过tools-》Event Viewer打开面板：</p>
+<ul>
+<li>FPS: 帧率</li>
+<li>MonoHeap：内存占用</li>
+<li>Event Count：每帧事件数</li>
+<li>Instantiation Counts：通过Addressables.InstantiateAsync实例化的资源</li>
+<li>Resource Request：每个资源的引用计数</li>
+</ul>
+<p>注意：当资源的引用计数为零时，并不代表该资源被回收，比如AB中的a资源引用未0，但AB自身的引用不为0，AB未被释放所以a也未释放。</p>
+<h2 id="6-代码层加载资源过程（如何实现）"><a href="#6-代码层加载资源过程（如何实现）" class="headerlink" title="6. 代码层加载资源过程（如何实现）"></a>6. 代码层加载资源过程（如何实现）</h2><p>第一步初始化，加载catalog文件，解析出资源定位信息。</p>
+<img src="/2021/01/15/UnityAddressable/image_4.png" alt="image_4.png" title="">
+<p>接下来的过程可以简单分为两步：寻址和加载。</p>
+<img src="/2021/01/15/UnityAddressable/image_5.png" alt="image_5.png" title="">
+<ol>
+<li>catalog文件会被加载并解析得出所有的Locator对象，Locator对象包括资源及其依赖的信息。</li>
+<li>遍历所有的Locator对象，匹配address key，找出对应的Locator，Locator下包含了资源的Location对象，这个对象管理资源地址及其依赖信息。</li>
+<li>ResourceManager类根据Locations对象上记录的ProviderId找到Provider对象，调用返回自身和其依赖的异步操作对象AsyncOperation，执行异步操作加载资源通过回调函数返回。</li>
+</ol>
+<p><strong>Location对象：</strong></p>
+<p>可以看到上面记录的InternalId，Dependencies、ProviderId、LocatorId等信息。</p>
+<p>catalog文件中记录有LocatorId，能被它解析出map信息：</p>
+<p><strong>参考资料：</strong></p>
+<p>Addressables官方文档</p>
+<p>Addressable Asset System</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

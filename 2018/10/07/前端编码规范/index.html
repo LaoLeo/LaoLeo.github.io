@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="前言学习了业界一些对于编码风格的理论，结合一些业界比较推荐的规范风格，反观自身的编码习惯，总结出这么一份自己比较喜欢的规范风格。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端编码规范">
+<meta property="og:url" content="https://laoleo.github.io/2018/10/07/%E5%89%8D%E7%AB%AF%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/index.html">
+<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:description" content="前言学习了业界一些对于编码风格的理论，结合一些业界比较推荐的规范风格，反观自身的编码习惯，总结出这么一份自己比较喜欢的规范风格。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2015/06/24/15/45/ipad-820272__340.jpg">
+<meta property="article:published_time" content="2018-10-07T08:22:48.000Z">
+<meta property="article:modified_time" content="2022-12-06T15:30:38.512Z">
+<meta property="article:author" content="Walking 劳翼">
+<meta property="article:tag" content="规范">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2015/06/24/15/45/ipad-820272__340.jpg">
+
+
+<link rel="canonical" href="https://laoleo.github.io/2018/10/07/%E5%89%8D%E7%AB%AF%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>前端编码规范 | Unity游戏开发 博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#html"><span class="nav-number">2.</span> <span class="nav-text">html</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css"><span class="nav-number">3.</span> <span class="nav-text">css</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#js"><span class="nav-number">4.</span> <span class="nav-text">js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E5%90%8D"><span class="nav-number">4.1.</span> <span class="nav-text">命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">4.2.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A"><span class="nav-number">4.3.</span> <span class="nav-text">注释</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2018/10/07/%E5%89%8D%E7%AB%AF%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端编码规范
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-10-07 16:22:48" itemprop="dateCreated datePublished" datetime="2018-10-07T16:22:48+08:00">2018-10-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="https://cdn.pixabay.com/photo/2015/06/24/15/45/ipad-820272__340.jpg" alt="我是图片"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>学习了业界一些对于编码风格的理论，结合一些业界比较推荐的规范风格，反观自身的编码习惯，总结出这么一份自己比较喜欢的规范风格。</p>
+<a id="more"></a>
+<h2 id="html"><a href="#html" class="headerlink" title="html"></a>html</h2><p>html标签中有很多属性，这些属性假如没有一定的排列规则，会现得很乱，不整洁。以vue tempalte的html为例，我推荐一下属性排列优先级：</p>
+<ol>
+<li>id,ref,class等属于标签的标识排前</li>
+<li>v-if,v-for等操作类的属性</li>
+<li>v-model和带绑定的属性</li>
+<li>无绑定的属性</li>
+<li>事件绑定</li>
+</ol>
+<p>另外属性个数大于三个要换行显示<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;Tag </span><br><span class="line">    ref=<span class="string">"tag"</span></span><br><span class="line">    v-<span class="keyword">for</span>=<span class="string">"(item,index) in tabsInfo"</span></span><br><span class="line">    <span class="symbol">:title=<span class="string">"item.title"</span></span></span><br><span class="line">    <span class="symbol">:link=<span class="string">"item.router"</span></span></span><br><span class="line">    <span class="symbol">:active=<span class="string">"item.active"</span></span></span><br><span class="line">    <span class="symbol">:key=<span class="string">"index"</span></span></span><br><span class="line">    palcehold=<span class="string">"请输入"</span></span><br><span class="line">    <span class="variable">@click</span>=<span class="string">"handleClick"</span></span><br><span class="line">&gt;&lt;Tag&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="css"><a href="#css" class="headerlink" title="css"></a>css</h2><p>业界比较推荐的一种规范是<a href="http://getbem.com/" target="_blank" rel="external">BEM（块级元素修饰符）</a>，它可以让你的css模块化，变得易维护。</p>
+<ul>
+<li><a href="http://getbem.com/naming/" target="_blank" rel="external">http://getbem.com/naming/</a></li>
+<li><a href="https://github.com/getbem/getbem.com/blob/master/src/styles/pages/home.styl" target="_blank" rel="external">https://github.com/getbem/getbem.com/blob/master/src/styles/pages/home.styl</a></li>
+</ul>
+<h2 id="js"><a href="#js" class="headerlink" title="js"></a>js</h2><h3 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h3><blockquote>
+<p>计算机科学只存在两个难题：缓存失效和命名。 –Phil KarIton</p>
+</blockquote>
+<p>命名一直是计算机科学里的一大难题，在名变量时我只要做到准确、名副其实就可以了，记住一点就是要做到<strong>让人阅读代码就像是阅读一本书，用代码述说故事。</strong></p>
+<p>在命名是我比较喜欢参照一下几点原则：</p>
+<ul>
+<li>命名变量使用小写字母加下划线，这样是为了跟函数的小驼峰命名做区分，好让我一样就知道这是变量，而且使用名词或名词短语</li>
+<li>命名常量使用大写字母加下划线</li>
+<li>命名函数使用小驼峰，使用动词或动词短语，表示动作</li>
+<li>命名类使用就大驼峰</li>
+</ul>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><blockquote>
+<p>函数的第一规则是短小，第二规则是还要更短小。 –《代码整洁之道》</p>
+</blockquote>
+<p>写函数我一般遵循以下几点原则：</p>
+<ul>
+<li>短小。假如函数过长，你就要做拆分，最好不要超过20行。</li>
+<li>if else语句不要嵌套太深，最多两层。</li>
+<li>好的函数只做一件事情，也就是单一功能原则，并且能用函数名表达函数的主要功能。这里有个技巧，就是函数越短小，功能越集中，就越能取个准确的命名。</li>
+<li>参数不要过多，最好三个之内，三个以上要有足够的理由。</li>
+<li>减少副作用。</li>
+<li><p>错误提前返回</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">observe</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj &amp;&amp; <span class="keyword">typeof</span> obj === <span class="string">'object'</span>) &#123;</span><br><span class="line">        <span class="built_in">Object</span>.keys(obj).forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">            defineReactive(obj, key, obj[key])</span><br><span class="line">        &#125;)    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">改为：</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">observe</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!obj || <span class="keyword">typeof</span> obj !==     <span class="string">'object'</span>) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">Object</span>.keys(obj).forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">        defineReactive(obj, key, obj[key])</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自上而下排版函数。类似读报纸一样，细节总上在一个段落的下面。函数内的函数就类比细节，把内函数声明的位置放在外函数下面，依次排列。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    B()</span><br><span class="line">    C()</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 以下都是A的细节</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    D()</span><br><span class="line">&#125;</span><br><span class="line">--<span class="comment">// D属于B的细节，放在B下面</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">D</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    E()</span><br><span class="line">&#125;</span><br><span class="line">--<span class="comment">// E属于C的细节，放在C下面</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">E</span><span class="params">()</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>公共API函数要写注释。以下摘自tj大神co库里的一段</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="markdown">/**</span><br><span class="line"><span class="bullet"> * </span>Wrap </span>the<span class="markdown"> given generator <span class="code">`fn`</span> into </span>a<span class="markdown"><span class="bullet"></span><br><span class="line"> * </span>function that returns </span>a<span class="markdown"> promise.</span><br><span class="line"><span class="bullet"> * </span>This is </span>a<span class="markdown"> separate function </span>so<span class="markdown"> that</span><br><span class="line"><span class="bullet"> * </span>every <span class="code">`co()`</span> call </span>doesn't<span class="markdown"> create </span>a<span class="markdown"> new,</span><br><span class="line"><span class="bullet"> * </span>unnecessary closure.</span><br><span class="line"><span class="bullet"> *</span><br><span class="line"> </span>* @param &#123;GeneratorFunction&#125; fn</span><br><span class="line"><span class="bullet"> * </span>@return &#123;Function&#125;</span><br><span class="line"><span class="bullet"> * </span>@api public</span><br><span class="line"> */</span></span></span><br><span class="line"></span><br><span class="line">co.wrap = function (fn) &#123;</span><br><span class="line">  createPromise.__generatorFunction__ = fn;</span><br><span class="line">  <span class="keyword">return</span> createPromise;</span><br><span class="line">  function createPromise() &#123;</span><br><span class="line">    <span class="keyword">return</span> co.call(<span class="keyword">this</span>, fn.apply(<span class="keyword">this</span>, arguments));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如何能写出好函数呢？首先要记住好代码是改出来，好函数也一样，所以先把函数的主体逻辑写好，再参照规则改造就好了。</p>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><blockquote>
+<p>“别给糟糕的代码添加注释，重新写吧。” –《代码整洁之道》</p>
+</blockquote>
+<p>《代码整洁之道》这本书不建议我们给表意不明的代码添加注释。总结的理由如下：</p>
+<ol>
+<li>好代码可以从函数名就知道意思，假如函数名表达不了代码意图，就需要改造代码。</li>
+<li>注释是人写的，会有不准确性，有误人子弟的可能。</li>
+<li>写注释的原因可能是代码难读，一遇到难读的代码就写注释会导致跟多难读的代码。</li>
+</ol>
+<p>但是所有的注释都不应该写吗？肯定不是。</p>
+<p>注释也分类型，<strong>没必要写</strong>的类型有：</p>
+<ol>
+<li>喃喃自语类的注释，表意不明的信息。</li>
+<li>多余的说明。这种注释像是翻译一遍函数名。</li>
+<li>误导性的注释，就是不准确的描述了函数的意图。</li>
+<li>评论类的注释。对代码的评论可以使用github的评论工具，没必要写在代码里。</li>
+<li>骂人的注释。。</li>
+</ol>
+<p><strong>有必要</strong>写注释的类型有：</p>
+<ol>
+<li><p>法律信息和开源信息类，或者是一个库开头的说明信息。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*!</span><br><span class="line"> * Vue.js v2.6.10</span><br><span class="line"> * (c) 2014-2019 Evan You</span><br><span class="line"> * Released under the MIT License.</span><br><span class="line"> */</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>说明在某种场景，某种情况的注释，这种注释就是为了说明因为某种特殊的原因才有以下代码。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 当B网站的api data更新时会通过storage通知这里</span></span><br><span class="line"><span class="comment">// 监听storage，实时更新api data</span></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"storage"</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line"><span class="built_in">console</span>.warn(<span class="string">'event'</span>, event);</span><br><span class="line"><span class="keyword">const</span> &#123; key, newValue &#125; = event;</span><br><span class="line"><span class="keyword">const</span> api_storage_key = <span class="string">`api_list_<span class="subst">$&#123;<span class="keyword">this</span>.tpl_config.app_name&#125;</span>`</span>;</span><br><span class="line"><span class="keyword">if</span> (key === api_storage_key) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"storage change,key "</span>, key)</span><br><span class="line">  <span class="keyword">this</span>.$store.commit(<span class="string">"initApi"</span>, &#123;</span><br><span class="line">    data: <span class="built_in">JSON</span>.parse(newValue).content || []</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.select_node.label === <span class="string">"Form"</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> api_name = <span class="keyword">this</span>.props_temp.model.api</span><br><span class="line">    <span class="keyword">if</span> (!api_name) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> api = <span class="keyword">this</span>.apilist.find(<span class="function"><span class="params">api</span> =&gt;</span> api.name === api_name);</span><br><span class="line">    <span class="comment">// 需要更新当前Form面板关联api的参数配置</span></span><br><span class="line">    <span class="keyword">this</span>.createFormContentWithApiConf(api)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>以上代码说明了场景当B站点更新api data时，会以storage的方式通知，这就监听storage代码出现的原因。</p>
+<ol start="3">
+<li><p>对意图的解析。比如函数内部的某一段为什么这么写，是什么原因造成这样写的决定。</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">renameComponent(<span class="built_in">name</span>) &#123;</span><br><span class="line">    <span class="keyword">switch</span> (<span class="built_in">name</span>) &#123;</span><br><span class="line">      <span class="comment">// Switch不能作为组件名注册</span></span><br><span class="line">      <span class="keyword">case</span> <span class="string">'SwitchRadio'</span>:</span><br><span class="line">        <span class="built_in">name</span> = <span class="string">'Switch'</span></span><br><span class="line">        break</span><br><span class="line">    &#125;</span><br><span class="line">    return <span class="built_in">name</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对于特殊常量的说明。</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> TYPE_FORM = <span class="number">0</span>; <span class="comment">// 上搜下标类模板</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>TODO注释</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">TODO:</span> 太慢，待优化！</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>公共API的注释</p>
+</li>
+<li>注释掉代码，有必要写明注释掉的原因，好让人知道改删掉还是不改删掉。<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">let</span> <span class="built_in">key</span> <span class="keyword">in</span> defaultData) &#123;</span><br><span class="line">    this.props_temp[prop].relatedData[<span class="built_in">key</span>] = &#123;</span><br><span class="line">        <span class="built_in">label</span>: <span class="built_in">key</span>,</span><br><span class="line">        prop: <span class="built_in">key</span>,</span><br><span class="line">        // 暂时去掉默认值</span><br><span class="line">        // value: defaultData[<span class="built_in">key</span>],</span><br><span class="line">        inputType: <span class="string">"Input"</span></span><br><span class="line">    &#125;;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Walking 劳翼 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%A7%84%E8%8C%83/" rel="tag"># 规范</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/09/02/%E4%BD%BF%E7%94%A8javascript%E5%AE%9E%E7%8E%B0%E5%B8%B8%E8%A7%81%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" rel="prev" title="使用javascript实现常见的排序算法">
+                  <i class="fa fa-chevron-left"></i> 使用javascript实现常见的排序算法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/03/21/%E5%85%B3%E4%BA%8E%E9%AB%98%E6%95%88%E6%89%BE%E5%B7%A5%E4%BD%9C%E7%9A%84%E5%87%A0%E6%9D%A1%E5%BB%BA%E8%AE%AE/" rel="next" title="关于高效找工作的几条建议">
+                  关于高效找工作的几条建议 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

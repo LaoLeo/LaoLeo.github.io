@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用console输出网站logo彩蛋【工作日记03】">
+<meta property="og:url" content="https://laoleo.github.io/2019/11/18/03-%E4%BD%BF%E7%94%A8console%E8%BE%93%E5%87%BA%E7%BD%91%E7%AB%99logo%E5%BD%A9%E8%9B%8B/index.html">
+<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://pic1.win4000.com/wallpaper/2017-11-08/5a029f187ca9f.jpg">
+<meta property="og:image" content="http://b131.photo.store.qq.com/psb?/V12x89qA2LlAEO/piwEkxKgLCg69fWgJGgwSe9E98LHnzpFwrP938F4ufs!/b/dIMAAAAAAAAA&amp;bo=NANnAQAAAAADB3M!&amp;rf=viewer_4">
+<meta property="og:image" content="http://b338.photo.store.qq.com/psb?/V12x89qA2LlAEO/cRggOlfoPJaxWQWwXauWV1aJi57jspW6RmKORJeW8Xk!/b/dFIBAAAAAAAA&bo=lgCWAAAAAAACFzM!&rf=viewer_4">
+<meta property="og:image" content="http://b182.photo.store.qq.com/psb?/V12x89qA2LlAEO/7vb2fhkTRegac9U7pv.iMHmoIf2hqE2x9ZJIYSpvsZw!/b/dLYAAAAAAAAA&bo=8ADwAAAAAAARBzA!&rf=viewer_4">
+<meta property="og:image" content="http://b318.photo.store.qq.com/psb?/V12x89qA2LlAEO/sxtTcevZyQ55Zqb.olsITndQzMmw4oZwwoQmrGrn*O8!/b/dD4BAAAAAAAA&bo=LAEsAQAAAAACFzM!&rf=viewer_4">
+<meta property="og:image" content="http://b182.photo.store.qq.com/psb?/V12x89qA2LlAEO/jj43nXXEcKXqN2wnHhnyHnLuq6OBaIQmVrpngsNZdmw!/b/dLYAAAAAAAAA&bo=8ADwAAAAAAACJwM!&rf=viewer_4">
+<meta property="og:image" content="http://b338.photo.store.qq.com/psb?/V12x89qA2LlAEO/grdHiKfwZrCevmZGh8HoFlQ7X7fVWTd4.Ekyhl2zon8!/b/dFIBAAAAAAAA&amp;bo=OQMxAAAAAAADByk!&amp;rf=viewer_4">
+<meta property="og:image" content="http://b190.photo.store.qq.com/psb?/V12x89qA2LlAEO/MO7ODEnWcPYkDOJMM8VfeO1LROYS.5QE2NzR1qshQTQ!/b/dL4AAAAAAAAA&amp;bo=KgN8AQAAAAADB3Y!&amp;rf=viewer_4">
+<meta property="og:image" content="http://m.qpic.cn/psb?/V12x89qA2LlAEO/nS8f7*bX*osE9cs9U2D61xGHu5goQ8pwLFaHJnJZHNU!/b/dL8AAAAAAAAA&bo=yADIAAAAAAACJwM!&rf=viewer_4">
+<meta property="og:image" content="http://b190.photo.store.qq.com/psb?/V12x89qA2LlAEO/R3rpwlihgpSoxQnp92BPYp65Iryts4TmYoZemDikX1U!/b/dL4AAAAAAAAA&bo=8ADwAAAAAAARBzA!&rf=viewer_4">
+<meta property="og:image" content="http://b320.photo.store.qq.com/psb?/V12x89qA2LlAEO/rfwmg.Xm7*..V1vL41h84cYLFHoKAtwazaoIvnueRsI!/b/dEABAAAAAAAA&bo=UQHfAAAAAAADB60!&rf=viewer_4">
+<meta property="article:published_time" content="2019-11-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-12-06T15:30:37.608Z">
+<meta property="article:author" content="Walking 劳翼">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic1.win4000.com/wallpaper/2017-11-08/5a029f187ca9f.jpg">
+
+
+<link rel="canonical" href="https://laoleo.github.io/2019/11/18/03-%E4%BD%BF%E7%94%A8console%E8%BE%93%E5%87%BA%E7%BD%91%E7%AB%99logo%E5%BD%A9%E8%9B%8B/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>使用console输出网站logo彩蛋【工作日记03】 | Unity游戏开发 博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2019/11/18/03-%E4%BD%BF%E7%94%A8console%E8%BE%93%E5%87%BA%E7%BD%91%E7%AB%99logo%E5%BD%A9%E8%9B%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用console输出网站logo彩蛋【工作日记03】
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-11-18 00:00:00" itemprop="dateCreated datePublished" datetime="2019-11-18T00:00:00+08:00">2019-11-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:37" itemprop="dateModified" datetime="2022-12-06T23:30:37+08:00">2022-12-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/%E5%B7%A5%E4%BD%9C%E6%97%A5%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">工作日记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="http://pic1.win4000.com/wallpaper/2017-11-08/5a029f187ca9f.jpg" alt="我是图片"></p>
+<a id="more"></a>
+<blockquote>
+<p>工作日记是笔者记录在日常工作中对负责的前端项目和任务的总结和提炼，在工作中寻乐趣，在代码中找灵魂，输出工作中有价值有意思的沉淀，分享知识，娱乐自己。</p>
+</blockquote>
+<blockquote>
+<p>下文可能存在图片未显示问题，可异步到 <a href="https://juejin.im/post/5dca2e56518825574d2149e5" target="_blank" rel="external">原文</a> 阅读</p>
+</blockquote>
+<p>相信大多数年轻人上班时都会偶尔刷下知乎，吃瓜或者提问题，一天我美若天仙的GF发了一张截图过来，说她知乎刷着刷着感觉遇到了bug，于是打开F12，看到了这个彩蛋。</p>
+<p><img src="http://b131.photo.store.qq.com/psb?/V12x89qA2LlAEO/piwEkxKgLCg69fWgJGgwSe9E98LHnzpFwrP938F4ufs!/b/dIMAAAAAAAAA&amp;bo=NANnAQAAAAADB3M!&amp;rf=viewer_4" alt="zhihu-egg"></p>
+<p>除了不得不敬佩她的敬业精神外（她也是前端一枚），我肯定是不能涨他人志气，灭自己威风的。我平静的回了句，这玩意太简单，我也能整出来。</p>
+<p>编辑器打开，手在键盘上凝固，不知如何敲出第一个代码…</p>
+<html><br><center><br>    <img src="http://b338.photo.store.qq.com/psb?/V12x89qA2LlAEO/cRggOlfoPJaxWQWwXauWV1aJi57jspW6RmKORJeW8Xk!/b/dFIBAAAAAAAA&bo=lgCWAAAAAAACFzM!&rf=viewer_4"><br></center><br></html>
+
+
+
+<p>难道要一个个字符的画上去？那得画到什么何年何月？<br><!--【惊讶二级】--></p>
+<html><br><center><br>    <img src="http://b182.photo.store.qq.com/psb?/V12x89qA2LlAEO/7vb2fhkTRegac9U7pv.iMHmoIf2hqE2x9ZJIYSpvsZw!/b/dLYAAAAAAAAA&bo=8ADwAAAAAAARBzA!&rf=viewer_4"><br></center><br></html>
+
+<p>既然自己没那个美术天赋，那就动脑子吧，何况我本身就靠脑子吃饭的呀。</p>
+<!--【恍然大悟】-->
+<html><br><center><br>    <img width="200" src="http://b318.photo.store.qq.com/psb?/V12x89qA2LlAEO/sxtTcevZyQ55Zqb.olsITndQzMmw4oZwwoQmrGrn*O8!/b/dD4BAAAAAAAA&bo=LAEsAQAAAAACFzM!&rf=viewer_4"><br></center><br></html>
+
+<p>既然是靠脑子吃饭的，那就得对得起我这聪明的脑子。先问问google大哥如何解决。</p>
+<p>一搜，不出我所料，已经有总结文章了。站在巨人的肩膀也不失为一种小聪明。</p>
+<ul>
+<li><a href="hhttps://aotu.io/notes/2016/06/22/An-interesting-experience-on-console/index.html" target="_blank" rel="external">让console充满情怀</a></li>
+</ul>
+<!--【得意】-->
+<html><br><center><br>    <img width="200" src="http://b182.photo.store.qq.com/psb?/V12x89qA2LlAEO/jj43nXXEcKXqN2wnHhnyHnLuq6OBaIQmVrpngsNZdmw!/b/dLYAAAAAAAAA&bo=8ADwAAAAAAACJwM!&rf=viewer_4"><br></center><br></html>
+
+<p>提取出有用的信息：</p>
+<ol>
+<li><p>console的方法可以填入占位符，类似c语言的print方法中的占位符。</p>
+<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(<span class="keyword">object</span> [, <span class="keyword">object</span>, …])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>占位符</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>格式占位符</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%s</td>
+<td>字符串</td>
+</tr>
+<tr>
+<td>%d or %i</td>
+<td>整数</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>浮点数</td>
+</tr>
+<tr>
+<td>%o</td>
+<td>可展开的DOM</td>
+</tr>
+<tr>
+<td>%O</td>
+<td>列出DOM的属性</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>根据提供的css样式格式化字符串</td>
+</tr>
+</tbody>
+</table>
+<ol start="3">
+<li>字符画<br>打印出的logo图案叫字符画，是可以用软件分析图片生成。亲测下面的软件比较好用：</li>
+</ol>
+<ul>
+<li><a href="http://pan.baidu.com/share/link?shareid=3161588673&amp;uk=3509597415" target="_blank" rel="external">ASCII Generator</a></li>
+</ul>
+<p>从上面第二点得知，原来console可以使用css规则格式化字符串，再结合软件将logo生成字符画，这个网站彩蛋不就搞定了吗，如此简单。</p>
+<p>具体步骤：</p>
+<ol>
+<li>制作字符画  </li>
+</ol>
+<p>使用ASCII Generator上传logo图片，生成字符画，调节大小，抖动，然后选择好看的字符，调整好后可以拷贝到IDE了（粘贴到console.info(<code></code>)中，否则会出现换行符），如果不是很像可以增删一些字符微调一下。  </p>
+<p>这里要注意的是，字符画在IDE里表现会有点变形，可能打印出来也会变形，这是由字体不同造成的，回到软件中将字体调为微软雅黑，再粘贴回去，即使IDE上有点变形但打印出来不会。</p>
+<p>但是打印字符画有点单调，加点文字点缀点缀，会碰撞出更美的火花，加上我们团队的队名和标语。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">console.log(`</span></span><br><span class="line">                       <span class="number">7007</span>                       </span><br><span class="line">                 <span class="number">7000000000000007</span>                 </span><br><span class="line">            <span class="number">760000000000000000000000057</span>           </span><br><span class="line">         <span class="number">76000008888888888888880800000005</span>         </span><br><span class="line">       <span class="number">700008888868688868888880000008860006</span>       </span><br><span class="line">      <span class="number">800088886888688888888800067</span>      <span class="number">700002</span>     </span><br><span class="line">    <span class="number">70088888888888868888880007</span>         <span class="number">7088000</span>    </span><br><span class="line">   <span class="number">3008868800000088868888005</span>           <span class="number">70888800</span>   </span><br><span class="line">  <span class="number">7008888808000080888888801</span>       <span class="number">76000088888800</span>  </span><br><span class="line">  <span class="number">008868808</span>      <span class="number">608888808</span>      <span class="number">70000000888888806</span> </span><br><span class="line"> <span class="number">7088688800</span>      <span class="number">608888807</span>     <span class="number">700000888888688800</span> </span><br><span class="line"> <span class="number">3088868800</span>      <span class="number">808888007</span>             <span class="number">7088868880</span>                 <span class="string">加班熊工作室</span></span><br><span class="line"> <span class="number">2088686800</span>      <span class="number">608888807</span>             <span class="number">70888888807</span>          </span><br><span class="line"> <span class="number">2088888800</span>      <span class="number">808888007</span>             <span class="number">70888688007</span>          <span class="string">——国内精品AI语音游戏开创者——</span></span><br><span class="line"> <span class="number">1088888880</span>      <span class="number">808888807</span>     <span class="number">000000000888688880</span> </span><br><span class="line">  <span class="number">0088888007</span>     <span class="number">700888007</span>     <span class="number">000000000888888800</span> </span><br><span class="line">  <span class="number">0088888806</span>      <span class="number">70000007</span>     <span class="number">808888888888888007</span> </span><br><span class="line">  <span class="number">70086888803</span>       <span class="number">758007</span>     <span class="number">00888686888888005</span>  </span><br><span class="line">   <span class="number">70088000006</span>                 <span class="number">8088686868888002</span>   </span><br><span class="line">    <span class="number">108057878003</span>               <span class="number">808688868888007</span>    </span><br><span class="line">    <span class="number">70007</span> <span class="number">1</span>  <span class="number">800087</span>            <span class="number">6088888880006</span>      </span><br><span class="line">    <span class="number">00800</span>  <span class="number">7</span>   <span class="number">700000008888888608888800008</span>        </span><br><span class="line">   <span class="number">8088800</span> <span class="number">77</span> <span class="number">7080800000000000808000004</span>          </span><br><span class="line">  <span class="number">400000000000800080808000000000000047</span>            </span><br><span class="line"><span class="number">700000000000000000000000000000007</span>                <span class="string">`);</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>加上样式<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(<span class="string">"%cHello,%cWorld"</span>, <span class="string">"color:red;"</span>, <span class="string">"color:blue;"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>%c占位符的样式会影响其字后的字符串，样式之间符合从前到后的覆盖逻辑，后面的样式会覆盖前面的样式。</p>
+<p><img src="http://b338.photo.store.qq.com/psb?/V12x89qA2LlAEO/grdHiKfwZrCevmZGh8HoFlQ7X7fVWTd4.Ekyhl2zon8!/b/dFIBAAAAAAAA&amp;bo=OQMxAAAAAAADByk!&amp;rf=viewer_4" alt="image"></p>
+<p>那我们就可以在不同位置插入%c占位符，来控制不同元素字符画、队名和标语之间的样式。代码封装成函数：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">const</span> <span class="string">consoleEgg</span> <span class="string">=</span> <span class="string">()</span> <span class="string">=&gt;</span> <span class="string">&#123;</span></span><br><span class="line">  <span class="string">const</span> <span class="string">egg</span> <span class="string">=</span> <span class="string">`%c</span></span><br><span class="line">                       <span class="number">7007</span>                       </span><br><span class="line">                 <span class="number">7000000000000007</span>                 </span><br><span class="line">            <span class="number">760000000000000000000000057</span>           </span><br><span class="line">         <span class="number">76000008888888888888880800000005</span>         </span><br><span class="line">       <span class="number">700008888868688868888880000008860006</span>       </span><br><span class="line">      <span class="number">800088886888688888888800067</span>      <span class="number">700002</span>     </span><br><span class="line">    <span class="number">70088888888888868888880007</span>         <span class="number">7088000</span>    </span><br><span class="line">   <span class="number">3008868800000088868888005</span>           <span class="number">70888800</span>   </span><br><span class="line">  <span class="number">7008888808000080888888801</span>       <span class="number">76000088888800</span>  </span><br><span class="line">  <span class="number">008868808</span>      <span class="number">608888808</span>      <span class="number">70000000888888806</span> </span><br><span class="line"> <span class="number">7088688800</span>      <span class="number">608888807</span>     <span class="number">700000888888688800</span> </span><br><span class="line"> <span class="number">3088868800</span>      <span class="number">808888007</span>             <span class="number">7088868880</span>                 <span class="string">%c加班熊工作室%c</span></span><br><span class="line"> <span class="number">2088686800</span>      <span class="number">608888807</span>             <span class="number">70888888807</span>          </span><br><span class="line"> <span class="number">2088888800</span>      <span class="number">808888007</span>             <span class="number">70888688007</span>          <span class="string">——%c国内精品AI语音游戏开创者%c——</span></span><br><span class="line"> <span class="number">1088888880</span>      <span class="number">808888807</span>     <span class="number">000000000888688880</span> </span><br><span class="line">  <span class="number">0088888007</span>     <span class="number">700888007</span>     <span class="number">000000000888888800</span> </span><br><span class="line">  <span class="number">0088888806</span>      <span class="number">70000007</span>     <span class="number">808888888888888007</span> </span><br><span class="line">  <span class="number">70086888803</span>       <span class="number">758007</span>     <span class="number">00888686888888005</span>  </span><br><span class="line">   <span class="number">70088000006</span>                 <span class="number">8088686868888002</span>   </span><br><span class="line">    <span class="number">108057878003</span>               <span class="number">808688868888007</span>    </span><br><span class="line">    <span class="number">70007</span> <span class="number">1</span>  <span class="number">800087</span>            <span class="number">6088888880006</span>      </span><br><span class="line">    <span class="number">00800</span>  <span class="number">7</span>   <span class="number">700000008888888608888800008</span>        </span><br><span class="line">   <span class="number">8088800</span> <span class="number">77</span> <span class="number">7080800000000000808000004</span>          </span><br><span class="line">  <span class="number">400000000000800080808000000000000047</span>            </span><br><span class="line"><span class="number">700000000000000000000000000000007</span>                <span class="string">`;</span></span><br><span class="line">  <span class="string">const</span> <span class="string">defaultStyle</span> <span class="string">=</span> <span class="string">'color: rgba(0,0,0,.7);'</span><span class="string">;</span></span><br><span class="line">  <span class="string">const</span> <span class="string">titleStyle</span> <span class="string">=</span> <span class="string">'color: #fff;background: rgba(52,55,86,1);padding: 2px 10px; border-radius: 2px;font-family: 微软雅黑;'</span><span class="string">;</span></span><br><span class="line">  <span class="string">const</span> <span class="string">sloganStyle</span> <span class="string">=</span> <span class="string">'color: #343756'</span><span class="string">;</span></span><br><span class="line"></span><br><span class="line">  <span class="string">console.log(egg,</span> <span class="string">defaultStyle,</span> <span class="string">titleStyle,</span> <span class="string">defaultStyle,</span> <span class="string">sloganStyle,</span> <span class="string">defaultStyle);</span></span><br><span class="line"><span class="string">&#125;;</span></span><br></pre></td></tr></table></figure></p>
+<p>最终效果：<br><img src="http://b190.photo.store.qq.com/psb?/V12x89qA2LlAEO/MO7ODEnWcPYkDOJMM8VfeO1LROYS.5QE2NzR1qshQTQ!/b/dL4AAAAAAAAA&amp;bo=KgN8AQAAAAADB3Y!&amp;rf=viewer_4" alt="image"></p>
+<p>把图片发给GF，她立马秒变迷妹，发来表情：</p>
+<html><br><center><br>    <img width="200" src="http://m.qpic.cn/psb?/V12x89qA2LlAEO/nS8f7*bX*osE9cs9U2D61xGHu5goQ8pwLFaHJnJZHNU!/b/dL8AAAAAAAAA&bo=yADIAAAAAAACJwM!&rf=viewer_4"><br></center><br></html>
+
+<p><br><br><br><br><br><br><br></p>
+<center>————————–》》》一条华丽的结束线《《《————————–<br></center><br><br><br><br><br>await!await!!await!!!<br><center><br>    <img width="200" src="http://b190.photo.store.qq.com/psb?/V12x89qA2LlAEO/R3rpwlihgpSoxQnp92BPYp65Iryts4TmYoZemDikX1U!/b/dL4AAAAAAAAA&bo=8ADwAAAAAAARBzA!&rf=viewer_4"><br></center><br>好奇的小伙伴肯定注意到我们古怪的队名，下面就是我们团队和业务的简单介绍，欢迎关注：<br><br><br>&gt; 加班熊工作室，国内精品AI语音游戏开创者，打造有趣好玩多元化语音交互游戏，在各大智能音箱平台天猫精灵、小度和小度在家、小爱同学上线语音技能数量达10+，积累玩家达一千多万，部分爆款游戏有女生追求手册、约会大作战、恐怖嫌疑人、恐怖陌生人、喜剧之王…赶快上音箱上玩玩吧！<br><br><center><br>    <img src="http://b320.photo.store.qq.com/psb?/V12x89qA2LlAEO/rfwmg.Xm7*..V1vL41h84cYLFHoKAtwazaoIvnueRsI!/b/dEABAAAAAAAA&bo=UQHfAAAAAAADB60!&rf=viewer_4"><br></center>
+
+
+<center>————————–》》》一条真正的结束线《《《————————–<br></center>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Walking 劳翼 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/10/16/02-%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83-%E6%95%B4%E7%90%86%E5%87%8C%E4%B9%B1%E4%BB%A3%E7%A0%81%E7%9A%84%E6%9C%89%E6%95%88%E5%A7%BF%E5%8A%BF/" rel="prev" title="整理凌乱代码的有效姿势【工作日记02】">
+                  <i class="fa fa-chevron-left"></i> 整理凌乱代码的有效姿势【工作日记02】
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/12/20/04-%E4%B8%8D%E5%BE%97%E4%B8%8D%E6%87%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%BC%98%E5%8C%96%E6%8A%80%E8%83%BD/" rel="next" title="不得不懂的工作流优化技能【工作日记04】">
+                  不得不懂的工作流优化技能【工作日记04】 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建mock层【工作日记01】">
+<meta property="og:url" content="https://laoleo.github.io/2019/09/10/01-%E6%90%AD%E5%BB%BAmock%E5%B1%82/index.html">
+<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://pic1.win4000.com/wallpaper/2017-11-08/5a029eda4cc75.jpg">
+<meta property="article:published_time" content="2019-09-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-12-06T15:30:37.602Z">
+<meta property="article:author" content="Walking 劳翼">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic1.win4000.com/wallpaper/2017-11-08/5a029eda4cc75.jpg">
+
+
+<link rel="canonical" href="https://laoleo.github.io/2019/09/10/01-%E6%90%AD%E5%BB%BAmock%E5%B1%82/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>搭建mock层【工作日记01】 | Unity游戏开发 博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mockjs"><span class="nav-number">1.</span> <span class="nav-text">mockjs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96mock%E5%B1%82"><span class="nav-number">2.</span> <span class="nav-text">优化mock层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">浏览器插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">4.</span> <span class="nav-text">工具</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2019/09/10/01-%E6%90%AD%E5%BB%BAmock%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          搭建mock层【工作日记01】
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-09-10 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-10T00:00:00+08:00">2019-09-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:37" itemprop="dateModified" datetime="2022-12-06T23:30:37+08:00">2022-12-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/%E5%B7%A5%E4%BD%9C%E6%97%A5%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">工作日记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><img src="http://pic1.win4000.com/wallpaper/2017-11-08/5a029eda4cc75.jpg" alt="我是图片"></p>
+<a id="more"></a>
+<blockquote>
+<p>什么是mock？mock指的是模拟。</p>
+</blockquote>
+<p>在软件工程中当开发工作不同步情况下为了不断工作链，而模拟其中一环节让工作得以持续下去，符合这种情况的工作我们就叫mock。当然我们常说的mock是指模拟网络请求前后端通讯。</p>
+<p>前端和后端的协同工作中，为了不串行工作流加快开发效率，往往需要制定协议，而前端只需要后端提供数据接口，所以这份协议就是接口协议。根据这份协议前端就可以mock模仿数据，达到前后端并行开发。</p>
+<p>mock可以分为以下几种方式：</p>
+<ol>
+<li>侵入业务代码，设置开关</li>
+<li>利用webpack构建工具拦截请求</li>
+<li>搭建mock服务层代理响应</li>
+<li>利用浏览器插件拦截请求</li>
+</ol>
+<p>cms-web是由vue-cli3脚手架搭建的项目，依赖webpack打包工具，可以利用devServer.defore api对请求拦截处理，返回mock数据，引入mock层。</p>
+<p>所以选择上面第二种方式，原因总结为：<strong>无侵入，简单快捷易上手</strong>。</p>
+<h2 id="mockjs"><a href="#mockjs" class="headerlink" title="mockjs"></a>mockjs</h2><p>借助mockjs实现mock数据逻辑，以下是最简单的实现：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Mock = <span class="built_in">require</span>(<span class="string">'mockjs'</span>);</span><br><span class="line">...</span><br><span class="line">before(app, server) &#123;</span><br><span class="line">    app.get(<span class="string">'/api/action/game/list'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> data = Mock.mock(&#123;</span><br><span class="line">        <span class="attr">code</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">data</span>: &#123;</span><br><span class="line">          <span class="string">'totalCount|1-100'</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="string">'datas|1-10'</span>: [&#123;</span><br><span class="line">            <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="string">'dataName|1-5'</span>: <span class="string">'name'</span>,</span><br><span class="line">            <span class="string">'dataType|1-2'</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="string">'dataScope'</span>: <span class="string">'1,100'</span>,</span><br><span class="line">            <span class="string">'defaultValue|1-5'</span>: <span class="string">'value'</span>,</span><br><span class="line">            <span class="string">'dataStatus|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="string">'remark|1-5'</span>: <span class="string">'str'</span>,</span><br><span class="line">            <span class="string">'record|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="string">'series|1-3'</span>: [&#123;</span><br><span class="line">              <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">              <span class="string">'type|1-2'</span>: <span class="number">2</span>,</span><br><span class="line">              <span class="string">'name|1-2'</span>: <span class="string">'小云熊奇妙故事'</span>,</span><br><span class="line">              <span class="string">'mark'</span>: <span class="literal">null</span>,</span><br><span class="line">              <span class="string">'status'</span>: <span class="number">0</span></span><br><span class="line">            &#125;]</span><br><span class="line">          &#125;]</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    </span><br><span class="line">      res.json(data)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里我们简单介绍一下mockjs的使用规范，详细移至<a href="https://github.com/nuysoft/Mock/wiki/Syntax-Specification" target="_blank" rel="external">mockjs文档</a></p>
+<p>数据模板中属性主要由三个部分构成：属性名，生成规则和属性值<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">'属性名|生成规则': 属性值</span><br></pre></td></tr></table></figure></p>
+<p>以’dataName|1-5’: ‘name’为例，dataName是属性值，name是属性值，1-5是生成规则，对应String类型属性代表重复随机次数1到5次，假如对应Number类型代表生成随机数的最小值1和最大值5。’id|+1’: 1表示id值会从开始叠加。</p>
+<h2 id="优化mock层"><a href="#优化mock层" class="headerlink" title="优化mock层"></a>优化mock层</h2><p>话题回来mock层搭建的迭代优化，首先分析上面实现存在的问题：</p>
+<ul>
+<li>所有的请求都会经过这一层，mock层匹配到请求就会被拦截，需要设置开关</li>
+<li>配置的请求和数据模板会越来越多，逻辑与配置混合会导致代码越来越臃肿，逻辑和配置要分离</li>
+</ul>
+<p>把mock层从before函数中抽离，并设置开关机制：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Mock = <span class="built_in">require</span>(<span class="string">'mockjs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MockHandler</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;&#125;</span><br><span class="line">  </span><br><span class="line">  handle(app, server) &#123;</span><br><span class="line">    app.get(<span class="string">'/api/action/game/list'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!!process.env.mock || !!req.query._is_mock) &#123;</span><br><span class="line">        <span class="keyword">var</span> data = Mock.mock(&#123;</span><br><span class="line">          <span class="attr">code</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="attr">data</span>: &#123;</span><br><span class="line">            <span class="string">'totalCount|1-100'</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="string">'datas|1-10'</span>: [&#123;</span><br><span class="line">              <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">              <span class="string">'dataName|1-5'</span>: <span class="string">'name'</span>,</span><br><span class="line">              <span class="string">'dataType|1-2'</span>: <span class="number">1</span>,</span><br><span class="line">              <span class="string">'dataScope'</span>: <span class="string">'1,100'</span>,</span><br><span class="line">              <span class="string">'defaultValue|1-5'</span>: <span class="string">'value'</span>,</span><br><span class="line">              <span class="string">'dataStatus|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">              <span class="string">'remark|1-5'</span>: <span class="string">'str'</span>,</span><br><span class="line">              <span class="string">'record|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">              <span class="string">'series|1-3'</span>: [&#123;</span><br><span class="line">                <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">                <span class="string">'type|1-2'</span>: <span class="number">2</span>,</span><br><span class="line">                <span class="string">'name|1-2'</span>: <span class="string">'小云熊奇妙故事'</span>,</span><br><span class="line">                <span class="string">'mark'</span>: <span class="literal">null</span>,</span><br><span class="line">                <span class="string">'status'</span>: <span class="number">0</span></span><br><span class="line">              &#125;]</span><br><span class="line">            &#125;]</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        res.json(data);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        next();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">new</span> MockHandler(config);</span><br></pre></td></tr></table></figure></p>
+<p>设置了两个并联开关，分别设置环境变量mock或者往请求查询参数加入_is_mock变量都可以通过验证。</p>
+<p>逻辑与配置分离：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">    <span class="string">'/api/action/game/list'</span>: &#123;</span><br><span class="line">      <span class="attr">code</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="string">'totalCount|1-100'</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">'datas|1-10'</span>: [&#123;</span><br><span class="line">          <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="string">'dataName|1-5'</span>: <span class="string">'name'</span>,</span><br><span class="line">          <span class="string">'dataType|1-2'</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="string">'dataScope'</span>: <span class="string">'1,100'</span>,</span><br><span class="line">          <span class="string">'defaultValue|1-5'</span>: <span class="string">'value'</span>,</span><br><span class="line">          <span class="string">'dataStatus|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="string">'remark|1-5'</span>: <span class="string">'str'</span>,</span><br><span class="line">          <span class="string">'record|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="string">'series|1-3'</span>: [&#123;</span><br><span class="line">            <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="string">'type|1-2'</span>: <span class="number">2</span>,</span><br><span class="line">            <span class="string">'name|1-2'</span>: <span class="string">'小云熊奇妙故事'</span>,</span><br><span class="line">            <span class="string">'mark'</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="string">'status'</span>: <span class="number">0</span></span><br><span class="line">          &#125;]</span><br><span class="line">        &#125;]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MockHandler</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(config) &#123;</span><br><span class="line">      <span class="keyword">this</span>.config = config</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  handle(app, server) &#123;</span><br><span class="line">    <span class="built_in">Object</span>.keys(<span class="keyword">this</span>.config).forEach(<span class="function"><span class="params">route</span> =&gt;</span> &#123;</span><br><span class="line">        app.get(route, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!!process.env.mock || !!req.query._is_mock) &#123;</span><br><span class="line">                <span class="keyword">var</span> data = Mock.mock(&#123;</span><br><span class="line">                  <span class="attr">code</span>: <span class="number">0</span>,</span><br><span class="line">                  <span class="attr">data</span>: &#123;</span><br><span class="line">                    <span class="string">'totalCount|1-100'</span>: <span class="number">1</span>,</span><br><span class="line">                    <span class="string">'datas|1-10'</span>: [&#123;</span><br><span class="line">                      <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">                      <span class="string">'dataName|1-5'</span>: <span class="string">'name'</span>,</span><br><span class="line">                      <span class="string">'dataType|1-2'</span>: <span class="number">1</span>,</span><br><span class="line">                      <span class="string">'dataScope'</span>: <span class="string">'1,100'</span>,</span><br><span class="line">                      <span class="string">'defaultValue|1-5'</span>: <span class="string">'value'</span>,</span><br><span class="line">                      <span class="string">'dataStatus|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">                      <span class="string">'remark|1-5'</span>: <span class="string">'str'</span>,</span><br><span class="line">                      <span class="string">'record|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">                      <span class="string">'series|1-3'</span>: [&#123;</span><br><span class="line">                        <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">                        <span class="string">'type|1-2'</span>: <span class="number">2</span>,</span><br><span class="line">                        <span class="string">'name|1-2'</span>: <span class="string">'小云熊奇妙故事'</span>,</span><br><span class="line">                        <span class="string">'mark'</span>: <span class="literal">null</span>,</span><br><span class="line">                        <span class="string">'status'</span>: <span class="number">0</span></span><br><span class="line">                      &#125;]</span><br><span class="line">                    &#125;]</span><br><span class="line">                  &#125;</span><br><span class="line">                &#125;)</span><br><span class="line">                res.json(data);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                next();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>革命尚未成功，旧的问题的解决了，但同时又出现的新的问题：</p>
+<ul>
+<li>只支持get请求，不支持post请求</li>
+<li>get方法的回调函数中重复了很多次对mock开关条件的判断，需要提取出来</li>
+</ul>
+<p>针对第一个问题，只需要将get/post请求方法配置到route就好了，本身属于配置逻辑的范围之内。而第二个问题，可以提炼函数，利用函数式编程，利用高阶函数返回回调函数，这样代码会简洁很多，具体优化如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">    <span class="string">'GET /api/action/game/list'</span>: &#123;</span><br><span class="line">      <span class="attr">code</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="string">'totalCount|1-100'</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">'datas|1-10'</span>: [&#123;</span><br><span class="line">          <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="string">'dataName|1-5'</span>: <span class="string">'name'</span>,</span><br><span class="line">          <span class="string">'dataType|1-2'</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="string">'dataScope'</span>: <span class="string">'1,100'</span>,</span><br><span class="line">          <span class="string">'defaultValue|1-5'</span>: <span class="string">'value'</span>,</span><br><span class="line">          <span class="string">'dataStatus|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="string">'remark|1-5'</span>: <span class="string">'str'</span>,</span><br><span class="line">          <span class="string">'record|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="string">'series|1-3'</span>: [&#123;</span><br><span class="line">            <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="string">'type|1-2'</span>: <span class="number">2</span>,</span><br><span class="line">            <span class="string">'name|1-2'</span>: <span class="string">'小云熊奇妙故事'</span>,</span><br><span class="line">            <span class="string">'mark'</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="string">'status'</span>: <span class="number">0</span></span><br><span class="line">          &#125;]</span><br><span class="line">        &#125;]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MockHandler</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(config) &#123;</span><br><span class="line">    <span class="keyword">this</span>.init(config);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.config = config;</span><br><span class="line">  &#125;</span><br><span class="line">  init(config) &#123;</span><br><span class="line">    <span class="built_in">Object</span>.keys(config).forEach(<span class="function"><span class="params">route</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> model = config[route];</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">callbackWarpper</span>(<span class="params">model</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">if</span> (isMock || !!req.query._is_mock) &#123;</span><br><span class="line">            <span class="keyword">var</span> data = Mock.mock(&#123;</span><br><span class="line">              <span class="attr">code</span>: <span class="number">0</span>,</span><br><span class="line">              <span class="attr">data</span>: model</span><br><span class="line">            &#125;);</span><br><span class="line">            res.json(data);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            next();</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">      &#125;</span><br><span class="line">      config[route] = callbackWarpper(model);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  handle(app, server) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> route <span class="keyword">in</span> <span class="keyword">this</span>.config) &#123;</span><br><span class="line">      <span class="keyword">let</span> [method, path] = route.split(<span class="string">' '</span>)</span><br><span class="line">      <span class="keyword">let</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(path);</span><br><span class="line">      <span class="keyword">let</span> callback = <span class="keyword">this</span>.config[route];</span><br><span class="line">      app[method.toLowerCase()](reg, callback);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>写到这里本以为自己写出了一手漂亮的代码，但是突然想起，app实例上有个use()可以用来忽略请求方法get/post，然后在内部对请求做匹配处理，这样代码会更加的精简和容易被理解：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isMock = !!process.env.mock;</span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">    <span class="string">'/api/action/game/list'</span>: &#123;</span><br><span class="line">      <span class="attr">code</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="string">'totalCount|1-100'</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">'datas|1-10'</span>: [&#123;</span><br><span class="line">          <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="string">'dataName|1-5'</span>: <span class="string">'name'</span>,</span><br><span class="line">          <span class="string">'dataType|1-2'</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="string">'dataScope'</span>: <span class="string">'1,100'</span>,</span><br><span class="line">          <span class="string">'defaultValue|1-5'</span>: <span class="string">'value'</span>,</span><br><span class="line">          <span class="string">'dataStatus|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="string">'remark|1-5'</span>: <span class="string">'str'</span>,</span><br><span class="line">          <span class="string">'record|0-1'</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="string">'series|1-3'</span>: [&#123;</span><br><span class="line">            <span class="string">'id|+1'</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="string">'type|1-2'</span>: <span class="number">2</span>,</span><br><span class="line">            <span class="string">'name|1-2'</span>: <span class="string">'小云熊奇妙故事'</span>,</span><br><span class="line">            <span class="string">'mark'</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="string">'status'</span>: <span class="number">0</span></span><br><span class="line">          &#125;]</span><br><span class="line">        &#125;]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MockHandler</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(config) &#123;</span><br><span class="line">    <span class="keyword">this</span>.config = config;</span><br><span class="line">  &#125;</span><br><span class="line">  handle(app, server) &#123;</span><br><span class="line">    app.use(<span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (isMock || !!req.query._is_mock) &#123;</span><br><span class="line">        <span class="built_in">Object</span>.keys(<span class="keyword">this</span>.config).forEach(<span class="function"><span class="params">route</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">const</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(route)</span><br><span class="line">          <span class="keyword">const</span> model = <span class="keyword">this</span>.config[route]</span><br><span class="line">          <span class="keyword">if</span> (reg.test(req.path)) &#123;</span><br><span class="line">            <span class="keyword">var</span> data = Mock.mock(&#123;</span><br><span class="line">              <span class="attr">code</span>: <span class="number">0</span>,</span><br><span class="line">              <span class="attr">data</span>: model</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">return</span> res.json(data);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        next()</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        next()</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个方案原理是利用webpack devServer在发送请求时候做了一层拦截，请求并没有经过真实的网络环境，但是利用webpack devServer其实有个弊端，当我想增加一条记录时，需要再次重启webpack，本身属于对webpack配置的修改，除利用node watch功能监听文件改动运行脚本重启的方法外，几乎想不出有更好的方法了，这个痛点用一个名词来形容就是不支持热插拔。</p>
+<h2 id="浏览器插件"><a href="#浏览器插件" class="headerlink" title="浏览器插件"></a>浏览器插件</h2><p>有没有不涉及到编程的mock方案呢？有，<strong>利用浏览器插件拦截请求或篡改响应。</strong></p>
+<p>这种方案属于利用工具，不用在代码层面引入mock层也可以拦击请求，好处是相对前面介绍的方案，更加的具有普适性，可以让测试小伙伴在后端接口发生异常的情况下依然畅通无阻的测试前端功能。</p>
+<p>这样的插件我推荐： <strong>Ajax Interceptor</strong> <a href="https://chrome.google.com/webstore/detail/ajax-interceptor/nhpjggchkhnlbgdfcbgpdpkifemomkpg" target="_blank" rel="external">下载</a> <a href="https://github.com/YGYOOO/ajax-interceptor" target="_blank" rel="external">源代码</a></p>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>不想用浏览器插件还有其他的工具吗？当然有，就是我们熟悉的postman，详细请参考下面文章：</p>
+<p><a href="https://blog.csdn.net/qq598535550/article/details/87924629" target="_blank" rel="external">Postman高级应用（11）：可以开始对接了吗——Mock服务</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Walking 劳翼 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/08/15/%E5%89%8D%E7%AB%AF%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="prev" title="前端单元测试">
+                  <i class="fa fa-chevron-left"></i> 前端单元测试
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/10/16/02-%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83-%E6%95%B4%E7%90%86%E5%87%8C%E4%B9%B1%E4%BB%A3%E7%A0%81%E7%9A%84%E6%9C%89%E6%95%88%E5%A7%BF%E5%8A%BF/" rel="next" title="整理凌乱代码的有效姿势【工作日记02】">
+                  整理凌乱代码的有效姿势【工作日记02】 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

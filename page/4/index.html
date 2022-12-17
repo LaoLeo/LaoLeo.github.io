@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="“Unity,移动开发,Web”">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Unity游戏开发 博客">
+<meta property="og:url" content="https://laoleo.github.io/page/4/index.html">
+<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:description" content="“Unity,移动开发,Web”">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Walking 劳翼">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://laoleo.github.io/page/4/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Unity游戏开发 博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2020/12/05/%E8%B5%84%E6%BA%90%E6%89%93%E5%8C%85%E7%AD%96%E7%95%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/12/05/%E8%B5%84%E6%BA%90%E6%89%93%E5%8C%85%E7%AD%96%E7%95%A5/" class="post-title-link" itemprop="url">项目打包策略</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-05 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-05T00:00:00+08:00">2020-12-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-07 21:39:06" itemprop="dateModified" datetime="2022-12-07T21:39:06+08:00">2022-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Unity游戏开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">资源管理</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<h2 id="项目打包策略"><a href="#项目打包策略" class="headerlink" title="项目打包策略"></a>项目打包策略</h2><p>打包策略：</p>
+<ul>
+<li><p>A：把整个目录打进一个ab</p>
+</li>
+<li><p>B：把目录下的子目录中的资源打进子目录的ab中</p>
+</li>
+<li><p>C：把整个目录拷贝到ab目录不打ab</p>
+</li>
+<li><p>D：目录下的每一个资源打一个ab，不管是否重复</p>
+</li>
+<li><p>E：目录下的每一个资源打一个ab，每个依赖也打成一个ab，去除重复</p>
+</li>
+<li><p>F：图集的图片根据tag打ab，每个tag打一个ab</p>
+</li>
+<li><p>G：lua打包，一个目录打成一个ab，可以选择是否编码，编码为.bytes文件，通过根据不同平台选择LuaEncoder目录下的对应编码器进去编码（利用py脚本语言执行脚本运行luajit-2.1编码器）。编码器在各种运行平台和目标平台的使用情况如下。</p>
+</li>
+<li><p>H：lua打包，多个目录打成一个ab，会编码</p>
+</li>
+</ul>
+<p>各种策略应用的项目目录情况：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">策略</th>
+<th style="text-align:left">目录</th>
+<th style="text-align:left">筛选模式</th>
+<th style="text-align:left">特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">D</td>
+<td style="text-align:left">Assets/GameAssets/ui</td>
+<td style="text-align:left">(.asset)$</td>
+<td style="text-align:left">这类资源的特点是各个模块都有分布，数量多，1比1打ab策略有利于控制ab大小粒度，属于按类型和功能模块分组策略</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/ui</td>
+<td style="text-align:left">(.prefab)$</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/ui/animations</td>
+<td style="text-align:left">(.controller)$</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/ui/materials</td>
+<td style="text-align:left">(.mat)$</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/audio</td>
+<td style="text-align:left">(.ogg</td>
+<td style="text-align:left">.mp3</td>
+<td>.wav)$</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/audio/audiomixer</td>
+<td style="text-align:left">(.prefab)$</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/live2dcharacter</td>
+<td style="text-align:left">(.prefab)$</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/live2dcharacter</td>
+<td style="text-align:left">(^(?!.*?(model))).+(.json</td>
+<td style="text-align:left">.bytes)$</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/bigbg</td>
+<td style="text-align:left">(.jpg</td>
+<td style="text-align:left">.png)$</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/font</td>
+<td style="text-align:left">(.ttf</td>
+<td style="text-align:left">.fontsettings)$</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">C</td>
+<td style="text-align:left">Assets/GameAssets/movie</td>
+<td style="text-align:left">(.mp4)$</td>
+<td style="text-align:left">这类资源一般是配置文件，或者像是mp4这种游戏中用得比较少的资源文件</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/config</td>
+<td style="text-align:left">(.txt</td>
+<td style="text-align:left">.png</td>
+<td>.jpg)$</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">A</td>
+<td style="text-align:left">Assets/GameAssets/shaders</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">全局常驻的文件</td>
+</tr>
+<tr>
+<td style="text-align:left">E</td>
+<td style="text-align:left">Assets/GameAssets/scene/pj-g_scene_assets</td>
+<td style="text-align:left">.*materials_dynload.+(.mat)$</td>
+<td style="text-align:left">这类资源的引用比较复杂，材质贴图引用得多，有些资源需要动态加载，需要对依赖资源做去重处理。 场景、spine人物动画、特效属于这类。</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/character</td>
+<td style="text-align:left">(.prefab)$</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/language/[lang]/character</td>
+<td style="text-align:left">(.prefab)$</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/effect</td>
+<td style="text-align:left">(.prefab)$</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/language/[lang]/effect</td>
+<td style="text-align:left">(.prefab)$</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/scene/pj-g_scene_prefab</td>
+<td style="text-align:left">(._p[\d]{0,}.prefab</td>
+<td style="text-align:left">._stage.prefab)$</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/GameAssets/language/[lang]/scene/pj-g_scene_prefab</td>
+<td style="text-align:left">(._p[\d]{0,}.prefab</td>
+<td style="text-align:left">._stage.prefab)$</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">F</td>
+<td style="text-align:left">Assets/AtlasSource</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">UI用的精灵图，需要根据自定义tag打图集，其实就是按功能模块分组策略</td>
+</tr>
+<tr>
+<td style="text-align:left">G</td>
+<td style="text-align:left">Assets/aounity-framework/ToLua/Lua</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">lua文件根据模块打ab，属于按逻辑实体分组策略，类似于粒度比较大的模块，但代码文件也属于系统常驻类型，不宜分得太小粒度</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/aounity-framework/Scripts/Lua/framework</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/aounity-framework/Scripts/Lua/frameworkext</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Assets/Scripts/Lua/logic</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">H</td>
+<td style="text-align:left"><p>Assets/aounity-framework/Scripts/Lua/bootstrap</p><p></p><p>Assets/Scripts/Lua/bootstrap</p></td>
+<td style="text-align:left"></td>
+<td style="text-align:left">lua文件根据模块打ab，同一个模块多个目录打在一起</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>没有写明打包策略的多语言下的目录，说明跟对应其的公用目录的打包策略一致。</p>
+</blockquote>
+<h2 id="Lua编译"><a href="#Lua编译" class="headerlink" title="Lua编译"></a>Lua编译</h2><p>using luajit2.1.0-beta3.</p>
+<p>编码器在各种运行平台和目标平台的使用：</p>
+<p>不同平台使用的编码器不同</p>
+<pre><code>1.pc使用
+
+luajit64:   win, ios 64bit
+
+luajit32:   android 32bit
+
+2. mac使用
+
+编译命令
+
+luajit\_mac32 make CC=&quot;gcc -m32&quot;
+
+luajit\_mac64 make XCFLAGS=-DLUAJIT\_ENABLE\_GC64
+
+luavm:        macos using luac(for u5.x). 
+
+luajit\_mac64: win, ios 64bit
+
+luajit\_mac32: android 32bit
+
+以下文件mac需要执行权限
+
+luavm/luac
+
+luajit\_mac32/luajit
+
+luajit\_mac64/luajit
+</code></pre><blockquote>
+<p>注意：没有权限mac无法编译，导致打不出lua文件的ab，也没有报错提示</p>
+</blockquote>
+<blockquote>
+<p>其实研究ab分组策略就是研究资源依赖树实现资源加载最优的问题。</p>
+</blockquote>
+<p>ab分组策略原则参考：<a href="https://zhuanlan.zhihu.com/p/91926428" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/91926428</a></p>
+<h2 id="build-package"><a href="#build-package" class="headerlink" title="build package"></a>build package</h2><p>项目构建包逻辑原理很简单，前面处理和准备好参数和数据，传递给BuildPipeline.BuildAssetBundles方法构建ab。</p>
+<p>工具面板上的参数解析：</p>
+<ul>
+<li><p>isEncodeLua：是否时候luajit-2.1编码lua文件成字节码。</p>
+</li>
+<li><p>isForceRebuild：BuildAssetBundleOptions.ForceRebuildAssetBundle参数，强制重打ab，即使Asset没有更改。</p>
+</li>
+<li><p>isOnlyBuildLua：是否只打lua ab。√了就不会打其他资源ab，在调试真机时候更改lua代码进行调试会很方便。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/" class="post-title-link" itemprop="url">场景控制流程解读</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-11-01T00:00:00+08:00">2020-11-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Unity游戏开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%9F%BA%E7%A1%80%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">基础系统</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<h1 id="场景控制流程解读"><a href="#场景控制流程解读" class="headerlink" title="场景控制流程解读"></a>场景控制流程解读</h1><h2 id="1-初始化流程"><a href="#1-初始化流程" class="headerlink" title="1 初始化流程"></a>1 初始化流程</h2><p>场景的初始化和进出控制有SceneMgr类负责管理，SceneMgr类实例化的时候，会对所有的场景类做一系列的初始化操作，包括场景类实例化，加入场景类中的功能组件类的实例化。</p>
+<img src="/2020/11/01/场景控制流程解读/image_SqQ7dNS1Cb.png" alt="image_SqQ7dNS1Cb.png" title="">
+<ol>
+<li><p>实例化所有注册到SceneMgr:_registerScenes()中的场景类，然后在每个场景中注入onEnterFinished和onStageLoadFinished函数，分别在进入完成和舞台加载完成时调用，控制loading页面的关闭和资源的释放</p>
+</li>
+<li><p>在实例化Scene Component时，执行自身的onInit函数，进行初始化的工作。</p>
+</li>
+</ol>
+<p>以上就是场景实例化的流程。</p>
+<p>加入新的场景代码需要以下：</p>
+<ol>
+<li><p>在SceneType文件加入场景type</p>
+</li>
+<li><p>在Editor的pjg&gt;场景编辑器&gt;场景导出，新增场景id和资源配置，保存导出生成t_scene配置</p>
+</li>
+<li><p>新增场景类代码，并加入stage组件，控制场景资源的加载。</p>
+</li>
+<li><p>在SceneMgr:_registerScenes()注册场景类</p>
+</li>
+</ol>
+<h2 id="2-进入流程"><a href="#2-进入流程" class="headerlink" title="2 进入流程"></a>2 进入流程</h2><img src="/2020/11/01/场景控制流程解读/image_3NDenmx_Of.png" alt="image_3NDenmx_Of.png" title="">
+<ol>
+<li><p>stage组件类中需要加入load函数，控制场景资源的加载，并且在资源加载完成回调中调用调用_onStageLoadFinished函数和_onAllLoaded函数</p>
+</li>
+<li><p>调用_onStageLoadFinished函数需在_onAllLoaded函数之前，_onAllLoaded函数其实就是调用了scene:onEnterFinished函数&#x20;</p>
+</li>
+</ol>
+<img src="/2020/11/01/场景控制流程解读/image_xvaTyll7c-.png" alt="image_xvaTyll7c-.png" title="">
+<ol>
+<li>场景资源其实是prefeb资源，实例化后被挂载在【SCENEROOT/场景名]】节点下</li>
+</ol>
+<h2 id="3-退出流程"><a href="#3-退出流程" class="headerlink" title="3 退出流程"></a>3 退出流程</h2><img src="/2020/11/01/场景控制流程解读/image_YlLPrr-tq-.png" alt="image_YlLPrr-tq-.png" title="">
+<h2 id="4-场景组件的类型和作用"><a href="#4-场景组件的类型和作用" class="headerlink" title="4 场景组件的类型和作用"></a>4 场景组件的类型和作用</h2><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型</td>
+<td>用途</td>
+<td>相关配置表</td>
+<td>其他</td>
+</tr>
+<tr>
+<td>SceneStageBase类</td>
+<td>控制场景资源（舞台）加载和释放，注入的onEnterFinished和onStageLoadFinished函数在这个类中调用</td>
+<td>t_scene（在Editor上【pjg&gt;场景编辑器&gt;场景导出】生成）</td>
+<td></td>
+</tr>
+<tr>
+<td>SceneCameraBase类</td>
+<td>负责相机的参数设置和相机的焦点跟随，相机的参数配置在camera表</td>
+<td>t_camera</td>
+<td></td>
+</tr>
+<tr>
+<td>SceneZoneMgr类</td>
+<td>负责管理场景上所有的区域，场景分区域加载是管理大资源加载的一种手段。一般简单的场景不需要加，主场景和主线副本场景比较大会分区域，需要用到这个类。</td>
+<td>t_scene，t_scene_zone（在Editor【pjg&gt;场景编辑器&gt;区域导出】上生成）</td>
+<td></td>
+</tr>
+<tr>
+<td>SceneCfgFinder类</td>
+<td>负责管理场景配置信息的查找，场景配置查找的代码可以写进这个类的衍生类。</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SceneGlobalTouchMgr类</td>
+<td>负责识别和管理场景上的屏幕触摸事件，包括点击、缩放、和拖拽。最大允许两点触摸，小屋的放大缩小就是通过这个类实现的</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>TriggerFactory类</td>
+<td>场景触发器，通过id初始化触发器并派发触发器根据条件触发动作。比如场景中的预制和特效加载完成触发一些动作</td>
+<td>t_scene_trigger，t_scene_triggeraction</td>
+<td></td>
+</tr>
+<tr>
+<td>UnitFactoryBase类</td>
+<td>管理场景里面的各个单元，比如主界面的陆吾猫的实现就可以当做一个单元</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>UnitBase类</td>
+<td>子类作为单元各个功能组件的容器，单元类各功能的实现需要封装进UnitComponentBase类的之类</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>UnitComponentBase类</td>
+<td>单元功能组件的封装</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2020/03/26/05-%E6%95%A3%E4%B9%B1%E7%9F%A5%E8%AF%86%E6%B1%87%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/03/26/05-%E6%95%A3%E4%B9%B1%E7%9F%A5%E8%AF%86%E6%B1%87%E9%9B%86/" class="post-title-link" itemprop="url">散乱知识汇集【工作日记05】</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-03-26 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-26T00:00:00+08:00">2020-03-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:37" itemprop="dateModified" datetime="2022-12-06T23:30:37+08:00">2022-12-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&amp;quality=100&amp;size=b4000_4000&amp;sec=1585232140&amp;di=19cede1f52e7d232878de1e59f7ef215&amp;src=http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/dbb44aed2e738bd4f69c4f49a58b87d6277ff90d.jpg" alt="Stark"></p>
+<center><i style="color:#333;">(权游Stark家族图徽)</i></center>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/26/05-%E6%95%A3%E4%B9%B1%E7%9F%A5%E8%AF%86%E6%B1%87%E9%9B%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2019/12/20/04-%E4%B8%8D%E5%BE%97%E4%B8%8D%E6%87%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%BC%98%E5%8C%96%E6%8A%80%E8%83%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/12/20/04-%E4%B8%8D%E5%BE%97%E4%B8%8D%E6%87%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%BC%98%E5%8C%96%E6%8A%80%E8%83%BD/" class="post-title-link" itemprop="url">不得不懂的工作流优化技能【工作日记04】</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-12-20 00:00:00" itemprop="dateCreated datePublished" datetime="2019-12-20T00:00:00+08:00">2019-12-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:37" itemprop="dateModified" datetime="2022-12-06T23:30:37+08:00">2022-12-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/%E5%B7%A5%E4%BD%9C%E6%97%A5%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">工作日记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="http://pic1.win4000.com/wallpaper/2017-11-08/5a029f1175340.jpg" alt="我是图片"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/12/20/04-%E4%B8%8D%E5%BE%97%E4%B8%8D%E6%87%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%BC%98%E5%8C%96%E6%8A%80%E8%83%BD/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2019/11/18/03-%E4%BD%BF%E7%94%A8console%E8%BE%93%E5%87%BA%E7%BD%91%E7%AB%99logo%E5%BD%A9%E8%9B%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/18/03-%E4%BD%BF%E7%94%A8console%E8%BE%93%E5%87%BA%E7%BD%91%E7%AB%99logo%E5%BD%A9%E8%9B%8B/" class="post-title-link" itemprop="url">使用console输出网站logo彩蛋【工作日记03】</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-11-18 00:00:00" itemprop="dateCreated datePublished" datetime="2019-11-18T00:00:00+08:00">2019-11-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-06 23:30:37" itemprop="dateModified" datetime="2022-12-06T23:30:37+08:00">2022-12-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/%E5%B7%A5%E4%BD%9C%E6%97%A5%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">工作日记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="http://pic1.win4000.com/wallpaper/2017-11-08/5a029f187ca9f.jpg" alt="我是图片"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/18/03-%E4%BD%BF%E7%94%A8console%E8%BE%93%E5%87%BA%E7%BD%91%E7%AB%99logo%E5%BD%A9%E8%9B%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

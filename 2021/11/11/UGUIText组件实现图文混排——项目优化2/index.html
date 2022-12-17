@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="图文混排-支持多个不同emoji来自不同图集和散图之前针对表情不支持多图集的问题优化过一板，可以回顾下这篇文章：UIGraphicText组件表情渲染优化-支持表情来之不同图集 但后来发现图文混排场景不支持多个不同emoji来自不同图集和散图，下面是问题描述。 PC下不打图集下发现，多个不同的emoji标签显示同一个emoji sprite。  原因分析每个text组件下只分配一个maskabl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图文混排-支持多个不同emoji来自不同图集和散图">
+<meta property="og:url" content="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/index.html">
+<meta property="og:site_name" content="Unity游戏开发 博客">
+<meta property="og:description" content="图文混排-支持多个不同emoji来自不同图集和散图之前针对表情不支持多图集的问题优化过一板，可以回顾下这篇文章：UIGraphicText组件表情渲染优化-支持表情来之不同图集 但后来发现图文混排场景不支持多个不同emoji来自不同图集和散图，下面是问题描述。 PC下不打图集下发现，多个不同的emoji标签显示同一个emoji sprite。  原因分析每个text组件下只分配一个maskabl">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/4c1118d6cb20ce80f3105b95502455c3.tmp">
+<meta property="og:image" content="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/7975d77768f66dd5b45d9ef03f066e45.tmp">
+<meta property="og:image" content="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/1b068870d1847acdd585381f49f9127c.tmp">
+<meta property="og:image" content="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/b1ea6bccc642c35685b0dd0f5671b303.tmp">
+<meta property="og:image" content="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/ebee4d8b9fab274fef93b95923e20796.tmp">
+<meta property="og:image" content="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/949ad5756a5f0697641e2267e54b6a2a.tmp">
+<meta property="og:image" content="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/889d57042c9cc1a988458e23e9617d0d.tmp">
+<meta property="og:image" content="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/1ed8f3c55e63efc72047784eb2d715ec.tmp">
+<meta property="og:image" content="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/35ae882a0e5fee85b1b7a102ba20976f.tmp">
+<meta property="og:image" content="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/83146e7e3d81e80b54edf6131d3203e2.tmp">
+<meta property="og:image" content="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/584310e308f30ee963734e6004db68f7.tmp">
+<meta property="og:image" content="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/4e5d287689f65ab1fab2db8cc848f218.tmp">
+<meta property="article:published_time" content="2021-11-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-12-07T13:37:02.710Z">
+<meta property="article:author" content="Walking 劳翼">
+<meta property="article:tag" content="emoji">
+<meta property="article:tag" content="图文混排">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/4c1118d6cb20ce80f3105b95502455c3.tmp">
+
+
+<link rel="canonical" href="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>图文混排-支持多个不同emoji来自不同图集和散图 | Unity游戏开发 博客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发 博客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92-%E6%94%AF%E6%8C%81%E5%A4%9A%E4%B8%AA%E4%B8%8D%E5%90%8Cemoji%E6%9D%A5%E8%87%AA%E4%B8%8D%E5%90%8C%E5%9B%BE%E9%9B%86%E5%92%8C%E6%95%A3%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">图文混排-支持多个不同emoji来自不同图集和散图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">原因分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.</span> <span class="nav-text">具体实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%A7%84%E8%8C%83"><span class="nav-number">1.5.</span> <span class="nav-text">测试与规范</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2021/11/11/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%962/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发 博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图文混排-支持多个不同emoji来自不同图集和散图
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-11 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-11T00:00:00+08:00">2021-11-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-07 21:37:02" itemprop="dateModified" datetime="2022-12-07T21:37:02+08:00">2022-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Unity游戏开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E4%B8%9A%E5%8A%A1%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">业务系统</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E4%B8%9A%E5%8A%A1%E7%B3%BB%E7%BB%9F/%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92/" itemprop="url" rel="index"><span itemprop="name">图文混排</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<h1 id="图文混排-支持多个不同emoji来自不同图集和散图"><a href="#图文混排-支持多个不同emoji来自不同图集和散图" class="headerlink" title="图文混排-支持多个不同emoji来自不同图集和散图"></a>图文混排-支持多个不同emoji来自不同图集和散图</h1><p>之前针对表情不支持多图集的问题优化过一板，可以回顾下这篇文章：<a href="./UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96.md">UIGraphicText组件表情渲染优化-支持表情来之不同图集</a></p>
+<p>但后来发现图文混排场景不支持多个不同emoji来自不同图集和散图，下面是问题描述。</p>
+<p>PC下不打图集下发现，多个不同的emoji标签显示同一个emoji sprite。</p>
+<p><img src="UGUIText组件实现图文混排——项目优化2/4c1118d6cb20ce80f3105b95502455c3.tmp" alt="C:\\88534cc8db9f6423fece8da47e598d32"><img src="UGUIText组件实现图文混排——项目优化2/7975d77768f66dd5b45d9ef03f066e45.tmp" alt="C:\\53fba21b5a4b310d26e01fbc92b36a2e"></p>
+<h2 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a><strong>原因分析</strong></h2><p>每个text组件下只分配一个maskableGraphic组件，如其名可遮罩图形，该组件可以根据uv坐标来截取自身mainTexture上的区域，以渲染emoji。</p>
+<p>当不打图集，uv坐标就代表整个mainTexture，也就是整张单图，而mainTexture同一时刻只能代表一张单图。</p>
+<p>所以在这个例子中，所有的emoji都显示同一张图。</p>
+<p>按照这个原理，即使在打图集的情况下，假如一行消息上的emoji并不是都来自同一个图集，那么显示上也会出问题。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a><strong>解决方案</strong></h2><p>这个问题的瓶颈在于maskableGraphic组件的数量，可以根据不同的texture来分配maskableGraphic组件来渲染emoji，这样就可以支持同时显示来自不同texture的emoji。</p>
+<p>问题分拆：</p>
+<ol>
+<li>分组，按sprite的texture的不同来决定分配UIGraphiTextSprites组件（继承maskableGraphic），每个UIGraphiTextSprites组件负责渲染这个texture的emoji。</li>
+<li>重构drawSprites方法逻辑以支持分组渲染emoji</li>
+<li>处理Update逻辑以支持渲染动图</li>
+</ol>
+<p>但实践结果发现，按texture不同来分配maskableGraphic组件的方式并不适用于多个动图（动图即多个sprite切换）的情况，比如不打图集情况下有两个一样的动图emoji，当动图切换sprite texture时候，因为按texture分配组件所以两个一样的动图emoji只分配一个组件，前一个emoji会被后一个emoji抢占组件而不渲染。</p>
+<p><img src="UGUIText组件实现图文混排——项目优化2/1b068870d1847acdd585381f49f9127c.tmp" alt="C:\\7a9f240bac4cb3c6c539f8bad0891c12"><img src="UGUIText组件实现图文混排——项目优化2/b1ea6bccc642c35685b0dd0f5671b303.tmp" alt="C:\\ad1a89e4b9b73f312118b21ca07bab28"></p>
+<p>所以最终的方案为：</p>
+<ol>
+<li>区分静图和动图的emoji，静图的emoji按texture分配UIGraphiTextSprites组件</li>
+<li>动图的emoji分配单独一个UIGraphiTextSprites组件负责渲染</li>
+<li>UIGraphicTextSpritesMgr池化UIGraphiTextSprites组件，避免在消息列表界面频繁创建和销毁组件</li>
+</ol>
+<p>分配策略代码如下：</p>
+<p>展开源码</p>
+<p>UIGraphicTextSprites[] m_spriteGraphicArray;</p>
+<p>private void DistributeTextSprite(List\&lt;SpriteTagInfor> listTag)</p>
+<p>{</p>
+<p>var staticEmojiDict = new Dictionary\&lt;Texture, List\&lt;int>>();</p>
+<p>for (var i=0;i\&lt;listTag.Count;i++)</p>
+<p>{</p>
+<p>var tagInfor = listTag[i];</p>
+<p>var animTagArray = m_AnimSpriteTag[i];</p>
+<p>if (animTagArray.Length>1)</p>
+<p>{</p>
+<p>var textSprite = CreateTextSprite();</p>
+<p>m_spriteGraphicArray[i] = textSprite;</p>
+<p>}</p>
+<p>else</p>
+<p>{</p>
+<p>var sprite = m_nameToSpriteDict[tagInfor.name];</p>
+<p>if (!staticEmojiDict.ContainsKey(sprite.texture)) {</p>
+<p>staticEmojiDict[sprite.texture] = new List\&lt;int>(){i};</p>
+<p>}</p>
+<p>staticEmojiDict[sprite.texture].Add(i);</p>
+<p>}</p>
+<p>}</p>
+<p>// staticEmojiDict：{texture1=>{1，3}}</p>
+<p>foreach (var item in staticEmojiDict)</p>
+<p>{</p>
+<p>var textSprite = CreateTextSprite();</p>
+<p>foreach(var index in item.Value)</p>
+<p>{</p>
+<p>m_spriteGraphicArray[index] = textSprite;</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a><strong>具体实现</strong></h2><p>下面以渲染emoji的流程图来讲解讲解改造的过程。</p>
+<img src="/2021/11/11/UGUIText组件实现图文混排——项目优化2/ebee4d8b9fab274fef93b95923e20796.tmp" alt="C:\\97daee51e2a0dadd426d08e8b46ba127" title="C:\\97daee51e2a0dadd426d08e8b46ba127">
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a><strong>遇到的问题</strong></h2><p>1.OnPopulateMesh中控制gameObject的slefActive会导致报错，与onLogCallBack有冲突。</p>
+<img src="/2021/11/11/UGUIText组件实现图文混排——项目优化2/949ad5756a5f0697641e2267e54b6a2a.tmp" alt="C:\\c8e64b17c775c1a4b44a6a7a6a6354ce" title="C:\\c8e64b17c775c1a4b44a6a7a6a6354ce">
+<p>“Trying to add…… while we are already inside a graphic rebuild loop.”这句是UGUI的报错，查看了UGUI的源码发现：</p>
+<p>canvas刷新时，会将标记为dirty的UIElement重新构建，graphic类会生成网格时调用OnPopulateMesh。</p>
+<p>这个时候Graphic类不能更改，更改会让canvas标记setDirty加入到待构建队列，而且在canvas刷新时不能禁止入队，所以报了这个错。</p>
+<p>下面是UGUI的源码：</p>
+<p><img src="UGUIText组件实现图文混排——项目优化2/889d57042c9cc1a988458e23e9617d0d.tmp" alt="C:\\8671ab9a5ec1a5f297a33d24684e119b"><img src="UGUIText组件实现图文混排——项目优化2/1ed8f3c55e63efc72047784eb2d715ec.tmp" alt="C:\\3b0528cdf5e8756c32cae65ffba1311a"><img src="UGUIText组件实现图文混排——项目优化2/35ae882a0e5fee85b1b7a102ba20976f.tmp" alt="C:\\11e53b162bb563663b032f919afcab4a"></p>
+<p>即在OnPopulateMesh方法里不能执行setActive方法，可以放在base.SetCVerticesDirty方法里做。</p>
+<p>2.重用cell的带sprite的text没有更新文本，只是调用了disable后调了enable，log：</p>
+<p>因为是base.SetVertivesDirty方法前提前返回了，没有加入到canvas的待更新队列不会更新图形，所以不能这样做。</p>
+<p>下面是引起错误的代码：</p>
+<img src="/2021/11/11/UGUIText组件实现图文混排——项目优化2/83146e7e3d81e80b54edf6131d3203e2.tmp" alt="C:\\56a7b0dce321c762d3affc70752c805e" title="C:\\56a7b0dce321c762d3affc70752c805e">
+<h2 id="测试与规范"><a href="#测试与规范" class="headerlink" title="测试与规范"></a><strong>测试与规范</strong></h2><p>兼容性排查，排查修改类被引用到的地方是否正常？</p>
+<p>修改了UIGraphicText类和UIGraphicTextSprites类，两者在项目中引用我排查过，变更代码不会引起错误，但UIGraphicTextSprites类属于submodule的框架层，不知其他项目的情况。</p>
+<p>测试案例如下：</p>
+<p><img src="UGUIText组件实现图文混排——项目优化2/584310e308f30ee963734e6004db68f7.tmp" alt="C:\\b7c4a0986ebdf75c5ef2bda9f54b15cf"><img src="UGUIText组件实现图文混排——项目优化2/4e5d287689f65ab1fab2db8cc848f218.tmp" alt="C:\\b40295cf6f4f0fca2550c102727d03d9"></p>
+<p>观察在各个平台上打不打图集的表现情况：</p>
+<table>
+<thead>
+<tr>
+<th><strong>测试平台</strong></th>
+<th><strong>是否打图集</strong></th>
+<th><strong>结果（emoji、多个emoji、动图emoji、动图）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unity</td>
+<td>不打</td>
+<td>正常</td>
+</tr>
+<tr>
+<td>Unity</td>
+<td>打</td>
+<td>正常</td>
+</tr>
+<tr>
+<td>安卓</td>
+<td>打</td>
+<td>正常</td>
+</tr>
+<tr>
+<td>IOS</td>
+<td>打</td>
+<td>正常</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Walking 劳翼 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/emoji/" rel="tag"># emoji</a>
+              <a href="/tags/%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92/" rel="tag"># 图文混排</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/10/%E6%B8%B8%E6%88%8F%E7%83%AD%E6%9B%B4%E6%96%B0/" rel="prev" title="游戏热更新">
+                  <i class="fa fa-chevron-left"></i> 游戏热更新
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/12/27/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E5%8E%9F%E7%90%86%E7%AF%87/" rel="next" title="UGUIText组件实现图文混排——原理篇">
+                  UGUIText组件实现图文混排——原理篇 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
