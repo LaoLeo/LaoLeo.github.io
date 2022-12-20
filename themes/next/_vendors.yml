@@ -90,11 +90,11 @@ disqusjs_css:
   file: dist/disqusjs.css
 gitalk_js:
   name: gitalk
-  version: 1.7.0
+  version: 1.7.2
   file: dist/gitalk.min.js
 gitalk_css:
   name: gitalk
-  version: 1.7.0
+  version: 1.7.2
   file: dist/gitalk.css
 firebase_app:
   name: firebase
