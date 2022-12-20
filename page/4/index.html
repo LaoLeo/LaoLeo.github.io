@@ -326,6 +326,13 @@
     </span>
 
   
+    <span id="/2020/12/05/%E8%B5%84%E6%BA%90%E6%89%93%E5%8C%85%E7%AD%96%E7%95%A5/" class="post-meta-item leancloud_visitors" data-flag-title="项目打包策略" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
 </div>
 
         </div>
@@ -657,6 +664,13 @@ luajit\_mac64/luajit
     </span>
 
   
+    <span id="/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/" class="post-meta-item leancloud_visitors" data-flag-title="场景控制流程解读" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
 </div>
 
         </div>
@@ -840,6 +854,13 @@ luajit\_mac64/luajit
     </span>
 
   
+    <span id="/2020/03/26/05-%E6%95%A3%E4%B9%B1%E7%9F%A5%E8%AF%86%E6%B1%87%E9%9B%86/" class="post-meta-item leancloud_visitors" data-flag-title="散乱知识汇集【工作日记05】" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
 </div>
 
         </div>
@@ -932,6 +953,13 @@ luajit\_mac64/luajit
     </span>
 
   
+    <span id="/2019/12/20/04-%E4%B8%8D%E5%BE%97%E4%B8%8D%E6%87%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%BC%98%E5%8C%96%E6%8A%80%E8%83%BD/" class="post-meta-item leancloud_visitors" data-flag-title="不得不懂的工作流优化技能【工作日记04】" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
 </div>
 
         </div>
@@ -1023,6 +1051,13 @@ luajit\_mac64/luajit
     </span>
 
   
+    <span id="/2019/11/18/03-%E4%BD%BF%E7%94%A8console%E8%BE%93%E5%87%BA%E7%BD%91%E7%AB%99logo%E5%BD%A9%E8%9B%8B/" class="post-meta-item leancloud_visitors" data-flag-title="使用console输出网站logo彩蛋【工作日记03】" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
 </div>
 
         </div>
@@ -1120,6 +1155,92 @@ luajit\_mac64/luajit
   
 
 
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            const target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"9UkIwF1j8GAbYNYHlAdGD0lc-gzGzoHsz","app_key":"SvWuPL4a5ae1tjdqinzlwTjV","server_url":"https://9ukiwf1j.lc-cn-n1-shared.com","security":true};
+    function fetchData(api_server) {
+      const Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
 
 
 
