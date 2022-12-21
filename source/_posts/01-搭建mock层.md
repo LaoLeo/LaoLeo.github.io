@@ -2,7 +2,7 @@
 title: 搭建mock层【工作日记01】
 date: 2019-9-10
 tags: []
-categories: [前端,工作日记]
+categories: [web开发,web,工作日记]
 ---
 
 ![我是图片](http://pic1.win4000.com/wallpaper/2017-11-08/5a029eda4cc75.jpg)

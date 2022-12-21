@@ -3,7 +3,7 @@
 title: 使用console输出网站logo彩蛋【工作日记03】
 date: 2019-11-18
 tags: []
-categories: [前端,工作日记]
+categories: [web开发,web,工作日记]
 ---
 
 ![我是图片](http://pic1.win4000.com/wallpaper/2017-11-08/5a029f187ca9f.jpg)
@@ -70,7 +70,7 @@ categories: [前端,工作日记]
 ```
 console.log(object [, object, …])
 ```
-2. 占位符
+1. 占位符
 
 格式占位符 | 作用
 ---|---

@@ -2,7 +2,7 @@
 title: js面向对象编程之继承
 date: 2016-5-29
 tags: [js, 继承]
-categories: [js]
+categories: [web开发,基础,js]
 ---
 
 ![我是图片](https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1310394567,277925733&fm=27&gp=0.jpg)

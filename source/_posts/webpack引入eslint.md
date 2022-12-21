@@ -2,7 +2,7 @@
 title: webpack引入eslint
 date: 2018-04-08 21:50:50
 tags: [webpack, eslint]
-categories: [工具]
+categories: [web开发,工具]
 ---
 
 ![我是图片](https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525174897&di=c0a06449ab438e83c3a8f2a245203535&imgtype=jpg&er=1&src=http%3A%2F%2Fwww.ibeifeng.com%2Fimages%2Fupload%2FImage%2Fc5bbf603918fa0ec91b3bd73259759ee3c6ddbc0.jpg)

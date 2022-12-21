@@ -2,7 +2,7 @@
 title: source map小知识
 date: 2018-04-09 19:36:00
 tags: [webpack, sourceMap]
-categories: [工具]
+categories: [web开发,工具]
 ---
 
 ![我是图片](https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524580962476&di=2bb2f9b1075674dbb2b22354e010b724&imgtype=0&src=http%3A%2F%2Fwww.d1net.com%2Fuploadfile%2F2014%2F1215%2F20141215110355156.jpeg)

@@ -2,7 +2,7 @@
 title: 【VueSSR系列二】clientManifest与bundle的处理流程解读
 date: 2019-07-20 19:02:01
 tags: [vue]
-categories: [前端]
+categories: [web]
 ---
 
 ![我是图片](https://cdn.pixabay.com/photo/2016/03/26/13/09/cup-of-coffee-1280537__340.jpg)

@@ -2,7 +2,7 @@
 title: 【VueSSR系列一】构建流程源码解读
 date: 2019-06-13 21:20:01
 tags: [vue]
-categories: [前端]
+categories: [web]
 ---
 
 ![首图](https://cdn.pixabay.com/photo/2014/05/02/21/49/home-office-336373__340.jpg)

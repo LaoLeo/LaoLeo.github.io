@@ -2,6 +2,7 @@
 title: js控制运动框架animation
 date: 2017-7-20
 tags: [js,css,animation]
+categories: [web开发,基础,js]
 ---
 
 ## js控制运动框架animation

@@ -2,7 +2,7 @@
 title: MVVM框架双向数据绑定的实现原理
 date: 2018-03-06
 tags: [MVVM]
-categories: [前端框架]
+categories: [web开发,框架]
 ---
 
 ![我是图片](https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525175920&di=0a8226ac6efda720e6da74d056b697a3&imgtype=jpg&er=1&src=http%3A%2F%2Fwww.chinairn.com%2FUserFiles%2Fimage%2F20161106%2F20161106162224_9200.jpg)

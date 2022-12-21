@@ -2,7 +2,7 @@
 title: 踏平windows下安装fabric遇到的坑s
 date: 2018-04-15 22:41:22
 tags: [fabric]
-categories: [工具]
+categories: [web开发,工具]
 ---
 
 ![我是图片](https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2127917617,591166268&fm=27&gp=0.jpg)

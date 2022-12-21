@@ -2,6 +2,7 @@
 title: JS之cookie.md
 date: 2016-06-2
 tags: [js]
+categories: [web开发,基础,js]
 ---
 
 ### cookie

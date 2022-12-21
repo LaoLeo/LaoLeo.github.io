@@ -2,7 +2,7 @@
 title: 聊聊git的分支和rebase命令
 date: 2018-04-02 20:46:00
 tags: [git]
-categories: [工具]
+categories: [web开发,工具]
 ---
 
 ![我是图片](https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=246425395,1170785252&fm=27&gp=0.jpg)

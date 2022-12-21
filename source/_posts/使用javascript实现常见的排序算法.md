@@ -2,7 +2,7 @@
 title: 使用javascript实现常见的排序算法
 date: 2018-09-2
 tags: [js, 算法]
-categories: [js]
+categories: [web开发,基础,js]
 ---
 
 ![我是图片](https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=441434788,2689487159&fm=27&gp=0.jpg)
