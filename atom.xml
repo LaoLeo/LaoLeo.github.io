@@ -1854,7 +1854,7 @@ luajit\_mac64/luajit
     <link href="https://laoleo.github.io/2020/03/26/05-%E6%95%A3%E4%B9%B1%E7%9F%A5%E8%AF%86%E6%B1%87%E9%9B%86/"/>
     <id>https://laoleo.github.io/2020/03/26/05-散乱知识汇集/</id>
     <published>2020-03-25T16:00:00.000Z</published>
-    <updated>2022-12-06T15:30:37.614Z</updated>
+    <updated>2022-12-21T14:43:35.180Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&amp;quality=100&amp;size=b4000_4000&amp;sec=1585232140&amp;di=19cede1f52e7d232878de1e59f7ef215&amp;src=http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/dbb44aed2e738bd4f69c4f49a58b87d6277ff90d.jpg" alt="Stark"></p>
 <center><i style="color:#333;">(权游Stark家族图徽)</i></center>
@@ -1910,7 +1910,9 @@ luajit\_mac64/luajit
     
     </summary>
     
-      <category term="工具" scheme="https://laoleo.github.io/categories/%E5%B7%A5%E5%85%B7/"/>
+      <category term="web开发" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="工具" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/%E5%B7%A5%E5%85%B7/"/>
     
     
       <category term="git" scheme="https://laoleo.github.io/tags/git/"/>
@@ -1928,7 +1930,7 @@ luajit\_mac64/luajit
     <link href="https://laoleo.github.io/2019/12/20/04-%E4%B8%8D%E5%BE%97%E4%B8%8D%E6%87%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%BC%98%E5%8C%96%E6%8A%80%E8%83%BD/"/>
     <id>https://laoleo.github.io/2019/12/20/04-不得不懂的工作流优化技能/</id>
     <published>2019-12-19T16:00:00.000Z</published>
-    <updated>2022-12-06T15:30:37.611Z</updated>
+    <updated>2022-12-21T14:42:47.307Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://pic1.win4000.com/wallpaper/2017-11-08/5a029f1175340.jpg" alt="我是图片"></p>
 <span id="more"></span>
@@ -1950,7 +1952,7 @@ luajit\_mac64/luajit
 
 <ul>
 <li><a href="#工作流分析">工作流分析</a></li>
-<li><a href="#推动立项">推动立项</a></li>
+<li><a href="#项目立项">项目立项</a></li>
 <li><a href="#实现需求">实现需求</a></li>
 <li><a href="#效果和收益">效果和收益</a></li>
 </ul>
@@ -2032,9 +2034,11 @@ luajit\_mac64/luajit
     
     </summary>
     
-      <category term="前端" scheme="https://laoleo.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="web开发" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/"/>
     
-      <category term="工作日记" scheme="https://laoleo.github.io/categories/%E5%89%8D%E7%AB%AF/%E5%B7%A5%E4%BD%9C%E6%97%A5%E8%AE%B0/"/>
+      <category term="web" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/web/"/>
+    
+      <category term="工作日记" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/web/%E5%B7%A5%E4%BD%9C%E6%97%A5%E8%AE%B0/"/>
     
     
   </entry>
@@ -2044,7 +2048,7 @@ luajit\_mac64/luajit
     <link href="https://laoleo.github.io/2019/11/18/03-%E4%BD%BF%E7%94%A8console%E8%BE%93%E5%87%BA%E7%BD%91%E7%AB%99logo%E5%BD%A9%E8%9B%8B/"/>
     <id>https://laoleo.github.io/2019/11/18/03-使用console输出网站logo彩蛋/</id>
     <published>2019-11-17T16:00:00.000Z</published>
-    <updated>2022-12-06T15:30:37.608Z</updated>
+    <updated>2022-12-21T14:42:43.089Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://pic1.win4000.com/wallpaper/2017-11-08/5a029f187ca9f.jpg" alt="我是图片"></p>
 <span id="more"></span>
@@ -2153,9 +2157,11 @@ luajit\_mac64/luajit
     
     </summary>
     
-      <category term="前端" scheme="https://laoleo.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="web开发" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/"/>
     
-      <category term="工作日记" scheme="https://laoleo.github.io/categories/%E5%89%8D%E7%AB%AF/%E5%B7%A5%E4%BD%9C%E6%97%A5%E8%AE%B0/"/>
+      <category term="web" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/web/"/>
+    
+      <category term="工作日记" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/web/%E5%B7%A5%E4%BD%9C%E6%97%A5%E8%AE%B0/"/>
     
     
   </entry>
