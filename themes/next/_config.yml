@@ -945,3 +945,5 @@ vendors:
 css: css
 js: js
 images: images
+
+googleAdsense: true
