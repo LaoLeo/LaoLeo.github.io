@@ -338,10 +338,28 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span class="leancloud-visitors-count"></span>
     </span>
+    <span id="thumbsup-/2018/03/06/MVVM%E6%A1%86%E6%9E%B6%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" class="post-thumbsup-wrap" title="点赞支持">
+      <span class="post-thumbsup-icon">
+        
+        <span id="thumbsup-btn-/2018/03/06/MVVM%E6%A1%86%E6%9E%B6%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">
+          <i class="fa fa-heart"></i>
+        </span>
+      </span>
+      
+      <span class="leancloud-thumbsup-count"></span>
+    </span>
 </div>
 
         </div>
       </header>
+
+
+    
+    
+    
+      <div class="post-tags">
+          <a href="/tags/MVVM/" rel="tag"><i class="fa fa-tag"></i> MVVM</a>
+      </div>
 
     
     
@@ -397,21 +415,18 @@
   </div>
 </div>
 
-          <div class="post-tags">
-              <a href="/tags/MVVM/" rel="tag"># MVVM</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2017/09/25/CSS3%E5%AE%9E%E7%8E%B03D%E8%BD%AE%E6%92%AD%E5%9B%BE/" rel="prev" title="CSS3实现3D轮播图">
-                  <i class="fa fa-chevron-left"></i> CSS3实现3D轮播图
+                <a href="/2018/04/02/%E8%81%8A%E8%81%8Agit%E7%9A%84%E5%88%86%E6%94%AF%E5%92%8Crebase%E5%91%BD%E4%BB%A4/" rel="prev" title="聊聊git的分支和rebase命令">
+                  <i class="fa fa-chevron-left"></i> 聊聊git的分支和rebase命令
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2018/04/02/%E8%81%8A%E8%81%8Agit%E7%9A%84%E5%88%86%E6%94%AF%E5%92%8Crebase%E5%91%BD%E4%BB%A4/" rel="next" title="聊聊git的分支和rebase命令">
-                  聊聊git的分支和rebase命令 <i class="fa fa-chevron-right"></i>
+                <a href="/2017/09/25/CSS3%E5%AE%9E%E7%8E%B03D%E8%BD%AE%E6%92%AD%E5%9B%BE/" rel="next" title="CSS3实现3D轮播图">
+                  CSS3实现3D轮播图 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -490,6 +505,75 @@
       return document.getElementById(url).querySelector('.leancloud-visitors-count');
     }
 
+    /**
+    **********
+    * 点赞
+    **********
+    */
+    function leancloudThumbsupSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById("thumbsup-"+url).querySelector('.leancloud-thumbsup-count');
+    }
+    function getThumbsupBtn()
+    {
+      const visitors = document.querySelector('.leancloud_visitors');
+      return document.getElementById("thumbsup-btn-"+visitors.id);
+    }
+    // let thumbsupCount = 0;
+    function getThumbsupCount(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time;
+            // thumbsupCount = counter.time;
+          } else {
+            leancloudThumbsupSelector(url).innerText = 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    function addThumbsUp(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time + 1;
+            getThumbsupBtn().classList.add("with-love");
+            Counter('put', '/classes/Thumbsup/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save Thumbsup count', error);
+              });
+          } else {
+            Counter('post', '/classes/Thumbsup', { title, url, time: 1 })
+              .then(response => response.json())
+              .then(() => {
+                getThumbsupBtn().classList.add("with-love");
+                leancloudThumbsupSelector(url).innerText = 1;
+              })
+              .catch(error => {
+                console.error('Failed to create', error);
+              });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    
+
     function addCount(Counter) {
       const visitors = document.querySelector('.leancloud_visitors');
       const url = decodeURI(visitors.id);
@@ -553,6 +637,11 @@
           body: JSON.stringify(data)
         });
       };
+
+      getThumbsupCount(Counter);
+      getThumbsupBtn().onclick = function() {
+          addThumbsUp(Counter);
+        }
       if (CONFIG.page.isPost) {
         if (CONFIG.hostname !== location.hostname) return;
         addCount(Counter);

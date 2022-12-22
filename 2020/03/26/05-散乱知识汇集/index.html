@@ -343,10 +343,31 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span class="leancloud-visitors-count"></span>
     </span>
+    <span id="thumbsup-/2020/03/26/05-%E6%95%A3%E4%B9%B1%E7%9F%A5%E8%AF%86%E6%B1%87%E9%9B%86/" class="post-thumbsup-wrap" title="点赞支持">
+      <span class="post-thumbsup-icon">
+        
+        <span id="thumbsup-btn-/2020/03/26/05-%E6%95%A3%E4%B9%B1%E7%9F%A5%E8%AF%86%E6%B1%87%E9%9B%86/">
+          <i class="fa fa-heart"></i>
+        </span>
+      </span>
+      
+      <span class="leancloud-thumbsup-count"></span>
+    </span>
 </div>
 
         </div>
       </header>
+
+
+    
+    
+    
+      <div class="post-tags">
+          <a href="/tags/git/" rel="tag"><i class="fa fa-tag"></i> git</a>
+          <a href="/tags/protobuf/" rel="tag"><i class="fa fa-tag"></i> protobuf</a>
+          <a href="/tags/Protocol-Buffer/" rel="tag"><i class="fa fa-tag"></i> Protocol Buffer</a>
+          <a href="/tags/make/" rel="tag"><i class="fa fa-tag"></i> make</a>
+      </div>
 
     
     
@@ -419,24 +440,18 @@
   </div>
 </div>
 
-          <div class="post-tags">
-              <a href="/tags/git/" rel="tag"># git</a>
-              <a href="/tags/protobuf/" rel="tag"># protobuf</a>
-              <a href="/tags/Protocol-Buffer/" rel="tag"># Protocol Buffer</a>
-              <a href="/tags/make/" rel="tag"># make</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2019/12/20/04-%E4%B8%8D%E5%BE%97%E4%B8%8D%E6%87%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%BC%98%E5%8C%96%E6%8A%80%E8%83%BD/" rel="prev" title="不得不懂的工作流优化技能【工作日记04】">
-                  <i class="fa fa-chevron-left"></i> 不得不懂的工作流优化技能【工作日记04】
+                <a href="/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/" rel="prev" title="场景控制流程解读">
+                  <i class="fa fa-chevron-left"></i> 场景控制流程解读
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/" rel="next" title="场景控制流程解读">
-                  场景控制流程解读 <i class="fa fa-chevron-right"></i>
+                <a href="/2019/12/20/04-%E4%B8%8D%E5%BE%97%E4%B8%8D%E6%87%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%BC%98%E5%8C%96%E6%8A%80%E8%83%BD/" rel="next" title="不得不懂的工作流优化技能【工作日记04】">
+                  不得不懂的工作流优化技能【工作日记04】 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -515,6 +530,75 @@
       return document.getElementById(url).querySelector('.leancloud-visitors-count');
     }
 
+    /**
+    **********
+    * 点赞
+    **********
+    */
+    function leancloudThumbsupSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById("thumbsup-"+url).querySelector('.leancloud-thumbsup-count');
+    }
+    function getThumbsupBtn()
+    {
+      const visitors = document.querySelector('.leancloud_visitors');
+      return document.getElementById("thumbsup-btn-"+visitors.id);
+    }
+    // let thumbsupCount = 0;
+    function getThumbsupCount(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time;
+            // thumbsupCount = counter.time;
+          } else {
+            leancloudThumbsupSelector(url).innerText = 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    function addThumbsUp(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time + 1;
+            getThumbsupBtn().classList.add("with-love");
+            Counter('put', '/classes/Thumbsup/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save Thumbsup count', error);
+              });
+          } else {
+            Counter('post', '/classes/Thumbsup', { title, url, time: 1 })
+              .then(response => response.json())
+              .then(() => {
+                getThumbsupBtn().classList.add("with-love");
+                leancloudThumbsupSelector(url).innerText = 1;
+              })
+              .catch(error => {
+                console.error('Failed to create', error);
+              });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    
+
     function addCount(Counter) {
       const visitors = document.querySelector('.leancloud_visitors');
       const url = decodeURI(visitors.id);
@@ -578,6 +662,11 @@
           body: JSON.stringify(data)
         });
       };
+
+      getThumbsupCount(Counter);
+      getThumbsupBtn().onclick = function() {
+          addThumbsUp(Counter);
+        }
       if (CONFIG.page.isPost) {
         if (CONFIG.hostname !== location.hostname) return;
         addCount(Counter);

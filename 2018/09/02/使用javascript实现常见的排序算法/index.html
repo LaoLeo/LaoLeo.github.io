@@ -344,10 +344,29 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span class="leancloud-visitors-count"></span>
     </span>
+    <span id="thumbsup-/2018/09/02/%E4%BD%BF%E7%94%A8javascript%E5%AE%9E%E7%8E%B0%E5%B8%B8%E8%A7%81%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="post-thumbsup-wrap" title="点赞支持">
+      <span class="post-thumbsup-icon">
+        
+        <span id="thumbsup-btn-/2018/09/02/%E4%BD%BF%E7%94%A8javascript%E5%AE%9E%E7%8E%B0%E5%B8%B8%E8%A7%81%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
+          <i class="fa fa-heart"></i>
+        </span>
+      </span>
+      
+      <span class="leancloud-thumbsup-count"></span>
+    </span>
 </div>
 
         </div>
       </header>
+
+
+    
+    
+    
+      <div class="post-tags">
+          <a href="/tags/js/" rel="tag"><i class="fa fa-tag"></i> js</a>
+          <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
+      </div>
 
     
     
@@ -412,22 +431,18 @@
   </div>
 </div>
 
-          <div class="post-tags">
-              <a href="/tags/js/" rel="tag"># js</a>
-              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2018/08/16/%E8%85%BE%E8%AE%AF%E5%A4%96%E5%8C%85%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%8E%86%E6%80%BB%E7%BB%93/" rel="prev" title="腾讯外包面试经历总结">
-                  <i class="fa fa-chevron-left"></i> 腾讯外包面试经历总结
+                <a href="/2018/10/07/%E5%89%8D%E7%AB%AF%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/" rel="prev" title="前端编码规范">
+                  <i class="fa fa-chevron-left"></i> 前端编码规范
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2018/10/07/%E5%89%8D%E7%AB%AF%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/" rel="next" title="前端编码规范">
-                  前端编码规范 <i class="fa fa-chevron-right"></i>
+                <a href="/2018/08/16/%E8%85%BE%E8%AE%AF%E5%A4%96%E5%8C%85%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%8E%86%E6%80%BB%E7%BB%93/" rel="next" title="腾讯外包面试经历总结">
+                  腾讯外包面试经历总结 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -506,6 +521,75 @@
       return document.getElementById(url).querySelector('.leancloud-visitors-count');
     }
 
+    /**
+    **********
+    * 点赞
+    **********
+    */
+    function leancloudThumbsupSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById("thumbsup-"+url).querySelector('.leancloud-thumbsup-count');
+    }
+    function getThumbsupBtn()
+    {
+      const visitors = document.querySelector('.leancloud_visitors');
+      return document.getElementById("thumbsup-btn-"+visitors.id);
+    }
+    // let thumbsupCount = 0;
+    function getThumbsupCount(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time;
+            // thumbsupCount = counter.time;
+          } else {
+            leancloudThumbsupSelector(url).innerText = 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    function addThumbsUp(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time + 1;
+            getThumbsupBtn().classList.add("with-love");
+            Counter('put', '/classes/Thumbsup/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save Thumbsup count', error);
+              });
+          } else {
+            Counter('post', '/classes/Thumbsup', { title, url, time: 1 })
+              .then(response => response.json())
+              .then(() => {
+                getThumbsupBtn().classList.add("with-love");
+                leancloudThumbsupSelector(url).innerText = 1;
+              })
+              .catch(error => {
+                console.error('Failed to create', error);
+              });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    
+
     function addCount(Counter) {
       const visitors = document.querySelector('.leancloud_visitors');
       const url = decodeURI(visitors.id);
@@ -569,6 +653,11 @@
           body: JSON.stringify(data)
         });
       };
+
+      getThumbsupCount(Counter);
+      getThumbsupBtn().onclick = function() {
+          addThumbsUp(Counter);
+        }
       if (CONFIG.page.isPost) {
         if (CONFIG.hostname !== location.hostname) return;
         addCount(Counter);

@@ -340,10 +340,29 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span class="leancloud-visitors-count"></span>
     </span>
+    <span id="thumbsup-/2021/03/18/%E6%B5%B7%E5%A4%96%E7%89%88%E6%9C%ACdiff%E5%B7%A5%E5%85%B7/" class="post-thumbsup-wrap" title="点赞支持">
+      <span class="post-thumbsup-icon">
+        
+        <span id="thumbsup-btn-/2021/03/18/%E6%B5%B7%E5%A4%96%E7%89%88%E6%9C%ACdiff%E5%B7%A5%E5%85%B7/">
+          <i class="fa fa-heart"></i>
+        </span>
+      </span>
+      
+      <span class="leancloud-thumbsup-count"></span>
+    </span>
 </div>
 
         </div>
       </header>
+
+
+    
+    
+    
+      <div class="post-tags">
+          <a href="/tags/%E5%A4%9A%E8%AF%AD%E8%A8%80/" rel="tag"><i class="fa fa-tag"></i> 多语言</a>
+          <a href="/tags/%E6%B5%B7%E5%A4%96/" rel="tag"><i class="fa fa-tag"></i> 海外</a>
+      </div>
 
     
     
@@ -429,22 +448,18 @@
   </div>
 </div>
 
-          <div class="post-tags">
-              <a href="/tags/%E5%A4%9A%E8%AF%AD%E8%A8%80/" rel="tag"># 多语言</a>
-              <a href="/tags/%E6%B5%B7%E5%A4%96/" rel="tag"># 海外</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/02/25/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/" rel="prev" title="UIGraphicText表情渲染优化-支持表情来自不同图集">
-                  <i class="fa fa-chevron-left"></i> UIGraphicText表情渲染优化-支持表情来自不同图集
+                <a href="/2021/04/09/%E6%96%B0%E6%89%8B%E5%BC%95%E5%AF%BC%E7%B3%BB%E7%BB%9F/" rel="prev" title="新手引导系统">
+                  <i class="fa fa-chevron-left"></i> 新手引导系统
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/04/09/%E6%96%B0%E6%89%8B%E5%BC%95%E5%AF%BC%E7%B3%BB%E7%BB%9F/" rel="next" title="新手引导系统">
-                  新手引导系统 <i class="fa fa-chevron-right"></i>
+                <a href="/2021/02/25/UGUIText%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E6%96%87%E6%B7%B7%E6%8E%92%E2%80%94%E2%80%94%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96/" rel="next" title="UIGraphicText表情渲染优化-支持表情来自不同图集">
+                  UIGraphicText表情渲染优化-支持表情来自不同图集 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -523,6 +538,75 @@
       return document.getElementById(url).querySelector('.leancloud-visitors-count');
     }
 
+    /**
+    **********
+    * 点赞
+    **********
+    */
+    function leancloudThumbsupSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById("thumbsup-"+url).querySelector('.leancloud-thumbsup-count');
+    }
+    function getThumbsupBtn()
+    {
+      const visitors = document.querySelector('.leancloud_visitors');
+      return document.getElementById("thumbsup-btn-"+visitors.id);
+    }
+    // let thumbsupCount = 0;
+    function getThumbsupCount(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time;
+            // thumbsupCount = counter.time;
+          } else {
+            leancloudThumbsupSelector(url).innerText = 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    function addThumbsUp(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time + 1;
+            getThumbsupBtn().classList.add("with-love");
+            Counter('put', '/classes/Thumbsup/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save Thumbsup count', error);
+              });
+          } else {
+            Counter('post', '/classes/Thumbsup', { title, url, time: 1 })
+              .then(response => response.json())
+              .then(() => {
+                getThumbsupBtn().classList.add("with-love");
+                leancloudThumbsupSelector(url).innerText = 1;
+              })
+              .catch(error => {
+                console.error('Failed to create', error);
+              });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    
+
     function addCount(Counter) {
       const visitors = document.querySelector('.leancloud_visitors');
       const url = decodeURI(visitors.id);
@@ -586,6 +670,11 @@
           body: JSON.stringify(data)
         });
       };
+
+      getThumbsupCount(Counter);
+      getThumbsupBtn().onclick = function() {
+          addThumbsUp(Counter);
+        }
       if (CONFIG.page.isPost) {
         if (CONFIG.hostname !== location.hostname) return;
         addCount(Counter);

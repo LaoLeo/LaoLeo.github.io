@@ -339,10 +339,25 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span class="leancloud-visitors-count"></span>
     </span>
+    <span id="thumbsup-/2019/09/10/01-%E6%90%AD%E5%BB%BAmock%E5%B1%82/" class="post-thumbsup-wrap" title="点赞支持">
+      <span class="post-thumbsup-icon">
+        
+        <span id="thumbsup-btn-/2019/09/10/01-%E6%90%AD%E5%BB%BAmock%E5%B1%82/">
+          <i class="fa fa-heart"></i>
+        </span>
+      </span>
+      
+      <span class="leancloud-thumbsup-count"></span>
+    </span>
 </div>
 
         </div>
       </header>
+
+
+    
+    
+    
 
     
     
@@ -413,13 +428,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2019/08/15/%E5%89%8D%E7%AB%AF%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="prev" title="前端单元测试">
-                  <i class="fa fa-chevron-left"></i> 前端单元测试
+                <a href="/2019/10/16/02-%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83-%E6%95%B4%E7%90%86%E5%87%8C%E4%B9%B1%E4%BB%A3%E7%A0%81%E7%9A%84%E6%9C%89%E6%95%88%E5%A7%BF%E5%8A%BF/" rel="prev" title="整理凌乱代码的有效姿势【工作日记02】">
+                  <i class="fa fa-chevron-left"></i> 整理凌乱代码的有效姿势【工作日记02】
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2019/10/16/02-%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83-%E6%95%B4%E7%90%86%E5%87%8C%E4%B9%B1%E4%BB%A3%E7%A0%81%E7%9A%84%E6%9C%89%E6%95%88%E5%A7%BF%E5%8A%BF/" rel="next" title="整理凌乱代码的有效姿势【工作日记02】">
-                  整理凌乱代码的有效姿势【工作日记02】 <i class="fa fa-chevron-right"></i>
+                <a href="/2019/08/15/%E5%89%8D%E7%AB%AF%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="next" title="前端单元测试">
+                  前端单元测试 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -498,6 +513,75 @@
       return document.getElementById(url).querySelector('.leancloud-visitors-count');
     }
 
+    /**
+    **********
+    * 点赞
+    **********
+    */
+    function leancloudThumbsupSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById("thumbsup-"+url).querySelector('.leancloud-thumbsup-count');
+    }
+    function getThumbsupBtn()
+    {
+      const visitors = document.querySelector('.leancloud_visitors');
+      return document.getElementById("thumbsup-btn-"+visitors.id);
+    }
+    // let thumbsupCount = 0;
+    function getThumbsupCount(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time;
+            // thumbsupCount = counter.time;
+          } else {
+            leancloudThumbsupSelector(url).innerText = 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    function addThumbsUp(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time + 1;
+            getThumbsupBtn().classList.add("with-love");
+            Counter('put', '/classes/Thumbsup/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save Thumbsup count', error);
+              });
+          } else {
+            Counter('post', '/classes/Thumbsup', { title, url, time: 1 })
+              .then(response => response.json())
+              .then(() => {
+                getThumbsupBtn().classList.add("with-love");
+                leancloudThumbsupSelector(url).innerText = 1;
+              })
+              .catch(error => {
+                console.error('Failed to create', error);
+              });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    
+
     function addCount(Counter) {
       const visitors = document.querySelector('.leancloud_visitors');
       const url = decodeURI(visitors.id);
@@ -561,6 +645,11 @@
           body: JSON.stringify(data)
         });
       };
+
+      getThumbsupCount(Counter);
+      getThumbsupBtn().onclick = function() {
+          addThumbsUp(Counter);
+        }
       if (CONFIG.page.isPost) {
         if (CONFIG.hostname !== location.hostname) return;
         addCount(Counter);

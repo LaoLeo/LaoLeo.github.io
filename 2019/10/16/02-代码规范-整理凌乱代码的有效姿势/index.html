@@ -341,10 +341,25 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span class="leancloud-visitors-count"></span>
     </span>
+    <span id="thumbsup-/2019/10/16/02-%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83-%E6%95%B4%E7%90%86%E5%87%8C%E4%B9%B1%E4%BB%A3%E7%A0%81%E7%9A%84%E6%9C%89%E6%95%88%E5%A7%BF%E5%8A%BF/" class="post-thumbsup-wrap" title="点赞支持">
+      <span class="post-thumbsup-icon">
+        
+        <span id="thumbsup-btn-/2019/10/16/02-%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83-%E6%95%B4%E7%90%86%E5%87%8C%E4%B9%B1%E4%BB%A3%E7%A0%81%E7%9A%84%E6%9C%89%E6%95%88%E5%A7%BF%E5%8A%BF/">
+          <i class="fa fa-heart"></i>
+        </span>
+      </span>
+      
+      <span class="leancloud-thumbsup-count"></span>
+    </span>
 </div>
 
         </div>
       </header>
+
+
+    
+    
+    
 
     
     
@@ -426,13 +441,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2019/09/10/01-%E6%90%AD%E5%BB%BAmock%E5%B1%82/" rel="prev" title="搭建mock层【工作日记01】">
-                  <i class="fa fa-chevron-left"></i> 搭建mock层【工作日记01】
+                <a href="/2019/11/18/03-%E4%BD%BF%E7%94%A8console%E8%BE%93%E5%87%BA%E7%BD%91%E7%AB%99logo%E5%BD%A9%E8%9B%8B/" rel="prev" title="使用console输出网站logo彩蛋【工作日记03】">
+                  <i class="fa fa-chevron-left"></i> 使用console输出网站logo彩蛋【工作日记03】
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2019/11/18/03-%E4%BD%BF%E7%94%A8console%E8%BE%93%E5%87%BA%E7%BD%91%E7%AB%99logo%E5%BD%A9%E8%9B%8B/" rel="next" title="使用console输出网站logo彩蛋【工作日记03】">
-                  使用console输出网站logo彩蛋【工作日记03】 <i class="fa fa-chevron-right"></i>
+                <a href="/2019/09/10/01-%E6%90%AD%E5%BB%BAmock%E5%B1%82/" rel="next" title="搭建mock层【工作日记01】">
+                  搭建mock层【工作日记01】 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -511,6 +526,75 @@
       return document.getElementById(url).querySelector('.leancloud-visitors-count');
     }
 
+    /**
+    **********
+    * 点赞
+    **********
+    */
+    function leancloudThumbsupSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById("thumbsup-"+url).querySelector('.leancloud-thumbsup-count');
+    }
+    function getThumbsupBtn()
+    {
+      const visitors = document.querySelector('.leancloud_visitors');
+      return document.getElementById("thumbsup-btn-"+visitors.id);
+    }
+    // let thumbsupCount = 0;
+    function getThumbsupCount(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time;
+            // thumbsupCount = counter.time;
+          } else {
+            leancloudThumbsupSelector(url).innerText = 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    function addThumbsUp(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time + 1;
+            getThumbsupBtn().classList.add("with-love");
+            Counter('put', '/classes/Thumbsup/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save Thumbsup count', error);
+              });
+          } else {
+            Counter('post', '/classes/Thumbsup', { title, url, time: 1 })
+              .then(response => response.json())
+              .then(() => {
+                getThumbsupBtn().classList.add("with-love");
+                leancloudThumbsupSelector(url).innerText = 1;
+              })
+              .catch(error => {
+                console.error('Failed to create', error);
+              });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    
+
     function addCount(Counter) {
       const visitors = document.querySelector('.leancloud_visitors');
       const url = decodeURI(visitors.id);
@@ -574,6 +658,11 @@
           body: JSON.stringify(data)
         });
       };
+
+      getThumbsupCount(Counter);
+      getThumbsupBtn().onclick = function() {
+          addThumbsUp(Counter);
+        }
       if (CONFIG.page.isPost) {
         if (CONFIG.hostname !== location.hostname) return;
         addCount(Counter);

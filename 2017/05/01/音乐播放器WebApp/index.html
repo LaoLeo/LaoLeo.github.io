@@ -329,10 +329,34 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span class="leancloud-visitors-count"></span>
     </span>
+    <span id="thumbsup-/2017/05/01/%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8WebApp/" class="post-thumbsup-wrap" title="点赞支持">
+      <span class="post-thumbsup-icon">
+        
+        <span id="thumbsup-btn-/2017/05/01/%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8WebApp/">
+          <i class="fa fa-heart"></i>
+        </span>
+      </span>
+      
+      <span class="leancloud-thumbsup-count"></span>
+    </span>
 </div>
 
         </div>
       </header>
+
+
+    
+    
+    
+      <div class="post-tags">
+          <a href="/tags/animation/" rel="tag"><i class="fa fa-tag"></i> animation</a>
+          <a href="/tags/layout/" rel="tag"><i class="fa fa-tag"></i> layout</a>
+          <a href="/tags/clear/" rel="tag"><i class="fa fa-tag"></i> clear</a>
+          <a href="/tags/audio/" rel="tag"><i class="fa fa-tag"></i> audio</a>
+          <a href="/tags/%E8%BF%9B%E5%BA%A6%E6%9D%A1/" rel="tag"><i class="fa fa-tag"></i> 进度条</a>
+          <a href="/tags/%E6%92%AD%E6%94%BE%E6%8C%89%E9%92%AE/" rel="tag"><i class="fa fa-tag"></i> 播放按钮</a>
+          <a href="/tags/QQ%E9%9F%B3%E4%B9%90API/" rel="tag"><i class="fa fa-tag"></i> QQ音乐API</a>
+      </div>
 
     
     
@@ -382,27 +406,18 @@
   </div>
 </div>
 
-          <div class="post-tags">
-              <a href="/tags/animation/" rel="tag"># animation</a>
-              <a href="/tags/layout/" rel="tag"># layout</a>
-              <a href="/tags/clear/" rel="tag"># clear</a>
-              <a href="/tags/audio/" rel="tag"># audio</a>
-              <a href="/tags/%E8%BF%9B%E5%BA%A6%E6%9D%A1/" rel="tag"># 进度条</a>
-              <a href="/tags/%E6%92%AD%E6%94%BE%E6%8C%89%E9%92%AE/" rel="tag"># 播放按钮</a>
-              <a href="/tags/QQ%E9%9F%B3%E4%B9%90API/" rel="tag"># QQ音乐API</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2017/03/07/%E6%9C%89%E8%B6%A3%E7%9A%84%E9%BC%A0%E6%A0%87%E6%82%AC%E6%B5%AE%E6%95%88%E6%9E%9C/" rel="prev" title="有趣的鼠标悬浮效果">
-                  <i class="fa fa-chevron-left"></i> 有趣的鼠标悬浮效果
+                <a href="/2017/06/13/node%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/" rel="prev" title="node开发微信公众号">
+                  <i class="fa fa-chevron-left"></i> node开发微信公众号
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2017/06/13/node%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/" rel="next" title="node开发微信公众号">
-                  node开发微信公众号 <i class="fa fa-chevron-right"></i>
+                <a href="/2017/03/07/%E6%9C%89%E8%B6%A3%E7%9A%84%E9%BC%A0%E6%A0%87%E6%82%AC%E6%B5%AE%E6%95%88%E6%9E%9C/" rel="next" title="有趣的鼠标悬浮效果">
+                  有趣的鼠标悬浮效果 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -481,6 +496,75 @@
       return document.getElementById(url).querySelector('.leancloud-visitors-count');
     }
 
+    /**
+    **********
+    * 点赞
+    **********
+    */
+    function leancloudThumbsupSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById("thumbsup-"+url).querySelector('.leancloud-thumbsup-count');
+    }
+    function getThumbsupBtn()
+    {
+      const visitors = document.querySelector('.leancloud_visitors');
+      return document.getElementById("thumbsup-btn-"+visitors.id);
+    }
+    // let thumbsupCount = 0;
+    function getThumbsupCount(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time;
+            // thumbsupCount = counter.time;
+          } else {
+            leancloudThumbsupSelector(url).innerText = 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    function addThumbsUp(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time + 1;
+            getThumbsupBtn().classList.add("with-love");
+            Counter('put', '/classes/Thumbsup/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save Thumbsup count', error);
+              });
+          } else {
+            Counter('post', '/classes/Thumbsup', { title, url, time: 1 })
+              .then(response => response.json())
+              .then(() => {
+                getThumbsupBtn().classList.add("with-love");
+                leancloudThumbsupSelector(url).innerText = 1;
+              })
+              .catch(error => {
+                console.error('Failed to create', error);
+              });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    
+
     function addCount(Counter) {
       const visitors = document.querySelector('.leancloud_visitors');
       const url = decodeURI(visitors.id);
@@ -544,6 +628,11 @@
           body: JSON.stringify(data)
         });
       };
+
+      getThumbsupCount(Counter);
+      getThumbsupBtn().onclick = function() {
+          addThumbsUp(Counter);
+        }
       if (CONFIG.page.isPost) {
         if (CONFIG.hostname !== location.hostname) return;
         addCount(Counter);

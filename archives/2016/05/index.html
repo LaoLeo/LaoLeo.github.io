@@ -335,8 +335,8 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2016/05/19/JS%E4%B9%8B%E4%BA%8B%E4%BB%B6%E8%AF%A6%E8%A7%A3%EF%BC%882%EF%BC%89/" itemprop="url">
-            <span itemprop="name">JS之事件详解（二）</span>
+          <a class="post-title-link" href="/2016/05/19/JS%E4%B9%8B%E4%BA%8B%E4%BB%B6%E8%AF%A6%E6%83%85%EF%BC%881%EF%BC%89/" itemprop="url">
+            <span itemprop="name">JS之事件详解（一）</span>
           </a>
       </div>
 
@@ -355,8 +355,8 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2016/05/19/JS%E4%B9%8B%E4%BA%8B%E4%BB%B6%E8%AF%A6%E6%83%85%EF%BC%881%EF%BC%89/" itemprop="url">
-            <span itemprop="name">JS之事件详解（一）</span>
+          <a class="post-title-link" href="/2016/05/19/JS%E4%B9%8B%E4%BA%8B%E4%BB%B6%E8%AF%A6%E8%A7%A3%EF%BC%882%EF%BC%89/" itemprop="url">
+            <span itemprop="name">JS之事件详解（二）</span>
           </a>
       </div>
 
@@ -476,6 +476,75 @@
       return document.getElementById(url).querySelector('.leancloud-visitors-count');
     }
 
+    /**
+    **********
+    * 点赞
+    **********
+    */
+    function leancloudThumbsupSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById("thumbsup-"+url).querySelector('.leancloud-thumbsup-count');
+    }
+    function getThumbsupBtn()
+    {
+      const visitors = document.querySelector('.leancloud_visitors');
+      return document.getElementById("thumbsup-btn-"+visitors.id);
+    }
+    // let thumbsupCount = 0;
+    function getThumbsupCount(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time;
+            // thumbsupCount = counter.time;
+          } else {
+            leancloudThumbsupSelector(url).innerText = 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    function addThumbsUp(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudThumbsupSelector(url).innerText = counter.time + 1;
+            getThumbsupBtn().classList.add("with-love");
+            Counter('put', '/classes/Thumbsup/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save Thumbsup count', error);
+              });
+          } else {
+            Counter('post', '/classes/Thumbsup', { title, url, time: 1 })
+              .then(response => response.json())
+              .then(() => {
+                getThumbsupBtn().classList.add("with-love");
+                leancloudThumbsupSelector(url).innerText = 1;
+              })
+              .catch(error => {
+                console.error('Failed to create', error);
+              });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Thumbsup Error', error);
+        });
+    }
+    
+
     function addCount(Counter) {
       const visitors = document.querySelector('.leancloud_visitors');
       const url = decodeURI(visitors.id);
@@ -539,6 +608,11 @@
           body: JSON.stringify(data)
         });
       };
+
+      getThumbsupCount(Counter);
+      getThumbsupBtn().onclick = function() {
+          addThumbsUp(Counter);
+        }
       if (CONFIG.page.isPost) {
         if (CONFIG.hostname !== location.hostname) return;
         addCount(Counter);
