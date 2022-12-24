@@ -439,75 +439,6 @@
       return document.getElementById(url).querySelector('.leancloud-visitors-count');
     }
 
-    /**
-    **********
-    * 点赞
-    **********
-    */
-    function leancloudThumbsupSelector(url) {
-      url = encodeURI(url);
-      return document.getElementById("thumbsup-"+url).querySelector('.leancloud-thumbsup-count');
-    }
-    function getThumbsupBtn()
-    {
-      const visitors = document.querySelector('.leancloud_visitors');
-      return document.getElementById("thumbsup-btn-"+visitors.id);
-    }
-    // let thumbsupCount = 0;
-    function getThumbsupCount(Counter) {
-      const visitors = document.querySelector('.leancloud_visitors');
-      const url = decodeURI(visitors.id);
-      const title = visitors.dataset.flagTitle;
-
-      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length > 0) {
-            const counter = results[0];
-            leancloudThumbsupSelector(url).innerText = counter.time;
-            // thumbsupCount = counter.time;
-          } else {
-            leancloudThumbsupSelector(url).innerText = 0;
-          }
-        })
-        .catch(error => {
-          console.error('LeanCloud Thumbsup Error', error);
-        });
-    }
-    function addThumbsUp(Counter) {
-      const visitors = document.querySelector('.leancloud_visitors');
-      const url = decodeURI(visitors.id);
-      const title = visitors.dataset.flagTitle;
-
-      Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length > 0) {
-            const counter = results[0];
-            leancloudThumbsupSelector(url).innerText = counter.time + 1;
-            getThumbsupBtn().classList.add("with-love");
-            Counter('put', '/classes/Thumbsup/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
-              .catch(error => {
-                console.error('Failed to save Thumbsup count', error);
-              });
-          } else {
-            Counter('post', '/classes/Thumbsup', { title, url, time: 1 })
-              .then(response => response.json())
-              .then(() => {
-                getThumbsupBtn().classList.add("with-love");
-                leancloudThumbsupSelector(url).innerText = 1;
-              })
-              .catch(error => {
-                console.error('Failed to create', error);
-              });
-          }
-        })
-        .catch(error => {
-          console.error('LeanCloud Thumbsup Error', error);
-        });
-    }
-    
-
     function addCount(Counter) {
       const visitors = document.querySelector('.leancloud_visitors');
       const url = decodeURI(visitors.id);
@@ -558,7 +489,7 @@
         });
     }
 
-    const { app_id, app_key, server_url } = {"enable":true,"app_id":"9UkIwF1j8GAbYNYHlAdGD0lc-gzGzoHsz","app_key":"SvWuPL4a5ae1tjdqinzlwTjV","server_url":"https://9ukiwf1j.lc-cn-n1-shared.com","security":false};
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"9UkIwF1j8GAbYNYHlAdGD0lc-gzGzoHsz","app_key":"SvWuPL4a5ae1tjdqinzlwTjV","server_url":"https://9ukiwf1j.lc-cn-n1-shared.com","security":false,"thumbsup":true};
     function fetchData(api_server) {
       const Counter = (method, url, data) => {
         return fetch(`${api_server}/1.1${url}`, {
@@ -571,11 +502,6 @@
           body: JSON.stringify(data)
         });
       };
-
-      getThumbsupCount(Counter);
-      getThumbsupBtn().onclick = function() {
-          addThumbsUp(Counter);
-        }
       if (CONFIG.page.isPost) {
         if (CONFIG.hostname !== location.hostname) return;
         addCount(Counter);
@@ -598,6 +524,125 @@
   })();
 </script>
 
+<script>
+(function(){
+  /**
+  **********
+  * 点赞
+  **********
+  */
+  let thumbsupLoaclKeyPrefix = "thumbsup"
+  let thumbsupCount = 0;
+  let thumbsupObjectId = "";
+  function leancloudThumbsupSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(thumbsupLoaclKeyPrefix+"-"+url).querySelector('.leancloud-thumbsup-count');
+  }
+  function getThumbsupBtn()
+  {
+    const visitors = document.querySelector('.leancloud_visitors');
+    return document.getElementById(thumbsupLoaclKeyPrefix+"-btn-"+visitors.id);
+  }
+  function getThumbsupCount(Counter) {
+    const visitors = document.querySelector('.leancloud_visitors');
+    const url = decodeURI(visitors.id);
+    const title = visitors.dataset.flagTitle;
+
+    Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+      .then(response => response.json())
+      .then(({ results }) => {
+        let localKey = thumbsupLoaclKeyPrefix+"-"+visitors.id
+        const isHadThumbsup = window.localStorage.getItem(localKey) == 1
+        console.log("localStorage thumbsup:", window.localStorage.getItem(localKey))
+        if (isHadThumbsup) {
+          getThumbsupBtn().classList.add("with-love");
+        }
+        if (results.length > 0) {
+          const counter = results[0];
+          leancloudThumbsupSelector(url).innerText = counter.time;
+          thumbsupCount = counter.time;
+          thumbsupObjectId = counter.objectId;
+        } else {
+          leancloudThumbsupSelector(url).innerText = 0;
+        }
+      })
+      .catch(error => {
+        console.error('LeanCloud Thumbsup Error', error);
+      });
+  }
+
+  function onThumbsUpSuccess(id) {
+    const url = decodeURI(id);
+    getThumbsupBtn().classList.add("with-love");
+    leancloudThumbsupSelector(url).innerText = ++thumbsupCount;
+    let localKey = thumbsupLoaclKeyPrefix+"-"+id
+    window.localStorage.setItem(localKey, 1);
+  }
+  function addThumbsUp(Counter) {
+    const visitors = document.querySelector('.leancloud_visitors');
+    const url = decodeURI(visitors.id);
+    const title = visitors.dataset.flagTitle;
+
+    if (thumbsupCount<=0) {
+      Counter('post', '/classes/Thumbsup', { title, url, time: 1 })
+        .then(response => response.json())
+        .then(() => {
+          onThumbsUpSuccess(visitors.id);
+        })
+        .catch(error => {
+          console.error('Failed to create', error);
+        });
+    } else {
+      Counter('put', '/classes/Thumbsup/' + thumbsupObjectId, { time: { '__op': 'Increment', 'amount': 1 } })
+        .then(response => {
+          onThumbsUpSuccess(visitors.id);
+        })
+        .catch(error => {
+          console.error('Failed to save Thumbsup count', error);
+        });
+    }
+  }
+
+  const { app_id, app_key, server_url } = {"enable":true,"app_id":"9UkIwF1j8GAbYNYHlAdGD0lc-gzGzoHsz","app_key":"SvWuPL4a5ae1tjdqinzlwTjV","server_url":"https://9ukiwf1j.lc-cn-n1-shared.com","security":false,"thumbsup":true};
+    function fetchData(api_server) {
+      const Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        // 添加点赞点击事件
+        let btn = getThumbsupBtn();
+        if (btn!=null) {
+          // console.log("bindThumbsupBtn found")
+          getThumbsupCount(Counter);
+          btn.onclick = function() {
+            addThumbsUp(Counter);
+          }
+        }
+      }
+    }
+
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  
+})();
+</script>
 
 
 
