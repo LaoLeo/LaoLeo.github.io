@@ -1,0 +1,25 @@
+<div class="post-fixed-siderbar">
+{%- if is_post() %}
+    {%- if theme.leancloud_visitors.enable and theme.leancloud_visitors.thumbsup %}
+    <div id="{{ 'thumbsup-'+url_for(post.path) }}" class="post-fixed-siderbar-item" title="点赞支持">
+        <span class="post-fixed-siderbar-icon">
+            <span id="{{ 'thumbsup-btn-'+url_for(post.path) }}">
+                <i class="fa fa-heart"></i>
+            </span>
+        </span>
+        <span class="leancloud-fixed-siderbar-count leancloud-thumbsup-count"></span>
+    </div>
+    {%- endif %}
+
+    {%- if theme.gitalk.enable %}
+        <div class="post-fixed-siderbar-item" title="评论试试">
+            <span class="post-fixed-siderbar-icon">
+                <span class="post-fixed-siderbar-comments-btn">
+                    <i class="fa fa-comment"></i>
+                </span>
+            </span>
+            <span class="leancloud-fixed-siderbar-count post-fixed-siderbar-comments-count"></span>
+        </div>
+    {%- endif %}
+{%- endif %}
+</div>
