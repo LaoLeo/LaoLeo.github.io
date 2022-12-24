@@ -24,7 +24,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="射箭小游戏 碰撞检测属于2D游戏，没有深度，碰撞检测采用判断两线段是否相交的方法，即箭头两帧之间位置线段与箭靶中心为原点的xy轴中心线两线段。  之所以选择这种判断方法，是因为中靶的位置是算分数的一个因素，不能像射气球那种带碰撞盒的方式，箭进入碰撞盒后就会立刻停止。这样的得分效果不好，只能拿到击中边缘的3分。 假如两帧的线段同时与两中心线相交，优先取与y轴平行的中心线交点，因为箭停留在靶上的效果">
 <meta property="og:type" content="article">
@@ -360,7 +360,14 @@
         </span>
         <span class="leancloud-fixed-siderbar-count leancloud-thumbsup-count"></span>
     </div>
-    
+        <div class="post-fixed-siderbar-item" title="评论试试">
+            <span class="post-fixed-siderbar-icon">
+                <span class="post-fixed-siderbar-comments-btn">
+                    <i class="fa fa-comment"></i>
+                </span>
+            </span>
+            <span class="leancloud-fixed-siderbar-count post-fixed-siderbar-comments-count"></span>
+        </div>
 </div>
       </header>
 
@@ -730,6 +737,38 @@
     }
   
 })();
+function bindCommentsBtn()
+{
+    setTimeout(function(){
+        var targetEl =document.querySelector(".gt-meta");
+        if (targetEl!=null)
+        {
+            var commentsBtn = document.querySelector(".post-fixed-siderbar-comments-btn");
+            var gtCountEl = document.querySelector(".gt-link-counts");
+            var commentsCountEl = document.querySelector(".post-fixed-siderbar-comments-count");
+            commentsCountEl.innerText = gtCountEl.innerText;
+            commentsBtn.onclick = function()
+            {
+                window.anime({
+                    targets  : document.scrollingElement,
+                    duration : 500,
+                    easing   : 'linear',
+                    scrollTop: targetEl.offsetTop
+                });
+
+            }
+        } else {
+            bindCommentsBtn();
+        }
+        
+    }, 2000)
+}
+if (CONFIG.page.isPost)
+{
+    bindCommentsBtn();
+}
+
+
 </script>
 
 
