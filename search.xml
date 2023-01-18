@@ -581,7 +581,7 @@
 <img src="/2023/01/05/WebGL%E4%B8%8A%E5%AF%BC%E5%87%BA%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6/image_ZrB80m7JK5.png" class="">
 <p>所以Clogger模块的log日志可以从IndexedDB提取ArrayBuffer，然后解析成string，上报或者导出为Log文件。</p>
 <p>IndexedDB没有容量限制。</p>
-<p>Demo实现了WebGL导出Log文件，地址点击<a target="_blank" rel="noopener" href="https://gitlab.bt/laotuzhu/webgldemo" title="这里">这里</a>。</p>
+<p>Demo实现了WebGL导出Log文件，地址点击<a target="_blank" rel="noopener" href="https://github.com/LaoLeo/WebGLLogExport" title="WebGLLogExport Demo">这里</a>。</p>
 ]]></content>
       
         <categories>
