@@ -38,4 +38,4 @@ Development Build的js代码不会压缩且具有可读性，但遇到Error或Ex
 
 IndexedDB没有容量限制。
 
-Demo实现了WebGL导出Log文件，地址点击[这里](https://gitlab.bt/laotuzhu/webgldemo "这里")。
+Demo实现了WebGL导出Log文件，地址点击[这里](https://github.com/LaoLeo/WebGLLogExport "WebGLLogExport Demo")。
