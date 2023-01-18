@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://laoleo.github.io/"/>
-  <updated>2022-12-17T14:04:08.684Z</updated>
+  <updated>2023-01-18T07:22:33.966Z</updated>
   <id>https://laoleo.github.io/</id>
   
   <author>
@@ -14,6 +14,736 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>UnityWebGL微信小游戏适配和优化</title>
+    <link href="https://laoleo.github.io/2023/01/18/UnityWebGL%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E9%80%82%E9%85%8D%E5%92%8C%E4%BC%98%E5%8C%96/"/>
+    <id>https://laoleo.github.io/2023/01/18/UnityWebGL微信小游戏适配和优化/</id>
+    <published>2023-01-17T16:00:00.000Z</published>
+    <updated>2023-01-18T07:22:33.966Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>微信提供Unity WebGL Transfer工具，将Unity游戏转换发布到小游戏平台。</p>
+<span id="more"></span>
+<h2 id="测试情况"><a href="#测试情况" class="headerlink" title="测试情况"></a>测试情况</h2><p>**1.小游戏平台标识 **</p>
+<p>Lua和C#代码要判断小游戏平台来做适配，需要自定义微信小游戏平台标识，单单webgl平台标识不能判断是不是运行在微信小游戏上。</p>
+<p>在小游戏打包时候添加symbol预编译宏。</p>
+<p><strong>2.video播放</strong></p>
+<p>游戏中资源加载之后播放video，在小游戏环境中会报错：video.canPlayType is not a function.</p>
+<p>网上又解决方案，C#调wx js代码播放video，<a target="_blank" rel="noopener" href="https://blog.csdn.net/u013032852/article/details/119605522?spm=1001.2014.3001.5501" title="链接">链接</a>。</p>
+<p>**3.Input 输入 **</p>
+<p>输入框适配微信，不然捕获不到键盘输入，需要适配，看<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/InputAdaptation.md" title="连接">连接</a>。</p>
+<p><strong>4.Touch事件和多点触控检验</strong></p>
+<ul>
+<li><em>请将WXTouchInputOverride.cs附加到EventSystem对象上，已测试EasyTouch、UGUI、FairGUI可正常工作</em>&#x20;</li>
+<li><em>NGUI、FairGUI等UI组件内部实现(如NGUI的UICamera.cs)判断touch id&lt;0逻辑分支需删除；在iOS高性能模式下，id可为负数。</em></li>
+</ul>
+<p><strong>5.音频</strong></p>
+<p>WebGL底层是利用WebAudio适配，所以Fmod的能力不能完全利用。</p>
+<p><em>目前音频播放存在占用内存大、播放声音噪声大不稳定的问题</em></p>
+<p><strong>6.文件存储</strong></p>
+<p>WebGL将文件存储存储进IndexDB，但是小游戏不支持，需要使用WX C# SDK适配。</p>
+<p>参考：WebGL微信小游戏转换-<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/DevelopmentQAList.md" title="技术常见问题QA">技术常见问题QA</a></p>
+<h2 id="优化记录"><a href="#优化记录" class="headerlink" title="优化记录"></a>优化记录</h2><table>
+<thead>
+<tr>
+<th>优化目标</th>
+<th>优化项</th>
+<th></th>
+<th>优化建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>启动速度&#xA;&#xA;<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/StartupOptimization.md" title="参考">参考</a></td>
+<td>内存</td>
+<td>剔除不必要插件，减少代码包体</td>
+<td>1.剔除MSDK等三方库代码&#xA;&#xA;2.代码剥离级别改为Medium，或者改为high加Link.xml文件修正，<a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/Manual/ManagedCodeStripping.html" title="参考">参考</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>使用代码分包工具缩减WebAssembly首次下载包体，<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/WasmSplit.md#概述" title="代码分包">代码分包</a></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>网络</td>
+<td>资源CDN加速，开启Brotli或gzip压缩首包data文件</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>将进入到登录页面前需要加载的资源放到小程序预加载中去</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>资源请求并发数提升至20个，但是不能超过20</td>
+<td></td>
+</tr>
+<tr>
+<td>内存</td>
+<td>纹理</td>
+<td>贴图maxsize尽量不超过1024，小游戏环境适当降低画质</td>
+<td>PJGTextureImportChecker脚本上加上webgl平台贴图的设置&#xA;&#xA;*   bigbg允许maxsize为2048（因为测试发现质量和压缩率友好），其他的纹理1024&#xA;*   2020版纹理格式使用DXT1和DXT5，详细参考本文纹理压缩</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>贴图尽量不生成Mipmap</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>贴图尽量不使用可写属性</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>选择压缩率较好的格式和maxsize</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>字体纹理压缩前最大不超过4MB</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>发布前使用压缩纹理工具进行优化</td>
+<td>小游戏压缩纹理工具可以将纹理资源从ab中分离出来，将资源指针替换至原来ab内，分离出来的资源将被处理成多种不同GPU所支持的纹理格式托管至CDN中，小游戏底层会劫持渲染时根据资源指针和当前GPU支持的纹理格式来进行远程加载，以此来达到成功加载立即上传至GPU后释放和节省系统内存的目的。参考<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/CompressedTexture.md" title="微信小游戏压缩纹理工具">微信小游戏压缩纹理工具</a>&#xA;&#xA;Unity 2020.3.34使用这个工具有问题，微信方建议最好使用Unity2021.2.5版本</td>
+</tr>
+<tr>
+<td></td>
+<td>AB</td>
+<td>AssetBundle</td>
+<td>小游戏底层会对bundle做缓存，需要关闭cache。WebGL上也不建议使用带cache的API，不然ab文件除了会存入浏览器的IndexDB外，还会存入内存中的UnityCache</td>
+</tr>
+<tr>
+<td></td>
+<td>音频</td>
+<td>优化Fmod bank，使用微信音频接口</td>
+<td>*   webgl对Fmod提供了音频基础性的支持，unity底层利用内部web audio api实现这点&#xA;*   支持音频回放和混音&#xA;*   2021版之前不支持音频压缩，占用内存大&#xA;*   目前fmod音频播放沙沙声原因未知？？内存太大？还是某些功能未实现？？？？？&#xA;*   微信方建议使用他们的SDK接口<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/AudioOptimization.md" title="适配播放音频">适配播放音频</a></td>
+</tr>
+<tr>
+<td>减低CPU消耗</td>
+<td></td>
+<td>iOS使用高性能模式</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>尽量使用Android CPU Profiler在小游戏真机环境Profie计算瓶颈</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>提前在Unity环境使用Unity Profiler发现问题</td>
+</tr>
+</tbody>
+</table>
+<h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><p>浏览器WebGL内存结构</p>
+<p><img src="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/raw/main/image/optimizationMemory1.png" alt=""></p>
+<p>微信小程序WebGL内存结构</p>
+<p><img src="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/raw/main/image/optimizationMemory10.png" alt=""></p>
+<p>小程序基础库+Canvas：小程序webgl运行的底层支持</p>
+<p>WASM编译：WASM是webassembly二进制代码（包括引擎、业务、第三方插件代码），运行时需进行编译执行，会产生大量内存占用（30M wasm code会产生300M编译内存）。</p>
+<p>UnityHeap：就是编译执行wasm代码后的内存，UnityHeap = max(托管/Mono内存) + max(Native/Reserved内存 + 三方库C原生代码内存)</p>
+<p>建议内存峰值控制范围：</p>
+<ol>
+<li>Android: 低档机 &lt; 1.2G, 中高档机 &lt; 1.5G</li>
+<li>iOS: 低档机 &lt; 1G, 中高档机 &lt; 1.4G（ios低档机为iPhone 6sp/7/8等内存2G机型，中高档机为iPhone7p/8p/X/11等内存3G或以上机型）</li>
+</ol>
+<p>以iOS高性能模式为例，一款代码(导出目录/webgl/Build/xxx.code.unityweb或code.wasm)大小为30MB的游戏占用内存为：</p>
+<p>小游戏基础库(130MB) + Cavnas(70MB) + 编译内存(300MB) + UnityHeap + Gfx显存 + 音频 + JavaScript(通常&lt;100MB)。</p>
+<p>所以假如是低端机，内存控制在1G以内，那么业务侧（UnityHeap，Gfx显存，音频，JavaScript）需控制在500MB左右。</p>
+<p>参考<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/OptimizationMemory.md" title="优化Unity WebGL的内存">优化Unity WebGL的内存</a></p>
+<h3 id="当前内存占用"><a href="#当前内存占用" class="headerlink" title="当前内存占用"></a>当前内存占用</h3><p>使用<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/UsingMemoryProfiler.md" title="profilingMemory分析">profilingMemory分析</a>当前内存，测试机三星GS 8,。</p>
+<p>使用微信的教程插入c代码忽略统计Lua内存，开启了profilingMemory后，真机和模拟器发现太卡了，帧率都掉到了个位数，浏览器访问速度正常。下面测试进入到主场景的情况：</p>
+<p>真机和模拟器（两者内存占用基本一样）:</p>
+<img src="/2023/01/18/UnityWebGL%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E9%80%82%E9%85%8D%E5%92%8C%E4%BC%98%E5%8C%96/image_vsb8Mwojo2.png" class="">
+<p>浏览器：</p>
+<img src="/2023/01/18/UnityWebGL%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E9%80%82%E9%85%8D%E5%92%8C%E4%BC%98%E5%8C%96/image_X3PZ1buk4d.png" class="">
+<p>Unity Profiler：</p>
+<img src="/2023/01/18/UnityWebGL%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E9%80%82%E9%85%8D%E5%92%8C%E4%BC%98%E5%8C%96/image_D4d4TQAzTI.png" class="">
+<p>分析：</p>
+<ul>
+<li>真机、模拟器、浏览器的内存使用情况差不多，毕竟使用同一份资源</li>
+<li>UsedHeapMemory 191是UnityHeap的真实使用量，MonoHeapUsed 164，那么剩下的native used+三方库为27，对这个结果很是疑惑。</li>
+<li>贴图使用38.4，比较可信，但是audio才2.8KB，可能需要使用Unity InstantGame版本增强的Profiler功能才行</li>
+</ul>
+<h3 id="纹理压缩"><a href="#纹理压缩" class="headerlink" title="纹理压缩"></a>纹理压缩</h3><p>WebGL的支持的纹理压缩格式受Unity版本的影响，测试的版本是<strong>Unity 2020.3.34f1</strong>。查阅Unity Docs 2020–<a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2020.3/Manual/class-TextureImporterOverride.html" title="Recommended, default, and supported texture formats, by platform">Recommended, default, and supported texture formats, by platform</a></p>
+<p>，简单总结支持格式，测试如下：</p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>支持</th>
+<th>测试</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RGB16/24</td>
+<td>是</td>
+<td>正常显示</td>
+</tr>
+<tr>
+<td>RGBA16/32</td>
+<td>是</td>
+<td>正常显示</td>
+</tr>
+<tr>
+<td>DXT1、DXT5</td>
+<td>部分</td>
+<td>正常显示</td>
+</tr>
+<tr>
+<td>ETC、ETC2 4/8 bits</td>
+<td>不</td>
+<td>显示异常</td>
+</tr>
+<tr>
+<td>ASTC</td>
+<td>不</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+<p>注意，在<a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2021.3/Manual/class-TextureImporterOverride.html" title="2021.3文档">2021.3文档</a>里，DXT格式不支持，但ECT会被支持，ASTC在IOS13，Android10上被支持。</p>
+<p>关于小游戏压缩纹理工具，在2020,3.34上压缩提取纹理ab会报错，不支持使用，这点微信方给出两点建议：</p>
+<ul>
+<li>切换到微信方验证过的对应Unity大年份版本的小版本打ab后再使用工具压缩提取纹理，如：2020.3.10f1c1。看考<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/CompressedTexture.md" title="这里">这里</a>。</li>
+<li>换微信方与Unity合作改进的Unity版本，改进的版本Unity支持了ASTC。</li>
+</ul>
+<p>多次测试后，Unity2020.3.34上纹理格式选择总结：</p>
+<ul>
+<li>无Alpha信息纹理使用DTX1，有Alpha信息使用DXT5，DXT格式的压缩率比较优。</li>
+<li>Crunched DXT格式压缩率比DXT更低，压缩质量调到最大100，大小还是比DXT1小，是DXT1的一半以下。关于Crunched压缩概念参考<a target="_blank" rel="noopener" href="https://docs.unity3d.com/Manual/texture-compression-formats.html" title="这里">这里</a></li>
+<li>Crunched DXT格式纹理质量对比，质量100的Crunched DXT1只是略微比DXT1差了一点。</li>
+</ul>
+<p>以下是在三星galaxy s8下的测试对比，分辨率为2220x1080，以第一时间出现的UI背景图为例：</p>
+<img src="/2023/01/18/UnityWebGL%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E9%80%82%E9%85%8D%E5%92%8C%E4%BC%98%E5%8C%96/image_6o3iFkTI7o.png" class="">
+<p>观察发现：</p>
+<ul>
+<li>RGB24质量最高</li>
+<li>DXT1与Crunched DXT1 quality 100的质量非常接近，只是微小的差别，手机上很难看出来</li>
+<li>Crunched DXT1 quality 50质量最差，与DXT1相比有肉眼可见的差别</li>
+</ul>
+<p>PC上的微信小程序贴图格式会选择用DXT，移动端首选ETC和ASTC，ASTC优于ETC。DXT格式用在移动端上解压速度不如ETC。</p>
+<p>看看不同贴图格式对AB大小的影响，对比如下：</p>
+<ul>
+<li>未设置格式，使用默认格式RGB24和RGBA32，ab包大小11G左右</li>
+<li>设置DXT1和DXT5格式和maxsize后，3.68G</li>
+<li>将DXT1和DXT5换成Crunched格式，质量调到Best100，3.05G</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;微信提供Unity WebGL Transfer工具，将Unity游戏转换发布到小游戏平台。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Unity游戏开发" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="平台" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/"/>
+    
+      <category term="WebGL" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/WebGL/"/>
+    
+    
+      <category term="小游戏" scheme="https://laoleo.github.io/tags/%E5%B0%8F%E6%B8%B8%E6%88%8F/"/>
+    
+      <category term="WebGL" scheme="https://laoleo.github.io/tags/WebGL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>食物语兼容打包编译到WebGL</title>
+    <link href="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/"/>
+    <id>https://laoleo.github.io/2023/01/16/食物语兼容打包编译到WebGL/</id>
+    <published>2023-01-15T16:00:00.000Z</published>
+    <updated>2023-01-18T07:21:26.501Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Unity使用WebAssembly(wasm)技术将引擎代码和业务代码编译到WebGL平台上解析运行，截止目前2023年，PC浏览器对webgl的支持也越来越兼容普及，并且wasm具有可移植、体积小、加载快等特点，应用运行能接近原生的体验。</p>
+<p>为应对项目组拓展海外市场的发展战略，因为海外用户使用PC玩游戏比较多，所以先预研一下发布WebGL平台的整体流程。</p>
+<p>这里使用已经上线的项目——食物语来实践，这样遇到的问题比较有代表性。</p>
+<blockquote>
+<p>顺便打下广告，食物语是一项集中华传统美食文明和二次元风格于一体的女性向养成卡牌游戏，对美食和二次元感兴趣的同学，非常有必要下载玩玩~~</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="总体方向"><a href="#总体方向" class="headerlink" title="总体方向"></a>总体方向</h2><table>
+<thead>
+<tr>
+<th>代码模块</th>
+<th>库模块</th>
+<th>兼容情况</th>
+<th>完成情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ao框架</td>
+<td>日志</td>
+<td><a target="_blank" rel="noopener" href="http://wiki.info/pages/viewpage.action?pageId=139784050" title="日志方案">日志方案</a></td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>网络</td>
+<td><a target="_blank" rel="noopener" href="http://wiki.info/pages/viewpage.action?pageId=139769721" title="使用websocket">使用websocket</a></td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>ToLua</td>
+<td>步骤7</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>资源加载</td>
+<td>步骤20</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>资源打包</td>
+<td>步骤5、6</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>热更新</td>
+<td></td>
+<td>⭕</td>
+</tr>
+<tr>
+<td></td>
+<td>Bugly</td>
+<td></td>
+<td>⭕</td>
+</tr>
+<tr>
+<td>三方库</td>
+<td>Spine</td>
+<td>支持</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>Live2D</td>
+<td>支持</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>Fmod</td>
+<td>步骤21</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>Msdk</td>
+<td>跳过</td>
+<td>✔</td>
+</tr>
+</tbody>
+</table>
+<h2 id="实施步骤"><a href="#实施步骤" class="headerlink" title="实施步骤"></a>实施步骤</h2><p>1.移除（剪切到别的目录）AltasSource、GameAssets资源目录，移除ThridParty三方库以及一切业务相关代码，只剩aounity框架相关代码。</p>
+<p>2.切换WebGL目标平台</p>
+<p>3.编译，解决编译报错</p>
+<ul>
+<li>注释打包相关的LocalBundleStrategy类</li>
+<li>注释LocalExportLuaSetting类，将C#类转为Lua类的工具类</li>
+<li>AssetBundleBuilder调用了上层的类RemoveEmptyDirectory</li>
+<li>BuglyAgent没有适配webgl平台，空引用报错</li>
+<li>LuaBinder和DelegateFactoryUtil使用了反射</li>
+</ul>
+<p>4.先跑通执行Lua代码，Editor没问题，打包需要解决打包Lua ab问题</p>
+<p>5.强打，只打Lua ab，可以正常打出ab，但是web上下载解压有报错。</p>
+<p>6.WebGL上不支持解压ab LZMA压缩格式，可以是LZ4，打包选项上得添加ChunkBasedCompression，不然默认打包压缩格式是LZMA。</p>
+<p>7.报错dlopen加载库错误、加载tolua DLL错误。这是因为webgl上允许使用动态链接库，Lua相关的库需要通过静态引用C源码的方式，打包时一起编译到webAssembly中。</p>
+<p>参考文章<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/486826570" title="Unity WebGL ToLua">Unity WebGL ToLua</a>，文章里的webgl plugins缺少项目中用到的库，得到<a target="_blank" rel="noopener" href="http://tolua_rumtime" title="tolua_runtime">tolua_runtime</a>仓库下载缺失的C文件。</p>
+<p>引入lua C源码后打包时会进行Complie WebAssembly Module编译步骤，就是编译刚刚引入的C库文件，假如这时候失败报错python.exe编译报错，则需要检查C文件，修改一下。</p>
+<p><strong>打包过程中发现了两处离奇的编译错误</strong>。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_gMMazqvHi4.png" class="">
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_jpm_1FmNy0.png" class="">
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_wjmhGTQACV.png" class="">
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_lBXxnzYyz7.png" class="">
+<p>关于bit库问题，luajit内置了，webgl平台需要单独开启，跟mac os类似情况，使用的bit也是luajit作者的</p>
+<p>解决编译报错后，成功打出包。<strong>注意：目前tolua c库，只包含lua51，cjson，pbc，pb.c(proto gen), bit.c(luajit作者的bit库), tolua运行时 这几个源码</strong></p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_A5gllRKePb.png" class="">
+<p><strong>另外编译lua的bytes，webgl是原生lua51，遇到以上jit的lua代码无法编译bytes，所以框架统一删掉，因为一直在客户端都是没有调用jit相关lua脚本的</strong></p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_5fUd5zvpx8.png" class="">
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_3tC5cwfsr5.png" class="">
+<p><strong>对于源码pbc（实际上框架没有使用只是保留不想改源码调用），webgl平台编译还不识别&lt;&gt;，要改成</strong>“”</p>
+<p><strong>另外webassembly编译c, c++代码，代码文件必须放在同一个目录下，不能有子目录，不然对于include的头文件要加相对目录，编译时候也不认，会报错提示找不到文件</strong></p>
+<p>8.FileUtils类添加webgl平台加载ab路径的正确路径，成功加载Lua ab后，输出ab中所有assetName确认加载ab的filename，改写LuaFileUtils.cs获取Lua TextAsset的filename。</p>
+<p>9.成功加载和解压Lua ab，tolua框架成功获取lua file buffer数据并成功执行输出log。</p>
+<p>10.C#中执行Lua代码成功跑通，接下来跑通Lua执行C#注册的类代码，LuaClient.bind里使用了反射，其实可以直接引用LuaBinder类。去掉LocalExportLuaSetting中缺失引用的类（第三方，pgj等），generate一遍解决C#编译报错。</p>
+<p>11.勾选development，打包编译到webAssembly module报错：unresolved symbol ZN14RefcountedData7ReleaseEv、luaopen_socket_core、luaopen_mime_core、luaopen_ffi。后面三个项目不用，直接在LuaDll中注释去掉，少了几个报错，但是还有一个。</p>
+<p><em>20230104更新：</em></p>
+<p><em>通过一步一步删除分拆代码打debug包的方式，逐步缩小问题的范围，发现只有加入ToLua导出的Wrap文件时，才会有出现这个编译错误：error: unresolved symbol: _ZN14RefcountedData7ReleaseEv。</em></p>
+<p><em>利用二分法进一步缩小范围，最后发现只要编译UnityEngine_Rendering_CommandBufferWrap.cs就会报这个错。</em></p>
+<p><em>这个Wrap文件没有在Lua中用到，处理方法可以使用宏过滤掉编译。</em></p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_7WdLCSVtdJ.png" class="">
+<p>12.打release包，没有注释LuaDll的情况下打包，没有报错，成功打出，真是奇怪，猜测是未引用的库已经剥离了，但是development build认为还需要引用。</p>
+<p>13.打包成功，成功执行到Lua业务逻辑，也就是说Lua能执行注册的C#类。</p>
+<p>14.验证框架打包资源ab并加载，打包bootstrap的UI view prefab，去掉prefab上的缺失的Script，不然打包报脚本错误，修改LocalBundleStrategy之打包GameAssets/ui/view/下的资源，移除GameAssets/ui/view/bootstrap外的资源，排除其他资源的影响。</p>
+<p>15.修改lua代码，跳过热更新逻辑和SDK初始化逻辑，至此webgl已经可以成功加载ui prefab ab，说明框架加载ab资源的能力已经跑通。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_J0oIdyHNOw.png" class="">
+<p>16.将所有业务代码，ThirdParty三方库、AltasSource、GameAssets资源目录拉回来，打包ab，解决编译标错后，成功打出ab，但是因为webgl平台的fmod bank需要使用fmod studio重新build，所以缺少bank的ab。</p>
+<p>17.build构建，webgl不支持的API会报找出不到namespace报错，Handheld（手持设备）、FullScreenMovieControlMode、FullScreenMovieScalingMode等，这写是toLua export的wrap文件，处理方法是加编译宏。解决build报错后，成功打出包。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_iWxvVgACJH.png" class="">
+<p>成功出包说明了三方库Fmod、Live2Dv2和v4库，Spine都能够在webgl平台上成功编译。</p>
+<p>后面通过player publishing settings配置勾选Debug Symbols，打release包输出调试符号表，通过查看符号表可以找到C#dll Live2D库、C源码的toLua库的函数。</p>
+<p>说明C、C++源码、C#已经C#编译的DLL文件可以编译进wasm中。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_eKJtFbgNS2.png" class="">
+<p>18.至此运行webgl包已经能入Loading页，但是运行时有个报错：RuntimeError: float unrepresentable in integer range，参考这篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/ithinking110/article/details/112028638" title="文章">文章</a>，通过设置PlayerSettings.WebGL.emscriptenArgs = “-s “BINARYEN_TRAP_MODE=‘clamp’””;解决。</p>
+<p>这点之后写入AudoPackage.cs中，根据webgl平台自动化添加PlayerSettings参数。</p>
+<p>19.到这里就可以跑到fmod bank的加载逻辑，但是由于缺失bank，报资源加载error。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_cvqjYHFKmM.png" class="">
+<p>20.webgl上资源加载重写，使用协程＋UnityWebRequest，去掉框架中的500帧超时重试逻辑，因为在web上调用UnityWebRequest.Abort()中断之后再试的逻辑跑不通，直接利用异步加载，等有结果后返回。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> UNITY_WEBGL</span></span><br><span class="line"></span><br><span class="line">  www = getUnityWebRequest (res.RealPath, fullPath);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">yield</span> <span class="keyword">return</span> www.SendWebRequest();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (www.result!=UnityWebRequest.Result.Success)</span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">    Debug.LogErrorFormat(<span class="string">&quot;UnityWebRequest加载失败，result&#123;0&#125;,error:&#123;1&#125;,ab:&#123;2&#125;&quot;</span>, www.result, www.error, res.RealPath);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">yield</span> <span class="keyword">return</span> <span class="title">newWWW</span> (<span class="params">res</span>)</span>;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> ab = DownloadHandlerAssetBundle.GetContent (www);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ab == <span class="literal">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">      Debug.LogError(<span class="string">&quot;DownloadHandlerAssetBundle.GetContent获取null，&quot;</span>+res.RealPath);</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">      Debug.LogFormat(<span class="string">&quot;UnityWebRequest加载ab[&#123;0&#125;]成功&quot;</span>, res.RealPath);</span><br><span class="line"></span><br><span class="line">      res.SetAssetBundle (ab);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>AssetBundles中的bank文件是从FmodProj/Build/Mobile中拷贝过来的，至此可以成功加载ab和bank文件了。</p>
+<p>21.fmod官方的<a target="_blank" rel="noopener" href="https://github.com/fmod/unity-html5-demo" title="unity-html5-demo">unity-html5-demo</a>支持webgl平台，但是但是pjg项目运行时播放不了bank，加载没问题就是没有声音。</p>
+<p>使用fmod studio将项目中的bank，选择Desktop平台后，build一份到FmodProj/Build/Desktop下，拷贝我们的master和music的一份bank到unity-html-demo项目中，适配代码后Editor上播放有声音没有问题，但是打包到webgl上却播放不出声音。</p>
+<p>这个问题我已经到fmod提了<a target="_blank" rel="noopener" href="https://github.com/fmod/unity-html5-demo/issues/4" title="Issues">Issues</a>，详细过程请移步查看。</p>
+<p>反过来，将unity-html-demo中的master bank拷贝到我们项目中去，验证是不是bank的格式原因导致的。结果还真的可以正常播放，channels 和 volume是正常的，<strong>说明跟构建出来的bank的格式有很大的关系</strong>。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_8BOg2gT045.png" class="">
+<p>那么项目的bank和demo中的bank有什么区别？最明显的就是项目中的bank使用了encryption key加密，而demo的bank没有加密。</p>
+<p>为验证这个问题，用fmod studio去掉encryption key然后重新build bank（这个过程可以删减一部分bank以构建少量数据），最后发现放在demo中能正常播放了。</p>
+<p>查下官方文档，发现<a target="_blank" rel="noopener" href="https://fmod.com/docs/2.02/unity/troubleshooting.html#cannot-fmod_openmemory_point-encrypted-data" title="LoadFromMemory和encryptionKey不兼容">LoadFromMemory和encryptionKey不兼容</a>，而webgl上正是使用LoadFromMemory加载web request请求回来的bank数据。</p>
+<p>另外在<strong>webgl上确保使用异步方式加载bank</strong>，否者会报错，而这个报错<strong>假如没有在FmodAssetSettings上开启Enable API Error Logging的话，是不会报出来的，所以调试时候最好开启</strong>。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">FMOD</span>] System::getEventByID(<span class="number">0x645bd0</span>:&#123;<span class="number">14</span>d7b992<span class="number">-3</span>a9c<span class="number">-4</span>d93<span class="number">-95</span>de<span class="number">-2</span>dfd73fdbf6e&#125;, <span class="number">0x645ba4</span>) <span class="function">returned ERR_EVENT_NOTFOUND <span class="keyword">for</span> <span class="title">STUDIO_SYSTEM</span> (<span class="params"><span class="number">0x1FFF1F</span></span>)</span></span><br></pre></td></tr></table></figure>
+<p>为了支持bank加密，可以考虑将bank下载后先存到本地IndexDB，再使用LoadFromFile API读取，但需要考虑版本和加载时间问题。</p>
+<p>22.Editor上webSocket已经调通，登录逻辑兼容webgl后，登录成功，至此成功进入到主界面。</p>
+<p>23.WebGL上Input输入需要兼容下，Button和GlobalTouchTrigger类点击逻辑走mouse的输入获取，因为pc上不支持移动设备上的touch获取（支持touch api的设备才可以）。</p>
+<p>对于键盘的输入捕获要注意下，除了游戏canvas，web界面上的其他Input输入框是捕获不到输入的，因为webgl会拦截捕获，解决需要参考<a target="_blank" rel="noopener" href="https://docs.unity3d.com/2020.3/Documentation/Manual/webgl-input.html" title="WebGL Input">WebGL Input</a>。</p>
+<p>还有多点触碰能力需要兼容下【待处理】。</p>
+<p>24.因为webgl development build有问题，所以允许gm按钮在release包上开启。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_-YJGd2vFNT.png" class="">
+<p>25.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">报错：Looks like you are rendering without <span class="keyword">using</span> requestAnimationFrame <span class="keyword">for</span> the main loop. You should use <span class="number">0</span> <span class="keyword">for</span> the frame rate <span class="keyword">in</span> emscripten_set_main_loop <span class="keyword">in</span> order to use requestAnimationFrame, <span class="keyword">as</span> that can greatly improve your frame rates!</span><br></pre></td></tr></table></figure>
+<p>webgl上不建议锁帧，构建的js框架代码会根据设备自动调节。参考<a target="_blank" rel="noopener" href="https://forum.unity.com/threads/rendering-without-using-requestanimationframe-for-the-main-loop.373331/" title="这里">这里</a>。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;Unity使用WebAssembly(wasm)技术将引擎代码和业务代码编译到WebGL平台上解析运行，截止目前2023年，PC浏览器对webgl的支持也越来越兼容普及，并且wasm具有可移植、体积小、加载快等特点，应用运行能接近原生的体验。&lt;/p&gt;
+&lt;p&gt;为应对项目组拓展海外市场的发展战略，因为海外用户使用PC玩游戏比较多，所以先预研一下发布WebGL平台的整体流程。&lt;/p&gt;
+&lt;p&gt;这里使用已经上线的项目——食物语来实践，这样遇到的问题比较有代表性。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;顺便打下广告，食物语是一项集中华传统美食文明和二次元风格于一体的女性向养成卡牌游戏，对美食和二次元感兴趣的同学，非常有必要下载玩玩~~&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Unity游戏开发" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="平台" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/"/>
+    
+      <category term="WebGL" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/WebGL/"/>
+    
+    
+      <category term="WebGL" scheme="https://laoleo.github.io/tags/WebGL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>WebGL游戏可行性评估和兼容性测试</title>
+    <link href="https://laoleo.github.io/2023/01/11/WebGL%E6%B8%B8%E6%88%8F%E5%8F%AF%E8%A1%8C%E6%80%A7%E8%AF%84%E4%BC%B0%E5%92%8C%E5%85%BC%E5%AE%B9%E6%80%A7%E6%B5%8B%E8%AF%95/"/>
+    <id>https://laoleo.github.io/2023/01/11/WebGL游戏可行性评估和兼容性测试/</id>
+    <published>2023-01-10T16:00:00.000Z</published>
+    <updated>2023-01-18T07:21:14.434Z</updated>
+    
+    <content type="html"><![CDATA[<span id="more"></span>
+<h2 id="WebGL浏览器兼容性"><a href="#WebGL浏览器兼容性" class="headerlink" title="WebGL浏览器兼容性"></a>WebGL浏览器兼容性</h2><ul>
+<li>支持主流的桌面浏览器，但不同浏览器的不同版本支持程度和性能不一。</li>
+<li>不支持移动设备，但在高端的移动设备上仍可以运行，瓶颈是内存。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2018.4/Manual/webgl-browsercompatibility.html" title="各浏览器webgl兼容性表">各浏览器webgl兼容性表</a></p>
+<h2 id="WebGL支持能力"><a href="#WebGL支持能力" class="headerlink" title="WebGL支持能力"></a>WebGL支持能力</h2><table>
+<thead>
+<tr>
+<th>能力</th>
+<th>支持程度</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多线程</td>
+<td>不支持</td>
+<td>不支持System.Threading，将多线程代码替换成异步等方式实现</td>
+</tr>
+<tr>
+<td>网络系统</td>
+<td>需调整</td>
+<td>不支持 <a target="_blank" rel="noopener" href="http://System.Net" title="System.Net">System.Net</a> 接口，HTTP使用UnityWebRequest，TCP使用 WebSocket 通信替代（UnityWebSocket 插件）</td>
+</tr>
+<tr>
+<td>音频</td>
+<td>支持</td>
+<td>仅基于Web Audio API实现基础功能，不支持压缩和自动播放，不支持Fmod</td>
+</tr>
+<tr>
+<td>图形API</td>
+<td>支持</td>
+<td>基于OpenGL ES图形库功能，WebGL 1.0 匹配 OpenGL ES 2.0 ，WebGL 2.0 匹配 OpenGL ES 3.0</td>
+</tr>
+<tr>
+<td>动态生成代码</td>
+<td>不支持</td>
+<td>WebGL是AOT平台，不支持C#反射等动态代码方案</td>
+</tr>
+<tr>
+<td>文件系统</td>
+<td>需调整</td>
+<td>PlayerPrefs、Unity Local储存文件，存在PresistetDataPath下的文件会储存进IndexedDB，IndexedDB无容量限制</td>
+</tr>
+<tr>
+<td>Lua脚本</td>
+<td>支持</td>
+<td>支持使用ToLua</td>
+</tr>
+<tr>
+<td>三方库</td>
+<td>需调整</td>
+<td>C#三方库不能包含System.Threading、<a target="_blank" rel="noopener" href="http://System.Net" title="System.Net">System.Net</a>、System.Reflection等接口</td>
+</tr>
+</tbody>
+</table>
+<h2 id="浏览器平台兼容性实测"><a href="#浏览器平台兼容性实测" class="headerlink" title="浏览器平台兼容性实测"></a>浏览器平台兼容性实测</h2><p>将打出的WebGL包放在各个浏览器运行测试</p>
+<table>
+<thead>
+<tr>
+<th>浏览器</th>
+<th>测试版本</th>
+<th>运行情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Google Chrome</td>
+<td>108.0.5359.125（正式版本） （64 位）</td>
+<td>1.各个模块运行基本正常&#xA;&#xA;2.fmod效果音刚播放时噪音有点大&#xA;&#xA;3.fmod背景音乐偶尔进入界面时未播放，像是没有触发，切换界面回来才会播，像是业务逻辑未兼容好的问题&#xA;&#xA;4.输入框捕获不到中文输入</td>
+</tr>
+<tr>
+<td>Microsoft Edge</td>
+<td>108.0.1462.54 (正式版本) (64 位)</td>
+<td>运行情况跟Chrome相似</td>
+</tr>
+<tr>
+<td>Mozila Firefox</td>
+<td>108.0.1 (64 位)</td>
+<td>1.fmod效果音刚播放时没有在chrome上噪音大的问题&#xA;&#xA;2.画质上比chrome高清&#xA;&#xA;3.输入框也捕获不到中文输入</td>
+</tr>
+<tr>
+<td>Apple Safari</td>
+<td>pjg的mac开发机上测试&#xA;&#xA;版本14.1.1</td>
+<td>1.手机Safari访问，加载慢，能够进入到登录页，弹不起输入框，运行不久弹窗报错：<strong>WebGL builds are not supported on mobile devices</strong>. &#xA;&#xA;2.fmod的效果音播放的噪声问题也存在，内存紧张是更加明显&#xA;&#xA;3.pv视频播放不了，报user not allow，像是设置禁用了</td>
+</tr>
+<tr>
+<td>360浏览器</td>
+<td>版本号: 13.1.6380.01内核版本: 86.0.4240.198</td>
+<td>进入主界面时报： Could not allocate memory: System out of memory! memory access out of bound，分配的内存不够&#xA;&#xA;有些贴图渲染不出来一片黑</td>
+</tr>
+<tr>
+<td>360浏览器</td>
+<td>版本号: 13.1.6380.01内核版本: 86.0.4240.198</td>
+<td>进入主界面时报： Could not allocate memory: System out of memory! memory access out of bound，分配的内存不够&#xA;&#xA;有些贴图渲染不出来一片黑</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;span id=&quot;more&quot;&gt;&lt;/span&gt;
+&lt;h2 id=&quot;WebGL浏览器兼容性&quot;&gt;&lt;a href=&quot;#WebGL浏览器兼容性&quot; class=&quot;headerlink&quot; title=&quot;WebGL浏览器兼容性&quot;&gt;&lt;/a&gt;WebGL浏览器兼容性&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;支持主流
+    
+    </summary>
+    
+      <category term="Unity游戏开发" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="平台" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/"/>
+    
+      <category term="WebGL" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/WebGL/"/>
+    
+    
+      <category term="WebGL" scheme="https://laoleo.github.io/tags/WebGL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>WebGL上导出日志文件</title>
+    <link href="https://laoleo.github.io/2023/01/05/WebGL%E4%B8%8A%E5%AF%BC%E5%87%BA%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6/"/>
+    <id>https://laoleo.github.io/2023/01/05/WebGL上导出日志文件/</id>
+    <published>2023-01-04T16:00:00.000Z</published>
+    <updated>2023-01-18T07:20:45.161Z</updated>
+    
+    <content type="html"><![CDATA[<span id="more"></span>
+<h2 id="与日志相关的配置选项"><a href="#与日志相关的配置选项" class="headerlink" title="与日志相关的配置选项"></a>与日志相关的配置选项</h2><p>Player Setting-》Other Settings-》Stack Track</p>
+<p>可以控制各个日志等级类型的输出，ScriptOnly只包括托管代码（C#、Lua），Full包括托管和非托管代码（C、C++）。</p>
+<p>一般debug和release下勾ScriptOnly就够。</p>
+<p>Publishing Settings-》Enable Exceptions</p>
+<p>runtime下异常捕获的处理方式</p>
+<ul>
+<li>None：不捕获，异常发生后运行不了</li>
+<li>Explicitly Thrown Exceptions Only：仅捕获Thrown语句显式调用抛出的异常。</li>
+<li>Full Without Stacktrace：在上面的基础上加上空引用和数组越界访问异常，并且包含非托管代码的堆栈。</li>
+<li>Full With Stacktrace：在上面基础上加上捕获堆栈。</li>
+</ul>
+<p>以上性能消耗由上都下递增，Full模式只建议调试时使用。</p>
+<p>Development Build的js代码不会压缩且具有可读性，但遇到Error或Exception时可以看到堆栈跟踪。</p>
+<h2 id="文件位置"><a href="#文件位置" class="headerlink" title="文件位置"></a>文件位置</h2><p>保存进<strong>Application.persistentDataPath</strong>目录下的文件，会被保存进IndexedDB，位于/idbfs数据库下的FILE_DATA仓库，包括PlayerPrefs、Unity local文件等，以二进制ArrayBuffer的形式存储。</p>
+<img src="/2023/01/05/WebGL%E4%B8%8A%E5%AF%BC%E5%87%BA%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6/image_ZrB80m7JK5.png" class="">
+<p>所以Clogger模块的log日志可以从IndexedDB提取ArrayBuffer，然后解析成string，上报或者导出为Log文件。</p>
+<p>IndexedDB没有容量限制。</p>
+<p>Demo实现了WebGL导出Log文件，地址点击<a target="_blank" rel="noopener" href="https://gitlab.bt/laotuzhu/webgldemo" title="这里">这里</a>。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;span id=&quot;more&quot;&gt;&lt;/span&gt;
+&lt;h2 id=&quot;与日志相关的配置选项&quot;&gt;&lt;a href=&quot;#与日志相关的配置选项&quot; class=&quot;headerlink&quot; title=&quot;与日志相关的配置选项&quot;&gt;&lt;/a&gt;与日志相关的配置选项&lt;/h2&gt;&lt;p&gt;Player Setting
+    
+    </summary>
+    
+      <category term="Unity游戏开发" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="平台" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/"/>
+    
+      <category term="WebGL" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/WebGL/"/>
+    
+    
+      <category term="WebGL" scheme="https://laoleo.github.io/tags/WebGL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>WebGL脚本交互</title>
+    <link href="https://laoleo.github.io/2023/01/05/WebGL%E8%84%9A%E6%9C%AC%E4%BA%A4%E4%BA%92/"/>
+    <id>https://laoleo.github.io/2023/01/05/WebGL脚本交互/</id>
+    <published>2023-01-04T16:00:00.000Z</published>
+    <updated>2023-01-18T07:20:40.259Z</updated>
+    
+    <content type="html"><![CDATA[<span id="more"></span>
+<p>官网脚本间的交互<a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2022.1/Manual/webgl-interactingwithbrowserscripting.html" title="教程">教程</a>。</p>
+<p>这里提一下注意点：</p>
+<h3 id="1-jslib的js调用js函数"><a href="#1-jslib的js调用js函数" class="headerlink" title="1. jslib的js调用js函数"></a>1. jslib的js调用js函数</h3><p>jslib里嵌入的js函数并且被C# extern导出，被编译进Build.Framework.js下的Module作用域下，在js下的函数名加了_前缀。</p>
+<p>打算在jslib里调用同样自己封装的js函数，需要两步，C#导出以及加上_前缀。</p>
+<p>比如SyncDB函数调用ExportLogFile函数：</p>
+<img src="/2023/01/05/WebGL%E8%84%9A%E6%9C%AC%E4%BA%A4%E4%BA%92/image_LH7j6YbDcD.png" class="">
+<img src="/2023/01/05/WebGL%E8%84%9A%E6%9C%AC%E4%BA%A4%E4%BA%92/image_RKaYmVWOKt.png" class="">
+<p>编译进js的函数：</p>
+<img src="/2023/01/05/WebGL%E8%84%9A%E6%9C%AC%E4%BA%A4%E4%BA%92/image_Tc714gt9om.png" class="">
+<img src="/2023/01/05/WebGL%E8%84%9A%E6%9C%AC%E4%BA%A4%E4%BA%92/image_z92_IORzd2.png" class="">
+<h3 id="2-C-传给JS函数的参数转换"><a href="#2-C-传给JS函数的参数转换" class="headerlink" title="2.C#传给JS函数的参数转换"></a>2.C#传给JS函数的参数转换</h3><img src="/2023/01/05/WebGL%E8%84%9A%E6%9C%AC%E4%BA%A4%E4%BA%92/image_-2cjqXZEFd.png" class="">
+<p>JS里拿到的string类型参数是一个内存地址，需要使用UTF8ToString来进行转换。</p>
+<p><strong>注意的是</strong>，不能放在回调下面FS.syncfs的回调作用域内转换，必须放在参数自己的作用域，不然后面地址回收后转出来是不准确的。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;span id=&quot;more&quot;&gt;&lt;/span&gt;
+&lt;p&gt;官网脚本间的交互&lt;a target=&quot;_blank&quot; rel=&quot;noopener&quot; href=&quot;https://docs.unity3d.com/cn/2022.1/Manual/webgl-interactingwithbr
+    
+    </summary>
+    
+      <category term="Unity游戏开发" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="平台" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/"/>
+    
+      <category term="WebGL" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/WebGL/"/>
+    
+    
+      <category term="WebGL" scheme="https://laoleo.github.io/tags/WebGL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>WebGL调试和打包</title>
+    <link href="https://laoleo.github.io/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/"/>
+    <id>https://laoleo.github.io/2022/12/30/WebGL调试和打包/</id>
+    <published>2022-12-29T16:00:00.000Z</published>
+    <updated>2023-01-18T07:20:31.461Z</updated>
+    
+    <content type="html"><![CDATA[<span id="more"></span>
+<h2 id="运行和调试"><a href="#运行和调试" class="headerlink" title="运行和调试"></a>运行和调试</h2><h3 id="两个起http服务器方案："><a href="#两个起http服务器方案：" class="headerlink" title="两个起http服务器方案："></a>两个起http服务器方案：</h3><ul>
+<li><p><strong>Build and Run</strong></p>
+<p>执行后Unity会起一个http服务器运行web界面，缺点是端口号每次都会变。</p>
+</li>
+<li><p><strong>自起http服务器</strong></p>
+<p>利用node的npm包管理器下载http-server插件</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install --global http-server</span><br><span class="line">//起一个http服务器</span><br><span class="line">http-server</span><br><span class="line">// 或者，假如打出的包文件时gzip压缩，需加上-g</span><br><span class="line">http-server -g</span><br></pre></td></tr></table></figure>
+<p>另外需要改http-server插件的一个文件，路径是：C:\Users\[yourusername]\AppData\Roaming\npm\node_modules\http-server\lib\core\index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 搜索第一行注释找到这段代码，改为下面代码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//if (file === gzippedFile) &#123; // is .gz picked up</span></span><br><span class="line"><span class="keyword">if</span> (file === gzippedFile || path.<span class="title function_">extname</span>(file) ==<span class="string">&quot;.gz&quot;</span>) &#123; <span class="comment">// is .gz picked up</span></span><br><span class="line">  res.<span class="title function_">setHeader</span>(<span class="string">&#x27;Content-Encoding&#x27;</span>, <span class="string">&#x27;gzip&#x27;</span>);</span><br><span class="line">  <span class="comment">// strip gz ending and lookup mime type</span></span><br><span class="line">  contentType = mime.<span class="title function_">lookup</span>(path.<span class="title function_">basename</span>(file, <span class="string">&#x27;.gz&#x27;</span>), defaultType);</span><br><span class="line"><span class="comment">//&#125; else if (file === brotliFile) &#123; // is .br picked up</span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (file === brotliFile || path.<span class="title function_">extname</span>(file) ==<span class="string">&quot;.br&quot;</span>) &#123; <span class="comment">// is .br picked up  </span></span><br><span class="line">  res.<span class="title function_">setHeader</span>(<span class="string">&#x27;Content-Encoding&#x27;</span>, <span class="string">&#x27;br&#x27;</span>);</span><br><span class="line">  <span class="comment">// strip br ending and lookup mime type</span></span><br><span class="line">  contentType = mime.<span class="title function_">lookup</span>(path.<span class="title function_">basename</span>(file, <span class="string">&#x27;.br&#x27;</span>), defaultType);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p><em>假如运行http-server命令报未找到命令，需要设置环境变量，添加：C:\Users[yourUserName]\AppData\Roaming\npm</em></p>
+<h3 id="调试JS"><a href="#调试JS" class="headerlink" title="调试JS"></a>调试JS</h3><p>jslib文件插入的js代码会被打包进Build.framework.js里，但只有在C# Extern导出的才会被包含。</p>
+<p>调试JS代码可以选择编辑Build.framework.js，加入Debug代码调试，快速方便，跳过打包。</p>
+<h2 id="打webgl包设置"><a href="#打webgl包设置" class="headerlink" title="打webgl包设置"></a>打webgl包设置</h2><p>1.branch选择以下分支之外的分支，跳过MSDK的逻辑，或者可以手改Resources目录下的GameConst.txt下的branch字段。</p>
+<p><em>20230104:更新：已处理成在国内分支上的MSDK上过滤掉webgl平台。</em></p>
+<img src="/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/image_tGLLj0XYUL.png" class="">
+<p>2.在PlayerSetting.asset下搜索webGLEmscriptenArgs，手动添加下：webGLEmscriptenArgs: -s “BINARYEN_TRAP_MODE=’clamp’”</p>
+<p>这可以跳过运行时报错：RuntimeError: float unrepresentable in integer range</p>
+<p><em>20230104:更新：已添加并提交。</em></p>
+<img src="/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/image_xEZJCQfHjP.png" class="">
+<p>3.打包不要勾选Development Build。</p>
+<p>目前Development Build打包编译有报错，还跳跳不过这个坑。</p>
+<p><em>20230104:更新：编译报错的问题已经找出并解决。</em></p>
+<h2 id="打包配置说明"><a href="#打包配置说明" class="headerlink" title="打包配置说明"></a>打包配置说明</h2><h3 id="build-setting"><a href="#build-setting" class="headerlink" title="build setting"></a><a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2022.1/Manual/webgl-building.html" title="build setting">build setting</a></h3><p>Texture Compression：贴图压缩格式</p>
+<p>Development build：dev模式构建，开启后链Profiler</p>
+<p>Code Optimization：编译优化</p>
+<ul>
+<li>speed：优化包的运行时性能</li>
+<li>size：构建包大小优先</li>
+</ul>
+<h3 id="Player-Setting"><a href="#Player-Setting" class="headerlink" title="Player Setting"></a><a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2022.1/Manual/class-PlayerSettingsWebGL.html" title="Player Setting">Player Setting</a></h3><p>Resolution And Presentaiton：web页面的游戏窗分辨率设置、模板设置。</p>
+<p>Sqlash Image：web tab图标、游戏启动页动画、logo、背景图设置。</p>
+<p>Other Settings</p>
+<ul>
+<li>Auto Graphics API：开启会交由Unity自动根据设备选择webGL图形API。默认WebGL2.0，不支持会回退到WebGL1.0。但Untiy2021.1后将弃用WebGL1.0，可禁用这个选项然后手动添加。</li>
+</ul>
+<p>Publishing Setting</p>
+<ul>
+<li>Compression Format：非dev构建的文件压缩格式，dev构建无作用。<strong>注意服务器nginx要配置支持解压，</strong><a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2022.1/Manual/webgl-server-configuration-code-samples.html" title="参考链接"><strong>参考链接</strong></a><strong>。</strong></li>
+<li>Decompression Fallback：勾选会构建包含未压缩的代码，解压失败会回退。</li>
+<li>Data Caching：开启会自动将内容资源数据缓存在用户计算机上，这样就不必在后续运行中重新下载（除非内容已更改）。缓存是使用浏览器提供的 IndexedDB API 实现的。</li>
+<li>Debug Symbols：对release包有效，在发生错误时保留调试符号并执行堆栈跟踪的恢复。对于发布版本，所有调试信息都存储在单独的文件中；发生错误时将根据需要从服务器下载该文件(Build/WebGLPackageProj.symbols.json)。开发版本始终具有嵌入在主模块中的恢复支持，因此不受此选项的影响。</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;span id=&quot;more&quot;&gt;&lt;/span&gt;
+&lt;h2 id=&quot;运行和调试&quot;&gt;&lt;a href=&quot;#运行和调试&quot; class=&quot;headerlink&quot; title=&quot;运行和调试&quot;&gt;&lt;/a&gt;运行和调试&lt;/h2&gt;&lt;h3 id=&quot;两个起http服务器方案：&quot;&gt;&lt;a href=&quot;#两个起h
+    
+    </summary>
+    
+      <category term="Unity游戏开发" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="平台" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/"/>
+    
+      <category term="WebGL" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/WebGL/"/>
+    
+    
+      <category term="WebGL" scheme="https://laoleo.github.io/tags/WebGL/"/>
+    
+  </entry>
   
   <entry>
     <title>SQLite替换lua配置表方案实现</title>
@@ -1287,882 +2017,6 @@
       <category term="RT" scheme="https://laoleo.github.io/tags/RT/"/>
     
       <category term="RenderTexture" scheme="https://laoleo.github.io/tags/RenderTexture/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Unity Addressable Asset System介绍、教程和原理讲解</title>
-    <link href="https://laoleo.github.io/2021/01/15/UnityAddressable/"/>
-    <id>https://laoleo.github.io/2021/01/15/UnityAddressable/</id>
-    <published>2021-01-14T16:00:00.000Z</published>
-    <updated>2022-12-06T15:30:38.413Z</updated>
-    
-    <content type="html"><![CDATA[<span id="more"></span>
-<h1 id="Unity-Addressable-Asset-System介绍、教程和原理讲解"><a href="#Unity-Addressable-Asset-System介绍、教程和原理讲解" class="headerlink" title="Unity Addressable Asset System介绍、教程和原理讲解"></a>Unity Addressable Asset System介绍、教程和原理讲解</h1><h2 id="1-背景（怎么来的）"><a href="#1-背景（怎么来的）" class="headerlink" title="1. 背景（怎么来的）"></a>1. 背景（怎么来的）</h2><p>Unity Addressable Asset System是官方推出的资源加载和资源管理的一套解决方案。</p>
-<p>它使用异步加载的方式加载资源，提供统一的加载接口，不管资源放在哪个目录，不管资源的依赖有多复杂。</p>
-<p>传统的资源管理方式严重将组织、构建、加载Asset的逻辑捆绑在一起，比如</p>
-<ol>
-<li>资源存放在Resource文件，那加载资源必须要用到Resources.Load方法，并且提供资源路径</li>
-<li>加载ab中的asset时，加载代码需要和构建策略捆绑在一起，先找出资源对应的bundle加载完成后，再加载需要的资源。</li>
-<li>以路径加载的代码，当资源路径发生改变往往要多次更改代码，这个更改可能涉及多处。</li>
-<li>资源位于远程，需要写代码管理资源的下载、加载、卸载和缓存。<img src="/2021/01/15/UnityAddressable/image.png" class="">
-基于以上种种不便，Unity Addressable Asset System（下文称AA系统）的一个重要好处就是解决以上种种痛点。<h2 id="2-特点（有何用）"><a href="#2-特点（有何用）" class="headerlink" title="2. 特点（有何用）"></a>2. 特点（有何用）</h2></li>
-</ol>
-<ul>
-<li>快速迭代：解耦组织、构建、加载Asset的逻辑，通过[address]和统一接口加载资源，不管资源放是否来自Resources目录，或者将来重命名或者路径变更，不管资源如何构建，都不用再修改加载代码。</li>
-<li>依赖管理：当加载一个资源的时候，AA系统会先加载完这个资源的所有依赖，然后再返回这个资源。</li>
-<li>内存管理：自动管理资源加载卸载的引用计数，并提供工具探测内存泄露问题。</li>
-<li>内容打包：当资源变更时能够有效打包资源，更容易管理本地和远程打包资源和有效减小应用大小。</li>
-<li>配置文件：统一管理资源如何打包的变量，避免配置分散多处修改问题。</li>
-</ul>
-<h2 id="3-概念"><a href="#3-概念" class="headerlink" title="3. 概念"></a>3. 概念</h2><h3 id="Group"><a href="#Group" class="headerlink" title="Group"></a>Group</h3><p>group定义一组在构建时可处理的Addressable Asset集合。</p>
-<p>默认有两个group，如上图：</p>
-<ul>
-<li>Built In Data。内置的group，包含Resources文件夹，这个group不支持修改。</li>
-<li>Default Local Group。在Inspector标记Addresables的Asset会默认添加进这里，支持修改，包括改名和添加Schema。</li>
-</ul>
-<h3 id="Group-Schema"><a href="#Group-Schema" class="headerlink" title="Group Schema"></a>Group Schema</h3><p>group schema定义一组分配给group在构建使用的数据，可视为配置数据，决定group中Asset如何打包、打包粒度等等。</p>
-<p>点击group，查看这个group中添加的schema，和schema的配置：</p>
-<img src="/2021/01/15/UnityAddressable/image_1.png" class="">
-<p>包括三种Schema：</p>
-<ol>
-<li>Content Updage Restriction 主要决定ab可不可以更改<br> Update Restriction：决定改组内容打包成ab后，可不可以动态更新。can change post release：允许发布后变更；cannot change post release：不允许发布后变更。</li>
-<li>Content Packing &amp; Loading <strong>决定打包方式和加载的配置</strong>，包括构建目录、压缩、打包模式等等<br> 下面是几个重要的配置，鼠标移动到变量名上可以显示该配置作用介绍：<br> Build Path：打包后的发布路径。可分为本地和远程路径。<br> Load Path：加载ab的路径，可分为本地和远程路径。<br> 这些的路径变量来自Profiles中定义的变量，Profiles的解析请看下面。<br> Compression：支持三种压缩方式，包括不压缩、LZ4和LZMA。<br> Include In Build：勾选才会将该group纳入构建进程中。<br> Use Asset Bundle Cache：勾选会将加载的ab加进缓存目录中，远程bundle才需要勾选。<br> Bundle Mode：打包模式，分别是Pack Separately单独打包，Pack Together全部达成一个包，Pack Together By Label根据label划分打包。<br> Bundle Naming：bundle的命名规则。<br> Asset Provider：加载和解析Asset的类，不同的资源类型对应不同的provider。<br> Asset bundle Provider：加载和解析Asset bundle的类，默认为AssetBundleProvider。</li>
-<li>Resources and Build In Scenes<strong> 是否将Resources和Build Setting Scenes包含进来打包</strong><br> Include Resources Folders：是否将Resources文件夹下的Asset包含进group。Resources下的Asset会打包进包体，一般不需要勾选。<br> Include Build Setting Scenes：是否包含Build Setting添加的Scenes。</li>
-</ol>
-<h3 id="Addressable-Asset-Settings"><a href="#Addressable-Asset-Settings" class="headerlink" title="Addressable Asset Settings"></a>Addressable Asset Settings</h3><p>作为AA系统全局的配置文件，在初始化的时候生成。以下介绍几个重要的变量：</p>
-<p>属性介绍：</p>
-<p>Disable Catalog Update on Startup：勾选则在AA系统初始化时候不检查catalog文件更新。</p>
-<p><strong>Build Remote Catalog</strong>： 勾选则生成远程ab的catalog文件，需要配置remote catalog文件的build path和load path。</p>
-<p>Send Profiler Event：勾选则开启分析器。</p>
-<p>Unique Bundle IDs：给bundle分配独一无二的ID。因为catalog文件可以在初始化以外的时候更新，当旧资源已经在内存中时，但unity无法下载两个同internal name的资源，这种情况资源无法及时更新。要么先卸载重新资源重新下载，要么分配给bundle单独的id来区分。开启这个选项，当资源更新时不仅仅是更新该资源，也会更新依赖链，带来一定的性能花销。</p>
-<p>Contiguous Bundle：基于源资源的排序来排序Bundle，可以加快Asset加载速度。</p>
-<p><strong>Build and Play Mode Scripts</strong></p>
-<p>Use Asset Database （fastest）：加载源文件模式，不用打ab和分析。</p>
-<p>Simulate Groups（Advanced）：模拟组模式，以不打ab方式来分析内容的布局和依赖。用类似加载ab的方式，通过ResourceManager从AssetDatabase加载。这个模式用于模拟加载策略，调整和平衡内容的分布。</p>
-<p>Use Existing Build：使用构建好的ab加载，需要提前构建好ab。</p>
-<p>Default Build Script：默认的构建脚本。</p>
-<p>可选的Build Script都是ScriptableObject的Asset。假如需要扩展，可以新建脚本，继承IDataBuilder接口。添加可以选择左下角+，添加Build Script Asset。</p>
-<p>前三个Play Mode Script分别对应Assetables Groups-》Play Mode Script下的三个模式。</p>
-<p>Default Build Script对应Assetables Groups-》Build-》New Build-》Default Build Script。</p>
-<p>Asset Group Template：group模板，Assetables Groups面板下Create→Group下，或者group右键菜单可以选择。在Project面板目录上右键菜单Create-》Addressables-》Group Templates-》Blank Group Template可以创建模板。</p>
-<h2 id="4-使用流程（怎么用）"><a href="#4-使用流程（怎么用）" class="headerlink" title="4. 使用流程（怎么用）"></a>4. 使用流程（怎么用）</h2><h3 id="step1-安装"><a href="#step1-安装" class="headerlink" title="step1 安装"></a>step1 安装</h3><p>到Package Manager安装以下两个package：</p>
-<ul>
-<li>Addressables，基本包，本文章使用的版本是1.16.15</li>
-<li>Scriptable Build Pipeline package，依赖包</li>
-</ul>
-<h3 id="step2-初始化"><a href="#step2-初始化" class="headerlink" title="step2 初始化"></a>step2 初始化</h3><p>安装包后，通过菜单栏Window-&gt;Asset Management-&gt;Addressables→Groups 可以打开AA系统的管理面板</p>
-<p>未初始化会出现初始化按钮，点击后Asset目录下会出现一个AddressableAssetsData目录，存放着一些配置文件。</p>
-<h3 id="step3-标记可寻址"><a href="#step3-标记可寻址" class="headerlink" title="step3 标记可寻址"></a>step3 标记可寻址</h3><p>需要将Asset标记为Addressable，才能纳入AA系统的管理。标记为Addressable Asset有两个途径：</p>
-<p>通过Inspector。勾选，会将Asset添加进默认的group（Default Local Group），以相对Assets目录的地址作为AA系统寻找该Asset的【address】，这个地址支持修改。</p>
-<ol>
-<li>拖动Asset进group。<h3 id="step4-配置远程打包路径"><a href="#step4-配置远程打包路径" class="headerlink" title="step4 配置远程打包路径"></a>step4 配置远程打包路径</h3>unity官方推荐新建一个profile为hosting service所用，配置正确的build path和load path，可以上可以填上Hosting Service 变量：<br>并在需要在AddressableAssetSettings上开启构建远程catelog，选用Editor Hosted Profile，选择build path 和 load path：<br>Addressables Group面板上选择Editor Hosted Profile<br>最后在group Inspector面板中选择内容构建输出的目录，若为远程资源则选择RemoteBuildPath。<br>这就配置完了Hosting Services的使用流程。<h3 id="step5-打包"><a href="#step5-打包" class="headerlink" title="step5 打包"></a>step5 打包</h3>前面已经了解到Group Schema控制打包方式，主要用到两个Schema：content update restriction 和 content packing &amp; loading<br>打出的ab类型可分为远程和本地，静态和非静态（can change post release为非静态）。两两结合可以分为四个组，每个组下各包含两个资源：<br>点击Addressables Groups菜单栏build-》new build-》default build script，开始构建。<br>ab构建完成后，可以看到本地ab和远程ab分别打包到了各自的目录：<br>local和remote各自有一份catalog json文件，remote多了一份hash文件，记录catalog文件的hash值，用于判断catalog文件的更新。<br>catalog文件里记录了address到资源的映射关系，用于定位资源和决定如何加载资源（where和how），每当资源发生变动后构建完成时，catalog文件重新生成。<h3 id="step6-更新"><a href="#step6-更新" class="headerlink" title="step6 更新"></a>step6 更新</h3>再看看更新资源后，各组间的资源打包后如何组织？<br>每个组更改第一个资源后，点击Tools-》check for content update restriction，检查更新<br>这时候会打开窗口选择addressables_content_state.bin文件，文件位于Assets/AddressableAssetsData/[platform]下，发布哪个平台选择哪个平台，一般是Android和Windows。<br>为什么要选择这个bin文件？<br>使用过BuildPipeline构建ab都知道有个manifest文件记录资源间依赖关系，AA系统会将资源间依赖关系记录进这个bin文件，作为对比找出更改的资源。<br>这步过后，会检查出更改的资源：<br>为什么所有资源都有更改，只检查出两个有更新，并且两个资源都来自静态组？<br>unity推荐打包内容分两种类型：</li>
-</ol>
-<ul>
-<li>can change post release：期望更新的动态内容。一般打成小包，以控制精准更新，减少包中其他没有更新的资源的不必要更新。</li>
-<li>cannot change post release：不期望更新的静态内容。一般打到一个很少更新的大包中。</li>
-</ul>
-<p>addressables_content_state.bin文件只是记录了静态资源的hash和依赖关系，动态资源的依赖关系动态计算没有记录到bin文件中，所以check for content update restriction只是作用于static组，对nonStatic组没有作用，也即是对设置了can change post release的组没有作用。</p>
-<p>点击apply changes按钮，groups会出现变化：</p>
-<p>static组中更改的资源会移动到一个新组content update group：</p>
-<p>content update group属于remote non static组</p>
-<p>点击build-》update a previous build，选择刚才的bin文件，增量更新</p>
-<p>对比发现：</p>
-<p>catalog json和hash文件会更新，被重写。</p>
-<p>静态组资源bundle并不会被重写更改或者重生生成，静态组中更改的资源会被移动进content update group重新打包到remote目录。</p>
-<p>非静态资源组的bundle包虽然不会被重写，但是会被重新生成，hash值也会更新。</p>
-<p>旧的非静态资源组bundle会在catalog文件中失去连接和记录，成为无效资源（这个无效资源会保留在用户设备上成为垃圾资源，应该要有个机制及时清理）。</p>
-<p>note：每次full build，bundle和catalog文件会重新生成，localBuildpath目录会清空，但是remoteBuildPath目录并不会清空，新生成的资源会跟旧资源混合。</p>
-<p>用一张图来阐述官方推荐的AA系统资源更新生命周期：</p>
-<img src="/2021/01/15/UnityAddressable/image_2.png" class="">
-<img src="/2021/01/15/UnityAddressable/image_3.png" class="">
-<h2 id="5-工具"><a href="#5-工具" class="headerlink" title="5. 工具"></a>5. 工具</h2><h3 id="Profiles"><a href="#Profiles" class="headerlink" title="Profiles"></a>Profiles</h3><p>通过菜单栏Window-&gt;Asset Management→Addressables→Profiles 或者 group面板的菜单栏tools→Profiles 打开Profiles面板。</p>
-<p>这个是AA系统用来管理一组组变量的解决方案。</p>
-<p>默认有以上5个变量，见名知义。</p>
-<p>从变量的值中发现有两种符号：[]和{}。</p>
-<p>[]：定义编辑时的变量。比如UnityEditor.EditorUserBuildSettings.activeBuildTarget，在编辑时就可以得到的值。</p>
-<p>{}：定义运行时的变量。比如UnityEngine.AddressableAssets.Addressables.RuntimePath，在运行时才知道值。</p>
-<p>左上角可以添加变量和Profile，在变量上右键可以删除和更名变量。</p>
-<p>在AddressableAssetSettings Inspector上可以选择使用哪一份Profilles，这里使用Default Profiles。</p>
-<h3 id="Hosting-Services"><a href="#Hosting-Services" class="headerlink" title="Hosting Services"></a>Hosting Services</h3><p>AA系统提供本地资源服务器，模拟远程资源加载。被设计的目的是为了在测试打包内容时加快迭代速度，不需要另外写一套远程资源下载加载代码。它能够为本地或者远端的客户端提供内容。</p>
-<p>Addressables Groups-》tools-》Hosting Services-》Create-》Local Hosting创建本地资源服务器：</p>
-<p>勾选Enable会分配端口号启动服务器，也可以指定端口号。</p>
-<p>开启后，hosting services会以每个group的build path为资源目录提供内容。</p>
-<h3 id="内存管理memory-management"><a href="#内存管理memory-management" class="headerlink" title="内存管理memory management"></a>内存管理memory management</h3><p>AA系统通过Addressables API来管理资源的引用计数，提供Event Viewer工具监测资源对象被引用和内存占用情况。</p>
-<p>Addressables常见的资源加卸载API：</p>
-<ul>
-<li>Addressables.LoadAssetAsync &amp; Addressables.Release </li>
-<li>Addressables.LoadSceneAsync &amp; Addressables.UnloadSceneAsync</li>
-<li>Addressables.InstantiateAsync &amp; Addressables.ReleaseInstance</li>
-</ul>
-<p>写段测试代码观察资源的引用情况：<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.AddressableAssets;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.ResourceManagement.AsyncOperations;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Loader</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnEnable</span>()</span></span><br><span class="line">  &#123;</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">&quot;Assets/Local_static 1.prefab&quot;</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">&quot;Assets/Local_non_static.prefab&quot;</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">&quot;Assets/Remote_static 1.prefab&quot;</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">&quot;Assets/Remote_non_static.prefab&quot;</span>);</span><br><span class="line">    InstByLoadAssetAsync(<span class="string">&quot;Assets/Local_static.prefab&quot;</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">&quot;Assets/Local_static 1.prefab&quot;</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">&quot;Assets/Local_non_static.prefab&quot;</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">&quot;Assets/Remote_static 1.prefab&quot;</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">&quot;Assets/Remote_non_static.prefab&quot;</span>);</span><br><span class="line">    InstByInstantiateAsync(<span class="string">&quot;Assets/Local_static.prefab&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">InstByLoadAssetAsync</span>(<span class="params"><span class="built_in">string</span> address</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    AsyncOperationHandle&lt;GameObject&gt; handle = Addressables.LoadAssetAsync&lt;GameObject&gt;(address);</span><br><span class="line">    handle.Completed += OnLoadDone;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnLoadDone</span>(<span class="params">AsyncOperationHandle&lt;GameObject&gt; handle</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    Instantiate(handle.Result);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">InstByInstantiateAsync</span>(<span class="params"><span class="built_in">string</span> address</span>)</span></span><br><span class="line">  &#123;</span><br><span class="line">    Addressables.InstantiateAsync(address);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
-<p>play mode script选择use existing build，因为use asset database 模式没有统计资源依赖数据（实际上只有fps和Monoheap），线上是ab加载模式所以数据更加准确。</p>
-<p>通过tools-》Event Viewer打开面板：</p>
-<ul>
-<li>FPS: 帧率</li>
-<li>MonoHeap：内存占用</li>
-<li>Event Count：每帧事件数</li>
-<li>Instantiation Counts：通过Addressables.InstantiateAsync实例化的资源</li>
-<li>Resource Request：每个资源的引用计数</li>
-</ul>
-<p>注意：当资源的引用计数为零时，并不代表该资源被回收，比如AB中的a资源引用未0，但AB自身的引用不为0，AB未被释放所以a也未释放。</p>
-<h2 id="6-代码层加载资源过程（如何实现）"><a href="#6-代码层加载资源过程（如何实现）" class="headerlink" title="6. 代码层加载资源过程（如何实现）"></a>6. 代码层加载资源过程（如何实现）</h2><p>第一步初始化，加载catalog文件，解析出资源定位信息。</p>
-<img src="/2021/01/15/UnityAddressable/image_4.png" class="">
-<p>接下来的过程可以简单分为两步：寻址和加载。</p>
-<img src="/2021/01/15/UnityAddressable/image_5.png" class="">
-<ol>
-<li>catalog文件会被加载并解析得出所有的Locator对象，Locator对象包括资源及其依赖的信息。</li>
-<li>遍历所有的Locator对象，匹配address key，找出对应的Locator，Locator下包含了资源的Location对象，这个对象管理资源地址及其依赖信息。</li>
-<li>ResourceManager类根据Locations对象上记录的ProviderId找到Provider对象，调用返回自身和其依赖的异步操作对象AsyncOperation，执行异步操作加载资源通过回调函数返回。</li>
-</ol>
-<p><strong>Location对象：</strong></p>
-<p>可以看到上面记录的InternalId，Dependencies、ProviderId、LocatorId等信息。</p>
-<p>catalog文件中记录有LocatorId，能被它解析出map信息：</p>
-<p><strong>参考资料：</strong></p>
-<p>Addressables官方文档</p>
-<p>Addressable Asset System</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;span id=&quot;more&quot;&gt;&lt;/span&gt;
-&lt;h1 id=&quot;Unity-Addressable-Asset-System介绍、教程和原理讲解&quot;&gt;&lt;a href=&quot;#Unity-Addressable-Asset-System介绍、教程和原理讲解&quot; class=&quot;headerl
-    
-    </summary>
-    
-      <category term="Unity游戏开发" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="Unity" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/"/>
-    
-      <category term="资源管理" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/"/>
-    
-    
-      <category term="Addressable" scheme="https://laoleo.github.io/tags/Addressable/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>项目打包策略</title>
-    <link href="https://laoleo.github.io/2020/12/05/%E8%B5%84%E6%BA%90%E6%89%93%E5%8C%85%E7%AD%96%E7%95%A5/"/>
-    <id>https://laoleo.github.io/2020/12/05/资源打包策略/</id>
-    <published>2020-12-04T16:00:00.000Z</published>
-    <updated>2022-12-07T13:39:06.616Z</updated>
-    
-    <content type="html"><![CDATA[<span id="more"></span>
-<h2 id="项目打包策略"><a href="#项目打包策略" class="headerlink" title="项目打包策略"></a>项目打包策略</h2><p>打包策略：</p>
-<ul>
-<li><p>A：把整个目录打进一个ab</p>
-</li>
-<li><p>B：把目录下的子目录中的资源打进子目录的ab中</p>
-</li>
-<li><p>C：把整个目录拷贝到ab目录不打ab</p>
-</li>
-<li><p>D：目录下的每一个资源打一个ab，不管是否重复</p>
-</li>
-<li><p>E：目录下的每一个资源打一个ab，每个依赖也打成一个ab，去除重复</p>
-</li>
-<li><p>F：图集的图片根据tag打ab，每个tag打一个ab</p>
-</li>
-<li><p>G：lua打包，一个目录打成一个ab，可以选择是否编码，编码为.bytes文件，通过根据不同平台选择LuaEncoder目录下的对应编码器进去编码（利用py脚本语言执行脚本运行luajit-2.1编码器）。编码器在各种运行平台和目标平台的使用情况如下。</p>
-</li>
-<li><p>H：lua打包，多个目录打成一个ab，会编码</p>
-</li>
-</ul>
-<p>各种策略应用的项目目录情况：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">策略</th>
-<th style="text-align:left">目录</th>
-<th style="text-align:left">筛选模式</th>
-<th style="text-align:left">特点</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">D</td>
-<td style="text-align:left">Assets/GameAssets/ui</td>
-<td style="text-align:left">(.asset)$</td>
-<td style="text-align:left">这类资源的特点是各个模块都有分布，数量多，1比1打ab策略有利于控制ab大小粒度，属于按类型和功能模块分组策略</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/ui</td>
-<td style="text-align:left">(.prefab)$</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/ui/animations</td>
-<td style="text-align:left">(.controller)$</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/ui/materials</td>
-<td style="text-align:left">(.mat)$</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/audio</td>
-<td style="text-align:left">(.ogg</td>
-<td style="text-align:left">.mp3</td>
-<td>.wav)$</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/audio/audiomixer</td>
-<td style="text-align:left">(.prefab)$</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/live2dcharacter</td>
-<td style="text-align:left">(.prefab)$</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/live2dcharacter</td>
-<td style="text-align:left">(^(?!.*?(model))).+(.json</td>
-<td style="text-align:left">.bytes)$</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/bigbg</td>
-<td style="text-align:left">(.jpg</td>
-<td style="text-align:left">.png)$</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/font</td>
-<td style="text-align:left">(.ttf</td>
-<td style="text-align:left">.fontsettings)$</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:left">C</td>
-<td style="text-align:left">Assets/GameAssets/movie</td>
-<td style="text-align:left">(.mp4)$</td>
-<td style="text-align:left">这类资源一般是配置文件，或者像是mp4这种游戏中用得比较少的资源文件</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/config</td>
-<td style="text-align:left">(.txt</td>
-<td style="text-align:left">.png</td>
-<td>.jpg)$</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:left">A</td>
-<td style="text-align:left">Assets/GameAssets/shaders</td>
-<td style="text-align:left"></td>
-<td style="text-align:left">全局常驻的文件</td>
-</tr>
-<tr>
-<td style="text-align:left">E</td>
-<td style="text-align:left">Assets/GameAssets/scene/pj-g_scene_assets</td>
-<td style="text-align:left">.*materials_dynload.+(.mat)$</td>
-<td style="text-align:left">这类资源的引用比较复杂，材质贴图引用得多，有些资源需要动态加载，需要对依赖资源做去重处理。 场景、spine人物动画、特效属于这类。</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/character</td>
-<td style="text-align:left">(.prefab)$</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/language/[lang]/character</td>
-<td style="text-align:left">(.prefab)$</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/effect</td>
-<td style="text-align:left">(.prefab)$</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/language/[lang]/effect</td>
-<td style="text-align:left">(.prefab)$</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/scene/pj-g_scene_prefab</td>
-<td style="text-align:left">(._p[\d]{0,}.prefab</td>
-<td style="text-align:left">._stage.prefab)$</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/GameAssets/language/[lang]/scene/pj-g_scene_prefab</td>
-<td style="text-align:left">(._p[\d]{0,}.prefab</td>
-<td style="text-align:left">._stage.prefab)$</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:left">F</td>
-<td style="text-align:left">Assets/AtlasSource</td>
-<td style="text-align:left"></td>
-<td style="text-align:left">UI用的精灵图，需要根据自定义tag打图集，其实就是按功能模块分组策略</td>
-</tr>
-<tr>
-<td style="text-align:left">G</td>
-<td style="text-align:left">Assets/aounity-framework/ToLua/Lua</td>
-<td style="text-align:left"></td>
-<td style="text-align:left">lua文件根据模块打ab，属于按逻辑实体分组策略，类似于粒度比较大的模块，但代码文件也属于系统常驻类型，不宜分得太小粒度</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/aounity-framework/Scripts/Lua/framework</td>
-<td style="text-align:left"></td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/aounity-framework/Scripts/Lua/frameworkext</td>
-<td style="text-align:left"></td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:left">Assets/Scripts/Lua/logic</td>
-<td style="text-align:left"></td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left">H</td>
-<td style="text-align:left"><p>Assets/aounity-framework/Scripts/Lua/bootstrap</p><p></p><p>Assets/Scripts/Lua/bootstrap</p></td>
-<td style="text-align:left"></td>
-<td style="text-align:left">lua文件根据模块打ab，同一个模块多个目录打在一起</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>没有写明打包策略的多语言下的目录，说明跟对应其的公用目录的打包策略一致。</p>
-</blockquote>
-<h2 id="Lua编译"><a href="#Lua编译" class="headerlink" title="Lua编译"></a>Lua编译</h2><p>using luajit2.1.0-beta3.</p>
-<p>编码器在各种运行平台和目标平台的使用：</p>
-<p>不同平台使用的编码器不同</p>
-<pre><code>1.pc使用
-
-luajit64:   win, ios 64bit
-
-luajit32:   android 32bit
-
-2. mac使用
-
-编译命令
-
-luajit\_mac32 make CC=&quot;gcc -m32&quot;
-
-luajit\_mac64 make XCFLAGS=-DLUAJIT\_ENABLE\_GC64
-
-luavm:        macos using luac(for u5.x). 
-
-luajit\_mac64: win, ios 64bit
-
-luajit\_mac32: android 32bit
-
-以下文件mac需要执行权限
-
-luavm/luac
-
-luajit\_mac32/luajit
-
-luajit\_mac64/luajit
-</code></pre><blockquote>
-<p>注意：没有权限mac无法编译，导致打不出lua文件的ab，也没有报错提示</p>
-</blockquote>
-<blockquote>
-<p>其实研究ab分组策略就是研究资源依赖树实现资源加载最优的问题。</p>
-</blockquote>
-<p>ab分组策略原则参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/91926428">https://zhuanlan.zhihu.com/p/91926428</a></p>
-<h2 id="build-package"><a href="#build-package" class="headerlink" title="build package"></a>build package</h2><p>项目构建包逻辑原理很简单，前面处理和准备好参数和数据，传递给BuildPipeline.BuildAssetBundles方法构建ab。</p>
-<p>工具面板上的参数解析：</p>
-<ul>
-<li><p>isEncodeLua：是否时候luajit-2.1编码lua文件成字节码。</p>
-</li>
-<li><p>isForceRebuild：BuildAssetBundleOptions.ForceRebuildAssetBundle参数，强制重打ab，即使Asset没有更改。</p>
-</li>
-<li><p>isOnlyBuildLua：是否只打lua ab。√了就不会打其他资源ab，在调试真机时候更改lua代码进行调试会很方便。</p>
-</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;span id=&quot;more&quot;&gt;&lt;/span&gt;
-&lt;h2 id=&quot;项目打包策略&quot;&gt;&lt;a href=&quot;#项目打包策略&quot; class=&quot;headerlink&quot; title=&quot;项目打包策略&quot;&gt;&lt;/a&gt;项目打包策略&lt;/h2&gt;&lt;p&gt;打包策略：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;A：把整个目录打
-    
-    </summary>
-    
-      <category term="Unity游戏开发" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="Unity" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/"/>
-    
-      <category term="资源管理" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/Unity/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/"/>
-    
-    
-      <category term="打包" scheme="https://laoleo.github.io/tags/%E6%89%93%E5%8C%85/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>场景控制流程解读</title>
-    <link href="https://laoleo.github.io/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/"/>
-    <id>https://laoleo.github.io/2020/11/01/场景控制流程解读/</id>
-    <published>2020-10-31T16:00:00.000Z</published>
-    <updated>2022-12-06T15:30:38.518Z</updated>
-    
-    <content type="html"><![CDATA[<span id="more"></span>
-<h1 id="场景控制流程解读"><a href="#场景控制流程解读" class="headerlink" title="场景控制流程解读"></a>场景控制流程解读</h1><h2 id="1-初始化流程"><a href="#1-初始化流程" class="headerlink" title="1 初始化流程"></a>1 初始化流程</h2><p>场景的初始化和进出控制有SceneMgr类负责管理，SceneMgr类实例化的时候，会对所有的场景类做一系列的初始化操作，包括场景类实例化，加入场景类中的功能组件类的实例化。</p>
-<img src="/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/image_SqQ7dNS1Cb.png" class="">
-<ol>
-<li><p>实例化所有注册到SceneMgr:_registerScenes()中的场景类，然后在每个场景中注入onEnterFinished和onStageLoadFinished函数，分别在进入完成和舞台加载完成时调用，控制loading页面的关闭和资源的释放</p>
-</li>
-<li><p>在实例化Scene Component时，执行自身的onInit函数，进行初始化的工作。</p>
-</li>
-</ol>
-<p>以上就是场景实例化的流程。</p>
-<p>加入新的场景代码需要以下：</p>
-<ol>
-<li><p>在SceneType文件加入场景type</p>
-</li>
-<li><p>在Editor的pjg&gt;场景编辑器&gt;场景导出，新增场景id和资源配置，保存导出生成t_scene配置</p>
-</li>
-<li><p>新增场景类代码，并加入stage组件，控制场景资源的加载。</p>
-</li>
-<li><p>在SceneMgr:_registerScenes()注册场景类</p>
-</li>
-</ol>
-<h2 id="2-进入流程"><a href="#2-进入流程" class="headerlink" title="2 进入流程"></a>2 进入流程</h2><img src="/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/image_3NDenmx_Of.png" class="">
-<ol>
-<li><p>stage组件类中需要加入load函数，控制场景资源的加载，并且在资源加载完成回调中调用调用_onStageLoadFinished函数和_onAllLoaded函数</p>
-</li>
-<li><p>调用_onStageLoadFinished函数需在_onAllLoaded函数之前，_onAllLoaded函数其实就是调用了scene:onEnterFinished函数&#x20;</p>
-</li>
-</ol>
-<img src="/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/image_xvaTyll7c-.png" class="">
-<ol>
-<li>场景资源其实是prefeb资源，实例化后被挂载在【SCENEROOT/场景名]】节点下</li>
-</ol>
-<h2 id="3-退出流程"><a href="#3-退出流程" class="headerlink" title="3 退出流程"></a>3 退出流程</h2><img src="/2020/11/01/%E5%9C%BA%E6%99%AF%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB/image_YlLPrr-tq-.png" class="">
-<h2 id="4-场景组件的类型和作用"><a href="#4-场景组件的类型和作用" class="headerlink" title="4 场景组件的类型和作用"></a>4 场景组件的类型和作用</h2><table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>类型</td>
-<td>用途</td>
-<td>相关配置表</td>
-<td>其他</td>
-</tr>
-<tr>
-<td>SceneStageBase类</td>
-<td>控制场景资源（舞台）加载和释放，注入的onEnterFinished和onStageLoadFinished函数在这个类中调用</td>
-<td>t_scene（在Editor上【pjg&gt;场景编辑器&gt;场景导出】生成）</td>
-<td></td>
-</tr>
-<tr>
-<td>SceneCameraBase类</td>
-<td>负责相机的参数设置和相机的焦点跟随，相机的参数配置在camera表</td>
-<td>t_camera</td>
-<td></td>
-</tr>
-<tr>
-<td>SceneZoneMgr类</td>
-<td>负责管理场景上所有的区域，场景分区域加载是管理大资源加载的一种手段。一般简单的场景不需要加，主场景和主线副本场景比较大会分区域，需要用到这个类。</td>
-<td>t_scene，t_scene_zone（在Editor【pjg&gt;场景编辑器&gt;区域导出】上生成）</td>
-<td></td>
-</tr>
-<tr>
-<td>SceneCfgFinder类</td>
-<td>负责管理场景配置信息的查找，场景配置查找的代码可以写进这个类的衍生类。</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>SceneGlobalTouchMgr类</td>
-<td>负责识别和管理场景上的屏幕触摸事件，包括点击、缩放、和拖拽。最大允许两点触摸，小屋的放大缩小就是通过这个类实现的</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>TriggerFactory类</td>
-<td>场景触发器，通过id初始化触发器并派发触发器根据条件触发动作。比如场景中的预制和特效加载完成触发一些动作</td>
-<td>t_scene_trigger，t_scene_triggeraction</td>
-<td></td>
-</tr>
-<tr>
-<td>UnitFactoryBase类</td>
-<td>管理场景里面的各个单元，比如主界面的陆吾猫的实现就可以当做一个单元</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>UnitBase类</td>
-<td>子类作为单元各个功能组件的容器，单元类各功能的实现需要封装进UnitComponentBase类的之类</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>UnitComponentBase类</td>
-<td>单元功能组件的封装</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;span id=&quot;more&quot;&gt;&lt;/span&gt;
-&lt;h1 id=&quot;场景控制流程解读&quot;&gt;&lt;a href=&quot;#场景控制流程解读&quot; class=&quot;headerlink&quot; title=&quot;场景控制流程解读&quot;&gt;&lt;/a&gt;场景控制流程解读&lt;/h1&gt;&lt;h2 id=&quot;1-初始化流程&quot;&gt;&lt;a href=
-    
-    </summary>
-    
-      <category term="Unity游戏开发" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="基础系统" scheme="https://laoleo.github.io/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%9F%BA%E7%A1%80%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="场景" scheme="https://laoleo.github.io/tags/%E5%9C%BA%E6%99%AF/"/>
-    
-      <category term="Scene" scheme="https://laoleo.github.io/tags/Scene/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>散乱知识汇集【工作日记05】</title>
-    <link href="https://laoleo.github.io/2020/03/26/05-%E6%95%A3%E4%B9%B1%E7%9F%A5%E8%AF%86%E6%B1%87%E9%9B%86/"/>
-    <id>https://laoleo.github.io/2020/03/26/05-散乱知识汇集/</id>
-    <published>2020-03-25T16:00:00.000Z</published>
-    <updated>2022-12-21T14:43:35.180Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&amp;quality=100&amp;size=b4000_4000&amp;sec=1585232140&amp;di=19cede1f52e7d232878de1e59f7ef215&amp;src=http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/dbb44aed2e738bd4f69c4f49a58b87d6277ff90d.jpg" alt="Stark"></p>
-<center><i style="color:#333;">(权游Stark家族图徽)</i></center>
-
-<span id="more"></span>
-<blockquote>
-<p>下面的内容是，我最近几个月工作遇到的零散的技术和知识点的汇聚，定期整理归类繁杂的知识，有利于形成知识的结构化。</p>
-</blockquote>
-<p>目录：</p>
-<ul>
-<li>git相关</li>
-<li>protobuf协议</li>
-<li>make构建</li>
-</ul>
-<h2 id="git相关"><a href="#git相关" class="headerlink" title="git相关"></a>git相关</h2><h3 id="git子模块"><a href="#git子模块" class="headerlink" title="git子模块"></a>git子模块</h3><p>允许git仓库做为另一个git仓库的子目录，同时保持自己的独立提交<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加子模块，同时会创建.gitmodules保存仓库子模块的映射信息</span></span><br><span class="line">git <span class="keyword">submodule </span><span class="keyword">add </span>[url] </span><br><span class="line"></span><br><span class="line"><span class="comment"># clone含有子模块的项目后拉取子模块代码</span></span><br><span class="line">git <span class="keyword">clone </span>[url]</span><br><span class="line">git <span class="keyword">submodule </span>init</span><br><span class="line">git <span class="keyword">submodule </span>update</span><br><span class="line"><span class="comment"># 加入--recursive 同等于上面</span></span><br><span class="line">git <span class="keyword">clone </span>--recursive [url]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在子模块上更新代码</span></span><br><span class="line">git fetch</span><br><span class="line">git merge <span class="keyword">origin/master</span></span><br><span class="line"><span class="keyword"></span><span class="comment"># 在主项目中执行下面命令同等于上面操作,缺少[submodule name]默认更新所有子模块</span></span><br><span class="line">git <span class="keyword">submodule </span>update --remote [<span class="keyword">submodule </span>name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在主项目看到子模块的提交日志</span></span><br><span class="line">git log -p --<span class="keyword">submodule</span></span><br></pre></td></tr></table></figure></p>
-<p>git子模块：<a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97">https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97</a><br>业界文档：<a target="_blank" rel="noopener" href="https://juejin.im/post/5addeb48518825672a028a3b">https://juejin.im/post/5addeb48518825672a028a3b</a></p>
-<h3 id="git-diff命令"><a href="#git-diff命令" class="headerlink" title="git-diff命令"></a>git-diff命令</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 显示更改文件数</span><br><span class="line">git diff <span class="keyword">COMMIT</span> <span class="keyword">COMMIT</span> <span class="comment">--shortstat  </span></span><br><span class="line">#显示更改的文件名</span><br><span class="line"><span class="comment">--name-status </span></span><br><span class="line"></span><br><span class="line"># 筛选文件</span><br><span class="line"># 合并后对比一些特定文件的情况下，这条命令尤为重要，后买可以接对多个文件名，用vscode的diff插件还要一个一个文件检查</span><br><span class="line"># 假如合并文件有几百个，工作量是艰巨的，可以写个shell脚本处理对比结果，写进txt文件</span><br><span class="line"># 我最近就有个这样的需求，幸好有这条命令</span><br><span class="line">git diff <span class="keyword">COMMIT</span> <span class="keyword">COMMIT</span> *.lua *.js </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 筛选具体目录下的目标文件，注意<span class="type">path</span>从当前目录起始</span><br><span class="line">git diff <span class="keyword">COMMIT</span> <span class="keyword">COMMIT</span> <span class="type">path</span>/<span class="keyword">to</span>/target  </span><br><span class="line"></span><br><span class="line"># 版本信息</span><br><span class="line">git <span class="keyword">show</span> <span class="keyword">COMMIT</span> </span><br></pre></td></tr></table></figure>
-<h2 id="protobuf协议"><a href="#protobuf协议" class="headerlink" title="protobuf协议"></a>protobuf协议</h2><p>游戏中的数据通讯协议主要是Protobuf+socket，只有登录时拿到ID和session或token用到了http协议。对于数据响应要求高、低延迟甚至实时的应用程序，像游戏、直播、即时聊天，一般都会用到protobuf作为数据结构化和序列化的协议。</p>
-<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>Protobuf全称Protocol Buffer，是google内部广泛使用的结构化数据存储、数据序列化的协议。下面是google官方给出的定义：<br>Protocol Buffers 是一种轻便高效的结构化数据存储格式，可以用于结构化数据序列化，很适合做数据存储或 RPC 数据交换格式。它可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。</p>
-<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><p>首先从定义上，可以看到一个描述protobuf的关键字：方便高效。</p>
-<ul>
-<li>proobuf的语法比xml简洁方便</li>
-</ul>
-<p>拿常见的数据序列化协议Json，xml与protobuf做对比：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.proto</span><br><span class="line">package lm; </span><br><span class="line">message helloworld </span><br><span class="line">&#123; </span><br><span class="line">   required int32     id = 1;  // ID </span><br><span class="line">   required string    str = 2;  // str </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.xml</span><br><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">helloword</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">id</span>&gt;</span>1<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">str</span>&gt;</span>helloworld<span class="tag">&lt;/<span class="name">str</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">note</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>protobuf是二进制协议，比同为文本协议的json和xml的读写操作都要高效，快捷。<br>文本协议要读进内存，会被解析成二进制，而pb属于二进制协议，所以相对文本协议解析速度更快。</li>
-</ul>
-<p>官方针对protobuf的性能将其更各种数据协议做了测试比较，下图是通过各个协议对一个对象操作的时间–Total time，包括创建对象、将对象序列化为内存中的字节序列，然后再反序列化的过程。</p>
-<p><img src="http://m.qpic.cn/psc?/V12x89qA2LlAEO/YPhsM5mUO5.bFmyDEhTOh.bBxFLbiHnVZm4ijUstjs4299r7Qq73xp9N6FkEC3fTipoSpwWAoyqyDu6AavAyu7I6I3SMKyuZQdfOcLaFKu0!/b&amp;bo=sAKrAbACqwEDGTw!&amp;rf=viewer_4" alt="image"></p>
-<p>protobuf性能测试报告：<a target="_blank" rel="noopener" href="https://code.google.com/archive/p/thrift-protobuf-compare/wikis/Benchmarking.wiki">https://code.google.com/archive/p/thrift-protobuf-compare/wikis/Benchmarking.wiki</a></p>
-<ul>
-<li>protobuf协议更小</li>
-</ul>
-<p>各协议的字节码大小对比：<br><img src="http://m.qpic.cn/psc?/V12x89qA2LlAEO/NZ9C4PTRAOGVNvAxFZDwtwanSqa8Dd8UwWZwMJTLqealcb2nqDNffsJmDvN0EJWV7GIgHvUar5NDR37*AGkxwA!!/b&amp;bo=SwTNAUsEzQEDCSw!&amp;rf=viewer_4" alt="image"></p>
-<ul>
-<li>protobuf与平台无关，与语言无关，所以兼容性更好</li>
-</ul>
-<p>java中使用json和xml数据结构，使用使用相应的包支持的，jackson（java的标准json库）和javolution xmlformat（javolution库中格式化xml的API）。<br>而protobuf可以通过编译器将描述数据结构的.proto文件编译成各种目标语言，github仓库上标有目标语言有：c++、java、c#、JavaScript、Ruby、Go、PHP、Dart、Objective-C。</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/protocolbuffers/protobuf">https://github.com/protocolbuffers/protobuf</a></p>
-<h2 id="make构建"><a href="#make构建" class="headerlink" title="make构建"></a>make构建</h2><p>make是一个常用的构建工具，多用于C语言项目，但在一些大型的项目中使用频率也比较高。</p>
-<p>假如一个工程里有个makefile文件，往往都需要用到make命令来构建。</p>
-<h3 id="详细介绍："><a href="#详细介绍：" class="headerlink" title="详细介绍："></a>详细介绍：</h3><p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/02/make.html">http://www.ruanyifeng.com/blog/2015/02/make.html</a></p>
-<h3 id="如何用make来构建node-js项目"><a href="#如何用make来构建node-js项目" class="headerlink" title="如何用make来构建node.js项目"></a>如何用make来构建node.js项目</h3><p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/03/build-website-with-make.html">http://www.ruanyifeng.com/blog/2015/03/build-website-with-make.html</a></p>
-<h3 id="windows下使用make命令安装教程"><a href="#windows下使用make命令安装教程" class="headerlink" title="windows下使用make命令安装教程"></a>windows下使用make命令安装教程</h3><p>下载MinGW：<a target="_blank" rel="noopener" href="http://sourceforge.net/projects/mingw/files/latest/download?source=files">http://sourceforge.net/projects/mingw/files/latest/download?source=files</a></p>
-<p>下载后假如没在bin下找make.exe，可以到MinGW instanllation manager中找到下载MinGW-make.exe，勾选包然后到左上角点击apply change下载(记得把MinGW-make改名成make)。最好把basic setup都下了。</p>
-<p>最后记得手动添加环境变量：path/to/MinGW/bin，就可以使用了。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&amp;amp;quality=100&amp;amp;size=b4000_4000&amp;amp;sec=1585232140&amp;amp;di=19cede1f52e7d232878de1e59f7ef215&amp;amp;src=http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/dbb44aed2e738bd4f69c4f49a58b87d6277ff90d.jpg&quot; alt=&quot;Stark&quot;&gt;&lt;/p&gt;
-&lt;center&gt;&lt;i style=&quot;color:#333;&quot;&gt;(权游Stark家族图徽)&lt;/i&gt;&lt;/center&gt;
-    
-    </summary>
-    
-      <category term="web开发" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="工具" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/%E5%B7%A5%E5%85%B7/"/>
-    
-    
-      <category term="git" scheme="https://laoleo.github.io/tags/git/"/>
-    
-      <category term="protobuf" scheme="https://laoleo.github.io/tags/protobuf/"/>
-    
-      <category term="Protocol Buffer" scheme="https://laoleo.github.io/tags/Protocol-Buffer/"/>
-    
-      <category term="make" scheme="https://laoleo.github.io/tags/make/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>不得不懂的工作流优化技能【工作日记04】</title>
-    <link href="https://laoleo.github.io/2019/12/20/04-%E4%B8%8D%E5%BE%97%E4%B8%8D%E6%87%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E4%BC%98%E5%8C%96%E6%8A%80%E8%83%BD/"/>
-    <id>https://laoleo.github.io/2019/12/20/04-不得不懂的工作流优化技能/</id>
-    <published>2019-12-19T16:00:00.000Z</published>
-    <updated>2022-12-21T14:42:47.307Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="http://pic1.win4000.com/wallpaper/2017-11-08/5a029f1175340.jpg" alt="我是图片"></p>
-<span id="more"></span>
-<blockquote>
-<p>工作日记是笔者记录在日常工作中对负责的前端项目和任务的总结和提炼，在工作中寻乐趣，在代码中找灵魂，输出工作中有价值有意思的沉淀，用娱乐精神分享知识。</p>
-</blockquote>
-<blockquote>
-<p>下文可能存在图片未显示问题，可异步到 <a target="_blank" rel="noopener" href="https://juejin.im/post/5dcd569d51882510b265fc62">原文</a> 阅读</p>
-</blockquote>
-<p>很多朋友都知道我们团队是在智能音箱上开发语音技能业务，问答类和剧情类是语音技能中常见的两大类，其中剧情类是我们家游戏重中之重。</p>
-<p>剧情游戏的数据结构是树，称为剧情树。上线游戏之前，得先在后台手动录入剧情树，包括创建剧情节点、填入语料信息、关键词等等。故事内容小的不出一百个剧情节点，大的还要划分章节，剧情节点总数可达千级以上。<br><img src="http://b184.photo.store.qq.com/psb?/V12x89qA2LlAEO/7EoUcLRyVwuW4jKAVcqKAUgwghtnsujZtzd9TMD8Iow!/b/dLgAAAAAAAAA&amp;bo=fgWqAX4FqgEDCSw!&amp;rf=viewer_4" alt="image"></p>
-<p>那么人工录入这颗庞大的剧情树的时间成本会制约剧情游戏上线时间，况且这么多数据靠人工操作，那人岂不是要心态爆炸。</p>
-<p>有大佬说过：有麻烦的地方，就有机会。谁说的我想不起来。</p>
-<center><br>    <img width="200" src="http://b191.photo.store.qq.com/psb?/V12x89qA2LlAEO/5Qtfvc0ROsoe3VEROyr3amxeZ9EQuFRpLQLeAKzRFnw!/b/dL8AAAAAAAAA&bo=2gDwANoA8AARCT4!&rf=viewer_4"></img><br></center>
-
-<p>况且不忍心看着运营妹子把青春都浪费在重复无价值的工作上，于是就有了我，一位技术不咋地但乐善好施的前端专业切图手，挺身而出，做了以下事情。</p>
-<center><br>    <img width="200" src="http://m.qpic.cn/psb?/V12x89qA2LlAEO/ba.jrAo5EBEsb8Z6kUXjh1LKPc.BE.*1gVfOx54UmXY!/b/dLgAAAAAAAAA&bo=8ADwAPAA8AACOR0!&rf=viewer_4"></img><br></center>
-
-
-<ul>
-<li><a href="#工作流分析">工作流分析</a></li>
-<li><a href="#项目立项">项目立项</a></li>
-<li><a href="#实现需求">实现需求</a></li>
-<li><a href="#效果和收益">效果和收益</a></li>
-</ul>
-<h2 id="工作流分析"><a href="#工作流分析" class="headerlink" title="工作流分析"></a>工作流分析</h2><p>把录入剧情树的工作流程画成图来表达会更加容易说明问题：<br><img src="http://b182.photo.store.qq.com/psb?/V12x89qA2LlAEO/irSMmVs9SQXAZc.sQNRUNvzUF2AcpE1qI11nC38RsKs!/b/dLYAAAAAAAAA&amp;bo=WAK3AFgCtwADCSw!&amp;rf=viewer_4" alt="image"></p>
-<p>很简单的一个工作流，把效率不高的环节拆分成多个组合因素，这里的目的主要是录入剧情树的相关信息，把信息分类如下：<br><img src="http://b182.photo.store.qq.com/psb?/V12x89qA2LlAEO/KL0TIziHozdKiDj0ij7KTQgemnqVWU95I4rM5YdTB2I!/b/dLYAAAAAAAAA&amp;bo=lALpAZQC6QEDCSw!&amp;rf=viewer_4" alt="image"></p>
-<p>其中有些信息是可以直接从剧本中去是识别提炼出来形成结构化数据，将这个任务自动化，交给机器来处理，人工只负责剧本不需要出现、数据操作类的信息，那么一下步就是按自动/人工的范畴来重整信息。<br><img src="http://b309.photo.store.qq.com/psb?/V12x89qA2LlAEO/360ys0nAUzliwPsseN63c1piKE.gxPEOVybPBtnENpU!/b/dDUBAAAAAAAA&amp;bo=5ANBAuQDQQIDCSw!&amp;rf=viewer_4" alt="image"></p>
-<p>右边的就是重整后的信息分类，两个分类可以演化成两个新阶段，机器分析剧本自动化阶段和人工补全阶段，替换掉前面效率低下的部分就可以形成新的工作流：<br><img src="http://b191.photo.store.qq.com/psb?/V12x89qA2LlAEO/YbT32wTf*K8*knQAtn5Jh5W7MlFfZp.ugGPtwVawxEU!/b/dL8AAAAAAAAA&amp;bo=0AIcAdACHAEDCSw!&amp;rf=viewer_4" alt="image"></p>
-<p>优化升级后的工作流需要一个剧本分析器来为它赋能。</p>
-<p>现在的感觉就像仿佛看见了曙光。</p>
-<center><br>    <img width="200" src="http://m.qpic.cn/psb?/V12x89qA2LlAEO/o4r2aVqjJIaMwG*LrzJSw0Xuc0XZ2AdKU.2r58u8XxM!/b/dPMAAAAAAAAA&bo=9wCaAAAAAAACZy4!&rf=viewer_4"></img><br></center>
-
-
-<p>你以为我会现在马上动手做吗？不，这仅仅是我歪歪的一个东西，并没有经过各方面的认同，需要请求下产品和技术老大的意见，否者辛辛苦苦做出来，得不到大家认同，没有功劳更没有苦劳。</p>
-<h2 id="项目立项"><a href="#项目立项" class="headerlink" title="项目立项"></a>项目立项</h2><p>在周会上回报工作情况时候，顺水推舟的拿出上面的工作流分析，向组内提出了这个优化方案。大伙也没啥意见，反正不用他们搬砖，真是替你们有我这么个好伙伴感到开心。</p>
-<center><br>    <img width="200" src="http://b184.photo.store.qq.com/psb?/V12x89qA2LlAEO/bmc64lJ4xpxu59RZC9Xq7DRVxyhVRuZASlr.L3L9iiM!/b/dLgAAAAAAAAA&bo=8ADWAPAA1gARCT4!&rf=viewer_4"></img><br></center>
-
-
-<p>接着找到产品，需要确定两点：</p>
-<ul>
-<li>剧情剧本的统一格式（假如策划伙伴每人各持一套，兼容代码会让人写到吐）</li>
-<li>解析器具体的功能点</li>
-</ul>
-<p>最终这个项目的面貌逐渐清晰：<br><!-- 具体需求 --></p>
-<ul>
-<li>剧本格式<figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">第一章 互动</span><br><span class="line"><span class="meta prompt_">...</span></span><br><span class="line">1. 已经是晚上11点了</span><br><span class="line">你的女神突然很想吃宵夜</span><br><span class="line">你会帮她叫外卖还是让她赶紧睡觉？  </span><br><span class="line">(1-1： 帮她叫外卖，叫外卖，外卖。1-2： 让她赶紧睡觉，赶紧睡觉，睡觉)</span><br><span class="line"><span class="meta prompt_">...</span></span><br></pre></td></tr></table></figure></li>
-<li>功能<ul>
-<li>上传.docx文档剧本</li>
-<li>解析提出信息</li>
-<li>验证剧情树结构</li>
-<li>输出结构化数据</li>
-</ul>
-</li>
-</ul>
-<h2 id="实现需求"><a href="#实现需求" class="headerlink" title="实现需求"></a>实现需求</h2><p>这里我们直接看关键功能：解析剧本提炼信息。这里就包含两个步骤：解析docx文档和识别提炼信息。</p>
-<ul>
-<li>解析docx文档</li>
-</ul>
-<p>自己实现个解析docx文档程序？一般人不会那么干，那是牛人做的事情。<br><!--【表情包：牛】--></p>
-<center><br>    <img width="200" src="http://m.qpic.cn/psb?/V12x89qA2LlAEO/uU8WcIx9l0DnUXjQSaLjPMau6FWllCnmMZu07ThMPik!/b/dFMBAAAAAAAA&bo=5gC3AOYAtwACaU0!&rf=viewer_4"></img><br></center>
-
-<p><code>mammoth.js</code>可以解决这个问题。</p>
-<blockquote>
-<p>Mammoth is designed to convert .docx documents, such as those created by Microsoft Word, and convert them to HTML. </p>
-</blockquote>
-<p>意思是主要用于将word的.docx文档转换成HTML文档，除此之外mammoth有个extractRawText方法可以转换成row text行文本，以换行符划分。</p>
-<p>将解析文档功能封装成函数:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mammoth = <span class="built_in">require</span>(<span class="string">&#x27;mammoth&#x27;</span>);</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 解析docx文本内容并导出</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">String</span>&#125; path .docx 路径</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> extractRawText = <span class="keyword">function</span> (<span class="params">file</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> opt = &#123;&#125;;</span><br><span class="line">  <span class="keyword">if</span> (file <span class="keyword">instanceof</span> <span class="title class_">Buffer</span>) &#123;</span><br><span class="line">    opt.<span class="property">buffer</span> = file;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> file === <span class="string">&#x27;string&#x27;</span>) &#123;</span><br><span class="line">    opt.<span class="property">path</span> = file;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">global</span>.<span class="property">log_debug</span>.<span class="title function_">error</span>(<span class="string">`[parseDocxScript]:<span class="subst">$&#123;file&#125;</span> 未知类型`</span>);</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">`<span class="subst">$&#123;file&#125;</span> 未知类型`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    mammoth.<span class="title function_">extractRawText</span>(opt)</span><br><span class="line">      .<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">result</span>) &#123;</span><br><span class="line">        <span class="title function_">resolve</span>(result); <span class="comment">// &#123;value, message&#125;</span></span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br>文档内容以String类型存在于result.value中，其中换行符会被转换成\n\n。</p>
-<ul>
-<li>识别并提炼信息</li>
-</ul>
-<p>识别就是字符串遍历和检测，利用正则表达式足以解决，其实就是使用标记法，待识别的数据有其相关的标记。</p>
-<p>根据剧本格式，需要正则识别的信息有：</p>
-<ul>
-<li>章节：第一章<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/第(.*)章(.*)$/</span></span><br></pre></td></tr></table></figure></li>
-<li>剧情编号（ID）：2. 2-1. <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/^([\d\-]+)\./</span></span><br></pre></td></tr></table></figure></li>
-<li>分支：（5：回复，回。6：不理会）<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/^[（\()](.*)[）\)]$/</span></span><br></pre></td></tr></table></figure></li>
-<li>分支中的剧情编号<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/([\d\-]+)/</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>可以以<code>\n\n</code>为分隔符将内容切分成数组，遍历去逐行识别检验。</p>
-<details><br><summary>code</summary><br><pre><code class="hljs"><br>/*<em>
- </em> 解析剧本，结构化信息<br> <em> 
- </em> @param &#123;String&#125; path .docx 路径<br> <em> @param &#123;Object&#125; opt 拼装数据需要的参数sceneId
- </em>/<br>const parseScript = function (file, opt = &#123;&#125;) &#123;<br>  return extractRawText(file)<br>    .then(result =&gt; &#123;<br>      var text = result.value;<br>      var aSource = text.split(‘\n\n’);<br>      var temp = aSource.filter(v =&gt; !!v);<br>      var dialog = &#123;&#125;,<br>        dialogs = [],<br>        chapters = [],<br>        currId,<br>        currChar;<br>      console.log(temp);<br>      temp.forEach(v =&gt; &#123;<br>        var matchIdReg = /^([\d-]+)./, // 2 2-1<br>          matchNextIdReg = /([\d-]+)/,<br>          matchChooseText = /^<a href=".*">（()</a>[）)]$/,<br>          matchChapText = /第(.<em>)章(.</em>)$/,<br>          res;<br>        // 解析章节<br>        res = v.trim().match(matchChapText);<br>        if (res) &#123;<br>          var chapNo = currChar = zhDigitToArabic(res[1]);<br>          var isExit = !!chapters.find(v =&gt; v.chapNo === chapNo);<br>          !isExit &amp;&amp; chapters.push(&#123;<br>            chapNo,<br>            title: res[2].trim()<br>          &#125;);<br>        &#125;<br>        // 识别节点<br>        res = v.match(matchIdReg);<br>        if (res) &#123;<br>          dialog = &#123;&#125;;<br>          currId = dialog.id = res[1];<br>          currChar &amp;&amp; (dialog.chapNo = currChar);<br>          v = v.replace(matchIdReg, ‘’);<br>        &#125;<br>        // 判断分支语句<br>        res = v.match(matchChooseText);<br>        if (res) &#123;<br>          const t = res[1];<br>          t.split(/[。；]/).forEach(v =&gt; &#123;<br>            // v =&gt; 2：xxx || 接4<br>            var item = &#123;&#125;,<br>              keyword;<br>            res = v.match(matchNextIdReg);<br>            if (res === null) return;<br>            item.nextId = res[1];<br>            keyword = v.split(‘：’)[1];<br>            keyword &amp;&amp; (item.keywords = keyword.trim().split(‘，’));<br>            !dialog.children &amp;&amp; (dialog.children = []);<br>            dialog.children.push(item);<br>          &#125;);<br>        &#125; else &#123;<br>          // 处理内容语句<br>          if (currId === dialog.id &amp;&amp; !/【全文完】/.test(v)) &#123;<br>            if (dialog.content === undefined) dialog.content = ‘’;<br>            dialog.content += <code>$&#123;v&#125;\n\n</code>;<br>          }<br>        }<br>        // 装载dialog<br>        if (dialog.id &amp;&amp; dialog.content &amp;&amp; !dialogs.includes(dialog)) dialogs.push(dialog);<br>      });<br>    return { dialogs, chapters }<br>};<br></code></pre><br></details>
-
-<h2 id="效果和收益"><a href="#效果和收益" class="headerlink" title="效果和收益"></a>效果和收益</h2><p>当打通流程之后，只需轻轻点击上传剧本，弹指一挥间，一棵可爱的剧情树已经出现在你面前，处理时间平均200+ms，整个过程1s不到。<br><!--【图片。gif】--><br><img src="http://b264.photo.store.qq.com/psb?/V12x89qA2LlAEO/oaTG.bAfWJtIE7Y944ngY0o5RnP5gragZki3JkEbu6Y!/b/dAgBAAAAAAAA&amp;bo=xgX*AQAAAAACR14!&amp;rf=viewer_4" alt="image"></p>
-<p>之前完整的配一个复杂的剧情树要配一天，目前只需要两小时不到。在效率上得到了大幅度的提升，对于运营伙伴来说简直是如获至宝，用他们的话来说就是大快人心。</p>
-<center><br>    <img width="200" src="http://b190.photo.store.qq.com/psb?/V12x89qA2LlAEO/97GNFgAvlnbwg.czssmO*4312jTHJXbY6zP1lm5.Em8!/b/dL4AAAAAAAAA&bo=WgHfAAAAAAAChyc!&rf=viewer_4"></img><br></center>
-
-
-
-
-
-
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;http://pic1.win4000.com/wallpaper/2017-11-08/5a029f1175340.jpg&quot; alt=&quot;我是图片&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="web开发" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="web" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/web/"/>
-    
-      <category term="工作日记" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/web/%E5%B7%A5%E4%BD%9C%E6%97%A5%E8%AE%B0/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>使用console输出网站logo彩蛋【工作日记03】</title>
-    <link href="https://laoleo.github.io/2019/11/18/03-%E4%BD%BF%E7%94%A8console%E8%BE%93%E5%87%BA%E7%BD%91%E7%AB%99logo%E5%BD%A9%E8%9B%8B/"/>
-    <id>https://laoleo.github.io/2019/11/18/03-使用console输出网站logo彩蛋/</id>
-    <published>2019-11-17T16:00:00.000Z</published>
-    <updated>2022-12-21T14:42:43.089Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="http://pic1.win4000.com/wallpaper/2017-11-08/5a029f187ca9f.jpg" alt="我是图片"></p>
-<span id="more"></span>
-<blockquote>
-<p>工作日记是笔者记录在日常工作中对负责的前端项目和任务的总结和提炼，在工作中寻乐趣，在代码中找灵魂，输出工作中有价值有意思的沉淀，分享知识，娱乐自己。</p>
-</blockquote>
-<blockquote>
-<p>下文可能存在图片未显示问题，可异步到 <a target="_blank" rel="noopener" href="https://juejin.im/post/5dca2e56518825574d2149e5">原文</a> 阅读</p>
-</blockquote>
-<p>相信大多数年轻人上班时都会偶尔刷下知乎，吃瓜或者提问题，一天我美若天仙的GF发了一张截图过来，说她知乎刷着刷着感觉遇到了bug，于是打开F12，看到了这个彩蛋。</p>
-<p><img src="http://b131.photo.store.qq.com/psb?/V12x89qA2LlAEO/piwEkxKgLCg69fWgJGgwSe9E98LHnzpFwrP938F4ufs!/b/dIMAAAAAAAAA&amp;bo=NANnAQAAAAADB3M!&amp;rf=viewer_4" alt="zhihu-egg"></p>
-<p>除了不得不敬佩她的敬业精神外（她也是前端一枚），我肯定是不能涨他人志气，灭自己威风的。我平静的回了句，这玩意太简单，我也能整出来。</p>
-<p>编辑器打开，手在键盘上凝固，不知如何敲出第一个代码…</p>
-<html><br><center><br>    <img src="http://b338.photo.store.qq.com/psb?/V12x89qA2LlAEO/cRggOlfoPJaxWQWwXauWV1aJi57jspW6RmKORJeW8Xk!/b/dFIBAAAAAAAA&bo=lgCWAAAAAAACFzM!&rf=viewer_4"></img><br></center><br></html>
-
-
-
-<p>难道要一个个字符的画上去？那得画到什么何年何月？<br><!--【惊讶二级】--></p>
-<html><br><center><br>    <img src="http://b182.photo.store.qq.com/psb?/V12x89qA2LlAEO/7vb2fhkTRegac9U7pv.iMHmoIf2hqE2x9ZJIYSpvsZw!/b/dLYAAAAAAAAA&bo=8ADwAAAAAAARBzA!&rf=viewer_4"></img><br></center><br></html>
-
-<p>既然自己没那个美术天赋，那就动脑子吧，何况我本身就靠脑子吃饭的呀。</p>
-<!--【恍然大悟】-->
-<html><br><center><br>    <img width="200" src="http://b318.photo.store.qq.com/psb?/V12x89qA2LlAEO/sxtTcevZyQ55Zqb.olsITndQzMmw4oZwwoQmrGrn*O8!/b/dD4BAAAAAAAA&bo=LAEsAQAAAAACFzM!&rf=viewer_4"></img><br></center><br></html>
-
-<p>既然是靠脑子吃饭的，那就得对得起我这聪明的脑子。先问问google大哥如何解决。</p>
-<p>一搜，不出我所料，已经有总结文章了。站在巨人的肩膀也不失为一种小聪明。</p>
-<ul>
-<li><a href="hhttps://aotu.io/notes/2016/06/22/An-interesting-experience-on-console/index.html">让console充满情怀</a></li>
-</ul>
-<!--【得意】-->
-<html><br><center><br>    <img width="200" src="http://b182.photo.store.qq.com/psb?/V12x89qA2LlAEO/jj43nXXEcKXqN2wnHhnyHnLuq6OBaIQmVrpngsNZdmw!/b/dLYAAAAAAAAA&bo=8ADwAAAAAAACJwM!&rf=viewer_4"></img><br></center><br></html>
-
-<p>提取出有用的信息：</p>
-<ol>
-<li>console的方法可以填入占位符，类似c语言的print方法中的占位符。<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(<span class="keyword">object</span> [, <span class="keyword">object</span>, …])</span><br></pre></td></tr></table></figure></li>
-<li>占位符</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th>格式占位符</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>%s</td>
-<td>字符串</td>
-</tr>
-<tr>
-<td>%d or %i</td>
-<td>整数</td>
-</tr>
-<tr>
-<td>%f</td>
-<td>浮点数</td>
-</tr>
-<tr>
-<td>%o</td>
-<td>可展开的DOM</td>
-</tr>
-<tr>
-<td>%O</td>
-<td>列出DOM的属性</td>
-</tr>
-<tr>
-<td>%c</td>
-<td>根据提供的css样式格式化字符串</td>
-</tr>
-</tbody>
-</table>
-<ol start="3">
-<li>字符画<br>打印出的logo图案叫字符画，是可以用软件分析图片生成。亲测下面的软件比较好用：</li>
-</ol>
-<ul>
-<li><a target="_blank" rel="noopener" href="http://pan.baidu.com/share/link?shareid=3161588673&amp;uk=3509597415">ASCII Generator</a></li>
-</ul>
-<p>从上面第二点得知，原来console可以使用css规则格式化字符串，再结合软件将logo生成字符画，这个网站彩蛋不就搞定了吗，如此简单。</p>
-<p>具体步骤：</p>
-<ol>
-<li>制作字符画  </li>
-</ol>
-<p>使用ASCII Generator上传logo图片，生成字符画，调节大小，抖动，然后选择好看的字符，调整好后可以拷贝到IDE了（粘贴到console.info(<code></code>)中，否则会出现换行符），如果不是很像可以增删一些字符微调一下。  </p>
-<p>这里要注意的是，字符画在IDE里表现会有点变形，可能打印出来也会变形，这是由字体不同造成的，回到软件中将字体调为微软雅黑，再粘贴回去，即使IDE上有点变形但打印出来不会。</p>
-<p>但是打印字符画有点单调，加点文字点缀点缀，会碰撞出更美的火花，加上我们团队的队名和标语。</p>
-<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">console.log(`</span><br><span class="line">                      <span class="number"> 7007 </span>                      </span><br><span class="line">                <span class="number"> 7000000000000007 </span>                </span><br><span class="line">           <span class="number"> 760000000000000000000000057 </span>          </span><br><span class="line">        <span class="number"> 76000008888888888888880800000005 </span>        </span><br><span class="line">      <span class="number"> 700008888868688868888880000008860006 </span>      </span><br><span class="line">     <span class="number"> 800088886888688888888800067 </span>    <span class="number"> 700002 </span>    </span><br><span class="line">   <span class="number"> 70088888888888868888880007 </span>       <span class="number"> 7088000 </span>   </span><br><span class="line">  <span class="number"> 3008868800000088868888005 </span>         <span class="number"> 70888800 </span>  </span><br><span class="line"> <span class="number"> 7008888808000080888888801 </span>     <span class="number"> 76000088888800 </span> </span><br><span class="line"> <span class="number"> 008868808 </span>    <span class="number"> 608888808 </span>    <span class="number"> 70000000888888806 </span></span><br><span class="line"><span class="number"> 7088688800 </span>    <span class="number"> 608888807 </span>   <span class="number"> 700000888888688800 </span></span><br><span class="line"><span class="number"> 3088868800 </span>    <span class="number"> 808888007 </span>           <span class="number"> 7088868880 </span>                加班熊工作室</span><br><span class="line"><span class="number"> 2088686800 </span>    <span class="number"> 608888807 </span>           <span class="number"> 70888888807 </span>         </span><br><span class="line"><span class="number"> 2088888800 </span>    <span class="number"> 808888007 </span>           <span class="number"> 70888688007 </span>         ——国内精品AI语音游戏开创者——</span><br><span class="line"><span class="number"> 1088888880 </span>    <span class="number"> 808888807 </span>   <span class="number"> 000000000888688880 </span></span><br><span class="line"> <span class="number"> 0088888007 </span>   <span class="number"> 700888007 </span>   <span class="number"> 000000000888888800 </span></span><br><span class="line"> <span class="number"> 0088888806 </span>    <span class="number"> 70000007 </span>   <span class="number"> 808888888888888007 </span></span><br><span class="line"> <span class="number"> 70086888803 </span>     <span class="number"> 758007 </span>   <span class="number"> 00888686888888005 </span> </span><br><span class="line">  <span class="number"> 70088000006 </span>               <span class="number"> 8088686868888002 </span>  </span><br><span class="line">   <span class="number"> 108057878003 </span>             <span class="number"> 808688868888007 </span>   </span><br><span class="line">   <span class="number"> 70007 </span>1 <span class="number"> 800087 </span>          <span class="number"> 6088888880006 </span>     </span><br><span class="line">   <span class="number"> 00800 </span><span class="number"> 7 </span> <span class="number"> 700000008888888608888800008 </span>       </span><br><span class="line">  <span class="number"> 8088800 </span>77<span class="number"> 7080800000000000808000004 </span>         </span><br><span class="line"> <span class="number"> 400000000000800080808000000000000047 </span>           </span><br><span class="line">700000000000000000000000000000007                `);</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>加上样式<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.<span class="built_in">log</span>(<span class="string">&quot;%cHello,%cWorld&quot;</span>, <span class="string">&quot;color:red;&quot;</span>, <span class="string">&quot;color:blue;&quot;</span>);</span><br></pre></td></tr></table></figure>
-%c占位符的样式会影响其字后的字符串，样式之间符合从前到后的覆盖逻辑，后面的样式会覆盖前面的样式。</li>
-</ol>
-<p><img src="http://b338.photo.store.qq.com/psb?/V12x89qA2LlAEO/grdHiKfwZrCevmZGh8HoFlQ7X7fVWTd4.Ekyhl2zon8!/b/dFIBAAAAAAAA&amp;bo=OQMxAAAAAAADByk!&amp;rf=viewer_4" alt="image"></p>
-<p>那我们就可以在不同位置插入%c占位符，来控制不同元素字符画、队名和标语之间的样式。代码封装成函数：<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">const consoleEgg = () =&gt; &#123;</span><br><span class="line">  const egg = `%c</span><br><span class="line">                      <span class="number"> 7007 </span>                      </span><br><span class="line">                <span class="number"> 7000000000000007 </span>                </span><br><span class="line">           <span class="number"> 760000000000000000000000057 </span>          </span><br><span class="line">        <span class="number"> 76000008888888888888880800000005 </span>        </span><br><span class="line">      <span class="number"> 700008888868688868888880000008860006 </span>      </span><br><span class="line">     <span class="number"> 800088886888688888888800067 </span>    <span class="number"> 700002 </span>    </span><br><span class="line">   <span class="number"> 70088888888888868888880007 </span>       <span class="number"> 7088000 </span>   </span><br><span class="line">  <span class="number"> 3008868800000088868888005 </span>         <span class="number"> 70888800 </span>  </span><br><span class="line"> <span class="number"> 7008888808000080888888801 </span>     <span class="number"> 76000088888800 </span> </span><br><span class="line"> <span class="number"> 008868808 </span>    <span class="number"> 608888808 </span>    <span class="number"> 70000000888888806 </span></span><br><span class="line"><span class="number"> 7088688800 </span>    <span class="number"> 608888807 </span>   <span class="number"> 700000888888688800 </span></span><br><span class="line"><span class="number"> 3088868800 </span>    <span class="number"> 808888007 </span>           <span class="number"> 7088868880 </span>                %c加班熊工作室%c</span><br><span class="line"><span class="number"> 2088686800 </span>    <span class="number"> 608888807 </span>           <span class="number"> 70888888807 </span>         </span><br><span class="line"><span class="number"> 2088888800 </span>    <span class="number"> 808888007 </span>           <span class="number"> 70888688007 </span>         ——%c国内精品AI语音游戏开创者%c——</span><br><span class="line"><span class="number"> 1088888880 </span>    <span class="number"> 808888807 </span>   <span class="number"> 000000000888688880 </span></span><br><span class="line"> <span class="number"> 0088888007 </span>   <span class="number"> 700888007 </span>   <span class="number"> 000000000888888800 </span></span><br><span class="line"> <span class="number"> 0088888806 </span>    <span class="number"> 70000007 </span>   <span class="number"> 808888888888888007 </span></span><br><span class="line"> <span class="number"> 70086888803 </span>     <span class="number"> 758007 </span>   <span class="number"> 00888686888888005 </span> </span><br><span class="line">  <span class="number"> 70088000006 </span>               <span class="number"> 8088686868888002 </span>  </span><br><span class="line">   <span class="number"> 108057878003 </span>             <span class="number"> 808688868888007 </span>   </span><br><span class="line">   <span class="number"> 70007 </span>1 <span class="number"> 800087 </span>          <span class="number"> 6088888880006 </span>     </span><br><span class="line">   <span class="number"> 00800 </span><span class="number"> 7 </span> <span class="number"> 700000008888888608888800008 </span>       </span><br><span class="line">  <span class="number"> 8088800 </span>77<span class="number"> 7080800000000000808000004 </span>         </span><br><span class="line"> <span class="number"> 400000000000800080808000000000000047 </span>           </span><br><span class="line">700000000000000000000000000000007                `;</span><br><span class="line">  const defaultStyle = &#x27;color: rgba(0,0,0,.7);&#x27;;</span><br><span class="line">  const titleStyle = &#x27;color: <span class="comment">#fff;background: rgba(52,55,86,1);padding: 2px 10px; border-radius: 2px;font-family: 微软雅黑;&#x27;;</span></span><br><span class="line">  const sloganStyle = &#x27;color: <span class="comment">#343756&#x27;;</span></span><br><span class="line"></span><br><span class="line">  console.log(egg, defaultStyle, titleStyle, defaultStyle, sloganStyle, defaultStyle);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>最终效果：<br><img src="http://b190.photo.store.qq.com/psb?/V12x89qA2LlAEO/MO7ODEnWcPYkDOJMM8VfeO1LROYS.5QE2NzR1qshQTQ!/b/dL4AAAAAAAAA&amp;bo=KgN8AQAAAAADB3Y!&amp;rf=viewer_4" alt="image"></p>
-<p>把图片发给GF，她立马秒变迷妹，发来表情：</p>
-<html><br><center><br>    <img width="200" src="http://m.qpic.cn/psb?/V12x89qA2LlAEO/nS8f7*bX*osE9cs9U2D61xGHu5goQ8pwLFaHJnJZHNU!/b/dL8AAAAAAAAA&bo=yADIAAAAAAACJwM!&rf=viewer_4"></img><br></center><br></html>
-
-<p><br><br><br><br><br><br><br></p>
-<center>————————–》》》一条华丽的结束线《《《————————–<br></center><br><br><br><br><br>await!await!!await!!!<br><center><br>    <img width="200" src="http://b190.photo.store.qq.com/psb?/V12x89qA2LlAEO/R3rpwlihgpSoxQnp92BPYp65Iryts4TmYoZemDikX1U!/b/dL4AAAAAAAAA&bo=8ADwAAAAAAARBzA!&rf=viewer_4"></img><br></center><br>好奇的小伙伴肯定注意到我们古怪的队名，下面就是我们团队和业务的简单介绍，欢迎关注：<br><br><br>&gt; 加班熊工作室，国内精品AI语音游戏开创者，打造有趣好玩多元化语音交互游戏，在各大智能音箱平台天猫精灵、小度和小度在家、小爱同学上线语音技能数量达10+，积累玩家达一千多万，部分爆款游戏有女生追求手册、约会大作战、恐怖嫌疑人、恐怖陌生人、喜剧之王…赶快上音箱上玩玩吧！<br><br><center><br>    <img src="http://b320.photo.store.qq.com/psb?/V12x89qA2LlAEO/rfwmg.Xm7*..V1vL41h84cYLFHoKAtwazaoIvnueRsI!/b/dEABAAAAAAAA&bo=UQHfAAAAAAADB60!&rf=viewer_4"></img><br></center>
-
-
-<center>————————–》》》一条真正的结束线《《《————————–<br></center>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;http://pic1.win4000.com/wallpaper/2017-11-08/5a029f187ca9f.jpg&quot; alt=&quot;我是图片&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="web开发" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="web" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/web/"/>
-    
-      <category term="工作日记" scheme="https://laoleo.github.io/categories/web%E5%BC%80%E5%8F%91/web/%E5%B7%A5%E4%BD%9C%E6%97%A5%E8%AE%B0/"/>
-    
     
   </entry>
   

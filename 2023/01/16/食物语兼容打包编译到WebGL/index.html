@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9532409502039699"
+     crossorigin="anonymous"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="前言Unity使用WebAssembly(wasm)技术将引擎代码和业务代码编译到WebGL平台上解析运行，截止目前2023年，PC浏览器对webgl的支持也越来越兼容普及，并且wasm具有可移植、体积小、加载快等特点，应用运行能接近原生的体验。 为应对项目组拓展海外市场的发展战略，因为海外用户使用PC玩游戏比较多，所以先预研一下发布WebGL平台的整体流程。 这里使用已经上线的项目——食物语来实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="食物语兼容打包编译到WebGL">
+<meta property="og:url" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/index.html">
+<meta property="og:site_name" content="Unity游戏开发">
+<meta property="og:description" content="前言Unity使用WebAssembly(wasm)技术将引擎代码和业务代码编译到WebGL平台上解析运行，截止目前2023年，PC浏览器对webgl的支持也越来越兼容普及，并且wasm具有可移植、体积小、加载快等特点，应用运行能接近原生的体验。 为应对项目组拓展海外市场的发展战略，因为海外用户使用PC玩游戏比较多，所以先预研一下发布WebGL平台的整体流程。 这里使用已经上线的项目——食物语来实">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_gMMazqvHi4.png">
+<meta property="og:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_jpm_1FmNy0.png">
+<meta property="og:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_wjmhGTQACV.png">
+<meta property="og:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_lBXxnzYyz7.png">
+<meta property="og:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_A5gllRKePb.png">
+<meta property="og:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_5fUd5zvpx8.png">
+<meta property="og:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_3tC5cwfsr5.png">
+<meta property="og:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_7WdLCSVtdJ.png">
+<meta property="og:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_J0oIdyHNOw.png">
+<meta property="og:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_iWxvVgACJH.png">
+<meta property="og:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_eKJtFbgNS2.png">
+<meta property="og:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_cvqjYHFKmM.png">
+<meta property="og:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_8BOg2gT045.png">
+<meta property="og:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_-YJGd2vFNT.png">
+<meta property="article:published_time" content="2023-01-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-18T07:21:26.501Z">
+<meta property="article:author" content="Walking 劳翼">
+<meta property="article:tag" content="WebGL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_gMMazqvHi4.png">
+
+
+<link rel="canonical" href="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>食物语兼容打包编译到WebGL | Unity游戏开发</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SCC49Q9P9H"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-SCC49Q9P9H');
+      }
+    </script>
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E4%BD%93%E6%96%B9%E5%90%91"><span class="nav-number">2.</span> <span class="nav-text">总体方向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%96%BD%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text">实施步骤</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正寻找新机会...</p>
+  </div>
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          食物语兼容打包编译到WebGL
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-01-16 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-16T00:00:00+08:00">2023-01-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2023-01-18 15:21:26" itemprop="dateModified" datetime="2023-01-18T15:21:26+08:00">2023-01-18</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Unity游戏开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/" itemprop="url" rel="index"><span itemprop="name">平台</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/WebGL/" itemprop="url" rel="index"><span itemprop="name">WebGL</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/" class="post-meta-item leancloud_visitors" data-flag-title="食物语兼容打包编译到WebGL" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+
+        <div class="post-fixed-siderbar">
+    <div id="thumbsup-/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/" class="post-fixed-siderbar-item" title="点赞支持">
+        <span class="post-fixed-siderbar-icon">
+            <span id="thumbsup-btn-/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/">
+                <i class="fa fa-heart"></i>
+            </span>
+        </span>
+        <span class="leancloud-fixed-siderbar-count leancloud-thumbsup-count"></span>
+    </div>
+        <div class="post-fixed-siderbar-item" title="评论试试">
+            <span class="post-fixed-siderbar-icon">
+                <span class="post-fixed-siderbar-comments-btn">
+                    <i class="fa fa-comment"></i>
+                </span>
+            </span>
+            <span class="leancloud-fixed-siderbar-count post-fixed-siderbar-comments-count"></span>
+        </div>
+</div>
+      </header>
+
+
+    
+    
+    
+      <div class="post-tags">
+          <a href="/tags/WebGL/" rel="tag"><i class="fa fa-tag"></i> WebGL</a>
+      </div>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Unity使用WebAssembly(wasm)技术将引擎代码和业务代码编译到WebGL平台上解析运行，截止目前2023年，PC浏览器对webgl的支持也越来越兼容普及，并且wasm具有可移植、体积小、加载快等特点，应用运行能接近原生的体验。</p>
+<p>为应对项目组拓展海外市场的发展战略，因为海外用户使用PC玩游戏比较多，所以先预研一下发布WebGL平台的整体流程。</p>
+<p>这里使用已经上线的项目——食物语来实践，这样遇到的问题比较有代表性。</p>
+<blockquote>
+<p>顺便打下广告，食物语是一项集中华传统美食文明和二次元风格于一体的女性向养成卡牌游戏，对美食和二次元感兴趣的同学，非常有必要下载玩玩~~</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="总体方向"><a href="#总体方向" class="headerlink" title="总体方向"></a>总体方向</h2><table>
+<thead>
+<tr>
+<th>代码模块</th>
+<th>库模块</th>
+<th>兼容情况</th>
+<th>完成情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ao框架</td>
+<td>日志</td>
+<td><a target="_blank" rel="noopener" href="http://wiki.info/pages/viewpage.action?pageId=139784050" title="日志方案">日志方案</a></td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>网络</td>
+<td><a target="_blank" rel="noopener" href="http://wiki.info/pages/viewpage.action?pageId=139769721" title="使用websocket">使用websocket</a></td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>ToLua</td>
+<td>步骤7</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>资源加载</td>
+<td>步骤20</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>资源打包</td>
+<td>步骤5、6</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>热更新</td>
+<td></td>
+<td>⭕</td>
+</tr>
+<tr>
+<td></td>
+<td>Bugly</td>
+<td></td>
+<td>⭕</td>
+</tr>
+<tr>
+<td>三方库</td>
+<td>Spine</td>
+<td>支持</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>Live2D</td>
+<td>支持</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>Fmod</td>
+<td>步骤21</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>Msdk</td>
+<td>跳过</td>
+<td>✔</td>
+</tr>
+</tbody>
+</table>
+<h2 id="实施步骤"><a href="#实施步骤" class="headerlink" title="实施步骤"></a>实施步骤</h2><p>1.移除（剪切到别的目录）AltasSource、GameAssets资源目录，移除ThridParty三方库以及一切业务相关代码，只剩aounity框架相关代码。</p>
+<p>2.切换WebGL目标平台</p>
+<p>3.编译，解决编译报错</p>
+<ul>
+<li>注释打包相关的LocalBundleStrategy类</li>
+<li>注释LocalExportLuaSetting类，将C#类转为Lua类的工具类</li>
+<li>AssetBundleBuilder调用了上层的类RemoveEmptyDirectory</li>
+<li>BuglyAgent没有适配webgl平台，空引用报错</li>
+<li>LuaBinder和DelegateFactoryUtil使用了反射</li>
+</ul>
+<p>4.先跑通执行Lua代码，Editor没问题，打包需要解决打包Lua ab问题</p>
+<p>5.强打，只打Lua ab，可以正常打出ab，但是web上下载解压有报错。</p>
+<p>6.WebGL上不支持解压ab LZMA压缩格式，可以是LZ4，打包选项上得添加ChunkBasedCompression，不然默认打包压缩格式是LZMA。</p>
+<p>7.报错dlopen加载库错误、加载tolua DLL错误。这是因为webgl上允许使用动态链接库，Lua相关的库需要通过静态引用C源码的方式，打包时一起编译到webAssembly中。</p>
+<p>参考文章<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/486826570" title="Unity WebGL ToLua">Unity WebGL ToLua</a>，文章里的webgl plugins缺少项目中用到的库，得到<a target="_blank" rel="noopener" href="http://tolua_rumtime" title="tolua_runtime">tolua_runtime</a>仓库下载缺失的C文件。</p>
+<p>引入lua C源码后打包时会进行Complie WebAssembly Module编译步骤，就是编译刚刚引入的C库文件，假如这时候失败报错python.exe编译报错，则需要检查C文件，修改一下。</p>
+<p><strong>打包过程中发现了两处离奇的编译错误</strong>。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_gMMazqvHi4.png" class="">
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_jpm_1FmNy0.png" class="">
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_wjmhGTQACV.png" class="">
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_lBXxnzYyz7.png" class="">
+<p>关于bit库问题，luajit内置了，webgl平台需要单独开启，跟mac os类似情况，使用的bit也是luajit作者的</p>
+<p>解决编译报错后，成功打出包。<strong>注意：目前tolua c库，只包含lua51，cjson，pbc，pb.c(proto gen), bit.c(luajit作者的bit库), tolua运行时 这几个源码</strong></p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_A5gllRKePb.png" class="">
+<p><strong>另外编译lua的bytes，webgl是原生lua51，遇到以上jit的lua代码无法编译bytes，所以框架统一删掉，因为一直在客户端都是没有调用jit相关lua脚本的</strong></p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_5fUd5zvpx8.png" class="">
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_3tC5cwfsr5.png" class="">
+<p><strong>对于源码pbc（实际上框架没有使用只是保留不想改源码调用），webgl平台编译还不识别&lt;&gt;，要改成</strong>“”</p>
+<p><strong>另外webassembly编译c, c++代码，代码文件必须放在同一个目录下，不能有子目录，不然对于include的头文件要加相对目录，编译时候也不认，会报错提示找不到文件</strong></p>
+<p>8.FileUtils类添加webgl平台加载ab路径的正确路径，成功加载Lua ab后，输出ab中所有assetName确认加载ab的filename，改写LuaFileUtils.cs获取Lua TextAsset的filename。</p>
+<p>9.成功加载和解压Lua ab，tolua框架成功获取lua file buffer数据并成功执行输出log。</p>
+<p>10.C#中执行Lua代码成功跑通，接下来跑通Lua执行C#注册的类代码，LuaClient.bind里使用了反射，其实可以直接引用LuaBinder类。去掉LocalExportLuaSetting中缺失引用的类（第三方，pgj等），generate一遍解决C#编译报错。</p>
+<p>11.勾选development，打包编译到webAssembly module报错：unresolved symbol ZN14RefcountedData7ReleaseEv、luaopen_socket_core、luaopen_mime_core、luaopen_ffi。后面三个项目不用，直接在LuaDll中注释去掉，少了几个报错，但是还有一个。</p>
+<p><em>20230104更新：</em></p>
+<p><em>通过一步一步删除分拆代码打debug包的方式，逐步缩小问题的范围，发现只有加入ToLua导出的Wrap文件时，才会有出现这个编译错误：error: unresolved symbol: _ZN14RefcountedData7ReleaseEv。</em></p>
+<p><em>利用二分法进一步缩小范围，最后发现只要编译UnityEngine_Rendering_CommandBufferWrap.cs就会报这个错。</em></p>
+<p><em>这个Wrap文件没有在Lua中用到，处理方法可以使用宏过滤掉编译。</em></p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_7WdLCSVtdJ.png" class="">
+<p>12.打release包，没有注释LuaDll的情况下打包，没有报错，成功打出，真是奇怪，猜测是未引用的库已经剥离了，但是development build认为还需要引用。</p>
+<p>13.打包成功，成功执行到Lua业务逻辑，也就是说Lua能执行注册的C#类。</p>
+<p>14.验证框架打包资源ab并加载，打包bootstrap的UI view prefab，去掉prefab上的缺失的Script，不然打包报脚本错误，修改LocalBundleStrategy之打包GameAssets/ui/view/下的资源，移除GameAssets/ui/view/bootstrap外的资源，排除其他资源的影响。</p>
+<p>15.修改lua代码，跳过热更新逻辑和SDK初始化逻辑，至此webgl已经可以成功加载ui prefab ab，说明框架加载ab资源的能力已经跑通。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_J0oIdyHNOw.png" class="">
+<p>16.将所有业务代码，ThirdParty三方库、AltasSource、GameAssets资源目录拉回来，打包ab，解决编译标错后，成功打出ab，但是因为webgl平台的fmod bank需要使用fmod studio重新build，所以缺少bank的ab。</p>
+<p>17.build构建，webgl不支持的API会报找出不到namespace报错，Handheld（手持设备）、FullScreenMovieControlMode、FullScreenMovieScalingMode等，这写是toLua export的wrap文件，处理方法是加编译宏。解决build报错后，成功打出包。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_iWxvVgACJH.png" class="">
+<p>成功出包说明了三方库Fmod、Live2Dv2和v4库，Spine都能够在webgl平台上成功编译。</p>
+<p>后面通过player publishing settings配置勾选Debug Symbols，打release包输出调试符号表，通过查看符号表可以找到C#dll Live2D库、C源码的toLua库的函数。</p>
+<p>说明C、C++源码、C#已经C#编译的DLL文件可以编译进wasm中。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_eKJtFbgNS2.png" class="">
+<p>18.至此运行webgl包已经能入Loading页，但是运行时有个报错：RuntimeError: float unrepresentable in integer range，参考这篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/ithinking110/article/details/112028638" title="文章">文章</a>，通过设置PlayerSettings.WebGL.emscriptenArgs = “-s “BINARYEN_TRAP_MODE=‘clamp’””;解决。</p>
+<p>这点之后写入AudoPackage.cs中，根据webgl平台自动化添加PlayerSettings参数。</p>
+<p>19.到这里就可以跑到fmod bank的加载逻辑，但是由于缺失bank，报资源加载error。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_cvqjYHFKmM.png" class="">
+<p>20.webgl上资源加载重写，使用协程＋UnityWebRequest，去掉框架中的500帧超时重试逻辑，因为在web上调用UnityWebRequest.Abort()中断之后再试的逻辑跑不通，直接利用异步加载，等有结果后返回。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> UNITY_WEBGL</span></span><br><span class="line"></span><br><span class="line">  www = getUnityWebRequest (res.RealPath, fullPath);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">yield</span> <span class="keyword">return</span> www.SendWebRequest();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (www.result!=UnityWebRequest.Result.Success)</span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">    Debug.LogErrorFormat(<span class="string">&quot;UnityWebRequest加载失败，result&#123;0&#125;,error:&#123;1&#125;,ab:&#123;2&#125;&quot;</span>, www.result, www.error, res.RealPath);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">yield</span> <span class="keyword">return</span> <span class="title">newWWW</span> (<span class="params">res</span>)</span>;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> ab = DownloadHandlerAssetBundle.GetContent (www);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ab == <span class="literal">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">      Debug.LogError(<span class="string">&quot;DownloadHandlerAssetBundle.GetContent获取null，&quot;</span>+res.RealPath);</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">      Debug.LogFormat(<span class="string">&quot;UnityWebRequest加载ab[&#123;0&#125;]成功&quot;</span>, res.RealPath);</span><br><span class="line"></span><br><span class="line">      res.SetAssetBundle (ab);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>AssetBundles中的bank文件是从FmodProj/Build/Mobile中拷贝过来的，至此可以成功加载ab和bank文件了。</p>
+<p>21.fmod官方的<a target="_blank" rel="noopener" href="https://github.com/fmod/unity-html5-demo" title="unity-html5-demo">unity-html5-demo</a>支持webgl平台，但是但是pjg项目运行时播放不了bank，加载没问题就是没有声音。</p>
+<p>使用fmod studio将项目中的bank，选择Desktop平台后，build一份到FmodProj/Build/Desktop下，拷贝我们的master和music的一份bank到unity-html-demo项目中，适配代码后Editor上播放有声音没有问题，但是打包到webgl上却播放不出声音。</p>
+<p>这个问题我已经到fmod提了<a target="_blank" rel="noopener" href="https://github.com/fmod/unity-html5-demo/issues/4" title="Issues">Issues</a>，详细过程请移步查看。</p>
+<p>反过来，将unity-html-demo中的master bank拷贝到我们项目中去，验证是不是bank的格式原因导致的。结果还真的可以正常播放，channels 和 volume是正常的，<strong>说明跟构建出来的bank的格式有很大的关系</strong>。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_8BOg2gT045.png" class="">
+<p>那么项目的bank和demo中的bank有什么区别？最明显的就是项目中的bank使用了encryption key加密，而demo的bank没有加密。</p>
+<p>为验证这个问题，用fmod studio去掉encryption key然后重新build bank（这个过程可以删减一部分bank以构建少量数据），最后发现放在demo中能正常播放了。</p>
+<p>查下官方文档，发现<a target="_blank" rel="noopener" href="https://fmod.com/docs/2.02/unity/troubleshooting.html#cannot-fmod_openmemory_point-encrypted-data" title="LoadFromMemory和encryptionKey不兼容">LoadFromMemory和encryptionKey不兼容</a>，而webgl上正是使用LoadFromMemory加载web request请求回来的bank数据。</p>
+<p>另外在<strong>webgl上确保使用异步方式加载bank</strong>，否者会报错，而这个报错<strong>假如没有在FmodAssetSettings上开启Enable API Error Logging的话，是不会报出来的，所以调试时候最好开启</strong>。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">FMOD</span>] System::getEventByID(<span class="number">0x645bd0</span>:&#123;<span class="number">14</span>d7b992<span class="number">-3</span>a9c<span class="number">-4</span>d93<span class="number">-95</span>de<span class="number">-2</span>dfd73fdbf6e&#125;, <span class="number">0x645ba4</span>) <span class="function">returned ERR_EVENT_NOTFOUND <span class="keyword">for</span> <span class="title">STUDIO_SYSTEM</span> (<span class="params"><span class="number">0x1FFF1F</span></span>)</span></span><br></pre></td></tr></table></figure>
+<p>为了支持bank加密，可以考虑将bank下载后先存到本地IndexDB，再使用LoadFromFile API读取，但需要考虑版本和加载时间问题。</p>
+<p>22.Editor上webSocket已经调通，登录逻辑兼容webgl后，登录成功，至此成功进入到主界面。</p>
+<p>23.WebGL上Input输入需要兼容下，Button和GlobalTouchTrigger类点击逻辑走mouse的输入获取，因为pc上不支持移动设备上的touch获取（支持touch api的设备才可以）。</p>
+<p>对于键盘的输入捕获要注意下，除了游戏canvas，web界面上的其他Input输入框是捕获不到输入的，因为webgl会拦截捕获，解决需要参考<a target="_blank" rel="noopener" href="https://docs.unity3d.com/2020.3/Documentation/Manual/webgl-input.html" title="WebGL Input">WebGL Input</a>。</p>
+<p>还有多点触碰能力需要兼容下【待处理】。</p>
+<p>24.因为webgl development build有问题，所以允许gm按钮在release包上开启。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_-YJGd2vFNT.png" class="">
+<p>25.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">报错：Looks like you are rendering without <span class="keyword">using</span> requestAnimationFrame <span class="keyword">for</span> the main loop. You should use <span class="number">0</span> <span class="keyword">for</span> the frame rate <span class="keyword">in</span> emscripten_set_main_loop <span class="keyword">in</span> order to use requestAnimationFrame, <span class="keyword">as</span> that can greatly improve your frame rates!</span><br></pre></td></tr></table></figure>
+<p>webgl上不建议锁帧，构建的js框架代码会根据设备自动调节。参考<a target="_blank" rel="noopener" href="https://forum.unity.com/threads/rendering-without-using-requestanimationframe-for-the-main-loop.373331/" title="这里">这里</a>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img itemprop="image" src="/images/wechatpay.jpg" alt="Walking 劳翼 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/01/18/UnityWebGL%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E9%80%82%E9%85%8D%E5%92%8C%E4%BC%98%E5%8C%96/" rel="prev" title="UnityWebGL微信小游戏适配和优化">
+                  <i class="fa fa-chevron-left"></i> UnityWebGL微信小游戏适配和优化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/01/11/WebGL%E6%B8%B8%E6%88%8F%E5%8F%AF%E8%A1%8C%E6%80%A7%E8%AF%84%E4%BC%B0%E5%92%8C%E5%85%BC%E5%AE%B9%E6%80%A7%E6%B5%8B%E8%AF%95/" rel="next" title="WebGL游戏可行性评估和兼容性测试">
+                  WebGL游戏可行性评估和兼容性测试 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            const target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"9UkIwF1j8GAbYNYHlAdGD0lc-gzGzoHsz","app_key":"SvWuPL4a5ae1tjdqinzlwTjV","server_url":"https://9ukiwf1j.lc-cn-n1-shared.com","security":false,"thumbsup":true};
+    function fetchData(api_server) {
+      const Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+<script>
+(function(){
+  /**
+  **********
+  * 点赞
+  **********
+  */
+  let thumbsupLoaclKeyPrefix = "thumbsup"
+  let thumbsupCount = 0;
+  let thumbsupObjectId = "";
+  function leancloudThumbsupSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(thumbsupLoaclKeyPrefix+"-"+url).querySelector('.leancloud-thumbsup-count');
+  }
+  function getThumbsupBtn()
+  {
+    const visitors = document.querySelector('.leancloud_visitors');
+    return document.getElementById(thumbsupLoaclKeyPrefix+"-btn-"+visitors.id);
+  }
+  function getThumbsupCount(Counter) {
+    const visitors = document.querySelector('.leancloud_visitors');
+    const url = decodeURI(visitors.id);
+    const title = visitors.dataset.flagTitle;
+
+    Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+      .then(response => response.json())
+      .then(({ results }) => {
+        let localKey = thumbsupLoaclKeyPrefix+"-"+visitors.id
+        const isHadThumbsup = window.localStorage.getItem(localKey) == 1
+        console.log("localStorage thumbsup:", window.localStorage.getItem(localKey))
+        if (isHadThumbsup) {
+          getThumbsupBtn().classList.add("with-love");
+        }
+        if (results.length > 0) {
+          const counter = results[0];
+          leancloudThumbsupSelector(url).innerText = counter.time;
+          thumbsupCount = counter.time;
+          thumbsupObjectId = counter.objectId;
+        } else {
+          leancloudThumbsupSelector(url).innerText = 0;
+        }
+      })
+      .catch(error => {
+        console.error('LeanCloud Thumbsup Error', error);
+      });
+  }
+
+  function onThumbsUpSuccess(id) {
+    const url = decodeURI(id);
+    getThumbsupBtn().classList.add("with-love");
+    leancloudThumbsupSelector(url).innerText = ++thumbsupCount;
+    let localKey = thumbsupLoaclKeyPrefix+"-"+id
+    window.localStorage.setItem(localKey, 1);
+  }
+  function addThumbsUp(Counter) {
+    const visitors = document.querySelector('.leancloud_visitors');
+    const url = decodeURI(visitors.id);
+    const title = visitors.dataset.flagTitle;
+
+    if (thumbsupCount<=0) {
+      Counter('post', '/classes/Thumbsup', { title, url, time: 1 })
+        .then(response => response.json())
+        .then(() => {
+          onThumbsUpSuccess(visitors.id);
+        })
+        .catch(error => {
+          console.error('Failed to create', error);
+        });
+    } else {
+      Counter('put', '/classes/Thumbsup/' + thumbsupObjectId, { time: { '__op': 'Increment', 'amount': 1 } })
+        .then(response => {
+          onThumbsUpSuccess(visitors.id);
+        })
+        .catch(error => {
+          console.error('Failed to save Thumbsup count', error);
+        });
+    }
+  }
+
+  const { app_id, app_key, server_url } = {"enable":true,"app_id":"9UkIwF1j8GAbYNYHlAdGD0lc-gzGzoHsz","app_key":"SvWuPL4a5ae1tjdqinzlwTjV","server_url":"https://9ukiwf1j.lc-cn-n1-shared.com","security":false,"thumbsup":true};
+    function fetchData(api_server) {
+      const Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        // 添加点赞点击事件
+        let btn = getThumbsupBtn();
+        if (btn!=null) {
+          // console.log("bindThumbsupBtn found")
+          getThumbsupCount(Counter);
+          btn.onclick = function() {
+            addThumbsUp(Counter);
+          }
+        }
+      }
+    }
+
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  
+})();
+function bindCommentsBtn()
+{
+    setTimeout(function(){
+        var targetEl =document.querySelector(".gt-meta");
+        if (targetEl!=null)
+        {
+            var commentsBtn = document.querySelector(".post-fixed-siderbar-comments-btn");
+            var gtCountEl = document.querySelector(".gt-link-counts");
+            var commentsCountEl = document.querySelector(".post-fixed-siderbar-comments-count");
+            commentsCountEl.innerText = gtCountEl.innerText;
+            commentsBtn.onclick = function()
+            {
+                window.anime({
+                    targets  : document.scrollingElement,
+                    duration : 500,
+                    easing   : 'linear',
+                    scrollTop: targetEl.offsetTop
+                });
+
+            }
+        } else {
+            bindCommentsBtn();
+        }
+        
+    }, 2000)
+}
+if (CONFIG.page.isPost)
+{
+    bindCommentsBtn();
+}
+
+
+</script>
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '2abda8c59c8738b0c092',
+      clientSecret: 'db6e788b11a1c8ff93404ed8802b5bda7fb06370',
+      repo        : 'LaoLeo.github.io',
+      owner       : 'laoleo',
+      admin       : ['laoleo'],
+      id          : '834e9f54394984d0d1363f04d7f999b9',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

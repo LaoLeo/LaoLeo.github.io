@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+<meta name="keywords" content="Walking,劳翼,Unity,游戏开发,laotuzhu,laoleo,web" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9532409502039699"
+     crossorigin="anonymous"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"laoleo.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="运行和调试两个起http服务器方案： Build and Run 执行后Unity会起一个http服务器运行web界面，缺点是端口号每次都会变。  自起http服务器 利用node的npm包管理器下载http-server插件   12345npm install --global http-server&#x2F;&#x2F;起一个http服务器http-server&#x2F;&#x2F; 或者，假如打出的包文件时gzip压缩，需">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebGL调试和打包">
+<meta property="og:url" content="https://laoleo.github.io/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/index.html">
+<meta property="og:site_name" content="Unity游戏开发">
+<meta property="og:description" content="运行和调试两个起http服务器方案： Build and Run 执行后Unity会起一个http服务器运行web界面，缺点是端口号每次都会变。  自起http服务器 利用node的npm包管理器下载http-server插件   12345npm install --global http-server&#x2F;&#x2F;起一个http服务器http-server&#x2F;&#x2F; 或者，假如打出的包文件时gzip压缩，需">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://laoleo.github.io/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/image_tGLLj0XYUL.png">
+<meta property="og:image" content="https://laoleo.github.io/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/image_xEZJCQfHjP.png">
+<meta property="article:published_time" content="2022-12-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-18T07:20:31.461Z">
+<meta property="article:author" content="Walking 劳翼">
+<meta property="article:tag" content="WebGL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://laoleo.github.io/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/image_tGLLj0XYUL.png">
+
+
+<link rel="canonical" href="https://laoleo.github.io/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>WebGL调试和打包 | Unity游戏开发</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SCC49Q9P9H"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-SCC49Q9P9H');
+      }
+    </script>
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Unity游戏开发</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">“Work Smarter”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%92%8C%E8%B0%83%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">运行和调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E8%B5%B7http%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">两个起http服务器方案：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E8%AF%95JS"><span class="nav-number">1.2.</span> <span class="nav-text">调试JS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93webgl%E5%8C%85%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">打webgl包设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E"><span class="nav-number">3.</span> <span class="nav-text">打包配置说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#build-setting"><span class="nav-number">3.1.</span> <span class="nav-text">build setting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Player-Setting"><span class="nav-number">3.2.</span> <span class="nav-text">Player Setting</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Walking 劳翼"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Walking 劳翼</p>
+  <div class="site-description" itemprop="description">“Unity,移动开发,Web”</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LaoLeo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LaoLeo" rel="noopener" target="_blank">GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/resume" title="我的简历 → &#x2F;resume">我的简历</a>
+      </span>
+  </div>
+
+
+  <div class="profiler site-overview-item animated">
+    <p class="profiler-item">就职：天梯-箜羽工作室</p>
+    <p class="profiler-item">坐标：广州</p>
+    <p class="profiler-item">正在：目前正寻找新机会...</p>
+  </div>
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WebGL调试和打包
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-12-30 00:00:00" itemprop="dateCreated datePublished" datetime="2022-12-30T00:00:00+08:00">2022-12-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2023-01-18 15:20:31" itemprop="dateModified" datetime="2023-01-18T15:20:31+08:00">2023-01-18</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Unity游戏开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/" itemprop="url" rel="index"><span itemprop="name">平台</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/%E5%B9%B3%E5%8F%B0/WebGL/" itemprop="url" rel="index"><span itemprop="name">WebGL</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/" class="post-meta-item leancloud_visitors" data-flag-title="WebGL调试和打包" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+
+        <div class="post-fixed-siderbar">
+    <div id="thumbsup-/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/" class="post-fixed-siderbar-item" title="点赞支持">
+        <span class="post-fixed-siderbar-icon">
+            <span id="thumbsup-btn-/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/">
+                <i class="fa fa-heart"></i>
+            </span>
+        </span>
+        <span class="leancloud-fixed-siderbar-count leancloud-thumbsup-count"></span>
+    </div>
+        <div class="post-fixed-siderbar-item" title="评论试试">
+            <span class="post-fixed-siderbar-icon">
+                <span class="post-fixed-siderbar-comments-btn">
+                    <i class="fa fa-comment"></i>
+                </span>
+            </span>
+            <span class="leancloud-fixed-siderbar-count post-fixed-siderbar-comments-count"></span>
+        </div>
+</div>
+      </header>
+
+
+    
+    
+    
+      <div class="post-tags">
+          <a href="/tags/WebGL/" rel="tag"><i class="fa fa-tag"></i> WebGL</a>
+      </div>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <span id="more"></span>
+<h2 id="运行和调试"><a href="#运行和调试" class="headerlink" title="运行和调试"></a>运行和调试</h2><h3 id="两个起http服务器方案："><a href="#两个起http服务器方案：" class="headerlink" title="两个起http服务器方案："></a>两个起http服务器方案：</h3><ul>
+<li><p><strong>Build and Run</strong></p>
+<p>执行后Unity会起一个http服务器运行web界面，缺点是端口号每次都会变。</p>
+</li>
+<li><p><strong>自起http服务器</strong></p>
+<p>利用node的npm包管理器下载http-server插件</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install --global http-server</span><br><span class="line">//起一个http服务器</span><br><span class="line">http-server</span><br><span class="line">// 或者，假如打出的包文件时gzip压缩，需加上-g</span><br><span class="line">http-server -g</span><br></pre></td></tr></table></figure>
+<p>另外需要改http-server插件的一个文件，路径是：C:\Users\[yourusername]\AppData\Roaming\npm\node_modules\http-server\lib\core\index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 搜索第一行注释找到这段代码，改为下面代码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//if (file === gzippedFile) &#123; // is .gz picked up</span></span><br><span class="line"><span class="keyword">if</span> (file === gzippedFile || path.<span class="title function_">extname</span>(file) ==<span class="string">&quot;.gz&quot;</span>) &#123; <span class="comment">// is .gz picked up</span></span><br><span class="line">  res.<span class="title function_">setHeader</span>(<span class="string">&#x27;Content-Encoding&#x27;</span>, <span class="string">&#x27;gzip&#x27;</span>);</span><br><span class="line">  <span class="comment">// strip gz ending and lookup mime type</span></span><br><span class="line">  contentType = mime.<span class="title function_">lookup</span>(path.<span class="title function_">basename</span>(file, <span class="string">&#x27;.gz&#x27;</span>), defaultType);</span><br><span class="line"><span class="comment">//&#125; else if (file === brotliFile) &#123; // is .br picked up</span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (file === brotliFile || path.<span class="title function_">extname</span>(file) ==<span class="string">&quot;.br&quot;</span>) &#123; <span class="comment">// is .br picked up  </span></span><br><span class="line">  res.<span class="title function_">setHeader</span>(<span class="string">&#x27;Content-Encoding&#x27;</span>, <span class="string">&#x27;br&#x27;</span>);</span><br><span class="line">  <span class="comment">// strip br ending and lookup mime type</span></span><br><span class="line">  contentType = mime.<span class="title function_">lookup</span>(path.<span class="title function_">basename</span>(file, <span class="string">&#x27;.br&#x27;</span>), defaultType);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p><em>假如运行http-server命令报未找到命令，需要设置环境变量，添加：C:\Users[yourUserName]\AppData\Roaming\npm</em></p>
+<h3 id="调试JS"><a href="#调试JS" class="headerlink" title="调试JS"></a>调试JS</h3><p>jslib文件插入的js代码会被打包进Build.framework.js里，但只有在C# Extern导出的才会被包含。</p>
+<p>调试JS代码可以选择编辑Build.framework.js，加入Debug代码调试，快速方便，跳过打包。</p>
+<h2 id="打webgl包设置"><a href="#打webgl包设置" class="headerlink" title="打webgl包设置"></a>打webgl包设置</h2><p>1.branch选择以下分支之外的分支，跳过MSDK的逻辑，或者可以手改Resources目录下的GameConst.txt下的branch字段。</p>
+<p><em>20230104:更新：已处理成在国内分支上的MSDK上过滤掉webgl平台。</em></p>
+<img src="/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/image_tGLLj0XYUL.png" class="">
+<p>2.在PlayerSetting.asset下搜索webGLEmscriptenArgs，手动添加下：webGLEmscriptenArgs: -s “BINARYEN_TRAP_MODE=’clamp’”</p>
+<p>这可以跳过运行时报错：RuntimeError: float unrepresentable in integer range</p>
+<p><em>20230104:更新：已添加并提交。</em></p>
+<img src="/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/image_xEZJCQfHjP.png" class="">
+<p>3.打包不要勾选Development Build。</p>
+<p>目前Development Build打包编译有报错，还跳跳不过这个坑。</p>
+<p><em>20230104:更新：编译报错的问题已经找出并解决。</em></p>
+<h2 id="打包配置说明"><a href="#打包配置说明" class="headerlink" title="打包配置说明"></a>打包配置说明</h2><h3 id="build-setting"><a href="#build-setting" class="headerlink" title="build setting"></a><a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2022.1/Manual/webgl-building.html" title="build setting">build setting</a></h3><p>Texture Compression：贴图压缩格式</p>
+<p>Development build：dev模式构建，开启后链Profiler</p>
+<p>Code Optimization：编译优化</p>
+<ul>
+<li>speed：优化包的运行时性能</li>
+<li>size：构建包大小优先</li>
+</ul>
+<h3 id="Player-Setting"><a href="#Player-Setting" class="headerlink" title="Player Setting"></a><a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2022.1/Manual/class-PlayerSettingsWebGL.html" title="Player Setting">Player Setting</a></h3><p>Resolution And Presentaiton：web页面的游戏窗分辨率设置、模板设置。</p>
+<p>Sqlash Image：web tab图标、游戏启动页动画、logo、背景图设置。</p>
+<p>Other Settings</p>
+<ul>
+<li>Auto Graphics API：开启会交由Unity自动根据设备选择webGL图形API。默认WebGL2.0，不支持会回退到WebGL1.0。但Untiy2021.1后将弃用WebGL1.0，可禁用这个选项然后手动添加。</li>
+</ul>
+<p>Publishing Setting</p>
+<ul>
+<li>Compression Format：非dev构建的文件压缩格式，dev构建无作用。<strong>注意服务器nginx要配置支持解压，</strong><a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2022.1/Manual/webgl-server-configuration-code-samples.html" title="参考链接"><strong>参考链接</strong></a><strong>。</strong></li>
+<li>Decompression Fallback：勾选会构建包含未压缩的代码，解压失败会回退。</li>
+<li>Data Caching：开启会自动将内容资源数据缓存在用户计算机上，这样就不必在后续运行中重新下载（除非内容已更改）。缓存是使用浏览器提供的 IndexedDB API 实现的。</li>
+<li>Debug Symbols：对release包有效，在发生错误时保留调试符号并执行堆栈跟踪的恢复。对于发布版本，所有调试信息都存储在单独的文件中；发生错误时将根据需要从服务器下载该文件(Build/WebGLPackageProj.symbols.json)。开发版本始终具有嵌入在主模块中的恢复支持，因此不受此选项的影响。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img itemprop="image" src="/images/wechatpay.jpg" alt="Walking 劳翼 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/01/05/WebGL%E8%84%9A%E6%9C%AC%E4%BA%A4%E4%BA%92/" rel="prev" title="WebGL脚本交互">
+                  <i class="fa fa-chevron-left"></i> WebGL脚本交互
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/30/SQLite%E6%9B%BF%E6%8D%A2lua%E9%85%8D%E7%BD%AE%E8%A1%A8%E6%96%B9%E6%A1%88%E5%AE%9E%E7%8E%B0/" rel="next" title="SQLite替换lua配置表方案实现">
+                  SQLite替换lua配置表方案实现 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walking 劳翼</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            const counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            const target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"9UkIwF1j8GAbYNYHlAdGD0lc-gzGzoHsz","app_key":"SvWuPL4a5ae1tjdqinzlwTjV","server_url":"https://9ukiwf1j.lc-cn-n1-shared.com","security":false,"thumbsup":true};
+    function fetchData(api_server) {
+      const Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+<script>
+(function(){
+  /**
+  **********
+  * 点赞
+  **********
+  */
+  let thumbsupLoaclKeyPrefix = "thumbsup"
+  let thumbsupCount = 0;
+  let thumbsupObjectId = "";
+  function leancloudThumbsupSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(thumbsupLoaclKeyPrefix+"-"+url).querySelector('.leancloud-thumbsup-count');
+  }
+  function getThumbsupBtn()
+  {
+    const visitors = document.querySelector('.leancloud_visitors');
+    return document.getElementById(thumbsupLoaclKeyPrefix+"-btn-"+visitors.id);
+  }
+  function getThumbsupCount(Counter) {
+    const visitors = document.querySelector('.leancloud_visitors');
+    const url = decodeURI(visitors.id);
+    const title = visitors.dataset.flagTitle;
+
+    Counter('get', '/classes/Thumbsup?where=' + encodeURIComponent(JSON.stringify({ url })))
+      .then(response => response.json())
+      .then(({ results }) => {
+        let localKey = thumbsupLoaclKeyPrefix+"-"+visitors.id
+        const isHadThumbsup = window.localStorage.getItem(localKey) == 1
+        console.log("localStorage thumbsup:", window.localStorage.getItem(localKey))
+        if (isHadThumbsup) {
+          getThumbsupBtn().classList.add("with-love");
+        }
+        if (results.length > 0) {
+          const counter = results[0];
+          leancloudThumbsupSelector(url).innerText = counter.time;
+          thumbsupCount = counter.time;
+          thumbsupObjectId = counter.objectId;
+        } else {
+          leancloudThumbsupSelector(url).innerText = 0;
+        }
+      })
+      .catch(error => {
+        console.error('LeanCloud Thumbsup Error', error);
+      });
+  }
+
+  function onThumbsUpSuccess(id) {
+    const url = decodeURI(id);
+    getThumbsupBtn().classList.add("with-love");
+    leancloudThumbsupSelector(url).innerText = ++thumbsupCount;
+    let localKey = thumbsupLoaclKeyPrefix+"-"+id
+    window.localStorage.setItem(localKey, 1);
+  }
+  function addThumbsUp(Counter) {
+    const visitors = document.querySelector('.leancloud_visitors');
+    const url = decodeURI(visitors.id);
+    const title = visitors.dataset.flagTitle;
+
+    if (thumbsupCount<=0) {
+      Counter('post', '/classes/Thumbsup', { title, url, time: 1 })
+        .then(response => response.json())
+        .then(() => {
+          onThumbsUpSuccess(visitors.id);
+        })
+        .catch(error => {
+          console.error('Failed to create', error);
+        });
+    } else {
+      Counter('put', '/classes/Thumbsup/' + thumbsupObjectId, { time: { '__op': 'Increment', 'amount': 1 } })
+        .then(response => {
+          onThumbsUpSuccess(visitors.id);
+        })
+        .catch(error => {
+          console.error('Failed to save Thumbsup count', error);
+        });
+    }
+  }
+
+  const { app_id, app_key, server_url } = {"enable":true,"app_id":"9UkIwF1j8GAbYNYHlAdGD0lc-gzGzoHsz","app_key":"SvWuPL4a5ae1tjdqinzlwTjV","server_url":"https://9ukiwf1j.lc-cn-n1-shared.com","security":false,"thumbsup":true};
+    function fetchData(api_server) {
+      const Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        // 添加点赞点击事件
+        let btn = getThumbsupBtn();
+        if (btn!=null) {
+          // console.log("bindThumbsupBtn found")
+          getThumbsupCount(Counter);
+          btn.onclick = function() {
+            addThumbsUp(Counter);
+          }
+        }
+      }
+    }
+
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  
+})();
+function bindCommentsBtn()
+{
+    setTimeout(function(){
+        var targetEl =document.querySelector(".gt-meta");
+        if (targetEl!=null)
+        {
+            var commentsBtn = document.querySelector(".post-fixed-siderbar-comments-btn");
+            var gtCountEl = document.querySelector(".gt-link-counts");
+            var commentsCountEl = document.querySelector(".post-fixed-siderbar-comments-count");
+            commentsCountEl.innerText = gtCountEl.innerText;
+            commentsBtn.onclick = function()
+            {
+                window.anime({
+                    targets  : document.scrollingElement,
+                    duration : 500,
+                    easing   : 'linear',
+                    scrollTop: targetEl.offsetTop
+                });
+
+            }
+        } else {
+            bindCommentsBtn();
+        }
+        
+    }, 2000)
+}
+if (CONFIG.page.isPost)
+{
+    bindCommentsBtn();
+}
+
+
+</script>
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+<script>
+NexT.utils.loadComments('.gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '2abda8c59c8738b0c092',
+      clientSecret: 'db6e788b11a1c8ff93404ed8802b5bda7fb06370',
+      repo        : 'LaoLeo.github.io',
+      owner       : 'laoleo',
+      admin       : ['laoleo'],
+      id          : '4947110b4541eb9ea32b2a94ca18d4f4',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render(document.querySelector('.gitalk-container'));
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

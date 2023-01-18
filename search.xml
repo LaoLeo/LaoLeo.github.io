@@ -3,6 +3,714 @@
   
     
     <entry>
+      <title><![CDATA[UnityWebGL微信小游戏适配和优化]]></title>
+      <url>/2023/01/18/UnityWebGL%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E9%80%82%E9%85%8D%E5%92%8C%E4%BC%98%E5%8C%96/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>微信提供Unity WebGL Transfer工具，将Unity游戏转换发布到小游戏平台。</p>
+<span id="more"></span>
+<h2 id="测试情况"><a href="#测试情况" class="headerlink" title="测试情况"></a>测试情况</h2><p>**1.小游戏平台标识 **</p>
+<p>Lua和C#代码要判断小游戏平台来做适配，需要自定义微信小游戏平台标识，单单webgl平台标识不能判断是不是运行在微信小游戏上。</p>
+<p>在小游戏打包时候添加symbol预编译宏。</p>
+<p><strong>2.video播放</strong></p>
+<p>游戏中资源加载之后播放video，在小游戏环境中会报错：video.canPlayType is not a function.</p>
+<p>网上又解决方案，C#调wx js代码播放video，<a target="_blank" rel="noopener" href="https://blog.csdn.net/u013032852/article/details/119605522?spm=1001.2014.3001.5501" title="链接">链接</a>。</p>
+<p>**3.Input 输入 **</p>
+<p>输入框适配微信，不然捕获不到键盘输入，需要适配，看<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/InputAdaptation.md" title="连接">连接</a>。</p>
+<p><strong>4.Touch事件和多点触控检验</strong></p>
+<ul>
+<li><em>请将WXTouchInputOverride.cs附加到EventSystem对象上，已测试EasyTouch、UGUI、FairGUI可正常工作</em>&#x20;</li>
+<li><em>NGUI、FairGUI等UI组件内部实现(如NGUI的UICamera.cs)判断touch id&lt;0逻辑分支需删除；在iOS高性能模式下，id可为负数。</em></li>
+</ul>
+<p><strong>5.音频</strong></p>
+<p>WebGL底层是利用WebAudio适配，所以Fmod的能力不能完全利用。</p>
+<p><em>目前音频播放存在占用内存大、播放声音噪声大不稳定的问题</em></p>
+<p><strong>6.文件存储</strong></p>
+<p>WebGL将文件存储存储进IndexDB，但是小游戏不支持，需要使用WX C# SDK适配。</p>
+<p>参考：WebGL微信小游戏转换-<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/DevelopmentQAList.md" title="技术常见问题QA">技术常见问题QA</a></p>
+<h2 id="优化记录"><a href="#优化记录" class="headerlink" title="优化记录"></a>优化记录</h2><table>
+<thead>
+<tr>
+<th>优化目标</th>
+<th>优化项</th>
+<th></th>
+<th>优化建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>启动速度&#xA;&#xA;<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/StartupOptimization.md" title="参考">参考</a></td>
+<td>内存</td>
+<td>剔除不必要插件，减少代码包体</td>
+<td>1.剔除MSDK等三方库代码&#xA;&#xA;2.代码剥离级别改为Medium，或者改为high加Link.xml文件修正，<a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2019.4/Manual/ManagedCodeStripping.html" title="参考">参考</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>使用代码分包工具缩减WebAssembly首次下载包体，<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/WasmSplit.md#概述" title="代码分包">代码分包</a></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>网络</td>
+<td>资源CDN加速，开启Brotli或gzip压缩首包data文件</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>将进入到登录页面前需要加载的资源放到小程序预加载中去</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>资源请求并发数提升至20个，但是不能超过20</td>
+<td></td>
+</tr>
+<tr>
+<td>内存</td>
+<td>纹理</td>
+<td>贴图maxsize尽量不超过1024，小游戏环境适当降低画质</td>
+<td>PJGTextureImportChecker脚本上加上webgl平台贴图的设置&#xA;&#xA;*   bigbg允许maxsize为2048（因为测试发现质量和压缩率友好），其他的纹理1024&#xA;*   2020版纹理格式使用DXT1和DXT5，详细参考本文纹理压缩</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>贴图尽量不生成Mipmap</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>贴图尽量不使用可写属性</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>选择压缩率较好的格式和maxsize</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>字体纹理压缩前最大不超过4MB</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>发布前使用压缩纹理工具进行优化</td>
+<td>小游戏压缩纹理工具可以将纹理资源从ab中分离出来，将资源指针替换至原来ab内，分离出来的资源将被处理成多种不同GPU所支持的纹理格式托管至CDN中，小游戏底层会劫持渲染时根据资源指针和当前GPU支持的纹理格式来进行远程加载，以此来达到成功加载立即上传至GPU后释放和节省系统内存的目的。参考<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/CompressedTexture.md" title="微信小游戏压缩纹理工具">微信小游戏压缩纹理工具</a>&#xA;&#xA;Unity 2020.3.34使用这个工具有问题，微信方建议最好使用Unity2021.2.5版本</td>
+</tr>
+<tr>
+<td></td>
+<td>AB</td>
+<td>AssetBundle</td>
+<td>小游戏底层会对bundle做缓存，需要关闭cache。WebGL上也不建议使用带cache的API，不然ab文件除了会存入浏览器的IndexDB外，还会存入内存中的UnityCache</td>
+</tr>
+<tr>
+<td></td>
+<td>音频</td>
+<td>优化Fmod bank，使用微信音频接口</td>
+<td>*   webgl对Fmod提供了音频基础性的支持，unity底层利用内部web audio api实现这点&#xA;*   支持音频回放和混音&#xA;*   2021版之前不支持音频压缩，占用内存大&#xA;*   目前fmod音频播放沙沙声原因未知？？内存太大？还是某些功能未实现？？？？？&#xA;*   微信方建议使用他们的SDK接口<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/AudioOptimization.md" title="适配播放音频">适配播放音频</a></td>
+</tr>
+<tr>
+<td>减低CPU消耗</td>
+<td></td>
+<td>iOS使用高性能模式</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>尽量使用Android CPU Profiler在小游戏真机环境Profie计算瓶颈</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>提前在Unity环境使用Unity Profiler发现问题</td>
+</tr>
+</tbody>
+</table>
+<h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><p>浏览器WebGL内存结构</p>
+<p><img src="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/raw/main/image/optimizationMemory1.png" alt=""></p>
+<p>微信小程序WebGL内存结构</p>
+<p><img src="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/raw/main/image/optimizationMemory10.png" alt=""></p>
+<p>小程序基础库+Canvas：小程序webgl运行的底层支持</p>
+<p>WASM编译：WASM是webassembly二进制代码（包括引擎、业务、第三方插件代码），运行时需进行编译执行，会产生大量内存占用（30M wasm code会产生300M编译内存）。</p>
+<p>UnityHeap：就是编译执行wasm代码后的内存，UnityHeap = max(托管/Mono内存) + max(Native/Reserved内存 + 三方库C原生代码内存)</p>
+<p>建议内存峰值控制范围：</p>
+<ol>
+<li>Android: 低档机 &lt; 1.2G, 中高档机 &lt; 1.5G</li>
+<li>iOS: 低档机 &lt; 1G, 中高档机 &lt; 1.4G（ios低档机为iPhone 6sp/7/8等内存2G机型，中高档机为iPhone7p/8p/X/11等内存3G或以上机型）</li>
+</ol>
+<p>以iOS高性能模式为例，一款代码(导出目录/webgl/Build/xxx.code.unityweb或code.wasm)大小为30MB的游戏占用内存为：</p>
+<p>小游戏基础库(130MB) + Cavnas(70MB) + 编译内存(300MB) + UnityHeap + Gfx显存 + 音频 + JavaScript(通常&lt;100MB)。</p>
+<p>所以假如是低端机，内存控制在1G以内，那么业务侧（UnityHeap，Gfx显存，音频，JavaScript）需控制在500MB左右。</p>
+<p>参考<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/OptimizationMemory.md" title="优化Unity WebGL的内存">优化Unity WebGL的内存</a></p>
+<h3 id="当前内存占用"><a href="#当前内存占用" class="headerlink" title="当前内存占用"></a>当前内存占用</h3><p>使用<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/UsingMemoryProfiler.md" title="profilingMemory分析">profilingMemory分析</a>当前内存，测试机三星GS 8,。</p>
+<p>使用微信的教程插入c代码忽略统计Lua内存，开启了profilingMemory后，真机和模拟器发现太卡了，帧率都掉到了个位数，浏览器访问速度正常。下面测试进入到主场景的情况：</p>
+<p>真机和模拟器（两者内存占用基本一样）:</p>
+<img src="/2023/01/18/UnityWebGL%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E9%80%82%E9%85%8D%E5%92%8C%E4%BC%98%E5%8C%96/image_vsb8Mwojo2.png" class="">
+<p>浏览器：</p>
+<img src="/2023/01/18/UnityWebGL%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E9%80%82%E9%85%8D%E5%92%8C%E4%BC%98%E5%8C%96/image_X3PZ1buk4d.png" class="">
+<p>Unity Profiler：</p>
+<img src="/2023/01/18/UnityWebGL%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E9%80%82%E9%85%8D%E5%92%8C%E4%BC%98%E5%8C%96/image_D4d4TQAzTI.png" class="">
+<p>分析：</p>
+<ul>
+<li>真机、模拟器、浏览器的内存使用情况差不多，毕竟使用同一份资源</li>
+<li>UsedHeapMemory 191是UnityHeap的真实使用量，MonoHeapUsed 164，那么剩下的native used+三方库为27，对这个结果很是疑惑。</li>
+<li>贴图使用38.4，比较可信，但是audio才2.8KB，可能需要使用Unity InstantGame版本增强的Profiler功能才行</li>
+</ul>
+<h3 id="纹理压缩"><a href="#纹理压缩" class="headerlink" title="纹理压缩"></a>纹理压缩</h3><p>WebGL的支持的纹理压缩格式受Unity版本的影响，测试的版本是<strong>Unity 2020.3.34f1</strong>。查阅Unity Docs 2020–<a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2020.3/Manual/class-TextureImporterOverride.html" title="Recommended, default, and supported texture formats, by platform">Recommended, default, and supported texture formats, by platform</a></p>
+<p>，简单总结支持格式，测试如下：</p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>支持</th>
+<th>测试</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RGB16/24</td>
+<td>是</td>
+<td>正常显示</td>
+</tr>
+<tr>
+<td>RGBA16/32</td>
+<td>是</td>
+<td>正常显示</td>
+</tr>
+<tr>
+<td>DXT1、DXT5</td>
+<td>部分</td>
+<td>正常显示</td>
+</tr>
+<tr>
+<td>ETC、ETC2 4/8 bits</td>
+<td>不</td>
+<td>显示异常</td>
+</tr>
+<tr>
+<td>ASTC</td>
+<td>不</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+<p>注意，在<a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2021.3/Manual/class-TextureImporterOverride.html" title="2021.3文档">2021.3文档</a>里，DXT格式不支持，但ECT会被支持，ASTC在IOS13，Android10上被支持。</p>
+<p>关于小游戏压缩纹理工具，在2020,3.34上压缩提取纹理ab会报错，不支持使用，这点微信方给出两点建议：</p>
+<ul>
+<li>切换到微信方验证过的对应Unity大年份版本的小版本打ab后再使用工具压缩提取纹理，如：2020.3.10f1c1。看考<a target="_blank" rel="noopener" href="https://github.com/wechat-miniprogram/minigame-unity-webgl-transform/blob/main/Design/CompressedTexture.md" title="这里">这里</a>。</li>
+<li>换微信方与Unity合作改进的Unity版本，改进的版本Unity支持了ASTC。</li>
+</ul>
+<p>多次测试后，Unity2020.3.34上纹理格式选择总结：</p>
+<ul>
+<li>无Alpha信息纹理使用DTX1，有Alpha信息使用DXT5，DXT格式的压缩率比较优。</li>
+<li>Crunched DXT格式压缩率比DXT更低，压缩质量调到最大100，大小还是比DXT1小，是DXT1的一半以下。关于Crunched压缩概念参考<a target="_blank" rel="noopener" href="https://docs.unity3d.com/Manual/texture-compression-formats.html" title="这里">这里</a></li>
+<li>Crunched DXT格式纹理质量对比，质量100的Crunched DXT1只是略微比DXT1差了一点。</li>
+</ul>
+<p>以下是在三星galaxy s8下的测试对比，分辨率为2220x1080，以第一时间出现的UI背景图为例：</p>
+<img src="/2023/01/18/UnityWebGL%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E9%80%82%E9%85%8D%E5%92%8C%E4%BC%98%E5%8C%96/image_6o3iFkTI7o.png" class="">
+<p>观察发现：</p>
+<ul>
+<li>RGB24质量最高</li>
+<li>DXT1与Crunched DXT1 quality 100的质量非常接近，只是微小的差别，手机上很难看出来</li>
+<li>Crunched DXT1 quality 50质量最差，与DXT1相比有肉眼可见的差别</li>
+</ul>
+<p>PC上的微信小程序贴图格式会选择用DXT，移动端首选ETC和ASTC，ASTC优于ETC。DXT格式用在移动端上解压速度不如ETC。</p>
+<p>看看不同贴图格式对AB大小的影响，对比如下：</p>
+<ul>
+<li>未设置格式，使用默认格式RGB24和RGBA32，ab包大小11G左右</li>
+<li>设置DXT1和DXT5格式和maxsize后，3.68G</li>
+<li>将DXT1和DXT5换成Crunched格式，质量调到Best100，3.05G</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> Unity游戏开发 </category>
+            
+            <category> 平台 </category>
+            
+            <category> WebGL </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 小游戏 </tag>
+            
+            <tag> WebGL </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[食物语兼容打包编译到WebGL]]></title>
+      <url>/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Unity使用WebAssembly(wasm)技术将引擎代码和业务代码编译到WebGL平台上解析运行，截止目前2023年，PC浏览器对webgl的支持也越来越兼容普及，并且wasm具有可移植、体积小、加载快等特点，应用运行能接近原生的体验。</p>
+<p>为应对项目组拓展海外市场的发展战略，因为海外用户使用PC玩游戏比较多，所以先预研一下发布WebGL平台的整体流程。</p>
+<p>这里使用已经上线的项目——食物语来实践，这样遇到的问题比较有代表性。</p>
+<blockquote>
+<p>顺便打下广告，食物语是一项集中华传统美食文明和二次元风格于一体的女性向养成卡牌游戏，对美食和二次元感兴趣的同学，非常有必要下载玩玩~~</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="总体方向"><a href="#总体方向" class="headerlink" title="总体方向"></a>总体方向</h2><table>
+<thead>
+<tr>
+<th>代码模块</th>
+<th>库模块</th>
+<th>兼容情况</th>
+<th>完成情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ao框架</td>
+<td>日志</td>
+<td><a target="_blank" rel="noopener" href="http://wiki.info/pages/viewpage.action?pageId=139784050" title="日志方案">日志方案</a></td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>网络</td>
+<td><a target="_blank" rel="noopener" href="http://wiki.info/pages/viewpage.action?pageId=139769721" title="使用websocket">使用websocket</a></td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>ToLua</td>
+<td>步骤7</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>资源加载</td>
+<td>步骤20</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>资源打包</td>
+<td>步骤5、6</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>热更新</td>
+<td></td>
+<td>⭕</td>
+</tr>
+<tr>
+<td></td>
+<td>Bugly</td>
+<td></td>
+<td>⭕</td>
+</tr>
+<tr>
+<td>三方库</td>
+<td>Spine</td>
+<td>支持</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>Live2D</td>
+<td>支持</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>Fmod</td>
+<td>步骤21</td>
+<td>✔</td>
+</tr>
+<tr>
+<td></td>
+<td>Msdk</td>
+<td>跳过</td>
+<td>✔</td>
+</tr>
+</tbody>
+</table>
+<h2 id="实施步骤"><a href="#实施步骤" class="headerlink" title="实施步骤"></a>实施步骤</h2><p>1.移除（剪切到别的目录）AltasSource、GameAssets资源目录，移除ThridParty三方库以及一切业务相关代码，只剩aounity框架相关代码。</p>
+<p>2.切换WebGL目标平台</p>
+<p>3.编译，解决编译报错</p>
+<ul>
+<li>注释打包相关的LocalBundleStrategy类</li>
+<li>注释LocalExportLuaSetting类，将C#类转为Lua类的工具类</li>
+<li>AssetBundleBuilder调用了上层的类RemoveEmptyDirectory</li>
+<li>BuglyAgent没有适配webgl平台，空引用报错</li>
+<li>LuaBinder和DelegateFactoryUtil使用了反射</li>
+</ul>
+<p>4.先跑通执行Lua代码，Editor没问题，打包需要解决打包Lua ab问题</p>
+<p>5.强打，只打Lua ab，可以正常打出ab，但是web上下载解压有报错。</p>
+<p>6.WebGL上不支持解压ab LZMA压缩格式，可以是LZ4，打包选项上得添加ChunkBasedCompression，不然默认打包压缩格式是LZMA。</p>
+<p>7.报错dlopen加载库错误、加载tolua DLL错误。这是因为webgl上允许使用动态链接库，Lua相关的库需要通过静态引用C源码的方式，打包时一起编译到webAssembly中。</p>
+<p>参考文章<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/486826570" title="Unity WebGL ToLua">Unity WebGL ToLua</a>，文章里的webgl plugins缺少项目中用到的库，得到<a target="_blank" rel="noopener" href="http://tolua_rumtime" title="tolua_runtime">tolua_runtime</a>仓库下载缺失的C文件。</p>
+<p>引入lua C源码后打包时会进行Complie WebAssembly Module编译步骤，就是编译刚刚引入的C库文件，假如这时候失败报错python.exe编译报错，则需要检查C文件，修改一下。</p>
+<p><strong>打包过程中发现了两处离奇的编译错误</strong>。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_gMMazqvHi4.png" class="">
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_jpm_1FmNy0.png" class="">
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_wjmhGTQACV.png" class="">
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_lBXxnzYyz7.png" class="">
+<p>关于bit库问题，luajit内置了，webgl平台需要单独开启，跟mac os类似情况，使用的bit也是luajit作者的</p>
+<p>解决编译报错后，成功打出包。<strong>注意：目前tolua c库，只包含lua51，cjson，pbc，pb.c(proto gen), bit.c(luajit作者的bit库), tolua运行时 这几个源码</strong></p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_A5gllRKePb.png" class="">
+<p><strong>另外编译lua的bytes，webgl是原生lua51，遇到以上jit的lua代码无法编译bytes，所以框架统一删掉，因为一直在客户端都是没有调用jit相关lua脚本的</strong></p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_5fUd5zvpx8.png" class="">
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_3tC5cwfsr5.png" class="">
+<p><strong>对于源码pbc（实际上框架没有使用只是保留不想改源码调用），webgl平台编译还不识别&lt;&gt;，要改成</strong>“”</p>
+<p><strong>另外webassembly编译c, c++代码，代码文件必须放在同一个目录下，不能有子目录，不然对于include的头文件要加相对目录，编译时候也不认，会报错提示找不到文件</strong></p>
+<p>8.FileUtils类添加webgl平台加载ab路径的正确路径，成功加载Lua ab后，输出ab中所有assetName确认加载ab的filename，改写LuaFileUtils.cs获取Lua TextAsset的filename。</p>
+<p>9.成功加载和解压Lua ab，tolua框架成功获取lua file buffer数据并成功执行输出log。</p>
+<p>10.C#中执行Lua代码成功跑通，接下来跑通Lua执行C#注册的类代码，LuaClient.bind里使用了反射，其实可以直接引用LuaBinder类。去掉LocalExportLuaSetting中缺失引用的类（第三方，pgj等），generate一遍解决C#编译报错。</p>
+<p>11.勾选development，打包编译到webAssembly module报错：unresolved symbol ZN14RefcountedData7ReleaseEv、luaopen_socket_core、luaopen_mime_core、luaopen_ffi。后面三个项目不用，直接在LuaDll中注释去掉，少了几个报错，但是还有一个。</p>
+<p><em>20230104更新：</em></p>
+<p><em>通过一步一步删除分拆代码打debug包的方式，逐步缩小问题的范围，发现只有加入ToLua导出的Wrap文件时，才会有出现这个编译错误：error: unresolved symbol: _ZN14RefcountedData7ReleaseEv。</em></p>
+<p><em>利用二分法进一步缩小范围，最后发现只要编译UnityEngine_Rendering_CommandBufferWrap.cs就会报这个错。</em></p>
+<p><em>这个Wrap文件没有在Lua中用到，处理方法可以使用宏过滤掉编译。</em></p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_7WdLCSVtdJ.png" class="">
+<p>12.打release包，没有注释LuaDll的情况下打包，没有报错，成功打出，真是奇怪，猜测是未引用的库已经剥离了，但是development build认为还需要引用。</p>
+<p>13.打包成功，成功执行到Lua业务逻辑，也就是说Lua能执行注册的C#类。</p>
+<p>14.验证框架打包资源ab并加载，打包bootstrap的UI view prefab，去掉prefab上的缺失的Script，不然打包报脚本错误，修改LocalBundleStrategy之打包GameAssets/ui/view/下的资源，移除GameAssets/ui/view/bootstrap外的资源，排除其他资源的影响。</p>
+<p>15.修改lua代码，跳过热更新逻辑和SDK初始化逻辑，至此webgl已经可以成功加载ui prefab ab，说明框架加载ab资源的能力已经跑通。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_J0oIdyHNOw.png" class="">
+<p>16.将所有业务代码，ThirdParty三方库、AltasSource、GameAssets资源目录拉回来，打包ab，解决编译标错后，成功打出ab，但是因为webgl平台的fmod bank需要使用fmod studio重新build，所以缺少bank的ab。</p>
+<p>17.build构建，webgl不支持的API会报找出不到namespace报错，Handheld（手持设备）、FullScreenMovieControlMode、FullScreenMovieScalingMode等，这写是toLua export的wrap文件，处理方法是加编译宏。解决build报错后，成功打出包。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_iWxvVgACJH.png" class="">
+<p>成功出包说明了三方库Fmod、Live2Dv2和v4库，Spine都能够在webgl平台上成功编译。</p>
+<p>后面通过player publishing settings配置勾选Debug Symbols，打release包输出调试符号表，通过查看符号表可以找到C#dll Live2D库、C源码的toLua库的函数。</p>
+<p>说明C、C++源码、C#已经C#编译的DLL文件可以编译进wasm中。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_eKJtFbgNS2.png" class="">
+<p>18.至此运行webgl包已经能入Loading页，但是运行时有个报错：RuntimeError: float unrepresentable in integer range，参考这篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/ithinking110/article/details/112028638" title="文章">文章</a>，通过设置PlayerSettings.WebGL.emscriptenArgs = “-s “BINARYEN_TRAP_MODE=‘clamp’””;解决。</p>
+<p>这点之后写入AudoPackage.cs中，根据webgl平台自动化添加PlayerSettings参数。</p>
+<p>19.到这里就可以跑到fmod bank的加载逻辑，但是由于缺失bank，报资源加载error。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_cvqjYHFKmM.png" class="">
+<p>20.webgl上资源加载重写，使用协程＋UnityWebRequest，去掉框架中的500帧超时重试逻辑，因为在web上调用UnityWebRequest.Abort()中断之后再试的逻辑跑不通，直接利用异步加载，等有结果后返回。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> UNITY_WEBGL</span></span><br><span class="line"></span><br><span class="line">  www = getUnityWebRequest (res.RealPath, fullPath);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">yield</span> <span class="keyword">return</span> www.SendWebRequest();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (www.result!=UnityWebRequest.Result.Success)</span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">    Debug.LogErrorFormat(<span class="string">&quot;UnityWebRequest加载失败，result&#123;0&#125;,error:&#123;1&#125;,ab:&#123;2&#125;&quot;</span>, www.result, www.error, res.RealPath);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">yield</span> <span class="keyword">return</span> <span class="title">newWWW</span> (<span class="params">res</span>)</span>;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> ab = DownloadHandlerAssetBundle.GetContent (www);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ab == <span class="literal">null</span>) &#123;</span><br><span class="line"></span><br><span class="line">      Debug.LogError(<span class="string">&quot;DownloadHandlerAssetBundle.GetContent获取null，&quot;</span>+res.RealPath);</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">      Debug.LogFormat(<span class="string">&quot;UnityWebRequest加载ab[&#123;0&#125;]成功&quot;</span>, res.RealPath);</span><br><span class="line"></span><br><span class="line">      res.SetAssetBundle (ab);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>AssetBundles中的bank文件是从FmodProj/Build/Mobile中拷贝过来的，至此可以成功加载ab和bank文件了。</p>
+<p>21.fmod官方的<a target="_blank" rel="noopener" href="https://github.com/fmod/unity-html5-demo" title="unity-html5-demo">unity-html5-demo</a>支持webgl平台，但是但是pjg项目运行时播放不了bank，加载没问题就是没有声音。</p>
+<p>使用fmod studio将项目中的bank，选择Desktop平台后，build一份到FmodProj/Build/Desktop下，拷贝我们的master和music的一份bank到unity-html-demo项目中，适配代码后Editor上播放有声音没有问题，但是打包到webgl上却播放不出声音。</p>
+<p>这个问题我已经到fmod提了<a target="_blank" rel="noopener" href="https://github.com/fmod/unity-html5-demo/issues/4" title="Issues">Issues</a>，详细过程请移步查看。</p>
+<p>反过来，将unity-html-demo中的master bank拷贝到我们项目中去，验证是不是bank的格式原因导致的。结果还真的可以正常播放，channels 和 volume是正常的，<strong>说明跟构建出来的bank的格式有很大的关系</strong>。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_8BOg2gT045.png" class="">
+<p>那么项目的bank和demo中的bank有什么区别？最明显的就是项目中的bank使用了encryption key加密，而demo的bank没有加密。</p>
+<p>为验证这个问题，用fmod studio去掉encryption key然后重新build bank（这个过程可以删减一部分bank以构建少量数据），最后发现放在demo中能正常播放了。</p>
+<p>查下官方文档，发现<a target="_blank" rel="noopener" href="https://fmod.com/docs/2.02/unity/troubleshooting.html#cannot-fmod_openmemory_point-encrypted-data" title="LoadFromMemory和encryptionKey不兼容">LoadFromMemory和encryptionKey不兼容</a>，而webgl上正是使用LoadFromMemory加载web request请求回来的bank数据。</p>
+<p>另外在<strong>webgl上确保使用异步方式加载bank</strong>，否者会报错，而这个报错<strong>假如没有在FmodAssetSettings上开启Enable API Error Logging的话，是不会报出来的，所以调试时候最好开启</strong>。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">FMOD</span>] System::getEventByID(<span class="number">0x645bd0</span>:&#123;<span class="number">14</span>d7b992<span class="number">-3</span>a9c<span class="number">-4</span>d93<span class="number">-95</span>de<span class="number">-2</span>dfd73fdbf6e&#125;, <span class="number">0x645ba4</span>) <span class="function">returned ERR_EVENT_NOTFOUND <span class="keyword">for</span> <span class="title">STUDIO_SYSTEM</span> (<span class="params"><span class="number">0x1FFF1F</span></span>)</span></span><br></pre></td></tr></table></figure>
+<p>为了支持bank加密，可以考虑将bank下载后先存到本地IndexDB，再使用LoadFromFile API读取，但需要考虑版本和加载时间问题。</p>
+<p>22.Editor上webSocket已经调通，登录逻辑兼容webgl后，登录成功，至此成功进入到主界面。</p>
+<p>23.WebGL上Input输入需要兼容下，Button和GlobalTouchTrigger类点击逻辑走mouse的输入获取，因为pc上不支持移动设备上的touch获取（支持touch api的设备才可以）。</p>
+<p>对于键盘的输入捕获要注意下，除了游戏canvas，web界面上的其他Input输入框是捕获不到输入的，因为webgl会拦截捕获，解决需要参考<a target="_blank" rel="noopener" href="https://docs.unity3d.com/2020.3/Documentation/Manual/webgl-input.html" title="WebGL Input">WebGL Input</a>。</p>
+<p>还有多点触碰能力需要兼容下【待处理】。</p>
+<p>24.因为webgl development build有问题，所以允许gm按钮在release包上开启。</p>
+<img src="/2023/01/16/%E9%A3%9F%E7%89%A9%E8%AF%AD%E5%85%BC%E5%AE%B9%E6%89%93%E5%8C%85%E7%BC%96%E8%AF%91%E5%88%B0WebGL/image_-YJGd2vFNT.png" class="">
+<p>25.</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">报错：Looks like you are rendering without <span class="keyword">using</span> requestAnimationFrame <span class="keyword">for</span> the main loop. You should use <span class="number">0</span> <span class="keyword">for</span> the frame rate <span class="keyword">in</span> emscripten_set_main_loop <span class="keyword">in</span> order to use requestAnimationFrame, <span class="keyword">as</span> that can greatly improve your frame rates!</span><br></pre></td></tr></table></figure>
+<p>webgl上不建议锁帧，构建的js框架代码会根据设备自动调节。参考<a target="_blank" rel="noopener" href="https://forum.unity.com/threads/rendering-without-using-requestanimationframe-for-the-main-loop.373331/" title="这里">这里</a>。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Unity游戏开发 </category>
+            
+            <category> 平台 </category>
+            
+            <category> WebGL </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> WebGL </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[WebGL游戏可行性评估和兼容性测试]]></title>
+      <url>/2023/01/11/WebGL%E6%B8%B8%E6%88%8F%E5%8F%AF%E8%A1%8C%E6%80%A7%E8%AF%84%E4%BC%B0%E5%92%8C%E5%85%BC%E5%AE%B9%E6%80%A7%E6%B5%8B%E8%AF%95/</url>
+      <content type="html"><![CDATA[<span id="more"></span>
+<h2 id="WebGL浏览器兼容性"><a href="#WebGL浏览器兼容性" class="headerlink" title="WebGL浏览器兼容性"></a>WebGL浏览器兼容性</h2><ul>
+<li>支持主流的桌面浏览器，但不同浏览器的不同版本支持程度和性能不一。</li>
+<li>不支持移动设备，但在高端的移动设备上仍可以运行，瓶颈是内存。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2018.4/Manual/webgl-browsercompatibility.html" title="各浏览器webgl兼容性表">各浏览器webgl兼容性表</a></p>
+<h2 id="WebGL支持能力"><a href="#WebGL支持能力" class="headerlink" title="WebGL支持能力"></a>WebGL支持能力</h2><table>
+<thead>
+<tr>
+<th>能力</th>
+<th>支持程度</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多线程</td>
+<td>不支持</td>
+<td>不支持System.Threading，将多线程代码替换成异步等方式实现</td>
+</tr>
+<tr>
+<td>网络系统</td>
+<td>需调整</td>
+<td>不支持 <a target="_blank" rel="noopener" href="http://System.Net" title="System.Net">System.Net</a> 接口，HTTP使用UnityWebRequest，TCP使用 WebSocket 通信替代（UnityWebSocket 插件）</td>
+</tr>
+<tr>
+<td>音频</td>
+<td>支持</td>
+<td>仅基于Web Audio API实现基础功能，不支持压缩和自动播放，不支持Fmod</td>
+</tr>
+<tr>
+<td>图形API</td>
+<td>支持</td>
+<td>基于OpenGL ES图形库功能，WebGL 1.0 匹配 OpenGL ES 2.0 ，WebGL 2.0 匹配 OpenGL ES 3.0</td>
+</tr>
+<tr>
+<td>动态生成代码</td>
+<td>不支持</td>
+<td>WebGL是AOT平台，不支持C#反射等动态代码方案</td>
+</tr>
+<tr>
+<td>文件系统</td>
+<td>需调整</td>
+<td>PlayerPrefs、Unity Local储存文件，存在PresistetDataPath下的文件会储存进IndexedDB，IndexedDB无容量限制</td>
+</tr>
+<tr>
+<td>Lua脚本</td>
+<td>支持</td>
+<td>支持使用ToLua</td>
+</tr>
+<tr>
+<td>三方库</td>
+<td>需调整</td>
+<td>C#三方库不能包含System.Threading、<a target="_blank" rel="noopener" href="http://System.Net" title="System.Net">System.Net</a>、System.Reflection等接口</td>
+</tr>
+</tbody>
+</table>
+<h2 id="浏览器平台兼容性实测"><a href="#浏览器平台兼容性实测" class="headerlink" title="浏览器平台兼容性实测"></a>浏览器平台兼容性实测</h2><p>将打出的WebGL包放在各个浏览器运行测试</p>
+<table>
+<thead>
+<tr>
+<th>浏览器</th>
+<th>测试版本</th>
+<th>运行情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Google Chrome</td>
+<td>108.0.5359.125（正式版本） （64 位）</td>
+<td>1.各个模块运行基本正常&#xA;&#xA;2.fmod效果音刚播放时噪音有点大&#xA;&#xA;3.fmod背景音乐偶尔进入界面时未播放，像是没有触发，切换界面回来才会播，像是业务逻辑未兼容好的问题&#xA;&#xA;4.输入框捕获不到中文输入</td>
+</tr>
+<tr>
+<td>Microsoft Edge</td>
+<td>108.0.1462.54 (正式版本) (64 位)</td>
+<td>运行情况跟Chrome相似</td>
+</tr>
+<tr>
+<td>Mozila Firefox</td>
+<td>108.0.1 (64 位)</td>
+<td>1.fmod效果音刚播放时没有在chrome上噪音大的问题&#xA;&#xA;2.画质上比chrome高清&#xA;&#xA;3.输入框也捕获不到中文输入</td>
+</tr>
+<tr>
+<td>Apple Safari</td>
+<td>pjg的mac开发机上测试&#xA;&#xA;版本14.1.1</td>
+<td>1.手机Safari访问，加载慢，能够进入到登录页，弹不起输入框，运行不久弹窗报错：<strong>WebGL builds are not supported on mobile devices</strong>. &#xA;&#xA;2.fmod的效果音播放的噪声问题也存在，内存紧张是更加明显&#xA;&#xA;3.pv视频播放不了，报user not allow，像是设置禁用了</td>
+</tr>
+<tr>
+<td>360浏览器</td>
+<td>版本号: 13.1.6380.01内核版本: 86.0.4240.198</td>
+<td>进入主界面时报： Could not allocate memory: System out of memory! memory access out of bound，分配的内存不够&#xA;&#xA;有些贴图渲染不出来一片黑</td>
+</tr>
+<tr>
+<td>360浏览器</td>
+<td>版本号: 13.1.6380.01内核版本: 86.0.4240.198</td>
+<td>进入主界面时报： Could not allocate memory: System out of memory! memory access out of bound，分配的内存不够&#xA;&#xA;有些贴图渲染不出来一片黑</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+      
+        <categories>
+            
+            <category> Unity游戏开发 </category>
+            
+            <category> 平台 </category>
+            
+            <category> WebGL </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> WebGL </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[WebGL上导出日志文件]]></title>
+      <url>/2023/01/05/WebGL%E4%B8%8A%E5%AF%BC%E5%87%BA%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6/</url>
+      <content type="html"><![CDATA[<span id="more"></span>
+<h2 id="与日志相关的配置选项"><a href="#与日志相关的配置选项" class="headerlink" title="与日志相关的配置选项"></a>与日志相关的配置选项</h2><p>Player Setting-》Other Settings-》Stack Track</p>
+<p>可以控制各个日志等级类型的输出，ScriptOnly只包括托管代码（C#、Lua），Full包括托管和非托管代码（C、C++）。</p>
+<p>一般debug和release下勾ScriptOnly就够。</p>
+<p>Publishing Settings-》Enable Exceptions</p>
+<p>runtime下异常捕获的处理方式</p>
+<ul>
+<li>None：不捕获，异常发生后运行不了</li>
+<li>Explicitly Thrown Exceptions Only：仅捕获Thrown语句显式调用抛出的异常。</li>
+<li>Full Without Stacktrace：在上面的基础上加上空引用和数组越界访问异常，并且包含非托管代码的堆栈。</li>
+<li>Full With Stacktrace：在上面基础上加上捕获堆栈。</li>
+</ul>
+<p>以上性能消耗由上都下递增，Full模式只建议调试时使用。</p>
+<p>Development Build的js代码不会压缩且具有可读性，但遇到Error或Exception时可以看到堆栈跟踪。</p>
+<h2 id="文件位置"><a href="#文件位置" class="headerlink" title="文件位置"></a>文件位置</h2><p>保存进<strong>Application.persistentDataPath</strong>目录下的文件，会被保存进IndexedDB，位于/idbfs数据库下的FILE_DATA仓库，包括PlayerPrefs、Unity local文件等，以二进制ArrayBuffer的形式存储。</p>
+<img src="/2023/01/05/WebGL%E4%B8%8A%E5%AF%BC%E5%87%BA%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6/image_ZrB80m7JK5.png" class="">
+<p>所以Clogger模块的log日志可以从IndexedDB提取ArrayBuffer，然后解析成string，上报或者导出为Log文件。</p>
+<p>IndexedDB没有容量限制。</p>
+<p>Demo实现了WebGL导出Log文件，地址点击<a target="_blank" rel="noopener" href="https://gitlab.bt/laotuzhu/webgldemo" title="这里">这里</a>。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Unity游戏开发 </category>
+            
+            <category> 平台 </category>
+            
+            <category> WebGL </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> WebGL </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[WebGL脚本交互]]></title>
+      <url>/2023/01/05/WebGL%E8%84%9A%E6%9C%AC%E4%BA%A4%E4%BA%92/</url>
+      <content type="html"><![CDATA[<span id="more"></span>
+<p>官网脚本间的交互<a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2022.1/Manual/webgl-interactingwithbrowserscripting.html" title="教程">教程</a>。</p>
+<p>这里提一下注意点：</p>
+<h3 id="1-jslib的js调用js函数"><a href="#1-jslib的js调用js函数" class="headerlink" title="1. jslib的js调用js函数"></a>1. jslib的js调用js函数</h3><p>jslib里嵌入的js函数并且被C# extern导出，被编译进Build.Framework.js下的Module作用域下，在js下的函数名加了_前缀。</p>
+<p>打算在jslib里调用同样自己封装的js函数，需要两步，C#导出以及加上_前缀。</p>
+<p>比如SyncDB函数调用ExportLogFile函数：</p>
+<img src="/2023/01/05/WebGL%E8%84%9A%E6%9C%AC%E4%BA%A4%E4%BA%92/image_LH7j6YbDcD.png" class="">
+<img src="/2023/01/05/WebGL%E8%84%9A%E6%9C%AC%E4%BA%A4%E4%BA%92/image_RKaYmVWOKt.png" class="">
+<p>编译进js的函数：</p>
+<img src="/2023/01/05/WebGL%E8%84%9A%E6%9C%AC%E4%BA%A4%E4%BA%92/image_Tc714gt9om.png" class="">
+<img src="/2023/01/05/WebGL%E8%84%9A%E6%9C%AC%E4%BA%A4%E4%BA%92/image_z92_IORzd2.png" class="">
+<h3 id="2-C-传给JS函数的参数转换"><a href="#2-C-传给JS函数的参数转换" class="headerlink" title="2.C#传给JS函数的参数转换"></a>2.C#传给JS函数的参数转换</h3><img src="/2023/01/05/WebGL%E8%84%9A%E6%9C%AC%E4%BA%A4%E4%BA%92/image_-2cjqXZEFd.png" class="">
+<p>JS里拿到的string类型参数是一个内存地址，需要使用UTF8ToString来进行转换。</p>
+<p><strong>注意的是</strong>，不能放在回调下面FS.syncfs的回调作用域内转换，必须放在参数自己的作用域，不然后面地址回收后转出来是不准确的。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Unity游戏开发 </category>
+            
+            <category> 平台 </category>
+            
+            <category> WebGL </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> WebGL </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[WebGL调试和打包]]></title>
+      <url>/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/</url>
+      <content type="html"><![CDATA[<span id="more"></span>
+<h2 id="运行和调试"><a href="#运行和调试" class="headerlink" title="运行和调试"></a>运行和调试</h2><h3 id="两个起http服务器方案："><a href="#两个起http服务器方案：" class="headerlink" title="两个起http服务器方案："></a>两个起http服务器方案：</h3><ul>
+<li><p><strong>Build and Run</strong></p>
+<p>执行后Unity会起一个http服务器运行web界面，缺点是端口号每次都会变。</p>
+</li>
+<li><p><strong>自起http服务器</strong></p>
+<p>利用node的npm包管理器下载http-server插件</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install --global http-server</span><br><span class="line">//起一个http服务器</span><br><span class="line">http-server</span><br><span class="line">// 或者，假如打出的包文件时gzip压缩，需加上-g</span><br><span class="line">http-server -g</span><br></pre></td></tr></table></figure>
+<p>另外需要改http-server插件的一个文件，路径是：C:\Users\[yourusername]\AppData\Roaming\npm\node_modules\http-server\lib\core\index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 搜索第一行注释找到这段代码，改为下面代码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//if (file === gzippedFile) &#123; // is .gz picked up</span></span><br><span class="line"><span class="keyword">if</span> (file === gzippedFile || path.<span class="title function_">extname</span>(file) ==<span class="string">&quot;.gz&quot;</span>) &#123; <span class="comment">// is .gz picked up</span></span><br><span class="line">  res.<span class="title function_">setHeader</span>(<span class="string">&#x27;Content-Encoding&#x27;</span>, <span class="string">&#x27;gzip&#x27;</span>);</span><br><span class="line">  <span class="comment">// strip gz ending and lookup mime type</span></span><br><span class="line">  contentType = mime.<span class="title function_">lookup</span>(path.<span class="title function_">basename</span>(file, <span class="string">&#x27;.gz&#x27;</span>), defaultType);</span><br><span class="line"><span class="comment">//&#125; else if (file === brotliFile) &#123; // is .br picked up</span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (file === brotliFile || path.<span class="title function_">extname</span>(file) ==<span class="string">&quot;.br&quot;</span>) &#123; <span class="comment">// is .br picked up  </span></span><br><span class="line">  res.<span class="title function_">setHeader</span>(<span class="string">&#x27;Content-Encoding&#x27;</span>, <span class="string">&#x27;br&#x27;</span>);</span><br><span class="line">  <span class="comment">// strip br ending and lookup mime type</span></span><br><span class="line">  contentType = mime.<span class="title function_">lookup</span>(path.<span class="title function_">basename</span>(file, <span class="string">&#x27;.br&#x27;</span>), defaultType);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p><em>假如运行http-server命令报未找到命令，需要设置环境变量，添加：C:\Users[yourUserName]\AppData\Roaming\npm</em></p>
+<h3 id="调试JS"><a href="#调试JS" class="headerlink" title="调试JS"></a>调试JS</h3><p>jslib文件插入的js代码会被打包进Build.framework.js里，但只有在C# Extern导出的才会被包含。</p>
+<p>调试JS代码可以选择编辑Build.framework.js，加入Debug代码调试，快速方便，跳过打包。</p>
+<h2 id="打webgl包设置"><a href="#打webgl包设置" class="headerlink" title="打webgl包设置"></a>打webgl包设置</h2><p>1.branch选择以下分支之外的分支，跳过MSDK的逻辑，或者可以手改Resources目录下的GameConst.txt下的branch字段。</p>
+<p><em>20230104:更新：已处理成在国内分支上的MSDK上过滤掉webgl平台。</em></p>
+<img src="/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/image_tGLLj0XYUL.png" class="">
+<p>2.在PlayerSetting.asset下搜索webGLEmscriptenArgs，手动添加下：webGLEmscriptenArgs: -s “BINARYEN_TRAP_MODE=’clamp’”</p>
+<p>这可以跳过运行时报错：RuntimeError: float unrepresentable in integer range</p>
+<p><em>20230104:更新：已添加并提交。</em></p>
+<img src="/2022/12/30/WebGL%E8%B0%83%E8%AF%95%E5%92%8C%E6%89%93%E5%8C%85/image_xEZJCQfHjP.png" class="">
+<p>3.打包不要勾选Development Build。</p>
+<p>目前Development Build打包编译有报错，还跳跳不过这个坑。</p>
+<p><em>20230104:更新：编译报错的问题已经找出并解决。</em></p>
+<h2 id="打包配置说明"><a href="#打包配置说明" class="headerlink" title="打包配置说明"></a>打包配置说明</h2><h3 id="build-setting"><a href="#build-setting" class="headerlink" title="build setting"></a><a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2022.1/Manual/webgl-building.html" title="build setting">build setting</a></h3><p>Texture Compression：贴图压缩格式</p>
+<p>Development build：dev模式构建，开启后链Profiler</p>
+<p>Code Optimization：编译优化</p>
+<ul>
+<li>speed：优化包的运行时性能</li>
+<li>size：构建包大小优先</li>
+</ul>
+<h3 id="Player-Setting"><a href="#Player-Setting" class="headerlink" title="Player Setting"></a><a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2022.1/Manual/class-PlayerSettingsWebGL.html" title="Player Setting">Player Setting</a></h3><p>Resolution And Presentaiton：web页面的游戏窗分辨率设置、模板设置。</p>
+<p>Sqlash Image：web tab图标、游戏启动页动画、logo、背景图设置。</p>
+<p>Other Settings</p>
+<ul>
+<li>Auto Graphics API：开启会交由Unity自动根据设备选择webGL图形API。默认WebGL2.0，不支持会回退到WebGL1.0。但Untiy2021.1后将弃用WebGL1.0，可禁用这个选项然后手动添加。</li>
+</ul>
+<p>Publishing Setting</p>
+<ul>
+<li>Compression Format：非dev构建的文件压缩格式，dev构建无作用。<strong>注意服务器nginx要配置支持解压，</strong><a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/2022.1/Manual/webgl-server-configuration-code-samples.html" title="参考链接"><strong>参考链接</strong></a><strong>。</strong></li>
+<li>Decompression Fallback：勾选会构建包含未压缩的代码，解压失败会回退。</li>
+<li>Data Caching：开启会自动将内容资源数据缓存在用户计算机上，这样就不必在后续运行中重新下载（除非内容已更改）。缓存是使用浏览器提供的 IndexedDB API 实现的。</li>
+<li>Debug Symbols：对release包有效，在发生错误时保留调试符号并执行堆栈跟踪的恢复。对于发布版本，所有调试信息都存储在单独的文件中；发生错误时将根据需要从服务器下载该文件(Build/WebGLPackageProj.symbols.json)。开发版本始终具有嵌入在主模块中的恢复支持，因此不受此选项的影响。</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> Unity游戏开发 </category>
+            
+            <category> 平台 </category>
+            
+            <category> WebGL </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> WebGL </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[SQLite替换lua配置表方案实现]]></title>
       <url>/2022/09/30/SQLite%E6%9B%BF%E6%8D%A2lua%E9%85%8D%E7%BD%AE%E8%A1%A8%E6%96%B9%E6%A1%88%E5%AE%9E%E7%8E%B0/</url>
       <content type="html"><![CDATA[<!-- # SQLite替换lua配置表方案实现 -->

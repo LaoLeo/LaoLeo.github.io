@@ -211,20 +211,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">61</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -242,7 +242,7 @@
   <div class="profiler site-overview-item animated">
     <p class="profiler-item">就职：天梯-箜羽工作室</p>
     <p class="profiler-item">坐标：广州</p>
-    <p class="profiler-item">正在：目前正研究WebGL...</p>
+    <p class="profiler-item">正在：目前正寻找新机会...</p>
   </div>
 
 
@@ -276,7 +276,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2017/09/25/CSS3%E5%AE%9E%E7%8E%B03D%E8%BD%AE%E6%92%AD%E5%9B%BE/">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2018/04/20/%E3%80%8A%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -289,7 +289,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/09/25/CSS3%E5%AE%9E%E7%8E%B03D%E8%BD%AE%E6%92%AD%E5%9B%BE/" class="post-title-link" itemprop="url">CSS3实现3D轮播图</a>
+          <a href="/2018/04/20/%E3%80%8A%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">《代码整洁之道》读书笔记</a>
         </h2>
 
         <div class="post-meta-container">
@@ -300,18 +300,18 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2017-09-25 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-25T00:00:00+08:00">2017-09-25</time>
+      <time title="创建时间：2018-04-20 20:20:01" itemprop="dateCreated datePublished" datetime="2018-04-20T20:20:01+08:00">2018-04-20</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-12-06 23:30:37" itemprop="dateModified" datetime="2022-12-06T23:30:37+08:00">2022-12-06</time>
+        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
       </span>
 
   
-    <span id="/2017/09/25/CSS3%E5%AE%9E%E7%8E%B03D%E8%BD%AE%E6%92%AD%E5%9B%BE/" class="post-meta-item leancloud_visitors" data-flag-title="CSS3实现3D轮播图" title="阅读次数">
+    <span id="/2018/04/20/%E3%80%8A%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="post-meta-item leancloud_visitors" data-flag-title="《代码整洁之道》读书笔记" title="阅读次数">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
@@ -330,24 +330,21 @@
     
     
     
-      <div class="post-tags">
-          <a href="/tags/html5/" rel="tag"><i class="fa fa-tag"></i> html5</a>
-          <a href="/tags/css3/" rel="tag"><i class="fa fa-tag"></i> css3</a>
-      </div>
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="CSS3-3D旋转图片轮播"><a href="#CSS3-3D旋转图片轮播" class="headerlink" title="CSS3 3D旋转图片轮播"></a>CSS3 3D旋转图片轮播</h3><p>想学好3D变换，必须先理解表示空间方向的XYZ轴，这个其实很容易理解，毕竟高中做了辣么多的函数方程题，要注意的是Z轴，向着自己的方向就是Z的方向。</p>
-<h4 id="变形transform"><a href="#变形transform" class="headerlink" title="变形transform"></a>变形transform</h4><p>旋转：transform : rotateX()/rotateY()/rotateZ()<br>这个项目很明显是用rotateY(angle)</p>
-<h4 id="关键的perspective属性"><a href="#关键的perspective属性" class="headerlink" title="关键的perspective属性"></a>关键的perspective属性</h4><p>这个单词的意思是视角，故名思义，就是眼睛的位置，有两种写法：<br>1.写在舞台元素上，也就是动画元素的父元素上<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.stage</span>&#123;</span><br><span class="line">		<span class="attribute">perspective</span>: <span class="number">800px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>2.写在动画元素上，写在transform属性里<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.stage</span> <span class="selector-class">.box</span>&#123;</span><br><span class="line">		<span class="attribute">transform</span>:<span class="built_in">perspective</span>(<span class="number">800px</span>) <span class="built_in">rotate</span>(<span class="number">60deg</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>视角的位置不一样，看到的景物也是有区别的，换个角度思考也是这个说法。<br>其实上面的两种写法是有区别的，前者视角在舞台的中心，后者则是在动画元素的中心。</p>
-<h4 id="定义视角位置"><a href="#定义视角位置" class="headerlink" title="定义视角位置"></a>定义视角位置</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.stage</span>&#123;</span><br><span class="line">		<span class="attribute">perspective</span>: <span class="number">800px</span>;</span><br><span class="line">		<span class="attribute">perspective-origin</span>:<span class="number">25%</span> <span class="number">250px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="拉开与中心的距离"><a href="#拉开与中心的距离" class="headerlink" title="拉开与中心的距离"></a>拉开与中心的距离</h4><p>当所有图片都以同一个旋转中心旋转后，其实是没有立体感的，这时候就需要用到这个属性translateZ<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.stage</span> <span class="selector-class">.box</span>&#123;</span><br><span class="line">		<span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">60deg</span>) <span class="built_in">translateZ</span>(<span class="number">500px</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="js控制transform属性"><a href="#js控制transform属性" class="headerlink" title="js控制transform属性"></a>js控制transform属性</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">aImg</span>[i].style.webkitTransform = <span class="string">&quot;rotateY(&quot;</span>+ ( - (count*<span class="number">60</span> - i*<span class="number">60</span>) )+  <span class="string">&quot;deg) translateZ(&quot;</span> + <span class="number">483</span>+<span class="string">&quot;px)&quot;</span>;</span><br></pre></td></tr></table></figure>
-<p>需要注意的是，aImg[i].style.webkitTransform只能用来设置css的transform属性，并不能用alert打印出来。同offsetLeft也left一样。</p>
-<p>[参考](<a target="_blank" rel="noopener" href="http://www.zhangxinxu.com/wordpress/2012/09/css3-3d-transform-perspective-animate-transition/）">http://www.zhangxinxu.com/wordpress/2012/09/css3-3d-transform-perspective-animate-transition/）</a></p>
-
+          <p><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=133076365,2636556812&amp;fm=27&amp;gp=0.jpg" alt="我是图片"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我为什么会选择阅读这一本书呢？书中给出的原因简介明了：首先我是程序员，第二我想成为更好的程序员。从这两点我们可以看得出来，作者的对于程序的看法是，能写出“整洁”代码的程序员必定是个优秀的程序员，写出“整洁”代码在作者看来是一个程序员需要发展和具备的一项素质。至于什么是“整洁的代码”，将会在下文进行讨论</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/04/20/%E3%80%8A%E4%BB%A3%E7%A0%81%E6%95%B4%E6%B4%81%E4%B9%8B%E9%81%93%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -373,7 +370,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2017/09/20/CSS3%E9%A5%BC%E7%8A%B6loading%E6%95%88%E6%9E%9C/">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2018/04/15/%E8%B8%8F%E5%B9%B3windows%E4%B8%8B%E5%AE%89%E8%A3%85fabric%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91s/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -386,7 +383,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/09/20/CSS3%E9%A5%BC%E7%8A%B6loading%E6%95%88%E6%9E%9C/" class="post-title-link" itemprop="url">饼状loading效果</a>
+          <a href="/2018/04/15/%E8%B8%8F%E5%B9%B3windows%E4%B8%8B%E5%AE%89%E8%A3%85fabric%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91s/" class="post-title-link" itemprop="url">踏平windows下安装fabric遇到的坑s</a>
         </h2>
 
         <div class="post-meta-container">
@@ -397,111 +394,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2017-09-20 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-20T00:00:00+08:00">2017-09-20</time>
+      <time title="创建时间：2018-04-15 22:41:22" itemprop="dateCreated datePublished" datetime="2018-04-15T22:41:22+08:00">2018-04-15</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-12-06 23:30:37" itemprop="dateModified" datetime="2022-12-06T23:30:37+08:00">2022-12-06</time>
-      </span>
-
-  
-    <span id="/2017/09/20/CSS3%E9%A5%BC%E7%8A%B6loading%E6%95%88%E6%9E%9C/" class="post-meta-item leancloud_visitors" data-flag-title="饼状loading效果" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-</div>
-
-        </div>
-
-        <div class="post-fixed-siderbar">
-</div>
-      </header>
-
-
-    
-    
-    
-      <div class="post-tags">
-          <a href="/tags/html5/" rel="tag"><i class="fa fa-tag"></i> html5</a>
-          <a href="/tags/css3/" rel="tag"><i class="fa fa-tag"></i> css3</a>
-      </div>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="垂直和水平居中"><a href="#垂直和水平居中" class="headerlink" title="垂直和水平居中"></a>垂直和水平居中</h3><p>水平居中是最简单的，在设置了大小的元素上加margin：0 auto<br>关键是垂直居中<br>使用定位position：absolution;  //脱离文档流<br>        top: 50%;    //这时顶部处于中央位置<br>       margin-top: -(height/2) px;<br>或者第三句可以使用位移：transfrom：translateY(-50%)</p>
-<p>另一种方法是使用flex布局<br>在居中元素的父元素上：display：flex;<br>                   align-items:center; //垂直居中<br>                   justify: center;    //水平居中<br>可是flex布局存在兼容性问题  ，慎用！<br>参考：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/yugege/p/5246652.html">http://www.cnblogs.com/yugege/p/5246652.html</a></p>
-<p><strong>让脱离了文档流的p标签垂直和水平居中</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">&quot;mynav&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">div</span>&gt;</span>		</span><br><span class="line">	<span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">	</span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.mynav</span>&#123;</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">height</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">margin-top</span>: <span class="number">70px</span>;	</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.mynav</span> <span class="selector-tag">div</span>&#123;</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">position</span>: relative; //垂直</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">text-align</span>: center; //水平</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.mynav</span> <span class="selector-tag">p</span>&#123;	</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">width</span>: <span class="number">100%</span>; //水平</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">position</span>: absolute; //垂直</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">top</span>: <span class="number">50%</span>;   //垂直</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">margin-top</span>: -<span class="number">12px</span>;  //垂直</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.mynav</span> <span class="selector-tag">p</span> <span class="selector-tag">span</span>&#123;</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">display</span>: inline-block;</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">width</span>: <span class="number">24px</span>;</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">height</span>: <span class="number">24px</span>;</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">border-radius</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="language-css">    	-webkit-<span class="attribute">border-radius</span>: <span class="number">50%</span>;</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">background-color</span>: <span class="number">#000</span>;</span></span><br><span class="line"><span class="language-css">    	<span class="attribute">margin-right</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="language-css">    </span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p><a target="_blank" rel="noopener" href="https://ww2.sinaimg.cn/large/006tNbRwly1fcr4ycdb9cg30d80dm0tf.gif">查看效果</a></p>
-<p>这个loading效果分两部份，第一部分是四分之三圆，第二部份是中间的圆饼。<br>首先如何画圆呢？<br>一般是在一个正方形的div上设置border-radius=圆的半径<br>可是现在是用另外的方法，用border来画圆<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>:<span class="number">0</span>;</span><br><span class="line"><span class="attribute">height</span>:<span class="number">0</span>;</span><br><span class="line"><span class="attribute">border</span>:<span class="number">50px</span> solid <span class="number">#000</span>;</span><br><span class="line"><span class="attribute">border-radius</span>:<span class="number">50px</span>;</span><br></pre></td></tr></table></figure><br>可以用border-top-color来设置圆的颜色，这样一个圆就可以有四种颜色，那么四分之三圆就是一部分的颜色设为透明transparent。<br>中间的圆饼其实是一个红色和粉红色的底圆和一个红半圆，一个粉红半圆实现的，半圆其实就是两部分的border颜色设为transparent</p>
-<p>一个红色和粉红色的底圆：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="number">0</span>;</span><br><span class="line"><span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line"><span class="attribute">border-radius</span>: <span class="number">50px</span>;</span><br><span class="line"><span class="attribute">border</span>:<span class="number">50px</span> solid;</span><br><span class="line"><span class="attribute">border-top-color</span>: <span class="built_in">rgb</span>(<span class="number">251</span>,<span class="number">139</span>,<span class="number">189</span>);</span><br><span class="line"><span class="attribute">border-left-color</span>: <span class="built_in">rgb</span>(<span class="number">255</span>,<span class="number">41</span>,<span class="number">140</span>);</span><br><span class="line"><span class="attribute">border-right-color</span>: <span class="built_in">rgb</span>(<span class="number">251</span>,<span class="number">139</span>,<span class="number">189</span>);</span><br><span class="line"><span class="attribute">border-bottom-color</span>: <span class="built_in">rgb</span>(<span class="number">255</span>,<span class="number">41</span>,<span class="number">140</span>);</span><br></pre></td></tr></table></figure></p>
-<p>一个红半圆：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="number">0</span>;</span><br><span class="line"> <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line"><span class="attribute">border-radius</span>: <span class="number">50px</span>;</span><br><span class="line"><span class="attribute">border</span>: solid <span class="built_in">rgb</span>(<span class="number">251</span>,<span class="number">139</span>,<span class="number">189</span>) <span class="number">50px</span>  ;</span><br><span class="line"><span class="attribute">border-right-color</span>: transparent;</span><br><span class="line"> <span class="attribute">border-bottom-color</span>: transparent;</span><br></pre></td></tr></table></figure><br>分析这个效果，其实是一开始是个红色的圆，然后粉色圆在慢慢出来，等整个圆是粉红色时，红圆慢慢出来。<br>我们可以这样两个半圆重叠，红色在其上，都放在底圆上，在动画框架的第一个过程上红圆转180deg，第二过程粉红圆转180deg，红圆继续保持位置，这个过程开始事时粉红圆的z - index大于红圆。第三个过程，红圆z-index还是小于粉红圆，红圆在转。第四个过程开始，红圆z-index大于粉红圆，粉红圆在转。</p>
-<p>对比下面的两个动画框架：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@keyframes</span> red-rotate&#123;</span><br><span class="line">		    <span class="number">0%</span> &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">45deg</span>);</span><br><span class="line">		    &#125;</span><br><span class="line">		    <span class="number">25%</span> &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">225deg</span>);</span><br><span class="line">		    &#125;</span><br><span class="line">		    <span class="number">50%</span> &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">225deg</span>);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">2</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    <span class="number">75%</span> &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">405deg</span>);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">3</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    <span class="number">100%</span> &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">405deg</span>);</span><br><span class="line">		    &#125;		</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">@keyframes</span> pink-rotate&#123;</span><br><span class="line">			<span class="number">0%</span> &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">45deg</span>);		    	</span><br><span class="line">		    &#125;</span><br><span class="line">		    <span class="number">25%</span> &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">45deg</span>);</span><br><span class="line">		    &#125;</span><br><span class="line">		    <span class="number">50%</span> &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">225deg</span>);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">3</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    <span class="number">75%</span> &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">225deg</span>);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">3</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    <span class="number">75.001%</span> &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">225deg</span>);</span><br><span class="line">		    	<span class="attribute">z-index</span>: <span class="number">2</span>;</span><br><span class="line">		    &#125;</span><br><span class="line">		    <span class="number">100%</span> &#123;</span><br><span class="line">		    	<span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">405deg</span>);</span><br><span class="line">		    &#125; </span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure><br>最后两个动画框架同时开始就大功告成了！</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2017/07/20/js%E6%8E%A7%E5%88%B6%E8%BF%90%E5%8A%A8%E6%A1%86%E6%9E%B6animation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Walking 劳翼">
-      <meta itemprop="description" content="“Unity,移动开发,Web”">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/07/20/js%E6%8E%A7%E5%88%B6%E8%BF%90%E5%8A%A8%E6%A1%86%E6%9E%B6animation/" class="post-title-link" itemprop="url">js控制运动框架animation</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2017-07-20 00:00:00" itemprop="dateCreated datePublished" datetime="2017-07-20T00:00:00+08:00">2017-07-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-12-21 22:39:47" itemprop="dateModified" datetime="2022-12-21T22:39:47+08:00">2022-12-21</time>
+        <time title="修改时间：2022-12-21 22:43:43" itemprop="dateModified" datetime="2022-12-21T22:43:43+08:00">2022-12-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -513,16 +413,122 @@
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/web%E5%BC%80%E5%8F%91/%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">基础</span></a>
+          <a href="/categories/web%E5%BC%80%E5%8F%91/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2018/04/15/%E8%B8%8F%E5%B9%B3windows%E4%B8%8B%E5%AE%89%E8%A3%85fabric%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91s/" class="post-meta-item leancloud_visitors" data-flag-title="踏平windows下安装fabric遇到的坑s" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+
+        <div class="post-fixed-siderbar">
+</div>
+      </header>
+
+
+    
+    
+    
+      <div class="post-tags">
+          <a href="/tags/fabric/" rel="tag"><i class="fa fa-tag"></i> fabric</a>
+      </div>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2127917617,591166268&amp;fm=27&amp;gp=0.jpg" alt="我是图片"></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文主要介绍python环境的文件上传部署工具，和在windows平台上安装fabric的过程遇到的坑和一些解决方案</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/04/15/%E8%B8%8F%E5%B9%B3windows%E4%B8%8B%E5%AE%89%E8%A3%85fabric%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91s/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2018/04/09/source%20map%E5%B0%8F%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/04/09/source%20map%E5%B0%8F%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">source map小知识</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-04-09 19:36:00" itemprop="dateCreated datePublished" datetime="2018-04-09T19:36:00+08:00">2018-04-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-21 22:43:50" itemprop="dateModified" datetime="2022-12-21T22:43:50+08:00">2022-12-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/web%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">web开发</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/web%E5%BC%80%E5%8F%91/%E5%9F%BA%E7%A1%80/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a>
+          <a href="/categories/web%E5%BC%80%E5%8F%91/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
         </span>
     </span>
 
   
-    <span id="/2017/07/20/js%E6%8E%A7%E5%88%B6%E8%BF%90%E5%8A%A8%E6%A1%86%E6%9E%B6animation/" class="post-meta-item leancloud_visitors" data-flag-title="js控制运动框架animation" title="阅读次数">
+    <span id="/2018/04/09/source%20map%E5%B0%8F%E7%9F%A5%E8%AF%86/" class="post-meta-item leancloud_visitors" data-flag-title="source map小知识" title="阅读次数">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
@@ -542,152 +548,31 @@
     
     
       <div class="post-tags">
-          <a href="/tags/js/" rel="tag"><i class="fa fa-tag"></i> js</a>
-          <a href="/tags/css/" rel="tag"><i class="fa fa-tag"></i> css</a>
-          <a href="/tags/animation/" rel="tag"><i class="fa fa-tag"></i> animation</a>
+          <a href="/tags/webpack/" rel="tag"><i class="fa fa-tag"></i> webpack</a>
+          <a href="/tags/sourceMap/" rel="tag"><i class="fa fa-tag"></i> sourceMap</a>
       </div>
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="js控制运动框架animation"><a href="#js控制运动框架animation" class="headerlink" title="js控制运动框架animation"></a>js控制运动框架animation</h2><p>目标：做一个通过按钮控制旋转的动画，下面的是效果图：<br><img src="http://note.youdao.com/yws/api/personal/file/221639B83D0B4AD3A49229F58A468023?method=download&amp;shareKey=fb6cd7994e20ce6c6ea7f94a1609b490" alt="image"></p>
-<p>想想都很简单，就写个css框架，然后用js给img节点添加animation样式。<br>所以一开始是这样的的：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*旋转动画*/</span></span><br><span class="line"><span class="keyword">@keyframes</span> rotation&#123;</span><br><span class="line">	<span class="selector-tag">from</span>&#123;</span><br><span class="line">		<span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">0deg</span>);</span><br><span class="line">		-webkit-<span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">0deg</span>);</span><br><span class="line">		-moz-<span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">0deg</span>);</span><br><span class="line">		-o-<span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">0deg</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="selector-tag">to</span>&#123;</span><br><span class="line">		<span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">360deg</span>);</span><br><span class="line">		-webkit-<span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">360deg</span>);</span><br><span class="line">		-moz-<span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">360deg</span>);</span><br><span class="line">		-o-<span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">360deg</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$positer.<span class="title function_">css</span>(<span class="string">&#x27;animation&#x27;</span>, <span class="string">&#x27;rotation 30s linear infinite&#x27;</span>); <span class="comment">//开始旋转动画</span></span><br><span class="line"></span><br><span class="line">$positer.<span class="title function_">css</span>(<span class="string">&#x27;animation&#x27;</span>, <span class="string">&#x27;&#x27;</span>); <span class="comment">//停止旋转动画</span></span><br></pre></td></tr></table></figure></p>
-<p>然而，问题就来了。停止的时候图片直接回归原始状态。<br>这得咋办呢？难道要写一个动画框架，用定时器去使transform的rotate去转动吗？<br>好说干就干<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> deg = <span class="number">0</span>;  <span class="comment">//记录旋转角度</span></span><br><span class="line"><span class="keyword">var</span> rotateTimer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">startRotation</span>(<span class="params">$obj, speed</span>) &#123;</span><br><span class="line">	<span class="built_in">clearInterval</span>(rotateTimer);</span><br><span class="line">	rotateTimer = <span class="built_in">setInterval</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">		deg++;</span><br><span class="line">		<span class="keyword">if</span>(deg &gt;= <span class="number">360</span>)&#123;</span><br><span class="line">			deg = <span class="number">0</span></span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		$obj.<span class="title function_">css</span>(<span class="string">&#x27;-webkit-transform&#x27;</span>, <span class="string">&#x27;rotate(&#x27;</span>+ deg +<span class="string">&#x27;deg)&#x27;</span>);</span><br><span class="line">	&#125;, speed)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">stopRotation</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="built_in">clearInterval</span>(rotateTimer);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用</span></span><br><span class="line"><span class="keyword">var</span> $positer = $(<span class="string">&#x27;#playerPage .positer img&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">startRotation</span>($positer, <span class="number">80</span>); <span class="comment">//转</span></span><br><span class="line"><span class="title function_">stopRotation</span>() <span class="comment">//停</span></span><br></pre></td></tr></table></figure><br>哈哈，就是这么简单。<br>。。。<br>阿西吧，旧的问题解决了，只是新的问题来的开始而已。这时，播放的动画没有想animation那么流畅，一卡一卡的。天啊，这怎么解决，假如有个属性控制animation的播放不就好了嘛，那用搞这么多事情。</p>
-<p>一百度，果真有！<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">animation-play-state</span>: paused || running;</span><br></pre></td></tr></table></figure></p>
-<p>代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#playerPage</span> <span class="selector-class">.positer</span> <span class="selector-tag">img</span>&#123;</span><br><span class="line">    <span class="attribute">animation</span>: rotation <span class="number">30s</span> linear infinite;</span><br><span class="line">    -webkit-<span class="attribute">animation</span>: rotation <span class="number">30s</span> linear infinite;</span><br><span class="line">    -moz-<span class="attribute">animation</span>: rotation <span class="number">30s</span> linear infinite;</span><br><span class="line">    <span class="attribute">animation-play-state</span>: paused;</span><br><span class="line">    -webkit-<span class="attribute">animation-play-state</span>: paused;</span><br><span class="line">    -moz-<span class="attribute">animation-play-state</span>: paused;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$positer.<span class="title function_">css</span>(<span class="string">&#x27;animation-play-state&#x27;</span>, <span class="string">&#x27;running&#x27;</span>); <span class="comment">//开始旋转动画</span></span><br><span class="line"></span><br><span class="line">$positer.<span class="title function_">css</span>(<span class="string">&#x27;animation-play-state&#x27;</span>, <span class="string">&#x27;paused&#x27;</span>); <span class="comment">//停止旋转</span></span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2017/07/10/mongoDB%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Walking 劳翼">
-      <meta itemprop="description" content="“Unity,移动开发,Web”">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Unity游戏开发">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/07/10/mongoDB%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/" class="post-title-link" itemprop="url">mongoDB常用知识整理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2017-07-10 00:00:00" itemprop="dateCreated datePublished" datetime="2017-07-10T00:00:00+08:00">2017-07-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
-      </span>
-
-  
-    <span id="/2017/07/10/mongoDB%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/" class="post-meta-item leancloud_visitors" data-flag-title="mongoDB常用知识整理" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-</div>
-
-        </div>
-
-        <div class="post-fixed-siderbar">
-</div>
-      </header>
-
-
-    
-    
-    
-      <div class="post-tags">
-          <a href="/tags/mongoDB/" rel="tag"><i class="fa fa-tag"></i> mongoDB</a>
-      </div>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="mongoDB常用知识整理"><a href="#mongoDB常用知识整理" class="headerlink" title="mongoDB常用知识整理"></a>mongoDB常用知识整理</h1><h2 id="数据库恢复"><a href="#数据库恢复" class="headerlink" title="数据库恢复"></a>数据库恢复</h2><pre><code>cd bin 
-</code></pre><p>进去bin目录，在该目录下有工具<code>mongorestore</code>，<code>mongoimport</code>，<code>mongodump</code>,<code>mongoexport</code><br>恢复数据库主要用<code>mongorestore</code></p>
-<p>使用命令：<code>mongorestore -d  baifuCommune_db  --noIndexRestore   C://pathname</code><br><code>--noIndexRestore</code>  是忽略数据库版本不同引起的索引问题<br><code>-d</code>后接数据库名<br><code>C://pathname</code>是数据库目录</p>
+          <p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1524580962476&amp;di=2bb2f9b1075674dbb2b22354e010b724&amp;imgtype=0&amp;src=http%3A%2F%2Fwww.d1net.com%2Fuploadfile%2F2014%2F1215%2F20141215110355156.jpeg" alt="我是图片"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前端项目的上线部署前，都需要经过合并压缩后，才能上线。这样会导致的一个问题就是，经过变换的代码，debug没办法定位到代码出错的准确位置。关于代码要压缩变换的原因：</p>
 <blockquote>
-<p>注入此类请参考：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/yangxia-test/p/3983271.html">mongoDB数据库导入、导出、备份</a></p>
+<ol>
+<li>合并能减少http请求数</li>
+<li>压缩可以减少http请求量</li>
+<li>经过编译后的得到的js，如es6，ts</li>
+</ol>
 </blockquote>
-<h2 id="mongoDB基础命令"><a href="#mongoDB基础命令" class="headerlink" title="mongoDB基础命令"></a>mongoDB基础命令</h2><pre><code>show dbs
-use dbname
-show collections
-db.collectionName.insert(&#123;x :  1&#125;)
-for(i = 3; i&lt; 100; i++)db.collectionName.insert(&#123; x ： 1&#125;)
-db.collectionName.find()
-db.collectionName.find(&#123; x : 1 &#125;)
-db.collectionName.find().count()
-
-
-db.collectionsName.find().skip(3).limit(2).sort(&#123; x : 1 &#125;)
-db.collectionName.drop()
-db.collectionName.update(&#123; x : 1&#125;, &#123; x : 999 &#125;)    第二个json对象替换掉原有的对象
-db.collectionName.update(&#123; z : 100&#125;, &#123; $set : &#123; y : 99&#125; &#125;)   只是更新了y值
-db.collectionName.update(&#123; y : 100&#125;, &#123; y : 999 &#125;, true)    假如更新的数据不存在就插入新数据
-db.collectionName.update(&#123; x : 1&#125;, &#123; $set : &#123; x : 999&#125; &#125;, false, true)   将第四个参数设为true，更新多条x为1的数据
-db.collectionName.remove( &#123; x : 2 &#125; )   删除x为2的数据
-
-db.collectionName.getIndexes()    获取索引
-db.collectioname.ensureIndex( &#123; x ： 1 &#125; )     创建索引   
-db,collectionName.ensureIndex( &#123; x : 1  &#125;, &#123; exprieAfterSeconds : 30&#125; )  x为key，1表示升序，相反-1表示降序，exprieAfterSeconds 值为秒数，表示索引失效被删除的时间，到了时间不一定准时被删除
-
-
-db.collectionName.ensureIndex( &#123; &quot;article&quot;  : &quot;text&quot;&#125; )  创建全文索引
-db.collectionName.find( $text : &#123; $search : &#123; &quot; aa  bb  cc &quot;&#125;&#125;)  全文查询，默认是或查询
-db.collectionName.find( $text : &#123; $search : &#123; &quot; aa  bb  -cc &quot;&#125;&#125;   包含aa或bb，但不包含cc
-db.collectionName.find( $text : &#123; $search : &#123; &quot;  \&quot;aa\&quot;  \&quot; bb\&quot;   \&quot;cc\&quot; &quot; &#125; &#125; )  反斜杠是转义符， 既包含   
-db.collectionName.find( $text : &#123; $search : &#123; &quot; aa  bb  cc &quot;&#125; &#125;, &#123; score :&#123;$meta : &quot;textScore&quot;&#125;&#125;  ).sort(&#123; score :&#123;$meta : &quot;textScore&quot;&#125;)   相识度查询，文档里 会增加一个相识度的值，sort排序
-
-地理位置查询
-db.collectionName.ensureIndex(&#123; &quot;w&quot;  : &quot;2d&quot;&#125;)
-db.collectionName.insert( &#123; w : [ 12, 12]&#125;)   经纬度  -180--180  -90--90
-db.collectionName.find( &#123; w :&#123;$near : [1,1]&#125;&#125;)    返回一百个距离这个点最近的地点
-db.collectionName.find( &#123; w :&#123;$ geowithin : &#123; $box : [ [0,0], [3,3] ]&#125; &#125; &#125;)    矩形内的点
-db.collectionName.find( &#123; w :&#123;$ geowithin : &#123; $center : [ [0,0], 5 ]&#125; &#125; &#125;)   圆型
-db.collectionName.find( &#123; w :&#123;$ geowithin : &#123; $ ploygon : [ [0,0], [3,3], [5,5] ]&#125; &#125; &#125;)  多边形
-db.runCommand(&#123; geoNear : &quot;collectionName&quot;, near : [1,3], maxDistance : 10, num: 10&#125;)
-</code></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/04/09/source%20map%E5%B0%8F%E7%9F%A5%E8%AF%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -713,7 +598,7 @@ db.runCommand(&#123; geoNear : &quot;collectionName&quot;, near : [1,3], maxDist
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2017/06/25/%E5%9F%BA%E4%BA%8EExpress4.0%E5%BC%80%E5%8F%91web/">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2018/04/08/webpack%E5%BC%95%E5%85%A5eslint/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -726,7 +611,7 @@ db.runCommand(&#123; geoNear : &quot;collectionName&quot;, near : [1,3], maxDist
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/06/25/%E5%9F%BA%E4%BA%8EExpress4.0%E5%BC%80%E5%8F%91web/" class="post-title-link" itemprop="url">基于Express4.0开发web</a>
+          <a href="/2018/04/08/webpack%E5%BC%95%E5%85%A5eslint/" class="post-title-link" itemprop="url">webpack引入eslint</a>
         </h2>
 
         <div class="post-meta-container">
@@ -737,18 +622,31 @@ db.runCommand(&#123; geoNear : &quot;collectionName&quot;, near : [1,3], maxDist
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2017-06-25 00:00:00" itemprop="dateCreated datePublished" datetime="2017-06-25T00:00:00+08:00">2017-06-25</time>
+      <time title="创建时间：2018-04-08 21:50:50" itemprop="dateCreated datePublished" datetime="2018-04-08T21:50:50+08:00">2018-04-08</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-12-06 23:30:38" itemprop="dateModified" datetime="2022-12-06T23:30:38+08:00">2022-12-06</time>
+        <time title="修改时间：2022-12-21 22:43:54" itemprop="dateModified" datetime="2022-12-21T22:43:54+08:00">2022-12-21</time>
       </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/web%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">web开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/web%E5%BC%80%E5%8F%91/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
 
   
-    <span id="/2017/06/25/%E5%9F%BA%E4%BA%8EExpress4.0%E5%BC%80%E5%8F%91web/" class="post-meta-item leancloud_visitors" data-flag-title="基于Express4.0开发web" title="阅读次数">
+    <span id="/2018/04/08/webpack%E5%BC%95%E5%85%A5eslint/" class="post-meta-item leancloud_visitors" data-flag-title="webpack引入eslint" title="阅读次数">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
@@ -768,54 +666,134 @@ db.runCommand(&#123; geoNear : &quot;collectionName&quot;, near : [1,3], maxDist
     
     
       <div class="post-tags">
-          <a href="/tags/mongoDB/" rel="tag"><i class="fa fa-tag"></i> mongoDB</a>
-          <a href="/tags/nodejs/" rel="tag"><i class="fa fa-tag"></i> nodejs</a>
-          <a href="/tags/express/" rel="tag"><i class="fa fa-tag"></i> express</a>
-          <a href="/tags/grunt/" rel="tag"><i class="fa fa-tag"></i> grunt</a>
-          <a href="/tags/router/" rel="tag"><i class="fa fa-tag"></i> router</a>
-          <a href="/tags/MVC/" rel="tag"><i class="fa fa-tag"></i> MVC</a>
-          <a href="/tags/jade/" rel="tag"><i class="fa fa-tag"></i> jade</a>
+          <a href="/tags/webpack/" rel="tag"><i class="fa fa-tag"></i> webpack</a>
+          <a href="/tags/eslint/" rel="tag"><i class="fa fa-tag"></i> eslint</a>
       </div>
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="1-快速搭建"><a href="#1-快速搭建" class="headerlink" title="1.快速搭建"></a>1.快速搭建</h3><p>在全局下安装express<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -g express  </span><br></pre></td></tr></table></figure><br>执行<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">express</span> -v yourProject 	</span><br><span class="line">或者</span><br><span class="line">cd yourProject</span><br><span class="line"><span class="built_in">express</span></span><br></pre></td></tr></table></figure><br>就会快速在目录yourProject中搭建express，-v参数指定模板引擎，没写就默认为jade</p>
-<h3 id="2-express中间件"><a href="#2-express中间件" class="headerlink" title="2.express中间件"></a>2.express中间件</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = <span class="title function_ invoke__">requrie</span>(<span class="string">&#x27;express&#x27;</span>)();</span><br><span class="line">app.<span class="keyword">use</span> (<span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="title function_ invoke__">next</span>()</span><br><span class="line">&#125;)  </span><br></pre></td></tr></table></figure>
-<p>next()作用是交付控制权，前往下一个中间件<br>可以利用这一点做验证功能</p>
-<h3 id="3-MVC架构"><a href="#3-MVC架构" class="headerlink" title="3.MVC架构"></a>3.MVC架构</h3><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">/app</span></span><br><span class="line">    <span class="string">/controllers</span></span><br><span class="line">    <span class="string">/models</span></span><br><span class="line">    <span class="string">/schemas</span></span><br><span class="line">    <span class="string">/views</span></span><br><span class="line"><span class="string">/public</span></span><br><span class="line">    <span class="string">/libs</span></span><br><span class="line">    <span class="string">/css</span></span><br><span class="line">    <span class="string">/js</span></span><br><span class="line"><span class="string">/router</span></span><br><span class="line">    router.js</span><br><span class="line">app.js</span><br><span class="line">package.json</span><br><span class="line"><span class="string">.bowerrc</span></span><br><span class="line">bower.json</span><br><span class="line">gruntfile.js</span><br><span class="line"><span class="string">.gitignore</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>以上就是项目的架构，按照MVC架构，后台代码都放在app下，schemas存放mongodb的模式，可以看作是一张张表，models放生成模型的文件，模型与模式对接起来。public存放静态文件，/libs存放前端框架如bootstrap。把router路由模块抽离放在router目录。<br>bower模块用来安装项目依赖的前端框架。需要在全局安装bower<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -g bower</span><br></pre></td></tr></table></figure><br>安装bootstrap<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bower </span>init</span><br><span class="line"><span class="keyword">bower </span><span class="keyword">install </span><span class="keyword">bootstrap</span></span><br></pre></td></tr></table></figure><br>bower init 生成bower.json<br>然后安装bootstrap时，会根据.bowerrc文件<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;directory&quot;</span><span class="punctuation">:</span> <span class="string">&quot;public/libs&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure><br>把依赖的框架安装在public/libs下</p>
-<h3 id="4-项目管理工具grunt"><a href="#4-项目管理工具grunt" class="headerlink" title="4.项目管理工具grunt"></a>4.项目管理工具grunt</h3><p>gruntfile.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="keyword">function</span>(<span class="params">grunt</span>) &#123;</span><br><span class="line"></span><br><span class="line">    grunt.<span class="title function_">initConfig</span>(&#123;</span><br><span class="line">        <span class="attr">watch</span>: &#123;</span><br><span class="line">            <span class="attr">jade</span>: &#123;</span><br><span class="line">                <span class="attr">files</span>: [<span class="string">&#x27;views/**&#x27;</span>],</span><br><span class="line">                <span class="attr">options</span>: &#123;</span><br><span class="line">                    <span class="attr">livereload</span>: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">js</span>: &#123;</span><br><span class="line">                <span class="attr">files</span>: [<span class="string">&#x27;public/js/**&#x27;</span>, <span class="string">&#x27;app/**/*.js&#x27;</span>],</span><br><span class="line">                <span class="comment">//tasks: [&#x27;jshint&#x27;],</span></span><br><span class="line">                <span class="attr">options</span>: &#123;</span><br><span class="line">                    <span class="attr">livereload</span>: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">uglify</span>: &#123;</span><br><span class="line">                <span class="attr">files</span>: [<span class="string">&#x27;public/**/*.js&#x27;</span>],</span><br><span class="line">                <span class="attr">tasks</span>: [<span class="string">&#x27;jshint&#x27;</span>],</span><br><span class="line">                <span class="attr">options</span>: &#123;</span><br><span class="line">                    <span class="attr">livereload</span>: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">styles</span>: &#123;</span><br><span class="line">                <span class="attr">files</span>: [<span class="string">&#x27;public/**/*.less&#x27;</span>],</span><br><span class="line">                <span class="attr">tasks</span>: [<span class="string">&#x27;less&#x27;</span>],</span><br><span class="line">                <span class="attr">options</span>: &#123;</span><br><span class="line">                    <span class="attr">nospawn</span>: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        <span class="attr">nodemon</span>: &#123;</span><br><span class="line">            <span class="attr">dev</span>: &#123;</span><br><span class="line">                <span class="attr">script</span>: <span class="string">&#x27;bin/www&#x27;</span>,  <span class="comment">//入口文件</span></span><br><span class="line">                <span class="attr">options</span>: &#123;</span><br><span class="line">                    <span class="attr">nodeArgs</span>: [<span class="string">&#x27;--debug&#x27;</span>], <span class="comment">//开启开发模式</span></span><br><span class="line">                    <span class="attr">args</span>:　[],</span><br><span class="line">                    <span class="attr">ignoredFiles</span>: [<span class="string">&#x27;README.md&#x27;</span>, <span class="string">&#x27;node_modules/**&#x27;</span>, <span class="string">&#x27;public/libs/**&#x27;</span>, <span class="string">&#x27;.vscode&#x27;</span>],</span><br><span class="line">                    <span class="attr">watchedExtensions</span>: [<span class="string">&#x27;js&#x27;</span>],</span><br><span class="line">                    <span class="attr">watchedFolders</span>: [<span class="string">&#x27;./&#x27;</span>], <span class="comment">//监听定义的文件夹,根目录</span></span><br><span class="line">                    <span class="attr">debug</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">delayTime</span>: <span class="number">1000</span>,</span><br><span class="line">                    <span class="attr">env</span>: &#123;</span><br><span class="line">                        <span class="attr">PORT</span>: <span class="number">3000</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="attr">cwd</span>: __dirname</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        <span class="attr">jshint</span>: &#123;</span><br><span class="line">            <span class="attr">options</span>: &#123;</span><br><span class="line">                <span class="attr">jshintrc</span>: <span class="string">&#x27;.jshintrc&#x27;</span>,</span><br><span class="line">                <span class="attr">ignores</span>: [<span class="string">&#x27;public/libs/**/*.js&#x27;</span>]</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">all</span>: [<span class="string">&#x27;public/javascripts/*.js&#x27;</span>, <span class="string">&#x27;test/**/*.js&#x27;</span>, <span class="string">&#x27;app/**/*.js&#x27;</span>]</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        <span class="attr">less</span>: &#123;</span><br><span class="line">            <span class="attr">development</span>: &#123;</span><br><span class="line">                <span class="attr">options</span>: &#123;</span><br><span class="line">                    <span class="attr">compress</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">yuicompress</span>: <span class="literal">true</span>,</span><br><span class="line">                    <span class="attr">optimization</span>: <span class="number">2</span></span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">files</span>: &#123;</span><br><span class="line">                    <span class="string">&#x27;public/build/index.css&#x27;</span> : <span class="string">&#x27;public/less/index.less&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        <span class="attr">uglify</span>: &#123;</span><br><span class="line">            <span class="attr">development</span>: &#123;</span><br><span class="line">                <span class="attr">files</span>: &#123;</span><br><span class="line">                <span class="string">&#x27;public/build/admin.min.js&#x27;</span>: <span class="string">&#x27;public/javascripts/admin.js&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;public/build/detail.min.js&#x27;</span>: [</span><br><span class="line">                    <span class="string">&#x27;public/javascripts/detail.js&#x27;</span></span><br><span class="line">                ]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        <span class="attr">mochaTest</span>: &#123;</span><br><span class="line">            <span class="attr">options</span>: &#123;</span><br><span class="line">                <span class="attr">reporter</span>: <span class="string">&#x27;spec&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">src</span>: [<span class="string">&#x27;test/**/*.js&#x27;</span>]</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        <span class="attr">concurrent</span>: &#123;</span><br><span class="line">            <span class="attr">tasks</span>: [<span class="string">&#x27;nodemon&#x27;</span>, <span class="string">&#x27;watch&#x27;</span>, <span class="string">&#x27;jshint&#x27;</span>, <span class="string">&#x27;less&#x27;</span>, <span class="string">&#x27;uglify&#x27;</span>],</span><br><span class="line">            <span class="attr">options</span>: &#123;</span><br><span class="line">                <span class="attr">logConcurrentOutput</span>: <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    grunt.<span class="title function_">loadNpmTasks</span>(<span class="string">&#x27;grunt-contrib-watch&#x27;</span>); <span class="comment">//监控定义好的静态文件变动</span></span><br><span class="line">    grunt.<span class="title function_">loadNpmTasks</span>(<span class="string">&#x27;grunt-nodemon&#x27;</span>); <span class="comment">//监控入口文件变动</span></span><br><span class="line">    grunt.<span class="title function_">loadNpmTasks</span>(<span class="string">&#x27;grunt-concurrent&#x27;</span>); <span class="comment">//优化慢任务的构建时间，比如sass,less，并发执行多个阻塞的任务,比如nodemon和watch</span></span><br><span class="line">    grunt.<span class="title function_">loadNpmTasks</span>(<span class="string">&#x27;grunt-mocha-test&#x27;</span>);  <span class="comment">//测试框架</span></span><br><span class="line">    grunt.<span class="title function_">loadNpmTasks</span>(<span class="string">&#x27;grunt-contrib-less&#x27;</span>);</span><br><span class="line">    grunt.<span class="title function_">loadNpmTasks</span>(<span class="string">&#x27;grunt-contrib-uglify&#x27;</span>);</span><br><span class="line">    grunt.<span class="title function_">loadNpmTasks</span>(<span class="string">&#x27;grunt-contrib-jshint&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    grunt.<span class="title function_">option</span>(<span class="string">&#x27;force&#x27;</span>, <span class="literal">true</span>); <span class="comment">//避免程序因语法错误而终止执行</span></span><br><span class="line"></span><br><span class="line">    grunt.<span class="title function_">registerTask</span>(<span class="string">&#x27;default&#x27;</span>, [<span class="string">&#x27;concurrent&#x27;</span>]);</span><br><span class="line">    grunt.<span class="title function_">registerTask</span>(<span class="string">&#x27;test&#x27;</span>, [<span class="string">&#x27;mochaTest&#x27;</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>前期开发只需要前面三个模块包即watch,nodemon,concurrent就行。</p>
-<h3 id="5-router模块"><a href="#5-router模块" class="headerlink" title="5.router模块"></a>5.router模块</h3><p>这里有两种方法<br>第一种是将路由分类<br><figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">app.js</span><br><span class="line"><span class="comment">//挂载路由表</span></span><br><span class="line">app.<span class="keyword">use</span>(<span class="string">&#x27;/&#x27;</span>, index);</span><br><span class="line">app.<span class="keyword">use</span>(<span class="string">&#x27;/admin&#x27;</span>, admin);</span><br><span class="line">app.<span class="keyword">use</span>(<span class="string">&#x27;/user&#x27;</span>, user)</span><br><span class="line"></span><br><span class="line">user.js</span><br><span class="line"><span class="keyword">var</span> express = <span class="keyword">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> User = <span class="keyword">require</span>(<span class="string">&#x27;../models/user&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line"></span><br><span class="line"><span class="comment">//用户注册</span></span><br><span class="line">router.post(<span class="string">&#x27;/signup&#x27;</span>, <span class="function"><span class="keyword">function</span><span class="params">(req, res)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">module.exports = router;</span><br></pre></td></tr></table></figure><br>当url以/user开头时就会进入user.js文件。<br>第二种是路由全部写在一个文件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="property">js</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;./config/routers&#x27;</span>)(app); <span class="comment">//不能传入express.Router(),它只能作为中间件用,如上</span></span><br><span class="line"></span><br><span class="line">router.<span class="property">js</span></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Movie</span> = <span class="built_in">require</span>(<span class="string">&#x27;../app/controllers/movie&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Index</span> = <span class="built_in">require</span>(<span class="string">&#x27;../app/controllers/index&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="keyword">function</span>(<span class="params">app</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Index</span></span><br><span class="line">    app.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="title class_">Index</span>.<span class="property">index</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Movie</span></span><br><span class="line">    app.<span class="title function_">get</span>(<span class="string">&#x27;/movie/:id&#x27;</span>, <span class="title class_">Movie</span>.<span class="property">detail</span>);</span><br><span class="line">    app.<span class="title function_">get</span>(<span class="string">&#x27;/admin/movie/list&#x27;</span>,<span class="title class_">User</span>.<span class="property">signinRequired</span>,<span class="title class_">User</span>.<span class="property">adminRequired</span>, <span class="title class_">Movie</span>.<span class="property">list</span>);</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
-<h3 id="6-数据库模块mongose"><a href="#6-数据库模块mongose" class="headerlink" title="6.数据库模块mongose"></a>6.数据库模块mongose</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="property">js</span></span><br><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">&#x27;mongoose&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> dbURL = <span class="string">&#x27;mongodb://localhost:27017/movieWeb&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//连接数据库</span></span><br><span class="line">mongoose.<span class="property">Promise</span> = <span class="variable language_">global</span>.<span class="property">Promise</span>; <span class="comment">//避免控制台输出Promise错误 </span></span><br><span class="line">mongoose.<span class="title function_">connect</span>(dbURL) <span class="comment">//数据库名为movieWeb</span></span><br><span class="line">mongoose.<span class="property">connection</span>.<span class="title function_">on</span>(<span class="string">&#x27;connected&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;    <span class="comment">//绑定connected函数，连接成功时触发</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Connection success!&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>模式schemas(表)<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">&#x27;mongoose&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Schema</span> = mongoose.<span class="property">Schema</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="title class_">ObjectId</span> = <span class="title class_">Schema</span>.<span class="property">Types</span>.<span class="property">ObjectId</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">MovieSchema</span> = <span class="keyword">new</span> mongoose.<span class="title class_">Schema</span>(&#123;  <span class="comment">//定义模式</span></span><br><span class="line">    <span class="attr">doctor</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">language</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">country</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">summary</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">flash</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">poster</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">year</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">pv</span>: &#123;</span><br><span class="line">        <span class="attr">type</span>: <span class="title class_">Number</span>,</span><br><span class="line">        <span class="attr">default</span>: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">category</span>: &#123;</span><br><span class="line">        <span class="attr">type</span>: <span class="title class_">ObjectId</span>,</span><br><span class="line">        <span class="attr">ref</span>: <span class="string">&#x27;Category&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">meta</span>: &#123;</span><br><span class="line">        <span class="attr">createAt</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="title class_">Date</span>,</span><br><span class="line">            <span class="attr">default</span>: <span class="title class_">Date</span>.<span class="title function_">now</span>()</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">updateAt</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="title class_">Date</span>,</span><br><span class="line">            <span class="attr">default</span>: <span class="title class_">Date</span>.<span class="title function_">now</span>()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//每次存取数据之前，都调用save方法</span></span><br><span class="line"><span class="title class_">MovieSchema</span>.<span class="title function_">pre</span>(<span class="string">&#x27;save&#x27;</span>, <span class="keyword">function</span>(<span class="params">next</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">isNew</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">meta</span>.<span class="property">createAt</span> = <span class="variable language_">this</span>.<span class="property">meta</span>.<span class="property">updateAt</span> = <span class="title class_">Date</span>.<span class="title function_">now</span>()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">meta</span>.<span class="property">updateAt</span> = <span class="title class_">Date</span>.<span class="title function_">now</span>()  </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">next</span>() <span class="comment">//将流程走下去</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="title class_">MovieSchema</span>.<span class="property">statics</span> = &#123;  <span class="comment">//实例化以后就会具有以下方法，相当于构造函数的成员方法</span></span><br><span class="line">    <span class="attr">fetch</span>: <span class="keyword">function</span>(<span class="params">cb</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span></span><br><span class="line">            .<span class="title function_">find</span>(&#123;&#125;)</span><br><span class="line">            .<span class="title function_">sort</span>(<span class="string">&#x27;meta.updateAt&#x27;</span>)</span><br><span class="line">            .<span class="title function_">exec</span>(cb)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">fetchById</span>: <span class="keyword">function</span>(<span class="params">id, cb</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span></span><br><span class="line">            .<span class="title function_">findOne</span>(&#123;<span class="attr">_id</span>: id&#125;)</span><br><span class="line">            .<span class="title function_">exec</span>(cb)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">MovieSchema</span></span><br></pre></td></tr></table></figure><br>模型models（模式跟模型对接）<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">&#x27;mongoose&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> <span class="title class_">MovieSchema</span> = <span class="built_in">require</span>(<span class="string">&#x27;../schemas/movie&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Movie</span> = mongoose.<span class="title function_">model</span>(<span class="string">&#x27;Movie&#x27;</span>, <span class="title class_">MovieSchema</span>)  <span class="comment">//模式和模型对接</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">Movie</span></span><br><span class="line"></span><br></pre></td></tr></table></figure><br>值得注意的是，使用mongodb之前，需要在电脑上安装mongodb，并注册成一个服务，方便使用前开启，具体参考笔记：mongodb错误</p>
-<h3 id="7-将session存放在mongodb里"><a href="#7-将session存放在mongodb里" class="headerlink" title="7.将session存放在mongodb里"></a>7.将session存放在mongodb里</h3><p>session是会话支持，作为客户端的id，跟服务器交互<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用mongodb来储存sesion信息</span></span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="keyword">require</span>(<span class="string">&#x27;cookie-parser&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> session = <span class="keyword">require</span>(<span class="string">&quot;express-session&quot;</span>);</span><br><span class="line"><span class="keyword">var</span> MongoStore = <span class="keyword">require</span>(<span class="string">&#x27;connect-mongo&#x27;</span>)(session);</span><br><span class="line"></span><br><span class="line"><span class="comment">//配置session</span></span><br><span class="line">app.<span class="keyword">use</span>(<span class="title function_ invoke__">cookieParser</span>());</span><br><span class="line">app.<span class="keyword">use</span>(<span class="title function_ invoke__">session</span>(&#123;</span><br><span class="line">  <span class="attr">secret</span>: <span class="string">&#x27;imoocMovieWeb&#x27;</span>,</span><br><span class="line">  <span class="attr">store</span>: <span class="keyword">new</span> <span class="title class_">MongoStore</span>(&#123;</span><br><span class="line">    <span class="attr">url</span>: dbURL,</span><br><span class="line">    <span class="attr">collection</span>: <span class="string">&#x27;sessions&#x27;</span></span><br><span class="line">  &#125;),</span><br><span class="line">  resave: <span class="literal">true</span>,</span><br><span class="line">  saveUninitialized: <span class="literal">true</span></span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure><br>其中呢，cookieParser()中间件是session和bodyParser的依赖的中间件<br>bodyParser是解析request请求的中间价<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">配置</span><br><span class="line">app.<span class="keyword">use</span>(bodyParser.<span class="title function_ invoke__">json</span>());</span><br><span class="line">app.<span class="keyword">use</span>(bodyParser.<span class="title function_ invoke__">urlencoded</span>(&#123;<span class="attr">extended</span>:<span class="literal">true</span>&#125;)); <span class="comment">//extended为true则可以解析字符串和数组以外的数据</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="8-前后台传数据"><a href="#8-前后台传数据" class="headerlink" title="8.前后台传数据"></a>8.前后台传数据</h3><p>可以用res.render方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">controllers/movie.<span class="property">js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//获取后列表页</span></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">list</span> = <span class="keyword">function</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  <span class="title class_">Movie</span>.<span class="title function_">fetch</span>(<span class="keyword">function</span>(<span class="params">err, movies</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    res.<span class="title function_">render</span>(<span class="string">&#x27;list&#x27;</span>, &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;后台列表页&#x27;</span>,</span><br><span class="line">      <span class="attr">movies</span>: movies</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br>还可以用res.locals，可以传递方法和变量<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="property">js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//前后台传递数据</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  res.<span class="property">locals</span>.<span class="property">moment</span> = moment;  <span class="comment">//向前台模板发送处理时间的moment方法</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">var</span> _user = req.<span class="property">session</span>.<span class="property">user</span>;</span><br><span class="line">  res.<span class="property">locals</span>.<span class="property">user</span> = _user; <span class="comment">//传递用户转态</span></span><br><span class="line"></span><br><span class="line">  <span class="title function_">next</span>();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<h3 id="8-各种用到的中间件"><a href="#8-各种用到的中间件" class="headerlink" title="8.各种用到的中间件"></a>8.各种用到的中间件</h3><ul>
-<li><p>flash  </p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">var</span> flash = <span class="built_in">require</span>(<span class="string">&#x27;connect-flash&#x27;</span>) <span class="comment">//存储变量的中间件，相当全局变量</span></span><br><span class="line">app<span class="selector-class">.use</span>(<span class="built_in">flash</span>())</span><br><span class="line"></span><br><span class="line">使用</span><br><span class="line"><span class="selector-tag">var</span> error = req<span class="selector-class">.flash</span>(<span class="string">&#x27;error&#x27;</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>logger  </p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> logger = <span class="built_in">require</span>(<span class="string">&#x27;morgan&#x27;</span>); <span class="comment">//处理日志模块 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//日志文件</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> accessLogfile = fs.<span class="title function_">createWriteStream</span>(<span class="string">&#x27;access.log&#x27;</span>, &#123;<span class="attr">flags</span>:<span class="string">&#x27;a&#x27;</span>&#125;);</span><br><span class="line"><span class="keyword">var</span> errorLogfile = fs.<span class="title function_">createWriteStream</span>(<span class="string">&#x27;error.log&#x27;</span>, &#123;<span class="attr">flags</span>:<span class="string">&#x27;a&#x27;</span>&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&#x27;env&#x27;</span>, <span class="string">&#x27;production&#x27;</span>);</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">logger</span>(&#123;<span class="attr">stream</span>: accessLogfile&#125;)); <span class="comment">//访问日志</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//处理错误日志，处理错误的中间件一定要写在路由后面</span></span><br><span class="line"><span class="keyword">if</span> (<span class="string">&#x27;production&#x27;</span> == app.<span class="title function_">get</span>(<span class="string">&#x27;env&#x27;</span>)) &#123;</span><br><span class="line">  app.<span class="title function_">use</span>(<span class="keyword">function</span>(<span class="params">err, req, res, next</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> meta = <span class="string">&#x27;[&#x27;</span> + <span class="keyword">new</span> <span class="title class_">Date</span>() + <span class="string">&#x27;] &#x27;</span> + req.<span class="property">url</span> + <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    errorLogfile.<span class="title function_">write</span>(meta + err.<span class="property">stack</span> + <span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">    <span class="title function_">next</span>();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>moment  </p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">app.js</span><br><span class="line">var moment = require(<span class="string">&#x27;moment&#x27;</span>); <span class="regexp">//</span>处理时间格式</span><br><span class="line">在中间件里</span><br><span class="line">res.locals.moment = moment;  <span class="regexp">//</span>向前台模板发送处理时间的moment方法</span><br><span class="line"></span><br><span class="line">jade模板文件</span><br><span class="line">moment(item.meta.updateAt).format(<span class="string">&#x27;MM/DD/YYYY&#x27;</span>) <span class="regexp">//i</span>tem.meta.updateAt是后台传过来的时间数据new Date()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>bcrypt-nodejs 加盐模块</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> bcrypt = <span class="built_in">require</span>(<span class="string">&#x27;bcrypt-nodejs&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">SALL_WORK_FACTOR</span> = <span class="number">10</span>; <span class="comment">//数值越大，破解越复杂</span></span><br><span class="line">bcrypt.<span class="title function_">genSalt</span>(<span class="variable constant_">SALL_WORK_FACTOR</span>, <span class="keyword">function</span>(<span class="params">err, salt</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="title function_">next</span>(err);</span><br><span class="line"></span><br><span class="line">        bcrypt.<span class="title function_">hash</span>(user.<span class="property">password</span>, salt, <span class="literal">null</span>, <span class="keyword">function</span>(<span class="params">err, hash</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="title function_">next</span>(err);</span><br><span class="line"></span><br><span class="line">            user.<span class="property">password</span> = hash</span><br><span class="line">            <span class="title function_">next</span>() <span class="comment">//将流程走下去</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>underscore （用到这模块的继承方法）  </p>
-<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="literal">_</span> = require(<span class="string">&#x27;underscore&#x27;</span>);</span><br><span class="line">_movie = <span class="literal">_</span>.extend(movie, movieObj)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="9-jade模板引擎"><a href="#9-jade模板引擎" class="headerlink" title="9.jade模板引擎"></a>9.jade模板引擎</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">layout.jade 公用的部份</span><br><span class="line"></span><br><span class="line">doctype html</span><br><span class="line">html</span><br><span class="line">  head</span><br><span class="line">    meta(charset=&quot;utf-8&quot;)</span><br><span class="line">    title #&#123;title&#125; - imoocMovie</span><br><span class="line">    include ./includes/head</span><br><span class="line">  body</span><br><span class="line">    include ./includes/header</span><br><span class="line">    block content</span><br><span class="line">    include ./includes/footer</span><br></pre></td></tr></table></figure>
-<p>引进用include<br>block content是主体内容<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">extends ../layout  //-扩展layout</span><br><span class="line"></span><br><span class="line">block content</span><br><span class="line">  .container</span><br><span class="line">    .row</span><br><span class="line">      each cat in categories</span><br><span class="line">        .panel.panel-default</span><br><span class="line">          .panel-heading</span><br><span class="line">            h3</span><br><span class="line">              a(href=&#x27;/results?cat=#&#123;cat._id&#125;&amp;p=0&#x27;) #&#123;cat.name&#125;</span><br><span class="line">          .panel-body</span><br><span class="line">            if cat.movies &amp;&amp; cat.movies.length &gt; 0</span><br><span class="line">              each item in cat.movies</span><br><span class="line">                .col-md-2</span><br><span class="line">                  .thumbnail</span><br><span class="line">                    a(href=&quot;/movie/#&#123;item._id&#125;&quot;)</span><br><span class="line">                      if item.poster.indexOf(&#x27;http:&#x27;) &gt; -1</span><br><span class="line">                        img(src=&quot;#&#123;item.poster&#125;&quot;, alt=&quot;#&#123;item.title&#125;&quot;)</span><br><span class="line">                      else</span><br><span class="line">                        img(src=&quot;/upload/#&#123;item.poster&#125;&quot;, alt=&quot;#&#123;item.title&#125;&quot;)</span><br><span class="line">                    .caption</span><br><span class="line">                      h4 #&#123;item.title&#125;</span><br><span class="line">                      p: a.btn.btn-primary(href=&quot;/movie/#&#123;item._id&#125;&quot;, role=&quot;button&quot;) 观看预告片</span><br><span class="line">    script(src=&#x27;/build/admin.min.js&#x27;)</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>request（发http请求）<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> request = <span class="keyword">require</span>(<span class="string">&#x27;request&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//用法</span></span><br><span class="line">request(&#123;url: url, json: <span class="literal">true</span>&#125;, function (error, response, body) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!error &amp;&amp; response.statusCode === <span class="number">200</span>) &#123;</span><br><span class="line">                <span class="built_in">var</span> <span class="built_in">data</span> = body;</span><br><span class="line">                <span class="built_in">var</span> now = (<span class="literal">new</span> <span class="built_in">Date</span>().getTime());</span><br><span class="line">                <span class="built_in">var</span> expires_in = now + (<span class="built_in">data</span>.expires_in - <span class="number">20</span>) * <span class="number">1000</span>;</span><br><span class="line">                <span class="built_in">data</span>.expires_in = expires_in;</span><br><span class="line">                resolve(<span class="built_in">data</span>);</span><br><span class="line">                <span class="comment">//console.log(data);</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                reject(<span class="string">&#x27;can not get ticket&#x27;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+          <p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1525174897&amp;di=c0a06449ab438e83c3a8f2a245203535&amp;imgtype=jpg&amp;er=1&amp;src=http%3A%2F%2Fwww.ibeifeng.com%2Fimages%2Fupload%2FImage%2Fc5bbf603918fa0ec91b3bd73259759ee3c6ddbc0.jpg" alt="我是图片"></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>eslint是前端编码规范的检测工具，本文记录如何在webpack配置eslint和定义前端的编码规范</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/04/08/webpack%E5%BC%95%E5%85%A5eslint/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://laoleo.github.io/2018/04/02/%E8%81%8A%E8%81%8Agit%E7%9A%84%E5%88%86%E6%94%AF%E5%92%8Crebase%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Walking 劳翼">
+      <meta itemprop="description" content="“Unity,移动开发,Web”">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Unity游戏开发">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/04/02/%E8%81%8A%E8%81%8Agit%E7%9A%84%E5%88%86%E6%94%AF%E5%92%8Crebase%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">聊聊git的分支和rebase命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-04-02 20:46:00" itemprop="dateCreated datePublished" datetime="2018-04-02T20:46:00+08:00">2018-04-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-12-21 22:43:39" itemprop="dateModified" datetime="2022-12-21T22:43:39+08:00">2022-12-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/web%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">web开发</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/web%E5%BC%80%E5%8F%91/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2018/04/02/%E8%81%8A%E8%81%8Agit%E7%9A%84%E5%88%86%E6%94%AF%E5%92%8Crebase%E5%91%BD%E4%BB%A4/" class="post-meta-item leancloud_visitors" data-flag-title="聊聊git的分支和rebase命令" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+
+        <div class="post-fixed-siderbar">
+</div>
+      </header>
+
+
+    
+    
+    
+      <div class="post-tags">
+          <a href="/tags/git/" rel="tag"><i class="fa fa-tag"></i> git</a>
+      </div>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=246425395,1170785252&amp;fm=27&amp;gp=0.jpg" alt="我是图片"></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>进入公司已经一周的时间，在项目的协作开发中，根据公司对代码提交的要求，对使用git所遇到的一些问题情况，做了一个简单的总结，以便帮助遇到同样问题的实习生，提高的解决问题效率，进而更快的适应公司的开发节奏。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/04/02/%E8%81%8A%E8%81%8Agit%E7%9A%84%E5%88%86%E6%94%AF%E5%92%8Crebase%E5%91%BD%E4%BB%A4/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -834,7 +812,7 @@ db.runCommand(&#123; geoNear : &quot;collectionName&quot;, near : [1,3], maxDist
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -868,7 +846,7 @@ db.runCommand(&#123; geoNear : &quot;collectionName&quot;, near : [1,3], maxDist
 
 <div class="copyright">
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
